@@ -7,9 +7,18 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Embeddable
+@Entity
 @Table(name = "preferenze")
 public class Preferenze {
+
+    @Id
+    @Column(name = "id_visitatore", nullable = false)
+    private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id_visitatore", nullable = false)
+    private Utente visitatore;
 
     @Enumerated
     @Column(name = "viaggio_preferito", nullable = false)

@@ -38,7 +38,4 @@ public class Utente {
     @Column(name = "ruolo", nullable = false)
     private RuoloUtente ruolo = RuoloUtente.VISITATORE;
 
-    @Embedded
-    private Preferenze preferenze;
-
 }
