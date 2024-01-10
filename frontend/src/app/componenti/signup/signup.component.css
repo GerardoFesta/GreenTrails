@@ -1,10 +1,10 @@
 .orientamento{
-    display: flex; /* Utilizza il layout flessibile */
-    justify-content: center; /* Centra orizzontalmente */
-    align-items: center; /* Centra verticalmente */
-    height: 100vh; /* Altezza pari all'intera altezza del viewport */
-    margin: 0; /* Rimuove il margine predefinito */
-    background-color: #f7f7f7; /* Colore di sfondo della pagina */
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0; 
+    background-color: #f7f7f7; 
   }
 
   form {
