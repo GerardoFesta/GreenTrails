@@ -1,0 +1,16 @@
+/* Container dettagli attivita */
+.example-card {
+    background-color: transparent;
+    color: black;
+    border: none;
+    box-shadow: none;
+}
+
+.card-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 5px solid black;
+    border-radius: 20px;
+    padding: 15px;
+}

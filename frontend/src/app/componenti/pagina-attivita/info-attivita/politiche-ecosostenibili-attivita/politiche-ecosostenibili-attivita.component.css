@@ -1,0 +1,30 @@
+/* Container card valori-ecosostenibilita */
+.example-card {
+    background-color: transparent;
+    color: black;
+    border: none;
+    box-shadow: none;
+    /* background-color: blue; */
+}
+
+/* Classe che viene assegnata all'header */
+.card-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: blueviolet; */
+}
+
+/* Container lista valori-ecosostenibilita */
+.lista-eco-container {
+    background-color: rgba(221, 221, 221, 0.504);
+    width: 100%;
+    border: 5px solid black;
+}
+/* Elemento della lista */
+mat-list-item {
+    display: flex;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;;
+}

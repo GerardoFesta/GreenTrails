@@ -1,0 +1,22 @@
+/* Container del container mappa attivita */
+.example-card {
+    background-color: transparent;
+    color: black;
+    border: none;
+    box-shadow: none;
+    /* background-color: orange; */
+}
+
+/* Classe che viene assegnata a casciun componente di mappa attivita */
+.card-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* background-color: blueviolet; */
+}
+
+/* Container immagine PROVVISORIA mappa attivita */
+.mat-card-image {
+    border: 5px ridge black;
+    max-width: 90%;
+}
