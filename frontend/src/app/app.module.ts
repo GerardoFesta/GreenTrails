@@ -16,6 +16,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatMenuModule} from '@angular/material/menu';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -37,10 +38,14 @@ import {MatMenuModule} from '@angular/material/menu';
     MatToolbarModule,
     MatMenuModule,
     FormsModule, 
-    ReactiveFormsModule
+    ReactiveFormsModule, NgbModule
 
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+
+  
+}
