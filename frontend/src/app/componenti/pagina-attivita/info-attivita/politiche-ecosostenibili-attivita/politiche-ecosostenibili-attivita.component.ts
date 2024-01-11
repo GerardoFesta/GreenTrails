@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
 
-  constructor() { }
+  politicheEcosostenibili: string[];
+
+  constructor() { 
+    this.politicheEcosostenibili = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
+  }
 
   ngOnInit(): void {
   }

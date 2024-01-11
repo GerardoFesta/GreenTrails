@@ -13,9 +13,7 @@
                 <!-- Lista valori-ecosostenibilita (devono essere generati dinamicamente)-->
                 <mat-list role="list">
                     <!-- Elemento della lista -->
-                    <mat-list-item role="listitem">Prodotti locali</mat-list-item>
-                    <mat-list-item role="listitem">Item 2</mat-list-item>
-                    <mat-list-item role="listitem">Item 3</mat-list-item>
+                    <mat-list-item role="listitem" *ngFor="let politica of politicheEcosostenibili, let i as index">{{politica}}</mat-list-item>
                   </mat-list>
             </div>
         </mat-card-content>

@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class ValutazioneAttivitaComponent {
 
-  @Input() preselectedRating: number = 0;
+  @Input() preselectedRating: number = 3;
   maxRating: number = 5;
   ratings: number[] = [];
 

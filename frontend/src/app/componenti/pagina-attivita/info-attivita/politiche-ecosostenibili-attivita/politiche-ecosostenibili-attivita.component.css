@@ -20,6 +20,8 @@
     background-color: rgba(221, 221, 221, 0.504);
     width: 100%;
     border: 5px solid black;
+    max-height: 200px;
+    overflow-y: auto;
 }
 /* Elemento della lista */
 mat-list-item {
@@ -28,3 +30,24 @@ mat-list-item {
     display: flex;
     flex-wrap: wrap;;
 }
+
+/* Larghezza */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Traccia scrollbar */
+  ::-webkit-scrollbar-track {
+    background: #f1f8e9; /* HEX: #f1f8e9, RGB: (241, 248, 233) */
+  }
+   
+  /* Maniglia scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background: #dcedc8; /* HEX: #dcedc8, RGB: (220, 237, 200) */
+  }
+  
+  /* Maniglia della scrollbar al passaggio del mouse */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c5e1a5; /* HEX: #c5e1a5, RGB: (197, 225, 165) */
+  }
+  
