@@ -1,45 +1,44 @@
-<div class="orientamento"> 
+<div class="orientamento">
   <form #singupform (ngSubmit)="onSubmit(singupform)">
     <h1>Registrati</h1>
-<mat-form-field>
-  <mat-label>Nome</mat-label>
-  <input matInput type="text" name="nome" ngModel required>
-</mat-form-field>
-
-<mat-form-field>
-  <mat-label>Cognome</mat-label>
-  <input matInput type="text" name="cognome" ngModel required>
-</mat-form-field>
-
-<mat-form-field>
-  <mat-label>Email</mat-label>
-  <input matInput type="email" name="email"     
-  [(ngModel)]="emailValue"
-  [ngClass]="{ 'invalid-email': !isEmailValid }"
-  (input)="validateEmail()" required>
-</mat-form-field>
-
-
-
-<div *ngIf="!isEmailValid" class="error-message">
-  Email non valida.
-</div>
-
-
-  <mat-form-field>
-      <mat-label>Enter your password</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'"  required>
-
-
-      <button mat-icon-button matSuffix (click)="hide = !hide" >
-          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
-              <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-            </button>
-            </button>
+    <mat-form-field>
+      <mat-label>Nome</mat-label>
+      <input matInput type="text" name="nome" ngModel required />
     </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Cognome</mat-label>
+      <input matInput type="text" name="cognome" ngModel required />
+    </mat-form-field>
 
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        name="email"
+        [(ngModel)]="emailValue"
+        [ngClass]="{ 'invalid-email': !isEmailValid }"
+        (input)="validateEmail()"
+        required
+      />
+    </mat-form-field>
 
-<button mat-raised-button color="primary" type="submit">Invia</button>
-</form>
+    <div *ngIf="!isEmailValid" class="error-message">Email non valida.</div>
+
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input  matInput [type]="hide ? 'password' : 'text'"  required/>
+
+      <button mat-icon-button matSuffix (click)="hide = !hide">
+        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()">
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+      </button>
+    </mat-form-field>
+  </form>
+
+  <button mat-raised-button color="primary" type="submit"  style="color: white" >
+    Invia
+  </button>
 </div>

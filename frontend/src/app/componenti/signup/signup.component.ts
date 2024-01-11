@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -16,13 +16,14 @@ export class SignupComponent implements OnInit {
   hide: boolean = true;
   
     validateEmail() {
-      // Logica per la validazione dell'email (es. regex, verifica della struttura dell'email)
-      // In questo esempio, utilizziamo una semplice validazione per scopi dimostrativi
+
       this.isEmailValid = /\S+@\S+\.\S+/.test(this.emailValue);
-  
+
     }
   
-    constructor() { }
+    constructor() { 
+
+    }
   
     ngOnInit(): void {
   
