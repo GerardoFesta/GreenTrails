@@ -5,9 +5,7 @@ import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 
 
 // Material Form Controls
@@ -53,22 +51,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
-import { SignupComponent } from './componenti/signup/signup.component';
-
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-
-
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-
     CommonModule,
     MatAutocompleteModule,
     MatCheckboxModule,
@@ -154,13 +145,8 @@ import { SignupComponent } from './componenti/signup/signup.component';
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
-
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-
-
-  
-}
+export class AppModule { }
