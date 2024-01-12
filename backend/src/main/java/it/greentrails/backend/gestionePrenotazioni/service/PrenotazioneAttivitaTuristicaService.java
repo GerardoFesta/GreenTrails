@@ -2,6 +2,8 @@ package it.greentrails.backend.gestionePrenotazioni.service;
 
 import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.PrenotazioneAttivitaTuristica;
+import it.greentrails.backend.entities.Utente;
+import it.greentrails.backend.enums.RuoloUtente;
 import it.greentrails.backend.enums.StatoPrenotazione;
 import it.greentrails.backend.gestionePrenotazioni.repository.PrenotazioneAttivitaTuristicaRepository;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +77,16 @@ public class PrenotazioneAttivitaTuristicaService {
             throw new Exception("L'attività è vuota.");
         }
         return repository.findByAttivitaTuristica(attivita.getId(), Pageable.unpaged()).toList();
+    }
+
+    public List<PrenotazioneAttivitaTuristica> getPrenotazioniByVisitatore(Utente visitatore) throws Exception {
+        if (visitatore == null) {
+            throw new Exception("L'utente è vuoto.");
+        }
+        if (visitatore.getRuolo() != RuoloUtente.VISITATORE) {
+            throw new Exception("L'utente non è un visitatore.");
+        }
+        return repository.findByVisitatore(visitatore.getId(), Pageable.unpaged()).toList();
     }
 
 }

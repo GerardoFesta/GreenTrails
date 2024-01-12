@@ -3,6 +3,8 @@ package it.greentrails.backend.gestionePrenotazioni.service;
 import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Camera;
 import it.greentrails.backend.entities.PrenotazioneAlloggio;
+import it.greentrails.backend.entities.Utente;
+import it.greentrails.backend.enums.RuoloUtente;
 import it.greentrails.backend.enums.StatoPrenotazione;
 import it.greentrails.backend.gestionePrenotazioni.repository.PrenotazioneAlloggioRepository;
 import lombok.RequiredArgsConstructor;
@@ -79,5 +81,15 @@ public class PrenotazioneAlloggioService {
             throw new Exception("L'attività non può essere un'attività turistica.");
         }
         return repository.findByAlloggio(attivita.getId(), Pageable.unpaged()).toList();
+    }
+    
+    public List<PrenotazioneAlloggio> getPrenotazioniByVisitatore(Utente visitatore) throws Exception {
+        if (visitatore == null) {
+            throw new Exception("L'utente è vuoto.");
+        }
+        if (visitatore.getRuolo() != RuoloUtente.VISITATORE) {
+            throw new Exception("L'utente non è un visitatore.");
+        }
+        return repository.findByVisitatore(visitatore.getId(), Pageable.unpaged()).toList();
     }
 }

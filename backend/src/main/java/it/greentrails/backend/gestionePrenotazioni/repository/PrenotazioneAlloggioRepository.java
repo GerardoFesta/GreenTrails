@@ -10,4 +10,7 @@ public interface PrenotazioneAlloggioRepository extends JpaRepository<Prenotazio
 
     @Query("SELECT p FROM PrenotazioneAlloggio p JOIN p.camera.alloggio a WHERE a.id = ?1")
     Page<PrenotazioneAlloggio> findByAlloggio(Long idAlloggio, Pageable pageable);
+    
+    @Query("SELECT p FROM PrenotazioneAlloggio p WHERE p.itinerario.visitatore.id = ?1")
+    Page<PrenotazioneAlloggio> findByVisitatore(Long idVisitatore, Pageable pageable);
 }

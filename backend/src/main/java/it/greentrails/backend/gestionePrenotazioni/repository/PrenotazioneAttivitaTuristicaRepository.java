@@ -10,4 +10,7 @@ public interface PrenotazioneAttivitaTuristicaRepository extends JpaRepository<P
 
     @Query("SELECT p FROM PrenotazioneAttivitaTuristica p JOIN p.attivitaTuristica a WHERE a.id = ?1")
     Page<PrenotazioneAttivitaTuristica> findByAttivitaTuristica(Long idAttivitaTuristica, Pageable pageable);
+
+    @Query("SELECT p FROM PrenotazioneAttivitaTuristica p WHERE p.itinerario.visitatore.id = ?1")
+    Page<PrenotazioneAttivitaTuristica> findByVisitatore(Long idVisitatore, Pageable pageable);
 }
