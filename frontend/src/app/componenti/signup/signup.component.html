@@ -11,8 +11,9 @@
           [formControl]="nome"
           required
         />
-        <mat-error *ngIf="nome.hasError('required')">Inserisci nome</mat-error>
-        <mat-error *ngIf="nome.hasError('maxLength')">Nome troppo lungo</mat-error>
+        <mat-error *ngIf="nome.invalid">
+          {{ getErrorMessageNome() }}
+        </mat-error>
       </mat-form-field>
     </div>
 

@@ -23,11 +23,11 @@ export class SignupComponent implements OnInit {
   
   //GESTIONE ERRORI NOME
   nome = new FormControl('', [Validators.required, Validators.maxLength(10)]);
-  getErrorMessageNome() {
+ getErrorMessageNome() {
     if (this.nome.hasError('required')) {
       return 'Inserisci nome';
     }
-    return this.nome.hasError('maxLength') ? 'Nome troppo lungo' : '';
+    return this.nome.hasError('maxlength') ? 'Nome troppo lungo' : '';
   }
   
   //GESTIONE ERRORI COGNOME
@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
     if (this.cognome.hasError('required')) {
       return 'Inserisci cognome';
     }
-    return this.cognome.hasError('maxLength')? 'Cognome troppo lungo' : '';
+    return this.cognome.hasError('maxlength')? 'Cognome troppo lungo' : '';
   }
 
 
