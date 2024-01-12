@@ -1,3 +1,4 @@
+import { StudentService } from './../../../../services/student.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,13 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
 
-  politicheEcosostenibili: string[];
+  politicheEcosostenibili: string[] = [];
 
-  constructor() { 
-    this.politicheEcosostenibili = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5']
+  constructor(private studentService: StudentService) { 
+    // this.loadNamesAndEmails();
   }
 
   ngOnInit(): void {
+    this.loadNames();
+  }
+
+  // loadNamesAndEmails() {
+  //   this.studentService.getNamesAndEmails().subscribe((data) => {
+  //     this.politicheEcosostenibili = data;
+  //   }, (error) => {
+  //     console.error(error);
+  //   });
+  // }
+
+  loadNames() {
+    this.studentService.getName().subscribe((nome) => {
+      this.politicheEcosostenibili = nome;
+    }, (error) => {
+       console.error(error);
+    })
   }
 
 }
