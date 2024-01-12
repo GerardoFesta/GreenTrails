@@ -76,16 +76,17 @@
 
     <div class="container">
       <mat-form-field>
-        <mat-label>Utente o Gestore</mat-label>
+        <mat-label>Seleziona ruolo</mat-label>
         <mat-select [formControl]="selected" [errorStateMatcher]="matcher">
-          <mat-option value="valid">Utente</mat-option>
-          <mat-option value="valid">Gestore Attività</mat-option>
+          <mat-option value="utente">Utente</mat-option>
+          <mat-option value="gestoreAttivita">Gestore Attività</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </form>
     <button
       mat-raised-button
+      (click)="onSubmit()"
       [disabled]="nome.invalid || cognome.invalid || email.invalid || password.invalid"
       color="primary"
       type="submit"

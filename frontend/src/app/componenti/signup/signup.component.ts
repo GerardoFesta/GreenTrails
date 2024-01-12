@@ -66,9 +66,9 @@ export class SignupComponent implements OnInit {
       }
     }
       //SELECT
-  selected = new FormControl('valid', [Validators.required, Validators.pattern('valid')]);
-  selectFormControl = new FormControl('valid', [Validators.required, Validators.pattern('valid')]);
-  nativeSelectFormControl = new FormControl('valid', [Validators.required, Validators.pattern('valid'), ]);
+  selected = new FormControl('', [Validators.required]);
+  selectFormControl = new FormControl('', [Validators.required]);
+  nativeSelectFormControl = new FormControl('', [Validators.required ]);
   matcher = new MyErrorStateMatcher();
 
       //SELECT
@@ -88,10 +88,20 @@ export class SignupComponent implements OnInit {
     } 
     signupform = false;
     onSubmit(){
+      console.log('Entrato nella onSubmit');
 
-      if (this.nome.valid && this.cognome.valid && this.email.invalid && this.password.valid) {
+      const formData = {
+        nome: this.nome.value,
+        cognome: this.cognome.value,
+        email: this.email.value,
+        password: this.password.value,
+        selected : this.selected.value
+      };
+
+      if (this.nome.valid && this.cognome.valid && this.email.valid && this.password.valid) {
         this.signupform = true;
         console.log('Submit button pressed!');
+        console.log(formData)
       } 
     
     }
