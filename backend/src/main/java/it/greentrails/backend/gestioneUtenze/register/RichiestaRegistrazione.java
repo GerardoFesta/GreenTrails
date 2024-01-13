@@ -1,5 +1,8 @@
 package it.greentrails.backend.gestioneUtenze.register;
 
+import java.util.Date;
+
+import it.greentrails.backend.enums.RuoloUtente;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,5 +18,7 @@ public class RichiestaRegistrazione {
     private final String cognome;
     private final String email;
     private final String password;
+    private final Date dataNascita;
+    private final  RuoloUtente ruoloUtente;
 }
 
