@@ -1,3 +1,4 @@
+import { RegistrazioneService } from './../../services/registrazione.service';
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -81,7 +82,7 @@ export class RegistrazioneComponent implements OnInit {
   throw new Error('Method not implemented.');
   }
 
-    constructor() {}
+    constructor(private RegistrazioneService : RegistrazioneService ) {}
   
     ngOnInit(): void {
       
@@ -99,13 +100,16 @@ export class RegistrazioneComponent implements OnInit {
       };
 
       if (this.nome.valid && this.cognome.valid && this.email.valid && this.password.valid) {
-        this.registrazioneform = true;
-        console.log('Submit button pressed!');
-        console.log(formData)
-      } 
-    
+        this.RegistrazioneService.registerUser(formData).subscribe(
+          response => {
+            console.log('Registrazione completata con successo!', response);
+          },
+          error => {
+            console.error('Errore durante la registrazione:', error);
+          }
+        );
     }
 }
   
   
-  
+}
