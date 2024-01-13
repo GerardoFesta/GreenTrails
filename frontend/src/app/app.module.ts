@@ -11,11 +11,10 @@ import { InfoAttivitaComponent } from './componenti/pagina-attivita/info-attivit
 import { CardAttivitaComponent } from './componenti/pagina-attivita/info-attivita/card-attivita/card-attivita.component';
 import { RecensioniComponent } from './componenti/pagina-attivita/recensioni/recensioni.component';
 import { DescrizioneAttivitaComponent } from './componenti/pagina-attivita/descrizione-attivita/descrizione-attivita.component';
-import { MappaAttivitaComponent } from './componenti/pagina-attivita/info-attivita/mappa-attivita/mappa-attivita.component';
 import { ValutazioneAttivitaComponent } from './componenti/pagina-attivita/info-attivita/valutazione-attivita/valutazione-attivita.component';
 import { PoliticheEcosostenibiliAttivitaComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/politiche-ecosostenibili-attivita.component';
 import { SlideshowComponent } from './componenti/pagina-attivita/descrizione-attivita/slideshow/slideshow.component';
-
+import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map.component';
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -69,10 +68,10 @@ import { HttpClientModule } from '@angular/common/http';
     CardAttivitaComponent,
     RecensioniComponent,
     DescrizioneAttivitaComponent,
-    MappaAttivitaComponent,
     ValutazioneAttivitaComponent,
     PoliticheEcosostenibiliAttivitaComponent,
     SlideshowComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,

@@ -53,3 +53,5 @@ local.properties
 .scala_dependencies
 .worksheet
 backend/src/main/resources/application-dev.yaml
+frontend/src/app/servizi/attivita-service.service.ts
+frontend/src/app/servizi/attivita-service.service.spec.ts
