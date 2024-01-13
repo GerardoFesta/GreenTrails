@@ -1,0 +1,56 @@
+/* Container lista-recensioni */
+mat-list {
+    background-color: red;
+}
+
+/* Container recensione */
+.recensione-container {
+    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    border: 5px solid black;
+}
+
+/* Container button per visualizzare galleria immagini recensione e immagine del profilo utente */
+.img-propic-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: yellow;
+    width: 50%;
+    height: 100%;
+}
+
+/* Container pulsante immagini */
+.immagini-container {
+    margin-right: 10px;
+    background-color: orange;
+}
+
+/* Container propic e nome utente */
+.propic-nome-container {
+}
+
+/* Container propic */
+div.propic-container {
+
+}
+
+/* Container nome utente */
+div.nome-container {
+
+}
+
+/* Container stelle valutazione utente */
+.stelle-utente-container {
+
+}
+
+/* Container valutazione discorsiva utente */
+.valutazione-discorsiva-container {
+
+}

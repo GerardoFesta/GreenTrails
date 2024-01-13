@@ -1,0 +1,13 @@
+<!-- <div class="rating-container">
+    <span *ngFor="let star of ratings">
+        <input type="radio" [id]="'star' + star" [value]="star" [checked]="star <= rating" (click)="setRating(star)" readonly="false" />
+        <label [for]="'star' + star" style="font-size: xx-large; color: greenyellow">&#9733;</label>
+    </span>
+</div> -->
+<!-- Container valutazione attivita -->
+<div class="rating">
+    <!-- Stelle valutazione attivita -->
+    <span *ngFor="let star of ratings" [ngClass]="{ 'selected': star <= preselectedRating }">
+        &#9733;
+    </span>
+</div>
