@@ -1,7 +1,9 @@
 package it.greentrails.backend.gestioneUtenze.controller;
 
 import it.greentrails.backend.entities.Utente;
+import it.greentrails.backend.enums.RuoloUtente;
 import it.greentrails.backend.gestioneUtenze.register.EmailValidator;
+import it.greentrails.backend.gestioneUtenze.register.RichiestaRegistrazione;
 import it.greentrails.backend.gestioneUtenze.register.ValidationToken;
 import it.greentrails.backend.gestioneUtenze.register.ValidationTokenService;
 import it.greentrails.backend.gestioneUtenze.service.UtenteService;
@@ -22,20 +24,9 @@ public class RegistrazioneService {
     }
 
 //controllo se la mail è valida
-    public Utente register(Utente utente) {
-        boolean isValidEmail = emailValidator.
-                test(utente.getEmail());
-
-        if (!isValidEmail) {
-            throw new IllegalStateException("email not valid");
-        }
-
-        return utenteService.saveUtente(new Utente()
-        );
-    }
 
 
-  @Transactional
+    @Transactional
     public String confirmToken(String token) {
         ValidationToken validationtoken = validationTokenService
                 .getToken(token)
@@ -52,8 +43,22 @@ public class RegistrazioneService {
             throw new IllegalStateException("token expired");
         }
 
-      validationTokenService.setConfirmedAt(token);
+        validationTokenService.setConfirmedAt(token);
 //serve la query della repository
         return "confirmed";
+    }
+
+    public String register(RichiestaRegistrazione request) {
+        boolean isValidEmail = emailValidator.
+                test(request.getEmail());
+
+        if (!isValidEmail) {
+            throw new IllegalStateException("email not valid");
+        }
+
+        String token = utenteService.signUpUser(
+                new Utente()
+        );
+        return token;
     }
 }

@@ -1,6 +1,7 @@
 package it.greentrails.backend.gestioneUtenze.controller;
 
 import it.greentrails.backend.entities.Utente;
+import it.greentrails.backend.gestioneUtenze.register.RichiestaRegistrazione;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,8 @@ public class UtenteController {
     }
 
     @PostMapping
-    public Utente signUpString(@RequestBody Utente utente) {
-        return registrazioneService.register(utente);
+    public String register(@RequestBody RichiestaRegistrazione request) {
+        return registrazioneService.register(request);
     }
 
     @GetMapping(path = "/")
