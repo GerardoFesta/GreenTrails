@@ -3,15 +3,16 @@
   <form name="signupform" #signupform="ngForm" (submit)="onSubmit()">
 
     <div class="container">
-        <mat-form-field>
-          <mat-label>Data Di nascita</mat-label>
-          <input
-            matInput
-            type="date"
-            required
-          />
+        <mat-form-field class="data-allineamento">
+          <mat-label>Data Di Nascita</mat-label>
+          <input matInput [matDatepicker]="picker" required>
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
+      
 
     <div class="container">
       <mat-form-field>
@@ -63,7 +64,7 @@
 
     <div class="container">
       <mat-form-field>
-        <mat-label>Enter your password</mat-label>
+        <mat-label>Password</mat-label>
         <input
           matInput
           placeholder="********"
