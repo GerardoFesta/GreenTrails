@@ -93,7 +93,7 @@ public class PrenotazioneAttivitaTuristicaService {
     }
     return repository.findByVisitatore(visitatore.getId(), Pageable.unpaged()).toList();
   }
-  
+
   public List<PrenotazioneAttivitaTuristica> getPrenotazioniByItinerario(Itinerario itinerario)
       throws Exception {
     if (itinerario == null) {

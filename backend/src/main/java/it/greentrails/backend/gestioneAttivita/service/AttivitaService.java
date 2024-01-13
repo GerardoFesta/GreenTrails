@@ -32,11 +32,11 @@ public class AttivitaService {
     return attivita.get();
   }
 
-  public List<Attivita> findAllAttivitaByGestore(Long id) throws Exception {
-    if (id == null || id < 0) {
+  public List<Attivita> findAllAttivitaByGestore(Long idGestore) throws Exception {
+    if (idGestore == null || idGestore < 0) {
       throw new Exception("L'id non è valido.");
     }
-    return repository.findByGestore(id, Pageable.unpaged()).toList();
+    return repository.findByGestore(idGestore, Pageable.unpaged()).toList();
   }
 
   public boolean deleteAttivita(Attivita attivita) throws Exception {
