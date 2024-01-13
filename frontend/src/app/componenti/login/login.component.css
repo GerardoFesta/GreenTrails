@@ -1,0 +1,29 @@
+.orientamento{
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh; 
+    margin: 0; 
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+  }
+
+  .error-message {
+    color: red; /* Colore del testo per il messaggio di errore */
+    font-size: 0.9em; /* Dimensione del carattere per il messaggio di errore */
+    margin-top: 1px; /* Spazio superiore dal campo di input */
+  }
+
+  .container{
+    margin: 15px;
+  .center-button {
+    margin-top: 20px; /* Add some top margin to the button for spacing */
+  }
+
+  }
