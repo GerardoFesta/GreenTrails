@@ -10,7 +10,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 5px solid black;
+    border:5px solid lightgreen;
     border-radius: 20px;
+    box-shadow: 7px 7px 5px #dedede;
     padding: 15px;
 }
