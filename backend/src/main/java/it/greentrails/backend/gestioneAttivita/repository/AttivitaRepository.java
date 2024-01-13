@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface AttivitaRepository extends JpaRepository<Attivita, Long> {
 
-    @Query("SELECT a FROM Attivita a WHERE a.gestore.id = ?1")
-    Page<Attivita> findByGestore(Long idGestore, Pageable pageable);
+  @Query("SELECT a FROM Attivita a WHERE a.gestore.id = ?1")
+  Page<Attivita> findByGestore(Long idGestore, Pageable pageable);
 }

@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface ItinerariRepository extends JpaRepository<Itinerario, Long> {
-    
-    @Query("SELECT i FROM Itinerario i WHERE i.visitatore.id = ?1")
-    Page<Itinerario> findByVisitatore(Long idVisitatore, Pageable pageable);
+
+  @Query("SELECT i FROM Itinerario i WHERE i.visitatore.id = ?1")
+  Page<Itinerario> findByVisitatore(Long idVisitatore, Pageable pageable);
 
 }

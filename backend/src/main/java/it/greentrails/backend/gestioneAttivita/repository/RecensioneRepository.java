@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface RecensioneRepository extends JpaRepository<Recensione, Long> {
 
-    @Query("SELECT r FROM Recensione r WHERE r.attivita.id = ?1")
-    Page<Recensione> findByAttivita(Long idAttivita, Pageable pageable);
+  @Query("SELECT r FROM Recensione r WHERE r.attivita.id = ?1")
+  Page<Recensione> findByAttivita(Long idAttivita, Pageable pageable);
 }

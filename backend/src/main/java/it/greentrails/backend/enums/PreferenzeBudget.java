@@ -1,8 +1,8 @@
 package it.greentrails.backend.enums;
 
 public enum PreferenzeBudget {
-    BASSO,
-    MEDIO,
-    ALTO,
-    FLESSIBILE
+  BASSO,
+  MEDIO,
+  ALTO,
+  FLESSIBILE
 }
