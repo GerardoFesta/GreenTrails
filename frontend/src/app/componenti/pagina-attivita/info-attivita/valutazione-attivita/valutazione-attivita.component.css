@@ -13,6 +13,7 @@
 .rating span {
   cursor: default;
   margin: 0 5px;
+  margin-top: 25px;
 }
 
 .rating span.selected {

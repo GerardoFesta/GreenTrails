@@ -6,18 +6,21 @@
         <mat-card-content>
             <!-- Container titolo -->
             <mat-card-title style="width: 100%;">
-                    Politiche ecosostenibili
+                Politiche ecosostenibili
             </mat-card-title>
-            <!-- Container lista valori-ecosostenibilita -->
             <div class="lista-eco-container">
-                <!-- Lista valori-ecosostenibilita (devono essere generati dinamicamente)-->
-                <mat-list role="list">
-                    <!-- Elemento della lista -->
-                    <mat-list-item role="listitem" *ngFor="let politica of politicheEcosostenibili;">{{ politica }}</mat-list-item>
-                  </mat-list>
+                <!-- Lista valori-ecosostenibilita -->
+                <div class="lista-eco">
+                    <!-- Lista valori-ecosostenibilita (devono essere generati dinamicamente)-->
+                    <mat-list role="list">
+                        <!-- Elemento della lista -->
+                        <mat-list-item role="listitem" *ngFor="let politica of politicheEcosostenibili;">{{ politica }}</mat-list-item>
+                    </mat-list>
+                </div>
             </div>
         </mat-card-content>
         <!-- Pulsante prenotazione -->
-        <button mat-raised-button color="primary" style="margin-top: 20px; color: white; background-color: lightgreen;">Prenota</button>
+        <button mat-raised-button color="primary"
+            style="margin-top: 20px; color: white; background-color: #32CD32;">Prenota</button>
     </mat-card-header>
 </mat-card>
