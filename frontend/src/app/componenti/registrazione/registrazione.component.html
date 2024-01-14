@@ -1,15 +1,25 @@
 <div class="orientamento">
-  <h1>Registrati</h1>
+  <mat-card >
+    <mat-card-header>
+      
+      <mat-card-title>Registrati</mat-card-title>
+
+    </mat-card-header>
+
+    <mat-card-content>
   <form name="signupform" #signupform="ngForm" (submit)="onSubmit()">
 
     <div class="container">
         <mat-form-field class="data-allineamento">
           <mat-label>Data Di Nascita</mat-label>
-          <input matInput [matDatepicker]="picker" required>
+          <input matInput [matDatepicker]="picker" required [formControl]="dataNascita">
           <mat-datepicker-toggle matSuffix [for]="picker">
             <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
           </mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="nome.invalid">
+            {{ getErrorMessagedata() }}
+          </mat-error>
         </mat-form-field>
       </div>
       
@@ -97,15 +107,19 @@
       </mat-form-field>
     </div>
   </form>
-  <button
+    </mat-card-content>
+  <mat-card-actions>
+    <div class="btn">
+  <button 
     mat-raised-button
     (click)="onSubmit()"
     [disabled]="
+    dataNascita.invalid ||
       nome.invalid ||
       cognome.invalid ||
       email.invalid ||
       password.invalid ||
-      selected.invalid
+      selected.invalid 
     "
     color="primary"
     type="submit"
@@ -114,4 +128,7 @@
   >
     Invia
   </button>
+</div>
+</mat-card-actions>
+</mat-card>
 </div>

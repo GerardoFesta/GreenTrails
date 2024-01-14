@@ -21,6 +21,16 @@ export class RegistrazioneComponent implements OnInit {
 
   hide = true;
 
+    
+  //GESTIONE ERRORI DataNascita
+  dataNascita = new FormControl('', [Validators.required]);
+  getErrorMessagedata() {
+    if (this.dataNascita.hasError('required')) {
+      return 'Inserisci Data';
+    }
+    return 
+  }
+
   
   //GESTIONE ERRORI NOME
   nome = new FormControl('', [Validators.required, Validators.maxLength(10)]);
@@ -92,6 +102,7 @@ export class RegistrazioneComponent implements OnInit {
       console.log('Entrato nella onSubmit');
 
       const formData = {
+        dataNascita :this.dataNascita,
         nome: this.nome.value,
         cognome: this.cognome.value,
         email: this.email.value,
@@ -99,7 +110,7 @@ export class RegistrazioneComponent implements OnInit {
         selected : this.selected.value
       };
 
-      if (this.nome.valid && this.cognome.valid && this.email.valid && this.password.valid) {
+      if (this.dataNascita && this.nome.valid && this.cognome.valid && this.email.valid && this.password.valid) {
         this.RegistrazioneService.registerUser(formData).subscribe(
           response => {
             console.log('Registrazione completata con successo!', response);
