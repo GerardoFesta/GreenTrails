@@ -1,6 +1,6 @@
 package it.greentrails.backend.gestioneUtenze.controller;
 
-import it.greentrails.backend.gestioneUtenze.register.RichiestaRegistrazione;
+import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.gestioneUtenze.service.UtenteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,38 +21,21 @@ public class UtenteController {
         this.utenteService = utenteService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RichiestaRegistrazione request) {
+    @PostMapping
+    public ResponseEntity<String> register(@RequestBody Utente utente) {
         HttpHeaders responseHeaders = new HttpHeaders();
-
         try {
-            String token = utenteService.register(request);
+            String token = utenteService.register(utente);
             return ResponseEntity.ok()
                     .headers(responseHeaders)
                     .body(token);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .headers(responseHeaders)
-                    .body("Registration failed: " + e.getMessage());
+                    .body("Registration failed. Please check the input data.");
         }
     }
-
-    @GetMapping("/confirm-sign-up")
-    public ResponseEntity<String> confirmSignUp(@RequestParam("token") String token) {
-        HttpHeaders responseHeaders = new HttpHeaders();
-
-        try {
-            String confirmationMessage = utenteService.confirmToken(token);
-            return ResponseEntity.ok()
-                    .headers(responseHeaders)
-                    .body(confirmationMessage);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .headers(responseHeaders)
-                    .body("Confirmation failed: " + e.getMessage());
-        }
-    }
-
 
 
 }
