@@ -1,95 +1,135 @@
-<h2 mat-dialog-title>Prenotazione</h2>
-<mat-dialog-content class="mat-typography">
-  <div>
-    <form>
-      <div class="form-group">
-        <mat-form-field class="data-allineamento">
-          <mat-label>Data Arrivo</mat-label>
-          <input matInput [matDatepicker]="picker1">
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+<h1 mat-dialog-title>Prenotazione</h1>
+
+<mat-dialog-content>
+  <div >
+    <form name="prenotazioni" #prenotazioni="ngForm">
+      <mat-grid-list cols="2" rowHeight="4:1">
+        <mat-grid-tile>
+          <mat-label class="mat-label">Arrivo:</mat-label>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <input
+            class="input"
+            matInput
+            [matDatepicker]="picker1"
+            required
+            [formControl]="arrivo"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
-        </mat-form-field>
-      </div>
 
+        </mat-grid-tile>
 
+        <mat-grid-tile>
+          <mat-label class="mat-label">Partenza:</mat-label>
+        </mat-grid-tile>
 
-      <div class="form-group">
-        <mat-form-field class="data-allineamento">
-          <mat-label>Data Partenza</mat-label>
-            <input matInput [matDatepicker]="picker2">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2 color="primary"></mat-datepicker>
-        </mat-form-field>
-      </div>
-      <div class="form-group">
-        <mat-icon>person</mat-icon>
-        <label>Adulti:</label>
-
-        <div class="colonna">
-          <input 
-          class="input"
-          type="number"
-          name="numAdulti"
-           [defaultValue]="1"
-            min="1"/>
-          </div>
-      </div>
-
-
-      <div class="form-group">
-        <mat-icon>child_care</mat-icon>
-        <label for="dataArrivo">Bambini:</label>
-        <div class="colonna">
+        <mat-grid-tile>
           <input
-          class="input"
-           type="number" 
-           name="numAdulti" 
-           [defaultValue]="0"
-            min="0"/>
-        </div>
-      </div>
+            class="input"
+            matInput
+            [matDatepicker]="picker2"
+            required
+            [formControl]="partenza"
+          />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker2"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker2 color="primary"></mat-datepicker>
+        </mat-grid-tile>
 
-      <div class="form-group">
-        <mat-icon>tag</mat-icon>
-        <label for="dataArrivo">Camere:</label>
-        <div class="colonna">
+        <mat-grid-tile>
+          <mat-icon>person</mat-icon>
+          <label class="mat-label">Adulti:</label>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
           <input
-          class="input"
-          type="number"
-          name="numCamere"
-          [defaultValue]="1"
-          min="0"
-        />
-        </div>
-      </div>
+            required
+            class="input"
+            type="number"
+            name="numAdulti"
+            [value]="1"
+            min="1"
+            [formControl]="numAdulti"
+          />
+        </mat-grid-tile>
 
+        <mat-grid-tile>
+          <mat-icon>child_care</mat-icon>
+          <label class="mat-label">Bambini:</label>
+        </mat-grid-tile>
 
-      <div class="input-container">
-        <label for="tipoCamera">
+        <mat-grid-tile>
+          <input
+            required
+            class="input"
+            type="number"
+            name="numBambini"
+            [value]="0"
+            min="0"
+            [formControl]="numBambini"
+          />
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-icon>tag</mat-icon>
+          <label class="mat-label">Camere:</label>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <input
+            class="input"
+            type="number"
+            name="numCamere"
+            [value]="1"
+            min="1"
+            [formControl]="numCamere"
+            required
+          />
+        </mat-grid-tile>
+
+        <mat-grid-tile>
           <mat-icon>bed</mat-icon>
-          Tipo di camera:
-        </label>
-        <mat-form-field>
-          <div class="colonna">
-          <mat-select>
+          <label class="mat-label"> Tipologia: </label>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field>
+
+            <mat-select class="  testo" [formControl]="tipo" [errorStateMatcher]="matcher">
               <mat-option value="singola">Singola</mat-option>
               <mat-option value="matrimoniale">Matrimoniale</mat-option>
+            </mat-select>
 
-          </mat-select>
-          </div>
-
-
-          
-        </mat-form-field>
-      </div>
-      
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
     </form>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancella</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Verifica Disponibilità</button>
+  <button
+    mat-button
+    type="submit"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    (click)="onSubmit()"
+    [disabled]="
+      numAdulti.invalid ||
+      numBambini.invalid ||
+      numCamere.invalid ||
+      arrivo.invalid ||
+      partenza.invalid ||
+      tipo.invalid
+    "
+  >
+    Verifica Disponibilità
+  </button>
 </mat-dialog-actions>
-

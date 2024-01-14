@@ -17,7 +17,7 @@ export class AppComponent {
   }
   openDialog(){
 
-    this.dialog.open(PrenotazioniComponent,{width:'50%'});
+    this.dialog.open(PrenotazioniComponent,{width:'60%'});
 
 
   }

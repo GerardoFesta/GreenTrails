@@ -1,30 +1,30 @@
-.form-group {
-  display: flex;
-  align-items: center;
-}
 
-/* Stile specifico per il label */
-.form-group label {
-  margin-right: 10px; /* Aggiungi spazio tra il label e l'input */
-}
+.input{
+  max-width: 50%;
+  max-height: 100%;
+  font-size:medium;
+  text-align: center ;
 
-/* Stile specifico per il contenitore della colonna */
-.colonna {
-  display: flex;
-  flex-direction: column;
-  flex: 1; /* Lascia che la colonna occupi tutto lo spazio rimanente */
 }
-
-/* Stile specifico per l'input */
-.colonna input {
-  width: 100%; /* Fai in modo che l'input occupi tutto lo spazio disponibile */
-  padding: 8px; /* Aggiungi padding per migliorare l'aspetto */
-  box-sizing: border-box; /* Include il padding e il bordo nella larghezza totale */
-  margin: 5px 0; /* Aggiungi margine sopra e sotto l'input */
+.color1{
+  background-color: aqua;
 }
 
 
+.mat-label{
+  font-size:large;
+}
 
-.data-allineamento {
-  margin-right: 20px;
+.selezione{
+
+  max-width:50%;
+  max-height: 100%;
+  font-size: medium;
+  background-color:blue ;
+}
+
+.testo{
+  text-align: center;
+
+
 }
