@@ -1,0 +1,101 @@
+<mat-card class="contenitore">
+  <h1 mat-dialog-title>Prenotazione Attività</h1>
+
+  <mat-dialog-content>
+    <div>
+      <form name="prenotazioni" #prenotazioni="ngForm">
+        <mat-grid-list cols="2" rowHeight="4:1">
+          <mat-grid-tile>
+            <mat-label class="mat-label">Arrivo:</mat-label>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <input
+              class="input"
+              matInput
+              [matDatepicker]="picker1"
+              required
+              [formControl]="arrivo"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker1"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-label class="mat-label">Partenza:</mat-label>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <input
+              class="input"
+              matInput
+              [matDatepicker]="picker2"
+              required
+              [formControl]="partenza"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker2"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-icon>person</mat-icon>
+            <label class="mat-label">Adulti:</label>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <input
+              required
+              class="input"
+              type="number"
+              name="numAdulti"
+              [value]="1"
+              min="1"
+              [formControl]="numAdulti"
+            />
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <mat-icon>child_care</mat-icon>
+            <label class="mat-label">Bambini:</label>
+          </mat-grid-tile>
+
+          <mat-grid-tile>
+            <input
+              required
+              class="input"
+              type="number"
+              name="numBambini"
+              [value]="0"
+              min="0"
+              [formControl]="numBambini"
+            />
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancella</button>
+    <button
+      mat-button
+      type="submit"
+      [mat-dialog-close]="true"
+      cdkFocusInitial
+      (click)="onSubmit()"
+      [disabled]="
+        numAdulti.invalid ||
+        numBambini.invalid ||
+        arrivo.invalid ||
+        partenza.invalid
+      "
+    >
+      Verifica Disponibilità
+    </button>
+  </mat-dialog-actions>
+ 

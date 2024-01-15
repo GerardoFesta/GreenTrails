@@ -1,0 +1,39 @@
+
+.input{
+    max-width: 50%;
+    max-height: 100%;
+    font-size:medium;
+    text-align: center ;
+    background-color: chartreuse;
+  
+  }
+
+  
+  
+  .mat-label{
+    font-size:large;
+  }
+  
+  .selezione{
+  
+    max-width:50%;
+    max-height: 100%;
+    font-size: medium;
+    background-color:blue ;
+  }
+  
+  .testo{
+    text-align: center;
+  
+  
+  }
+  .contenitore{
+    background-color: blueviolet;
+    width: 60%;
+margin-right: 20%;
+margin-left: 20%;
+
+
+
+
+  }
