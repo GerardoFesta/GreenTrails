@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 @Component({
   selector: 'app-info-attivita',
