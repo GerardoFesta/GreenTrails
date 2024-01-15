@@ -6,11 +6,14 @@ import it.greentrails.backend.gestioneUtenze.repository.PreferenzeRepository;
 import it.greentrails.backend.gestioneUtenze.repository.UtenteRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GestioneUtenzeService {
+public class GestioneUtenzeService implements UserDetailsService {
 
   private final UtenteRepository repository;
   private final PreferenzeRepository preferenzeRepository;
@@ -57,4 +60,12 @@ public class GestioneUtenzeService {
     return preferenze.get();
   }
 
+  @Override
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    Optional<Utente> utente = findByEmail(username);
+    if (utente.isEmpty()) {
+      throw new UsernameNotFoundException(username);
+    }
+    return utente.get();
+  }
 }
