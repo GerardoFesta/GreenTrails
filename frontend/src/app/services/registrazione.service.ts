@@ -6,12 +6,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RegistrazioneService {
-  private baseUrl = 'http://localhost:8080/api/v1/greentrails';
+ 
 
   constructor(private http: HttpClient) {}
 
-  registerUser(userData: any): Observable<any> {
-    return this.http.post(this.baseUrl, userData);
+  registerUser(baseUrl: string, userData:{}): Observable<any> {
+    return this.http.post(baseUrl, userData);
   }
 
 }
