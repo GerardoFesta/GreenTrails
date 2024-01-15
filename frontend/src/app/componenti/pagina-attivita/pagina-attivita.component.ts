@@ -21,15 +21,12 @@ export class PaginaAttivitaComponent implements OnInit {
   visualizzaDettagliAttivita(id: number): void {
     this.attivitaService.visualizzaAttivita(id).subscribe(
       (attivita: Attivita) => {
-        // Implementa la logica per visualizzare i dettagli dell'attività
         console.log('Dettagli dell\'attività:', attivita);
-  
-        // Esempio: Puoi assegnare l'attività a una variabile nel componente per utilizzarla nei template
-        // this.dettagliAttivita = attivita;
+        this.attivita = attivita;
+        this.attivitaService.inviaAttivita(attivita);
       },
       (errore) => {
         console.error('Errore durante il recupero dei dettagli dell\'attività:', errore);
-        // Gestisci l'errore, ad esempio mostrando un messaggio all'utente
       }
     );
   }
