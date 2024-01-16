@@ -2,13 +2,13 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
   datasource:
     url: jdbc:mysql://localhost:3306/greentrails
-    username: ${DB_USER}
-    password: ${DB_PASS}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
+    username: orfie
+    password: Zutuxe98!
 server:
   error:
     include-message: always

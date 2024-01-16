@@ -3,21 +3,25 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh; 
-    margin: 0; 
+    width:100%;
+    height: 100%; 
+    margin: 1; 
   }
 
   form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-
+    border-top:2px solid gray;
+    border-bottom: 2px solid gray;
+    padding-top: 10px;
+    padding-bottom: 10px; 
   }
 
   .error-message {
-    color: red; /* Colore del testo per il messaggio di errore */
-    font-size: 0.9em; /* Dimensione del carattere per il messaggio di errore */
-    margin-top: 1px; /* Spazio superiore dal campo di input */
+    color: red; 
+    font-size: 0.9em; 
+    margin-top: 1px; 
   }
 
   .container{
@@ -25,5 +29,15 @@
   .center-button {
     margin-top: 20px; /* Add some top margin to the button for spacing */
   }
+.campo{
+  display:flex;
+}
+mat-label{
+  margin-right:10px;
+}
+.form-bottom{
+  display:flex;
+  background-color:black;
+}
 
-  }
+}
