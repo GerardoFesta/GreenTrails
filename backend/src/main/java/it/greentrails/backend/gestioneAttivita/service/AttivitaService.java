@@ -1,6 +1,7 @@
 package it.greentrails.backend.gestioneAttivita.service;
 
 import it.greentrails.backend.entities.Attivita;
+import it.greentrails.backend.entities.ValoriEcosostenibilita;
 import it.greentrails.backend.gestioneAttivita.repository.AttivitaRepository;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +38,14 @@ public class AttivitaService {
       throw new Exception("L'id non è valido.");
     }
     return repository.findByGestore(idGestore, Pageable.unpaged()).toList();
+  }
+
+  public Optional<Attivita> findByValori(ValoriEcosostenibilita valoriEcosostenibilita)
+      throws Exception {
+    if (valoriEcosostenibilita == null) {
+      throw new Exception("I valori sono vuoti.");
+    }
+    return repository.findByValori(valoriEcosostenibilita.getId());
   }
 
   public boolean deleteAttivita(Attivita attivita) throws Exception {
