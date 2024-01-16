@@ -15,7 +15,7 @@ export class PaginaAttivitaComponent implements OnInit {
   constructor(private attivitaService: AttivitaService) { }
 
   ngOnInit(): void {
-    this.visualizzaDettagliAttivita(1);
+    this.visualizzaDettagliAttivita(10);
   }
 
   visualizzaDettagliAttivita(id: number): void {

@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Attivita } from '../classi/attivita';
 
@@ -57,7 +57,7 @@ export class AttivitaService {
       formData.append('categoriaAttivitaTuristica', categoriaAttivitaTuristica!.toString());
     }
 
-    return this.http.post<Attivita>(`${this.baseUrl}/attivita`, formData);
+    return this.http.post<Attivita>(`${this.baseUrl}`, formData);
   }
 
   visualizzaAttivita(id: number): Observable<Attivita> {
