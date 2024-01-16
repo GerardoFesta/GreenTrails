@@ -14,12 +14,12 @@ export class DescrizioneAttivitaComponent implements OnInit {
   constructor(private attivitaService: AttivitaService) { }
 
   ngOnInit(): void {
-    this.attivitaService.ottieniAttivitaCondivisa().subscribe(
-      (attivita: Attivita | null) => {
-        this.attivita = attivita!;
-        console.log(attivita);
-      }
-    )
+    // this.attivitaService.ottieniAttivitaCondivisa().subscribe(
+    //   (attivita: Attivita | null) => {
+    //     this.attivita = attivita!;
+    //     console.log(attivita);
+    //   }
+    // )
   }
 
 }

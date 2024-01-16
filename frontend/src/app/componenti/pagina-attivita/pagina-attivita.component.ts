@@ -10,26 +10,33 @@ import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 export class PaginaAttivitaComponent implements OnInit {
 
-  attivita?: Attivita;
+  // attivita?: Attivita;
+  attivita?: Attivita[];
 
   constructor(private attivitaService: AttivitaService) { }
 
   ngOnInit(): void {
-    this.visualizzaDettagliAttivita(10);
+    // this.visualizzaDettagliAttivita(10);
+    this.attivitaService.getListaAttivita().subscribe((data: Attivita[]) => {
+      this.attivita = data;
+      console.log(this.attivita);
+    })
   }
 
-  visualizzaDettagliAttivita(id: number): void {
-    this.attivitaService.visualizzaAttivita(id).subscribe(
-      (attivita: Attivita) => {
-        console.log('Dettagli dell\'attività:', attivita);
-        this.attivita = attivita;
-        this.attivitaService.inviaAttivita(attivita);
-      },
-      (errore) => {
-        console.error('Errore durante il recupero dei dettagli dell\'attività:', errore);
-      }
-    );
-  }
+  // visualizzaDettagliAttivita(id: number): void {
+  //   this.attivitaService.visualizzaAttivita(id).subscribe(
+  //     (attivita: Attivita) => {
+  //       console.log('Dettagli dell\'attività:', attivita);
+  //       this.attivita = attivita;
+  //       this.attivitaService.inviaAttivita(attivita);
+  //     },
+  //     (errore) => {
+  //       console.error('Errore durante il recupero dei dettagli dell\'attività:', errore);
+  //     }
+  //   );
+  // }
+  
+
   
 
 }
