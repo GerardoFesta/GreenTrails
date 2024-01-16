@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UtenteRepository extends JpaRepository<Utente, Long> {
 
-  @Query("SELECT u FROM Utente u WHERE u.email = ?1 LIMIT 1")
+  @Query("SELECT u FROM Utente u WHERE u.email = ?1")
   Optional<Utente> findOneByEmail(String email);
 }
