@@ -53,12 +53,13 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { PrenotazioniComponent } from './componenti/prenotazioni/prenotazioni.component';
-
+import { PrenotAttivitaComponent } from './componenti/prenot-attivita/prenot-attivita.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PrenotazioniComponent,
+    PrenotAttivitaComponent
 
   ],
   imports: [

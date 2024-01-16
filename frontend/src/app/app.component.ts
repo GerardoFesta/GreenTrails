@@ -1,6 +1,8 @@
+import { PrenotazioniService } from './servizi/prenotazioni.service';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PrenotazioniComponent } from './componenti/prenotazioni/prenotazioni.component';
+
 
 @Component({
   selector: 'app-root',
@@ -10,16 +12,19 @@ import { PrenotazioniComponent } from './componenti/prenotazioni/prenotazioni.co
 export class AppComponent {
   title = 'frontend';
 
+
   
-  constructor(public dialog: MatDialog){
+  constructor(public dialog: MatDialog, private PrenotazioniService: PrenotazioniService){
 
   
   }
-  openDialog(){
 
-    this.dialog.open(PrenotazioniComponent,{width:'60%'});
-
-
+  openDialog() {
+    this.PrenotazioniService.apriDialog();
   }
-  
+
+  // Add a method to set the category
+  setCategory(categoria: string) {
+    this.PrenotazioniService.categoria = categoria;
+  }
 }

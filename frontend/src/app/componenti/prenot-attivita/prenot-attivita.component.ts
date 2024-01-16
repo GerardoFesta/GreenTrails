@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-prenot-attivita',
@@ -8,10 +8,10 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class PrenotAttivitaComponent implements OnInit {
 
-  arrivo = new FormControl('',[Validators.required]);
-  partenza= new FormControl('',[Validators.required]);
-  numAdulti= new FormControl('',);
-  numBambini= new FormControl('',);
+  arrivo1 = new FormControl('',[Validators.required]);
+  partenza1= new FormControl('',[Validators.required]);
+  numAdulti1= new FormControl('',);
+  numBambini1= new FormControl('',);
 
 
   constructor() { }
@@ -22,10 +22,10 @@ export class PrenotAttivitaComponent implements OnInit {
     console.log('Entrato nella onSubmit');
 
     const formData = {
-      arrivo :this.arrivo.value,
-      partenza: this.partenza.value,
-      numAdulti: this.numAdulti.value,
-      numBambini: this.numBambini.value,      
+      arrivo1 :this.arrivo1.value,
+      partenza1: this.partenza1.value,
+      numAdulti1: this.numAdulti1.value,
+      numBambini1: this.numBambini1.value,      
     };
     console.log(formData)
 

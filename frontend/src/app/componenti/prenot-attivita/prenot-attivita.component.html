@@ -1,9 +1,9 @@
-<mat-card class="contenitore">
+
   <h1 mat-dialog-title>Prenotazione Attività</h1>
 
   <mat-dialog-content>
     <div>
-      <form name="prenotazioni" #prenotazioni="ngForm">
+      <form name="prenotattivita" #prenotattivita="ngForm">
         <mat-grid-list cols="2" rowHeight="4:1">
           <mat-grid-tile>
             <mat-label class="mat-label">Arrivo:</mat-label>
@@ -13,15 +13,15 @@
             <input
               class="input"
               matInput
-              [matDatepicker]="picker1"
+              [matDatepicker]="picker3"
               required
-              [formControl]="arrivo"
+              [formControl]="arrivo1"
             />
             <mat-datepicker-toggle
               matIconSuffix
-              [for]="picker1"
+              [for]="picker3"
             ></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
+            <mat-datepicker #picker3></mat-datepicker>
           </mat-grid-tile>
 
           <mat-grid-tile>
@@ -34,7 +34,7 @@
               matInput
               [matDatepicker]="picker2"
               required
-              [formControl]="partenza"
+              [formControl]="partenza1"
             />
             <mat-datepicker-toggle
               matIconSuffix
@@ -53,10 +53,10 @@
               required
               class="input"
               type="number"
-              name="numAdulti"
+              name="numAdulti1"
               [value]="1"
               min="1"
-              [formControl]="numAdulti"
+              [formControl]="numAdulti1"
             />
           </mat-grid-tile>
 
@@ -73,7 +73,7 @@
               name="numBambini"
               [value]="0"
               min="0"
-              [formControl]="numBambini"
+              [formControl]="numBambini1"
             />
           </mat-grid-tile>
         </mat-grid-list>
@@ -89,10 +89,10 @@
       cdkFocusInitial
       (click)="onSubmit()"
       [disabled]="
-        numAdulti.invalid ||
-        numBambini.invalid ||
-        arrivo.invalid ||
-        partenza.invalid
+        numAdulti1.invalid ||
+        numBambini1.invalid ||
+        arrivo1.invalid ||
+        partenza1.invalid
       "
     >
       Verifica Disponibilità

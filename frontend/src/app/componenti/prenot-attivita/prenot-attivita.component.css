@@ -4,7 +4,7 @@
     max-height: 100%;
     font-size:medium;
     text-align: center ;
-    background-color: chartreuse;
+
   
   }
 
@@ -19,7 +19,7 @@
     max-width:50%;
     max-height: 100%;
     font-size: medium;
-    background-color:blue ;
+
   }
   
   .testo{
@@ -28,7 +28,7 @@
   
   }
   .contenitore{
-    background-color: blueviolet;
+
     width: 60%;
 margin-right: 20%;
 margin-left: 20%;
