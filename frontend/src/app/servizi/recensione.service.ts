@@ -9,11 +9,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RecensioneService {
 
-  private baseUrl = 'http://localhost:3000/recensioni';
+  // private baseUrl = 'http://localhost:3000/recensioni';
 
   constructor(private http: HttpClient) { }
 
-  visualizzaRecensioniPerAttivita(idAttivita: number): Observable<Recensione[]> {
-    return this.http.get<Recensione[]>(`${this.baseUrl}/perAttivita/${idAttivita}`);
-  }
+  // visualizzaRecensioniPerAttivita(idAttivita: number): Observable<Recensione[]> {
+  //   return this.http.get<Recensione[]>(`${this.baseUrl}/perAttivita/${idAttivita}`);
+  // }
 }

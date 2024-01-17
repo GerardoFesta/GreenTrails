@@ -15,14 +15,14 @@ export class HomepageComponent implements OnInit {
   constructor(private attivitaService: AttivitaService) { }
 
   ngOnInit(): void {
-    this.getListaAttivita();
+    // this.getListaAttivita();
   }
 
-  getListaAttivita() {
-    this.attivitaService.getListaAttivita().subscribe((data: Attivita[]) => {
-      this.listaAttivita = data;
-      console.log(this.listaAttivita);
-    })
-  }
+  // getListaAttivita() {
+  //   this.attivitaService.getListaAttivita().subscribe((data: Attivita[]) => {
+  //     this.listaAttivita = data;
+  //     console.log(this.listaAttivita);
+  //   })
+  // }
 
 }

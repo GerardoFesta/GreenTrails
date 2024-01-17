@@ -20,8 +20,8 @@ export class AttivitaService {
   //   return this.attivitaSubject.asObservable();
   // }
 
-  private baseUrl = 'http://localhost:3000/attivita';
-  // private baseUrl= 'http://localhost:8080/attivita';
+  // private baseUrl = 'http://localhost:3000/attivita';
+  private baseUrl= 'http://localhost:8080/api/attivita';
 
   constructor(private http: HttpClient) { }
 

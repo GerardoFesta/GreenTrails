@@ -21,25 +21,26 @@ export class PaginaAttivitaComponent implements OnInit {
 
   ngOnInit(): void {
     this.visualizzaDettagliAttivita();
-    this.visualizzaValutazioneAttivita();
+    // this.visualizzaValutazioneAttivita();
   }
   
   visualizzaDettagliAttivita(): void {
-    const id = +this.route.snapshot.params['id'];
+    const id: number = +this.route.snapshot.params['id'];
 
     this.attivitaService.visualizzaAttivita(id).subscribe((data) => {
       this.attivita = data;
+      console.log(this.attivita.coordinate);
     }, (error) => {
       console.error(error);
     })
   }
 
-  visualizzaValutazioneAttivita(): void {
-    const id = this.route.snapshot.params['id'];
+  // visualizzaValutazioneAttivita(): void {
+  //   const id = this.route.snapshot.params['id'];
 
-    this.recensioneService.visualizzaRecensioniPerAttivita(id).subscribe((data) => {
-      this.listaRecensioni = data;
-      console.log(this.listaRecensioni);
-    })
-  }
+  //   this.recensioneService.visualizzaRecensioniPerAttivita(id).subscribe((data) => {
+  //     this.listaRecensioni = data;
+  //     console.log(this.listaRecensioni);
+  //   })
+  // }
 }
