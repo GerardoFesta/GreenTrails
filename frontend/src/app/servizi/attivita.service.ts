@@ -21,6 +21,7 @@ export class AttivitaService {
   // }
 
   private baseUrl = 'http://localhost:3000/attivita';
+  // private baseUrl= 'http://localhost:8080/attivita';
 
   constructor(private http: HttpClient) { }
 
@@ -76,5 +77,9 @@ export class AttivitaService {
 
   getListaAttivita(): Observable<Attivita[]> {
     return this.http.get<Attivita[]>(this.baseUrl);
+  }
+
+  visualizzaAttivita(id: number): Observable<Attivita> {
+    return this.http.get<Attivita>(`${this.baseUrl}/${id}`);
   }
 }

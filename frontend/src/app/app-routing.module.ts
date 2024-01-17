@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
+import { HomepageComponent } from './componenti/homepage/homepage.component';
 
 const routes: Routes = [
-  {path: '', component: PaginaAttivitaComponent}
+  {path: '', component: HomepageComponent},
+  {path: 'attivita/:id', component: PaginaAttivitaComponent},
 ];
 
 @NgModule({

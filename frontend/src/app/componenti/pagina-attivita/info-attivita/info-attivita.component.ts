@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Attivita } from 'src/app/classi/attivita';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 @Component({
@@ -7,6 +8,8 @@ import { AttivitaService } from 'src/app/servizi/attivita.service';
   styleUrls: ['./info-attivita.component.css']
 })
 export class InfoAttivitaComponent implements OnInit {
+
+  @Input() attivita?: Attivita;
 
   constructor() { }
 

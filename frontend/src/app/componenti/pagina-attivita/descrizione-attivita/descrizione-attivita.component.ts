@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Attivita } from 'src/app/classi/attivita';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 
@@ -9,17 +9,11 @@ import { AttivitaService } from 'src/app/servizi/attivita.service';
 })
 export class DescrizioneAttivitaComponent implements OnInit {
 
-  attivita?: Attivita;
+  @Input() attivita?: Attivita;
 
-  constructor(private attivitaService: AttivitaService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    // this.attivitaService.ottieniAttivitaCondivisa().subscribe(
-    //   (attivita: Attivita | null) => {
-    //     this.attivita = attivita!;
-    //     console.log(attivita);
-    //   }
-    // )
   }
 
 }

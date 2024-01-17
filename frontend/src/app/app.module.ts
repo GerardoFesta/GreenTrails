@@ -59,6 +59,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { HomepageComponent } from './componenti/homepage/homepage.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { HttpClientModule } from '@angular/common/http';
     PoliticheEcosostenibiliAttivitaComponent,
     SlideshowComponent,
     MapComponent,
+    HomepageComponent,
   ],
   imports: [
     BrowserModule,
