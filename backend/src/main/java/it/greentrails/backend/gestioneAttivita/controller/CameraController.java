@@ -61,15 +61,10 @@ public class CameraController {
 
   @GetMapping("{id}")
   private ResponseEntity<Object> visualizzaCamera(
-      @AuthenticationPrincipal Utente utente,
       @PathVariable("id") final Long id
   ) {
     try {
-      Camera camera = cameraService.findById(id);
-      if (!camera.getAlloggio().getGestore().getId().equals(utente.getId())) {
-        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Camera non trovata");
-      }
-      return ResponseGenerator.generateResponse(HttpStatus.OK, camera);
+      return ResponseGenerator.generateResponse(HttpStatus.OK, cameraService.findById(id));
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
@@ -77,14 +72,10 @@ public class CameraController {
 
   @GetMapping("perAlloggio/{idAlloggio}")
   private ResponseEntity<Object> visualizzaCamerePerAlloggio(
-      @AuthenticationPrincipal Utente utente,
       @PathVariable("idAlloggio") final Long idAlloggio
   ) {
     try {
       Attivita alloggio = attivitaService.findById(idAlloggio);
-      if (!alloggio.getGestore().getId().equals(utente.getId())) {
-        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Attività non trovata.");
-      }
       if (!alloggio.isAlloggio()) {
         return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
             "L'attività non è un alloggio.");
