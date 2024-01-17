@@ -81,6 +81,8 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.DELETE, "/api/prenotazioni-attivita-turistica/*")
             .hasRole(ROLE_VISITATORE)
 
+            .requestMatchers("/api/ricerca/**").permitAll()
+
             .anyRequest().authenticated()
         )
         .httpBasic(Customizer.withDefaults())
