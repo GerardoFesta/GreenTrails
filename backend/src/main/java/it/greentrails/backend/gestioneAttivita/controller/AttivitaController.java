@@ -89,14 +89,10 @@ public class AttivitaController {
 
   @GetMapping("{id}")
   private ResponseEntity<Object> visualizzaAttivita(
-      @AuthenticationPrincipal Utente utente,
       @PathVariable("id") final Long id
   ) {
     try {
       Attivita attivita = attivitaService.findById(id);
-      if (!attivita.getGestore().getId().equals(utente.getId())) {
-        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Attività non trovata");
-      }
       return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
