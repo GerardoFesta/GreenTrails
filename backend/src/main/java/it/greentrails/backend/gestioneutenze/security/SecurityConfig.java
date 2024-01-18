@@ -83,6 +83,10 @@ public class SecurityConfig {
 
             .requestMatchers("/api/ricerca/**").permitAll()
 
+            .requestMatchers(HttpMethod.POST, "/api/segnalazioni").authenticated()
+            .requestMatchers(HttpMethod.GET, "/api/segnalazioni/**").hasRole(ROLE_ADMIN)
+            .requestMatchers(HttpMethod.DELETE, "/api/segnalazioni/*").hasRole(ROLE_ADMIN)
+
             .anyRequest().authenticated()
         )
         .httpBasic(Customizer.withDefaults())
