@@ -7,12 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class StudentService {
 
-  private baseUrl = 'http://localhost:8080/api/v1/student'
+  private baseUrl = 'http://localhost:8080/api/v1/utenti'
 
   constructor(private http: HttpClient) { }
 
-  getNamesAndEmails(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}/names-emails`);
+  getEmail(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/email`);
   }
 
   getName(): Observable<string[]> {

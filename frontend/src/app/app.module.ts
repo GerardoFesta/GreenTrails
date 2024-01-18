@@ -59,6 +59,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { HttpClientModule } from '@angular/common/http';
     PoliticheEcosostenibiliAttivitaComponent,
     SlideshowComponent,
     MapComponent,
+    GestionePrenotazioniAttiveComponent,
   ],
   imports: [
     BrowserModule,
@@ -119,6 +121,8 @@ import { HttpClientModule } from '@angular/common/http';
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatTableModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatAutocompleteModule,
