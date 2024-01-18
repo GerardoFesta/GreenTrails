@@ -20,6 +20,7 @@ import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -59,6 +60,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +74,7 @@ import { HttpClientModule } from '@angular/common/http';
     PoliticheEcosostenibiliAttivitaComponent,
     SlideshowComponent,
     MapComponent,
+    RegistrazioneComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +84,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatAutocompleteModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
