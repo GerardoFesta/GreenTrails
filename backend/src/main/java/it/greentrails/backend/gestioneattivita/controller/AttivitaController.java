@@ -4,6 +4,7 @@ import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.CategorieAlloggio;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
+import it.greentrails.backend.gestioneattivita.service.ValoriEcosostenibilitaService;
 import it.greentrails.backend.gestioneutenze.service.GestioneUtenzeService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class AttivitaController {
 
   private final AttivitaService attivitaService;
   private final GestioneUtenzeService gestioneUtenzeService;
+  private final ValoriEcosostenibilitaService valoriEcosostenibilitaService;
 
   @PostMapping
   private ResponseEntity<Object> creaAttivita(
@@ -41,6 +43,7 @@ public class AttivitaController {
       @RequestParam("longitudine") final Double longitudine,
       @RequestParam("descrizioneBreve") final String descrizioneBreve,
       @RequestParam("descrizioneLunga") final String descrizioneLunga,
+      @RequestParam("valori") final long idValori,
       @RequestParam("immagine") final MultipartFile immagine,
       @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
       @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
@@ -60,6 +63,7 @@ public class AttivitaController {
       attivita.setCoordinate(new Point(latitudine, longitudine));
       attivita.setDescrizioneBreve(descrizioneBreve);
       attivita.setDescrizioneLunga(descrizioneLunga);
+      attivita.setValoriEcosostenibilita(valoriEcosostenibilitaService.findById(idValori));
       // TODO: implementare gestione media per attività
       attivita.setMedia("");
       if (isAlloggio) {
