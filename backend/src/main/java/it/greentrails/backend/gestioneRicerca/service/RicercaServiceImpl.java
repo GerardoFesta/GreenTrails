@@ -3,6 +3,7 @@ package it.greentrails.backend.gestioneRicerca.service;
 import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Categoria;
 import it.greentrails.backend.gestioneAttivita.repository.AttivitaRepository;
+import it.greentrails.backend.utils.DistanceCalculator;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,10 @@ public class RicercaServiceImpl implements RicercaService {
     if (raggio < 0) {
       throw new InvalidParameterException("Il raggio non è valido.");
     }
-    // TODO: implementare ricerca per coordinate e raggio
-    return new ArrayList<>();
+    return repository
+        .findAll()
+        .stream()
+        .filter(a -> DistanceCalculator.distance(coordinate, a.getCoordinate()) <= raggio)
+        .toList();
   }
 }

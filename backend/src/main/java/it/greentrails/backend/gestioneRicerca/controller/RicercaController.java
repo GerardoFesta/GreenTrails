@@ -30,16 +30,17 @@ public class RicercaController {
       @RequestParam(value = "idCategorie", required = false) final Long[] idCategorie,
       @RequestParam(value = "coordinate", required = false) final Point coordinate,
       @RequestParam(value = "raggio", required = false) final Double raggio
-      ) {
+  ) {
     List<Attivita> risultati = ricercaService.findAttivita(query);
     if (idCategorie != null && idCategorie.length > 0) {
-      risultati = ricercaService.findAttivitaByCategorie(Arrays.stream(idCategorie).map(idCategoria -> {
-        try {
-          return categoriaService.findById(idCategoria);
-        } catch (Exception e) {
-          throw new RuntimeException(e);
-        }
-      }).collect(Collectors.toList()))
+      risultati = ricercaService.findAttivitaByCategorie(
+              Arrays.stream(idCategorie).map(idCategoria -> {
+                try {
+                  return categoriaService.findById(idCategoria);
+                } catch (Exception e) {
+                  throw new RuntimeException(e);
+                }
+              }).collect(Collectors.toList()))
           .stream()
           .filter(risultati::contains)
           .collect(Collectors.toList());
