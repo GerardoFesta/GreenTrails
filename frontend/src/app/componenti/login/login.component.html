@@ -17,8 +17,6 @@
           </mat-error>
         </mat-form-field>
       </div>
-    </div>
-  <div class="campo">
       <div class="container">
         <mat-label>Pasword:</mat-label>
         <mat-form-field>
@@ -43,13 +41,14 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="form-bottom">
+    <div class="form-bottom" style="display: flex; flex-direction:column; justify-content:flex-end; width:100%; align-items:flex-end;">
     <a [routerLink]="['../../public/login']">Hai dimenticato la password?</a>
     <br>
     <a [routerLink]="['../../public/register']">Non hai un account? Registrati</a>
     <br>
-    <button mat-raised-button class="center-button">Accedi</button>
+    <button mat-raised-button style="margin-right:20%">Accedi</button>
     </div>
+
         </form>
   </div>
   
