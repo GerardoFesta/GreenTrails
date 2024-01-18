@@ -61,6 +61,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
+import { ChisiamoComponent } from './componenti/chisiamo/chisiamo.component';
+import { IntroduzioneComponent } from './componenti/chisiamo/introduzione/introduzione.component';
+import { PoliticheEcoComponent } from './componenti/chisiamo/politiche-eco/politiche-eco.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,9 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
+    ChisiamoComponent,
+    IntroduzioneComponent,
+    PoliticheEcoComponent,
   ],
   imports: [
     BrowserModule,

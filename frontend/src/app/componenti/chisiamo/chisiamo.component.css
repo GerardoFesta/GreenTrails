@@ -1,0 +1,33 @@
+.chisiamo{
+    font-size: 400%;
+    padding: 2%;
+    text-align: center;
+    background-size: cover;
+}
+.politiche-eco{
+
+    font-size: 300%;
+    padding: 2%;
+    text-align: center;
+}   
+.immagine{
+    width: 100%;
+    height: auto;
+    padding: 5%;
+}
+.contenitore {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Puoi scegliere il tipo di allineamento che preferisci */
+  }
+.card {
+    width: 50%; /* o qualsiasi larghezza desiderata */
+    margin-bottom: 10px;
+    border: none; /* o qualsiasi margine desiderato */
+  }
+  
+@media (max-width: 768px) {
+    .card {
+      flex-basis: 100%; /* Imposta la larghezza delle card al 100% quando la larghezza dello schermo è inferiore a 768px */
+    }
+  }
