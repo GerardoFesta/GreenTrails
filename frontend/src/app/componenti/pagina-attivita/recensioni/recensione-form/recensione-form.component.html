@@ -1,0 +1,46 @@
+<h2 style="font-weight: bold; text-align: center;">Scrivi una recensione</h2>
+<form (ngSubmit)="inviaRecensione(recensioneForm)" #recensioneForm="ngForm">
+  <div class="left">
+    <div class="rating">
+      <ngb-rating [(rate)]="rating" (hover)="updateSubmitButton()" ngModel name="stelle"
+        style="color: #32CD32; display: flex; flex-wrap: wrap; row-gap: 20px; justify-content: center;"></ngb-rating>
+    </div>
+    <div class="title">
+      <p style="text-align: center; font-size: 20px;">
+        Pratiche ecosostenibili rispettate
+      </p>
+    </div>
+    <div class="questionario-container">
+      <div *ngFor="let item of data, let i = index" style="font-size: 15px;">
+        <div *ngIf="item.showOptions">
+          <label style="margin-right: 20px; font-size: larger; margin-bottom: 5px;">{{item.label}}</label>
+          <input type="radio" name="{{item.label}}" value="sì" (change)="selectOption(item, 'sì')" ngModel
+            name="{{item.label}}" [checked]="item.selectedOption === 'sì'"> Sì
+          <input type="radio" name="{{item.label}}" value="no" (change)="selectOption(item, 'no')" ngModel
+            name="{{item.label}}" [checked]="item.selectedOption === 'no'"> No
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <mat-icon style="color: #32CD32; font-size: 45px; margin-right: 20px;">
+      account_box
+    </mat-icon>
+    <div class="textarea-container">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label style="font-size: medium; font-style: italic;">Fornisci maggiori informazioni...</mat-label>
+        <textarea maxlength="255" matInput rows="5" style="font-size: medium; resize: none;" ngModel
+          name="valutazioneDiscorsiva"></textarea>
+      </mat-form-field>
+      <div class="icon-container">
+        <button mat-icon-button type="button">
+          <mat-icon style="color: #32CD32;">add_photo_alternate</mat-icon>
+        </button>
+      </div>
+      <input matInput value="Recesione inviata!" #message style="color: transparent;">
+      <input matInput value="Chiudi" #action style="color: transparent;">
+      <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitDisabled"
+        class="submit-button" (click)="openSnackBar(message.value, action.value)">Invia</button>
+    </div>
+  </div>
+</form>

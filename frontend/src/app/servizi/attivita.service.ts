@@ -20,8 +20,8 @@ export class AttivitaService {
   //   return this.attivitaSubject.asObservable();
   // }
 
-  // private baseUrl = 'http://localhost:3000/attivita';
-  private baseUrl= 'http://localhost:8080/api/attivita';
+  private baseUrl = 'http://localhost:3000/attivita';
+  // private baseUrl= 'http://localhost:8080/api/attivita';
 
   constructor(private http: HttpClient) { }
 
@@ -61,10 +61,6 @@ export class AttivitaService {
   //   }
 
   //   return this.http.post<Attivita>(`${this.baseUrl}`, formData);
-  // }
-
-  // visualizzaAttivita(id: number): Observable<Attivita> {
-  //   return this.http.get<Attivita>(`${this.baseUrl}/${id}`);
   // }
 
   // visualizzaAttivitaPerGestore(): Observable<Attivita[]> {
