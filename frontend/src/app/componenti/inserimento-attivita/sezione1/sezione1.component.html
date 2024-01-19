@@ -1,0 +1,30 @@
+<div style="background-color: brown;">
+
+  <mat-form-field appearance="outline"  style="margin: 2%;">
+    <mat-label>Inserisci Nome</mat-label>
+    <input class="testo" matInput placeholder="Nome" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline"  style="margin: 2%;">
+    <mat-label>Tipo</mat-label>
+    <mat-select class="selezione" [errorStateMatcher]="matcher">
+      <mat-option value="true">Alloggio</mat-option>
+      <mat-option value="false">Attività</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline"  style="margin: 2%;" >
+    <mat-label>Categoria</mat-label>
+    <mat-select class="selezione" [errorStateMatcher]="matcher" >
+      <mat-option value="singola">Hotel</mat-option>
+      <mat-option value="matrimoniale">Campeggio</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+     <input placeholder="Posti" type="number" min="1" />
+
+
+</div>
+
+
