@@ -48,6 +48,11 @@ public class AttivitaService {
     return repository.findByValori(valoriEcosostenibilita.getId());
   }
 
+  public List<Attivita> getAttivitaTuristicheEconomiche(int limite)
+  {
+    return repository.getAllByPrezzo(Pageable.ofSize(limite)).toList();
+  }
+
   public boolean deleteAttivita(Attivita attivita) throws Exception {
     if (attivita == null) {
       throw new Exception("L'attività è vuota.");

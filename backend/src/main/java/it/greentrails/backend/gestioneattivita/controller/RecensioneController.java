@@ -9,8 +9,10 @@ import it.greentrails.backend.enums.RuoloUtente;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.RecensioneService;
 import it.greentrails.backend.gestioneattivita.service.ValoriEcosostenibilitaService;
+import it.greentrails.backend.gestioneupload.service.ArchiviazioneService;
 import it.greentrails.backend.gestioneutenze.service.GestioneUtenzeService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,7 @@ public class RecensioneController {
   private final AttivitaService attivitaService;
   private final GestioneUtenzeService gestioneUtenzeService;
   private final ValoriEcosostenibilitaService valoriEcosostenibilitaService;
+  private final ArchiviazioneService archiviazioneService;
 
   @PostMapping
   private ResponseEntity<Object> creaRecensione(
@@ -51,8 +54,10 @@ public class RecensioneController {
       recensione.setAttivita(attivita);
       recensione.setValutazioneStelleEsperienza(valutazioneStelleEsperienza);
       recensione.setDescrizione(descrizione);
-      if (immagine != null) {
-        // TODO: implementare gestione media per recensione
+      if (immagine != null && !immagine.isEmpty()) {
+        String media = UUID.randomUUID().toString();
+        recensione.setMedia(media);
+        archiviazioneService.store(media, immagine);
       }
       ValoriEcosostenibilita valori = valoriEcosostenibilitaService.findById(idValori);
       recensione.setValoriEcosostenibilita(valori);

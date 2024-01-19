@@ -37,9 +37,11 @@ public class SecurityConfig {
             .requestMatchers("/api/utenti").authenticated()
 
             .requestMatchers(HttpMethod.POST, "/api/file").authenticated()
+            .requestMatchers(HttpMethod.DELETE, "/api/file/**").authenticated()
             .requestMatchers(HttpMethod.GET, "/api/file/**").permitAll()
 
             .requestMatchers(HttpMethod.GET, "/api/attivita/*").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/attivita/perPrezzo").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/attivita").hasRole(ROLE_GESTORE)
             .requestMatchers(HttpMethod.POST, "/api/attivita").hasRole(ROLE_GESTORE)
             .requestMatchers(HttpMethod.DELETE, "/api/attivita/*").hasRole(ROLE_GESTORE)

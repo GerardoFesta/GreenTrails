@@ -5,8 +5,10 @@ import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.CategorieAlloggio;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.ValoriEcosostenibilitaService;
+import it.greentrails.backend.gestioneupload.service.ArchiviazioneService;
 import it.greentrails.backend.gestioneutenze.service.GestioneUtenzeService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ public class AttivitaController {
   private final AttivitaService attivitaService;
   private final GestioneUtenzeService gestioneUtenzeService;
   private final ValoriEcosostenibilitaService valoriEcosostenibilitaService;
+  private final ArchiviazioneService archiviazioneService;
 
   @PostMapping
   private ResponseEntity<Object> creaAttivita(
@@ -64,8 +67,9 @@ public class AttivitaController {
       attivita.setDescrizioneBreve(descrizioneBreve);
       attivita.setDescrizioneLunga(descrizioneLunga);
       attivita.setValoriEcosostenibilita(valoriEcosostenibilitaService.findById(idValori));
-      // TODO: implementare gestione media per attività
-      attivita.setMedia("");
+      String media = UUID.randomUUID().toString();
+      attivita.setMedia(media);
+      archiviazioneService.store(media, immagine);
       if (isAlloggio) {
         if (categoriaAlloggio == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
@@ -116,6 +120,16 @@ public class AttivitaController {
     }
   }
 
+  @GetMapping("perPrezzo")
+  private ResponseEntity<Object> visualizzaAttivitaPerPrezzo(
+      @RequestParam(value = "limite", required = false) Integer limite
+  ) {
+    if (limite == null) {
+      limite = 10;
+    }
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+        attivitaService.getAttivitaTuristicheEconomiche(limite));
+  }
 
   @DeleteMapping("{id}")
   private ResponseEntity<Object> cancellaAttivita(

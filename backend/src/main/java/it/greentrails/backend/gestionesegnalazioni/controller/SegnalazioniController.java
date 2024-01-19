@@ -9,8 +9,10 @@ import it.greentrails.backend.enums.StatoSegnalazione;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.RecensioneService;
 import it.greentrails.backend.gestionesegnalazioni.service.SegnalazioniService;
+import it.greentrails.backend.gestioneupload.service.ArchiviazioneService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
 import java.util.Date;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,7 @@ public class SegnalazioniController {
   private final SegnalazioniService segnalazioniService;
   private final AttivitaService attivitaService;
   private final RecensioneService recensioneService;
+  private final ArchiviazioneService archiviazioneService;
 
   @PostMapping
   private ResponseEntity<Object> creaSegnalazione(
@@ -46,7 +49,11 @@ public class SegnalazioniController {
       segnalazione.setUtente(utente);
       segnalazione.setDataSegnalazione(new Date());
       segnalazione.setDescrizione(descrizione);
-      // TODO: aggiungere supporto media per segnalazioni
+      if (immagine != null && !immagine.isEmpty()) {
+        String media = UUID.randomUUID().toString();
+        segnalazione.setMedia(media);
+        archiviazioneService.store(media, immagine);
+      }
       if (utente.getRuolo() == RuoloUtente.VISITATORE && idAttivita != null) {
         Attivita attivita = attivitaService.findById(idAttivita);
         segnalazione.setAttivita(attivita);
