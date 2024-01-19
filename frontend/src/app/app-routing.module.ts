@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
+import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { HomepageComponent } from './componenti/homepage/homepage.component';
 
 const routes: Routes = [
+  { path: 'registrazione', component: RegistrazioneComponent },
   {path: '', component: HomepageComponent},
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
 ];
