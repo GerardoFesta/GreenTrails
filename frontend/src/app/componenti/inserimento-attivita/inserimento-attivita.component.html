@@ -1,21 +1,21 @@
 <h1 mat-dialog-title>Inserisci i dati</h1>
 
-<mat-dialog-content style="background-color: black;" fxLayout="column" fxLayoutGap="10px">
+<mat-dialog-content fxLayout="column" fxLayoutGap="10px">
 
-<app-sezione1 style="background-color: aquamarine;" class="sezione"></app-sezione1>
+<app-sezione1 (formDataChanged)="onSezione1DataChanged($event)" class="sezione"></app-sezione1>
 
 <div class="contenitore">
-<app-sezione2 style="background-color:blueviolet; " class="card"></app-sezione2>
+<app-sezione2 (formDataChanged)="onSezione2DataChanged($event)" campo2={formData.campo1} updateFormData={updateFormData} class="card"></app-sezione2>
 
-<app-sezione3 style="background-color:brown; " class="card"></app-sezione3>
+<app-sezione3 (formDataChanged)="onSezione3DataChanged($event)" class="card1"></app-sezione3>
 
 </div>
 
-<app-sezione4 style="background-color:chartreuse;" class="sezione"></app-sezione4>
+<app-sezione4 (formDataChanged)="onSezione4DataChanged($event)" class="sezione"></app-sezione4>
 
 
 
-<app-sezione5 style="background-color:cornflowerblue;" class="sezione"></app-sezione5>
+<app-sezione5 (formDataChanged)="onSezione5DataChanged($event)" class="sezione"></app-sezione5>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">

@@ -1,8 +1,35 @@
 <div class="sezione1">
   <mat-form-field class="example-full-width">
-    <mat-label>Leave a comment</mat-label>
-    <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+    <mat-label>Descrizione Lunga</mat-label>
+    <textarea [formControl]="descrizioneLunga" matInput placeholder=". . ."></textarea>
   </mat-form-field>
 
-  
+    <label for="fileInput" class="file-label">
+      <i class="fas fa-image"></i> <mat-icon>image</mat-icon>
+    </label>
+    <input
+    [formControl]="file"
+      id="fileInput"
+      type="file"
+      (change)="onFilesSelected($event)"
+      multiple
+      accept="image/*"
+      style="display: none"
+    />
+
+  <div *ngIf="errorMessage">
+    <p style="color: red">{{ errorMessage }}</p>
   </div>
+
+  <button (click)="salvaDati5()">Salva</button>
+
+  <div *ngIf="selectedFiles.length > 0">
+    <p>Numero di file selezionati: {{ selectedFiles.length }}</p>
+    <ul>
+      <li *ngFor="let file of selectedFiles">
+        Nome del file: {{ file.name }} (Dimensione: {{ file.size }} byte)
+        <!-- Puoi aggiungere ulteriori informazioni sul file qui. -->
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,28 +1,57 @@
 <div class="sezione1">
-    <mat-form-field appearance="outline">
-      <mat-label>Inserisci Nome</mat-label>
-      <input class="testo" matInput placeholder="Nome" />
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-select class="selezione" >
-        <mat-option value="true">Alloggio</mat-option>
-        <mat-option value="false">Attività</mat-option>
-      </mat-select>
-    </mat-form-field>
-  
-    <mat-form-field appearance="outline">
-      <mat-select class="selezione" >
-        <mat-option value="singola">Hotel</mat-option>
-        <mat-option value="matrimoniale">Campeggio</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <input
-      required
-      class="number"
-      type="number"
-      name="numAdulti"
-      [value]="1"
-      min="1"
-    />
-  
-  </div>
+  <mat-form-field appearance="outline" style="margin: 2%; width: 60%;">
+    <mat-label>Indirizzo</mat-label>
+    <input [formControl]="indirizzo" matInput placeholder="Via Giovanni Paolo II, 132" />
+    <mat-error *ngIf="indirizzo.invalid">
+      {{ getErrorMessage(indirizzo) }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="margin: 2%; width: 150px;">
+    <mat-label>CAP</mat-label>
+    <input [formControl]="cap" matInput placeholder="84084" />
+    <mat-error *ngIf="cap.invalid">
+      {{ getErrorMessage(cap) }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="margin: 2%; width: 60%;  ">
+    <mat-label>Città</mat-label>
+    <input [formControl]="citta" matInput placeholder="Fisciano" />
+    <mat-error *ngIf="citta.invalid">
+      {{ getErrorMessage(citta) }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="margin: 2%; width: 150px;">
+    <mat-label>Provincia</mat-label>
+    <input [formControl]="provincia" matInput placeholder="SA" />
+    <mat-error *ngIf="provincia.invalid">
+      {{ getErrorMessage(provincia) }}
+    </mat-error>
+  </mat-form-field>
+
+
+ <div style="margin: 5%;">
+  <h4>Coordinate Geografiche</h4>
+
+  <mat-form-field appearance="outline" style="margin: 2%; width: 150px;">
+    <mat-label>latitudine</mat-label>
+    <input [formControl]="latitudine" matInput placeholder="xx.xx" />
+    <mat-error *ngIf="latitudine.invalid">
+      {{ getErrorMessage(latitudine) }}
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="margin: 2%; width: 300px;">
+    <mat-label>Longitudine</mat-label>
+    <input [formControl]="longitudine" matInput placeholder="xx.xx" />
+    <mat-error *ngIf="longitudine.invalid">
+      {{ getErrorMessage(longitudine) }}
+    </mat-error>
+  </mat-form-field>
+
+  <button (click)="salvaDati2()">Salva</button>
+
+</div>
+</div>

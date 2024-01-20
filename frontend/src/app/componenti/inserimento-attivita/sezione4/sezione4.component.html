@@ -1,17 +1,16 @@
 <div class="sezione1">
-  <mat-form-field>
+  <mat-form-field style="width: 60%; margin: 2%;">
     <mat-label>Descrizione Breve</mat-label>
-    <textarea matInput></textarea>
+    <textarea [formControl]="descrizioneBreve" matInput></textarea>
   </mat-form-field>
 
-  <mat-icon style="margin: 5%;">money</mat-icon>
-    <mat-form-field floatLabel="always">
+  <mat-icon>money</mat-icon>
+      <mat-form-field appearance="outline" style= "width: 150px;">
+        <mat-label>Prezzo</mat-label>
+        <input [formControl]="prezzo" matInput placeholder="xx.xx" />
+      </mat-form-field>
+      <mat-icon>euro</mat-icon>
 
-      <mat-label>Prezzo</mat-label>
-      <input matInput type="number" class="example-right-align" placeholder="0">
-      <span matTextPrefix>$&nbsp;</span>
-      <span matTextSuffix>.00</span>
-    </mat-form-field>
- 
-  
+      <button (click)="salvaDati4()">Salva</button>
+
   </div>

@@ -1,3 +1,12 @@
 .example-full-width {
-    width: 100%;
+    width: 70%;
+    margin: 2%;
+  }
+
+
+  .file-label {
+    cursor: pointer;
+    padding: 10px;
+    color:palegreen;
+    border-radius: 5px;
   }
