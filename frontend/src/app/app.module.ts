@@ -62,11 +62,6 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
-import { Sezione1Component } from './componenti/inserimento-attivita/sezione1/sezione1.component';
-import { Sezione2Component } from './componenti/inserimento-attivita/sezione2/sezione2.component';
-import { Sezione3Component } from './componenti/inserimento-attivita/sezione3/sezione3.component';
-import { Sezione4Component } from './componenti/inserimento-attivita/sezione4/sezione4.component';
-import { Sezione5Component } from './componenti/inserimento-attivita/sezione5/sezione5.component';
 
 @NgModule({
   declarations: [
@@ -82,11 +77,7 @@ import { Sezione5Component } from './componenti/inserimento-attivita/sezione5/se
     MapComponent,
     RegistrazioneComponent,
     InserimentoAttivitaComponent,
-    Sezione1Component,
-    Sezione2Component,
-    Sezione3Component,
-    Sezione4Component,
-    Sezione5Component,
+
   ],
   imports: [
     BrowserModule,

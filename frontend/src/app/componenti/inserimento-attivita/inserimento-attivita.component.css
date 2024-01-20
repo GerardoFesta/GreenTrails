@@ -33,3 +33,53 @@
     }
   }
 
+  input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+input.example-right-align {
+    -moz-appearance: textfield;
+  }
+  .sezione1 mat-form-field + mat-form-field {
+    margin-left: 8px;
+  }
+
+  .example-right-align {
+    text-align: right;
+  }
+
+  .example-full-width {
+    width: 70%;
+    margin: 2%;
+  }
+
+
+  .file-label {
+    cursor: pointer;
+    padding: 10px;
+    color:palegreen;
+    border-radius: 5px;
+  }
+
+  .example-section {
+    margin: 5%;
+  }
+
+  .example-card {
+    background-color: transparent;
+    color:black;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .card-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border:5px solid lightgreen;
+    border-radius: 20px;
+    box-shadow: 7px 7px 5px #dedede;
+    padding: 15px;
+  }
+
+

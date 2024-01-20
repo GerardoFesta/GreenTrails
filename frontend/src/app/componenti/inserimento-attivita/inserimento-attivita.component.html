@@ -1,21 +1,211 @@
 <h1 mat-dialog-title>Inserisci i dati</h1>
 
 <mat-dialog-content fxLayout="column" fxLayoutGap="10px">
+<!-- sezione 1-->
 
-<app-sezione1 (formDataChanged)="onSezione1DataChanged($event)" class="sezione"></app-sezione1>
+<div class="sezione">
+  <div>
+
+    <mat-form-field appearance="outline"  style="margin: 2%; margin-bottom: 0%;">
+      <mat-label>Inserisci Nome</mat-label>
+      <input 
+      matInput 
+      placeholder="Nome"         
+      [formControl]="nome"
+      required/>
+      <mat-error *ngIf="nome.invalid">
+        {{ getErrorMessage(nome) }}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline"  style="margin: 2%; margin-bottom: 0%;">
+      <mat-label>Tipo</mat-label>
+      <mat-select [formControl]="alloggio" [errorStateMatcher]="matcher">
+        <mat-option value="true">Alloggio</mat-option>
+        <mat-option value="false">Attività</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline"  style="margin: 2%; margin-bottom: 0%;" >
+      <mat-label>Categoria</mat-label>
+      <mat-select [formControl]="categoriaAlloggio" [errorStateMatcher]="matcher" >
+        <mat-option value="1">Hotel</mat-option>
+        <mat-option value="2">Campeggio</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline"  style="margin: 2%; margin-bottom: 0%;">
+      <mat-label>Disponibilità</mat-label>
+      <input class="testo" matInput="number" placeholder="Posti"    
+       [formControl]="disponibilita"
+      required />
+      <mat-error *ngIf="disponibilita.invalid">
+        {{ getErrorMessage(disponibilita) }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+</div>
+
 
 <div class="contenitore">
-<app-sezione2 (formDataChanged)="onSezione2DataChanged($event)" campo2={formData.campo1} updateFormData={updateFormData} class="card"></app-sezione2>
+<!-- sezione 2-->
+<div class="card">
+  <div class="sezione1">
+    <mat-form-field appearance="outline" style="margin: 2%; width: 60%;">
+      <mat-label>Indirizzo</mat-label>
+      <input [formControl]="indirizzo" matInput placeholder="Via Giovanni Paolo II, 132" />
+      <mat-error *ngIf="indirizzo.invalid">
+        {{ getErrorMessage(indirizzo) }}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline" style="margin: 2%; width: 150px;">
+      <mat-label>CAP</mat-label>
+      <input [formControl]="cap" matInput placeholder="84084" />
+      <mat-error *ngIf="cap.invalid">
+        {{ getErrorMessage(cap) }}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline" style="margin: 2%; width: 60%;  ">
+      <mat-label>Città</mat-label>
+      <input [formControl]="citta" matInput placeholder="Fisciano" />
+      <mat-error *ngIf="citta.invalid">
+        {{ getErrorMessage(citta) }}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline" style="margin: 2%; width: 150px;">
+      <mat-label>Provincia</mat-label>
+      <input [formControl]="provincia" matInput placeholder="SA" />
+      <mat-error *ngIf="provincia.invalid">
+        {{ getErrorMessage(provincia) }}
+      </mat-error>
+    </mat-form-field>
+  
+  
+   <div style="margin: 5%;">
+    <h4>Coordinate Geografiche</h4>
+  
+    <mat-form-field appearance="outline" style="margin: 2%; width: 150px;">
+      <mat-label>latitudine</mat-label>
+      <input [formControl]="latitudine" matInput placeholder="xx.xx" />
+      <mat-error *ngIf="latitudine.invalid">
+        {{ getErrorMessage(latitudine) }}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline" style="margin: 2%; width: 300px;">
+      <mat-label>Longitudine</mat-label>
+      <input [formControl]="longitudine" matInput placeholder="xx.xx" />
+      <mat-error *ngIf="longitudine.invalid">
+        {{ getErrorMessage(longitudine) }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  </div>
+</div>
+<!-- sezione 3-->
+<div class="sezione1">
+  <mat-card class="card-section">
+    <mat-card-header >
+      <mat-card-title>Politiche ecosostenibili:</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <section class="example-section" [formControl]="toppings">
+        <p>
+          <mat-checkbox formControlName="politicheAntispreco"
+            >Politiche antispreco</mat-checkbox
+          >
+        </p>
+        <p>
+          <mat-checkbox [formControl]="prodottiLocali"
+            >Prodotti locali</mat-checkbox
+          >
+        </p>
+        <p>
+          <mat-checkbox [formControl]="energiaVerde"
+            >Energia verde</mat-checkbox
+          >
+        </p>
+        <p>
+          <mat-checkbox [formControl]="raccoltaDifferenziata"
+            >Raccolta differenziata</mat-checkbox
+          >
+        </p>
+        <p>
+          <mat-checkbox [formControl]="limiteEmissioneCO2"
+            >Limiti emissioni Co2</mat-checkbox
+          >
+        </p>
+        <p>
+          <mat-checkbox [formControl]="contattoConNatura"
+            >A contatto con la natura</mat-checkbox
+          >
+        </p>
+      </section>
 
-<app-sezione3 (formDataChanged)="onSezione3DataChanged($event)" class="card1"></app-sezione3>
+      <button (click)="salvaDati3()">Salva</button>
+    </mat-card-content>
+  </mat-card>
+</div>
 
 </div>
 
-<app-sezione4 (formDataChanged)="onSezione4DataChanged($event)" class="sezione"></app-sezione4>
+<!-- sezione 4-->
+<div class="sezione">
+  <div class="sezione1">
+    <mat-form-field style="width: 60%; margin: 2%;">
+      <mat-label>Descrizione Breve</mat-label>
+      <textarea [formControl]="descrizioneBreve" matInput></textarea>
+    </mat-form-field>
+  
+    <mat-icon>money</mat-icon>
+        <mat-form-field appearance="outline" style= "width: 150px;">
+          <mat-label>Prezzo</mat-label>
+          <input [formControl]="prezzo" matInput placeholder="xx.xx" />
+        </mat-form-field>
+        <mat-icon>euro</mat-icon>
 
+    </div>
+</div>
 
+<!-- sezione 5-->
+<div class="sezione">
+  <div class="sezione1">
+    <mat-form-field class="example-full-width">
+      <mat-label>Descrizione Lunga</mat-label>
+      <textarea [formControl]="descrizioneLunga" matInput></textarea>
+    </mat-form-field>
+  
+      <label for="fileInput" class="file-label">
+        <i class="fas fa-image"></i> <mat-icon>image</mat-icon>
+      </label>
+      <input
+      [formControl]="file"
+        id="fileInput"
+        type="file"
+        (change)="onFilesSelected($event)"
+        multiple
+        accept="image/*"
+        style="display: none"
+      />
+  
+    <div *ngIf="errorMessage">
+      <p style="color: red">{{ errorMessage }}</p>
+    </div>
 
-<app-sezione5 (formDataChanged)="onSezione5DataChanged($event)" class="sezione"></app-sezione5>
+    <div *ngIf="selectedFiles.length > 0">
+      <p>Numero di file selezionati: {{ selectedFiles.length }}</p>
+      <ul>
+        <li *ngFor="let file of selectedFiles">
+          Nome del file: {{ file.name }} (Dimensione: {{ file.size }} byte)
+          <!-- Puoi aggiungere ulteriori informazioni sul file qui. -->
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
