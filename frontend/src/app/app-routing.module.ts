@@ -5,8 +5,8 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
 import { HomepageComponent } from './componenti/homepage/homepage.component';
 
 const routes: Routes = [
-  { path: 'registrazione', component: RegistrazioneComponent },
   {path: '', component: HomepageComponent},
+  { path: 'registrazione', component: RegistrazioneComponent },
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
 ];
 

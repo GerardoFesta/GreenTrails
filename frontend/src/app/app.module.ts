@@ -17,13 +17,11 @@ import { PoliticheEcosostenibiliAttivitaComponent } from './componenti/pagina-at
 import { SlideshowComponent } from './componenti/pagina-attivita/descrizione-attivita/slideshow/slideshow.component';
 import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map.component';
 import { HomepageComponent } from './componenti/homepage/homepage.component';
-import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -64,6 +62,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
+import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
+import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
 
 
 @NgModule({
@@ -80,8 +80,9 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     MapComponent,
     RegistrazioneComponent,
     HomepageComponent,
-    RecensioneComponent,
     RecensioneFormComponent,
+    RecensioneComponent,
+    PopupRecensioneComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Attivita } from 'src/app/classi/attivita';
 
 @Component({
   selector: 'app-descrizione-attivita',
@@ -8,7 +7,7 @@ import { Attivita } from 'src/app/classi/attivita';
 })
 export class DescrizioneAttivitaComponent implements OnInit {
 
-  @Input() attivita?: Attivita;
+  @Input() attivita?: any;
 
   constructor() { }
 
