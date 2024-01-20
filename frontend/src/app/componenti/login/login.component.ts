@@ -55,11 +55,14 @@ password= new FormControl('', [Validators.required])
             }
           } else {
             console.error('La risposta dal servizio non è valida:', response);
+            this.mostraMessaggio("Email o Password errate");
           }
         },
         (error: any) => {
           console.error('Errore durante il login:', error);
-          this.mostraMessaggio ("Mail o Password sbagliate");
+          if (error.status === 401) {
+          
+          this.mostraMessaggio ("Mail o Password sbagliate");}
         }
       );
     }
