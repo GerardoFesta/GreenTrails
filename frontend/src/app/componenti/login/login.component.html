@@ -11,9 +11,6 @@
             formControlName="email"
             required
           />
-          <mat-error >
-            {{ getError() }}
-          </mat-error>
         </mat-form-field>
       </div>
       <div class="container">
@@ -25,16 +22,12 @@
               [type]="hide ? 'password' : 'text'"
             required
           />
-          <mat-error >
-            {{ getError() }}
-          </mat-error>
           <button
           mat-icon-button
           matSuffix
           (click)="hide = !hide"
           [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide"
-        >
+          [attr.aria-pressed]="hide">
           <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
         </button>
         </mat-form-field>
