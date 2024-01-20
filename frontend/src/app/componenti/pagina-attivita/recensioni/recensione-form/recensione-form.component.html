@@ -2,7 +2,7 @@
 <form (ngSubmit)="inviaRecensione(recensioneForm)" #recensioneForm="ngForm">
   <div class="left">
     <div class="rating">
-      <ngb-rating [(rate)]="rating" (hover)="updateSubmitButton()" ngModel name="stelle"
+      <ngb-rating [(rate)]="rating" (hover)="updateSubmitButton()"
         style="color: #32CD32; display: flex; flex-wrap: wrap; row-gap: 20px; justify-content: center;"></ngb-rating>
     </div>
     <div class="title">
@@ -10,15 +10,16 @@
         Pratiche ecosostenibili rispettate
       </p>
     </div>
-    <div class="questionario-container">
-      <div *ngFor="let item of data, let i = index" style="font-size: 15px;">
-        <div *ngIf="item.showOptions">
-          <label style="margin-right: 20px; font-size: larger; margin-bottom: 5px;">{{item.label}}</label>
-          <input type="radio" name="{{item.label}}" value="sì" (change)="selectOption(item, 'sì')" ngModel
-            name="{{item.label}}" [checked]="item.selectedOption === 'sì'"> Sì
-          <input type="radio" name="{{item.label}}" value="no" (change)="selectOption(item, 'no')" ngModel
-            name="{{item.label}}" [checked]="item.selectedOption === 'no'"> No
-        </div>
+    <div *ngFor="let item of valori" style="font-size: 15px;" class="questionario-container">
+      <div class="lab-container">
+        <label style="font-size: larger; margin-bottom: 5px;">{{item.label}}</label>
+      </div>
+      <div class="center"></div>
+      <div class="radio-container">
+        <input type="radio" value="sì" (change)="selectOption(item, 'sì')" [checked]="item.selectedOption === 'sì'">
+        Sì
+        <input type="radio" [name]="item.label" value="no" (change)="selectOption(item, 'no')"
+          [checked]="item.selectedOption === 'no'"> No
       </div>
     </div>
   </div>
@@ -29,18 +30,16 @@
     <div class="textarea-container">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label style="font-size: medium; font-style: italic;">Fornisci maggiori informazioni...</mat-label>
-        <textarea maxlength="255" matInput rows="5" style="font-size: medium; resize: none;" ngModel
-          name="valutazioneDiscorsiva"></textarea>
+        <textarea maxlength="255" matInput rows="5" style="font-size: medium; resize: none;"
+          [(ngModel)]="valutazioneDiscorsiva" name="valutazioneDiscorsiva" (input)="validateTextArea()"></textarea>
       </mat-form-field>
       <div class="icon-container">
         <button mat-icon-button type="button">
           <mat-icon style="color: #32CD32;">add_photo_alternate</mat-icon>
         </button>
       </div>
-      <input matInput value="Recesione inviata!" #message style="color: transparent;">
-      <input matInput value="Chiudi" #action style="color: transparent;">
       <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitDisabled"
-        class="submit-button" (click)="openSnackBar(message.value, action.value)">Invia</button>
+        class="submit-button">Invia</button>
     </div>
   </div>
 </form>

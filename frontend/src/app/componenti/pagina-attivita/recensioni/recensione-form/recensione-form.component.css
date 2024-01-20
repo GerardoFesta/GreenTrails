@@ -28,11 +28,14 @@ form {
 
 .questionario-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: nowrap;
     width: 100%;
     font-size: 15px;
-    align-items: center;
+    align-items: flex-start;
+    padding-left: 30px;
+    padding-right: 30px;
+    justify-content: space-between;
 }
 
 .title {
