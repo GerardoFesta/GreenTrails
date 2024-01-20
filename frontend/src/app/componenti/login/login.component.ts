@@ -73,4 +73,16 @@ password= new FormControl('', [Validators.required])
       duration: 5000, });
 
   }
+
+  onLogoutClick(): void {
+    this.UtenteService.logout().subscribe(
+      (response) => {
+        console.log('Logout successful:', response);
+      },
+      (error) => {
+        console.error('Error during logout:', error);
+      }
+    );
+  }
+
  }
