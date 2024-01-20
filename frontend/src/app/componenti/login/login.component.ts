@@ -1,5 +1,9 @@
+import { LoginService } from 'src/app/servizi/login.service';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpHeaders } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,60 +11,41 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  loginForm: FormGroup;
-hide: any;
+loginForm: FormGroup;
 openBottomSheet: any;
+hide:any;
+email= new FormControl('', [Validators.required, Validators.email])
+password= new FormControl('', [Validators.required])
+  dataNascita: any;
+  nome: any;
+  cognome: any;
 
-  constructor() {
-    this.loginForm = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+
+  constructor(private LoginService: LoginService, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
+    this.loginForm = this.fb.group({
+      email: this.email, // Aggiungi il campo email al FormGroup
+      password: this.password, // Aggiungi il campo password al FormGroup
+      isGestore: false // Imposta il valore predefinito per isGestore (potresti voler modificare questo valore a seconda delle tue esigenze)
     });
   }
   
-  getErrorMessageEmail() {
+  getError(){
     const emailControl = this.loginForm.get('email');
-  
-    if (emailControl) {
-      if (emailControl.hasError('required')) {
-        return 'Email is required';
-      }
-  
-      if (emailControl.hasError('email')) {
-        return 'Invalid email address';
-      }
+    const passwordControl = this.loginForm.get('password')
+    if(emailControl && passwordControl){
+      if(emailControl.hasError('required') && passwordControl.hasError('required'))
+      return 'Email or password are wrong'
     }
-  
-    return 'Invalid email';
-  }
-  
-  getErrorMessagePassword() {
-    const passwordControl = this.loginForm.get('password');
-  
-    if (passwordControl) {
-      if (passwordControl.hasError('required')) {
-        return 'Password is required';
-      }
-  
-      if (passwordControl.hasError('minlength')) {
-        return 'Password should be at least 8 characters';
-      }
-    }
-  
-    return 'Invalid password';
+    return'check if the email or password you put are correct!'
   }
 
   onSubmit() {
-    const email = this.loginForm.get('email')?.value;
-    const password = this.loginForm.get('password')?.value;
 
-    // Simulate a simple authentication logic
-    if (email === 'user@example.com' && password === 'password') {
-      // Successful authentication logic (navigate to another page, set session, etc.)
-      console.log('Authentication successful');
-    } else {
-      // Handle incorrect email or password logic (display error message, etc.)
-      console.log('Incorrect email or password');
-    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+  
+
+  
   }
 }

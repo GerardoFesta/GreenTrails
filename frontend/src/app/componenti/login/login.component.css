@@ -12,8 +12,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border-top:2px solid gray;
-    border-bottom: 2px solid gray;
+    border-top:2px solid lightgreen;
+    border-bottom: 2px solid lightgreen;
     padding-top: 10px;
     padding-bottom: 10px; 
   }
@@ -26,16 +26,19 @@
 
   .container{
     margin: 15px;
+  align-content: center;
+justify-content: center;}
 
 .campo{
   display:flex;
+  flex-direction: column;
+  align-content: flex-end;
+  justify-content: flex-end;
 }
 mat-label{
   margin-right:10px;
 }
 .form-bottom{
   display:flex;
-  background-color:black;
 }
 
-}

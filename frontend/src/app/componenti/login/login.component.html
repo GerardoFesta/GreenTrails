@@ -9,11 +9,10 @@
             matInput
             type="email"
             formControlName="email"
-            placeholder="pat@example.com"
             required
           />
           <mat-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-            {{ getErrorMessageEmail() }}
+            {{ getError() }}
           </mat-error>
         </mat-form-field>
       </div>
@@ -22,13 +21,12 @@
         <mat-form-field>
           <input
             matInput
-            placeholder="********"
             formControlName="password"
-            [type]="hide ? 'password' : 'text'"
+            type="password"
             required
           />
           <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-            {{ getErrorMessagePassword() }}
+            {{ getError() }}
           </mat-error>
           <button
             mat-icon-button
@@ -42,9 +40,9 @@
       </div>
     </div>
     <div class="form-bottom" style="display: flex; flex-direction:column; justify-content:flex-end; width:100%; align-items:flex-end;">
-    <a [routerLink]="['../../public/login']">Hai dimenticato la password?</a>
+    <a ng-reflect-router-link="/passwordDimenticata" style="color:lightgreen" href="/passwordDimenticata">Hai dimenticato la password?</a>
     <br>
-    <a [routerLink]="['../../public/register']">Non hai un account? Registrati</a>
+    <a ng-reflect-router-link="/registrazione" style="color:lightgreen" href="/registrazione">Non hai un account? Registrati</a>
     <br>
     <button mat-raised-button style="margin-right:20%">Accedi</button>
     </div>
