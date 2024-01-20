@@ -61,6 +61,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
@@ -69,6 +70,7 @@ import { PopupRecensioneComponent } from './componenti/pagina-attivita/recension
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     PaginaAttivitaComponent,
     InfoAttivitaComponent,
     CardAttivitaComponent,
