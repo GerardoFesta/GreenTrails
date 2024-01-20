@@ -1,7 +1,5 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Attivita } from 'src/app/classi/attivita';
-import { Recensione } from 'src/app/classi/recensione';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { RecensioneService } from 'src/app/servizi/recensione.service';
 
@@ -13,34 +11,23 @@ import { RecensioneService } from 'src/app/servizi/recensione.service';
 
 export class PaginaAttivitaComponent implements OnInit {
 
-  attivita?: Attivita;
-  isAttivita?: boolean;
-  listaRecensioni?: Recensione[];
+  attivita?: any;
+  id: number = 0;
 
   constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, private recensioneService: RecensioneService) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.id = +params['id'];
+    })
     this.visualizzaDettagliAttivita();
-    // this.visualizzaValutazioneAttivita();
   }
-  
-  visualizzaDettagliAttivita(): void {
-    const id: number = +this.route.snapshot.params['id'];
 
-    this.attivitaService.visualizzaAttivita(id).subscribe((data) => {
-      this.attivita = data;
-      console.log(this.attivita.coordinate);
+  visualizzaDettagliAttivita(): void {
+    this.attivitaService.visualizzaAttivita(this.id).subscribe((attivita) => {
+      this.attivita = attivita.data;
     }, (error) => {
       console.error(error);
     })
   }
-
-  // visualizzaValutazioneAttivita(): void {
-  //   const id = this.route.snapshot.params['id'];
-
-  //   this.recensioneService.visualizzaRecensioniPerAttivita(id).subscribe((data) => {
-  //     this.listaRecensioni = data;
-  //     console.log(this.listaRecensioni);
-  //   })
-  // }
 }
