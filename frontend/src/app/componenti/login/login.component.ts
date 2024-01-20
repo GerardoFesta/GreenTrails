@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+
 loginForm: FormGroup
 hide = true;
 email= new FormControl('', [Validators.required, Validators.email])
@@ -62,6 +63,9 @@ password= new FormControl('', [Validators.required])
         }
       );
     }
+  }
+  click() {
+    this.mostraMessaggio ("Ti abbiamo inviato una mail. Controlla la posta elettronica e segui le istruzioni per cambiare la password");
   }
 
   mostraMessaggio(messaggio: string, errore: boolean = false) {
