@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Attivita } from 'src/app/classi/attivita';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 @Component({
@@ -10,19 +9,18 @@ import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 export class HomepageComponent implements OnInit {
 
-  listaAttivita?: Attivita[];
+  listaAttivita?: any;
 
   constructor(private attivitaService: AttivitaService) { }
 
   ngOnInit(): void {
-    // this.getListaAttivita();
+    this.getListaAttivita();
   }
 
-  // getListaAttivita() {
-  //   this.attivitaService.getListaAttivita().subscribe((data: Attivita[]) => {
-  //     this.listaAttivita = data;
-  //     console.log(this.listaAttivita);
-  //   })
-  // }
+  getListaAttivita() {
+    this.attivitaService.findAllAttivita().subscribe((listaAttivita: any) => {
+      this.listaAttivita = listaAttivita.data;
+    })
+  }
 
 }
