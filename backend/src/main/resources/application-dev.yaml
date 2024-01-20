@@ -5,9 +5,7 @@ spring:
     show-sql: 'true'
     properties:
       hibernate:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+
   datasource:
     url: jdbc:mysql://localhost:3306/greentrails
     username: ${DB_USER}

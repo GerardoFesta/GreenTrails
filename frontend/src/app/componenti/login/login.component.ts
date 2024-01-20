@@ -47,8 +47,7 @@ password= new FormControl('', [Validators.required])
           console.log('Login avvenuto con successo:', response);
           this.mostraMessaggio ("Bentornato");
             if (response && response.status === 'success') {
-            const isGestore = response.ruolo === 'GESTORE';
-            if (isGestore) {
+            if (response.data.ruolo) {
               this.router.navigate(['/paginaattiva']);
             } else {
               this.router.navigate(['/registrazione']);
