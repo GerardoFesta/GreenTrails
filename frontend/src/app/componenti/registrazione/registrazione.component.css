@@ -1,0 +1,22 @@
+.orientamento{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    }
+.color{
+        background-color: black;
+    }  
+form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+.container{
+      margin: 5%;
+      width: 100%;
+    }
+.btn{
+      display: flex;
+      justify-content: flex-end;
+    }
