@@ -5,11 +5,11 @@ import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-att
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 
 const routes: Routes = [
-  {path:'', component: LoginComponent},
+  { path: '', component: LoginComponent },
   { path: 'paginaattiva', component: PaginaAttivitaComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
-  // { path: '', redirectTo: '/paginaattiva', pathMatch: 'full' },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

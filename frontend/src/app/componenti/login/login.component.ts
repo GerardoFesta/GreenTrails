@@ -1,7 +1,6 @@
-import { LoginService } from 'src/app/servizi/login.service';
+import { UtenteService } from './../../servizi/utente.service';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { HttpHeaders } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -11,41 +10,64 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-loginForm: FormGroup;
-openBottomSheet: any;
-hide:any;
+loginForm: FormGroup
+hide = true;
 email= new FormControl('', [Validators.required, Validators.email])
 password= new FormControl('', [Validators.required])
-  dataNascita: any;
-  nome: any;
-  cognome: any;
 
 
-  constructor(private LoginService: LoginService, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
+  constructor(private UtenteService: UtenteService, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router) {
     this.loginForm = this.fb.group({
-      email: this.email, // Aggiungi il campo email al FormGroup
-      password: this.password, // Aggiungi il campo password al FormGroup
-      isGestore: false // Imposta il valore predefinito per isGestore (potresti voler modificare questo valore a seconda delle tue esigenze)
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]]
     });
   }
   
   getError(){
-    const emailControl = this.loginForm.get('email');
-    const passwordControl = this.loginForm.get('password')
+    const emailControl = this.email.get('email');
+    const passwordControl = this.password.get('password')
     if(emailControl && passwordControl){
       if(emailControl.hasError('required') && passwordControl.hasError('required'))
-      return 'Email or password are wrong'
+      return 'Inserisci mail'
     }
-    return'check if the email or password you put are correct!'
+    return'Inserisci mail e password'
   }
 
-  onSubmit() {
+  onSubmit() {}
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-  
 
-  
+  onClick() {
+    if (this.loginForm.valid) {
+      const { email, password } = this.loginForm.value;
+
+
+    
+      this.UtenteService.login(email, password).subscribe(
+        (response: any) => {
+          console.log('Login avvenuto con successo:', response);
+          this.mostraMessaggio ("Bentornato");
+            if (response && response.status === 'success') {
+            const isGestore = response.ruolo === 'GESTORE';
+            if (isGestore) {
+              this.router.navigate(['/paginaattiva']);
+            } else {
+              this.router.navigate(['/registrazione']);
+            }
+          } else {
+            console.error('La risposta dal servizio non è valida:', response);
+          }
+        },
+        (error: any) => {
+          console.error('Errore durante il login:', error);
+          this.mostraMessaggio ("Mail o Password sbagliate");
+        }
+      );
+    }
   }
-}
+
+  mostraMessaggio(messaggio: string, errore: boolean = false) {
+    this.snackBar.open(messaggio, 'Chiudi', {
+      duration: 5000, });
+
+  }
+ }
