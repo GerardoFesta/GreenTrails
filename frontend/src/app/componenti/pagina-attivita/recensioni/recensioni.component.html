@@ -1,39 +1,38 @@
-<!-- Container lista-recensioni -->
-<mat-list role="list">
-    <!-- Container elementi della lista -->
-    <mat-list-item role="listitem">
-        <!-- Container recensione -->
-        <div class="recensione-container">
-            <!-- Container button per visualizzare galleria immagini recensione e immagine del profilo utente -->
-            <div class="img-propic-container">
-                <!-- Container pulsante immagini -->
-                <div class="immagini-container">
-                    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
-                        <span class="material-symbols-outlined" style="font-size: 48px;">
-                            gallery_thumbnail
-                        </span>
-                    </button>
-                </div>
-                <!-- Container propic e nome utente -->
-                <div class="propic-nome-container">
-                    <!-- Container propic -->
-                    <div class="propic-container">
-
+<div class="container">
+    <div class="lista-container" *ngFor="let recensione of recensioni">
+        <ul>
+            <li style="margin: 0" class="elemento-lista">
+                <div class="recensione-container">
+                    <div class="img-propic-container">
+                        <div class="immagini-container">
+                            <button mat-icon-button aria-label="gallery_thumbnail"
+                                style="color: #32CD32; margin-top: 30px;">
+                                <mat-icon style="font-size: 50px;">collections</mat-icon>
+                            </button>
+                        </div>
+                        <div class="propic-nome-container">
+                            <div class="propic-container">
+                                <mat-icon style="color: #32CD32; font-size: 45px; margin-right: 30px;">account_box
+                                </mat-icon>
+                            </div>
+                            <div class="nome-container">
+                                {{recensione.visitatore.nome}} {{recensione.visitatore.cognome}}
+                            </div>
+                        </div>
                     </div>
-                    <!-- Container nome utente -->
-                    <div class="nome-container">
+                    <div class="stelle-utente-container">
+                        <ngb-rating [rate]="recensione.valutazioneStelleEsperienza"
+                            style="color: #32CD32;"></ngb-rating>
+                    </div>
 
+                    <div class="valutazione-discorsiva-container" *ngIf="recensione.descrizione !== ''">
+                        <p>
+                            {{recensione.descrizione}}
+                        </p>
                     </div>
                 </div>
-            </div>
-            <!-- Container stelle valutazione utente -->
-            <div class="stelle-utente-container">
-
-            </div>
-            <!-- Container valutazione discorsiva utente -->
-            <div class="valutazione-discorsiva-container">
-
-            </div>
-        </div>
-    </mat-list-item>
-</mat-list>
+            </li>
+        </ul>
+    </div>
+    <app-recensione-form *ngIf="!hasRecensione"></app-recensione-form>
+</div>

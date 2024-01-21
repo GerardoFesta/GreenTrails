@@ -1,9 +1,10 @@
+import { RecensioneFormComponent } from './componenti/pagina-attivita/recensioni/recensione-form/recensione-form.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
@@ -15,13 +16,13 @@ import { ValutazioneAttivitaComponent } from './componenti/pagina-attivita/info-
 import { PoliticheEcosostenibiliAttivitaComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/politiche-ecosostenibili-attivita.component';
 import { SlideshowComponent } from './componenti/pagina-attivita/descrizione-attivita/slideshow/slideshow.component';
 import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map.component';
+import { HomepageComponent } from './componenti/homepage/homepage.component';
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import { MatNativeDateModule } from '@angular/material/core';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -50,7 +51,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -63,14 +64,20 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { PrenotazioniComponent } from './componenti/prenotazioni/prenotazioni.component';
 import { PrenotAttivitaComponent } from './componenti/prenot-attivita/prenot-attivita.component';
+import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
+import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
+import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     PrenotazioniComponent,
-    PrenotAttivitaComponent
+    PrenotAttivitaComponent,
 
+    LoginComponent,
     PaginaAttivitaComponent,
     InfoAttivitaComponent,
     CardAttivitaComponent,
@@ -81,6 +88,10 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
+    HomepageComponent,
+    RecensioneFormComponent,
+    RecensioneComponent,
+    PopupRecensioneComponent,
   ],
   imports: [
     BrowserModule,
@@ -130,6 +141,8 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
+    Ng2SearchPipeModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -173,6 +186,8 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
+    Ng2SearchPipeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
