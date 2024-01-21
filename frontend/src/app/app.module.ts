@@ -65,6 +65,7 @@ import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -84,7 +85,7 @@ import { PopupRecensioneComponent } from './componenti/pagina-attivita/recension
     HomepageComponent,
     RecensioneFormComponent,
     RecensioneComponent,
-    PopupRecensioneComponent
+    PopupRecensioneComponent,
   ],
   imports: [
     BrowserModule,
@@ -134,6 +135,7 @@ import { PopupRecensioneComponent } from './componenti/pagina-attivita/recension
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
+    Ng2SearchPipeModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -178,6 +180,7 @@ import { PopupRecensioneComponent } from './componenti/pagina-attivita/recension
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
+    Ng2SearchPipeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
