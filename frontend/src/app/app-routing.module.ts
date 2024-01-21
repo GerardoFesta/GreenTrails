@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'paginaattiva', component: PaginaAttivitaComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
+  {path: 'attivita/:id', component: PaginaAttivitaComponent},
 ];
 
 
