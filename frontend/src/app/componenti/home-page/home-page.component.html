@@ -1,17 +1,26 @@
 <div class="container">
     <div class="header">
-        <div class="dettagli"></div>
+        <div class="dettagli">
+            <a href="" class="chisiamo">chi siamo?</a>
+        </div>
     </div>
     <div class="suggeriti">
-        <label for="suggeritiPerTe" > Suggeriti per te</label>
-        <mat-grid-list  rowHeight="2:1">
-            <mat-grid-tile>1</mat-grid-tile>
-            <mat-grid-tile>2</mat-grid-tile>
-            <mat-grid-tile>3</mat-grid-tile>
-            <mat-grid-tile>4</mat-grid-tile>
-          </mat-grid-list>
+        <label for="suggeritiPerTe" style="font-size:20px;"> Suggeriti per te</label>
+        <div class="mostra">
+            <img mat-card-image
+            src="{{immagine_attivita}}"
+            alt="immagine-attivita">  
+        </div>
     </div>
-    <div class="attivita"></div>
-    <div class="allogi"></div>
-    <div class="economici"></div>
+    <div class="attivita">
+        <label for="ATuristica" style="font-size:20px;" > Attività turistica</label>
+    </div>
+    <div class="allogi">
+        <label for="Allogi" style="font-size:20px;"> Allogi</label>
+
+    </div>
+    <div class="economici">
+        <label for="eco" style="font-size:20px;" > I più economici</label>
+
+    </div>
 </div>

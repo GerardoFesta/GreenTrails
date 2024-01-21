@@ -50,5 +50,19 @@ mat-grid-list {
     display:flex;
     display-direction: row;
         width: 10%;
-
+}
+.label{
+    font-size: 50px;
+}
+.mat-card-image {
+    border: 5px solid lightgreen;
+    height:60%;
+    border-radius: 20px;
+    box-shadow: 7px 7px 5px #dedede;
+    margin-top: 10%;
+    /* background-color: aqua; */
+}
+.mostra{
+    display:flex;
+    flex-direction:column;
 }
