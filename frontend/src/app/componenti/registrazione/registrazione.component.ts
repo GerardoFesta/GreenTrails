@@ -1,8 +1,9 @@
-import { RegistrazioneService } from './../../services/registrazione.service';
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { UtenteService } from './../../servizi/utente.service';
+import { HttpHeaders } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import {  AbstractControl, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -21,95 +22,110 @@ export class RegistrazioneComponent implements OnInit {
 
   hide = true;
 
-  
-  //GESTIONE ERRORI NOME
+  dataNascita = new FormControl();
   nome = new FormControl('', [Validators.required, Validators.maxLength(10)]);
- getErrorMessageNome() {
-    if (this.nome.hasError('required')) {
-      return 'Inserisci nome';
-    }
-    return this.nome.hasError('maxlength') ? 'Nome troppo lungo' : '';
-  }
-  
-  //GESTIONE ERRORI COGNOME
   cognome = new FormControl('', [Validators.required, Validators.maxLength(15)]);
-  getErrorMessageCognome() {
-    if (this.cognome.hasError('required')) {
-      return 'Inserisci cognome';
-    }
-    return this.cognome.hasError('maxlength')? 'Cognome troppo lungo' : '';
-  }
-
-
-
-  //GESTIONE ERRORI EMAIL
   email = new FormControl('', [Validators.required, Validators.email]);
-  getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'Inserisci email';
-    }
-    return this.email.hasError('email') ? 'Email non valida' : '';
-  }
-
-
-  //GESTIONE ERRORI PASSWORD
   password = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16),
     Validators.pattern("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$"), ]);
-    getErrorMessagepassword(): string {
-      if (this.password.hasError('required')) {
-        return 'Inserisci password';
+
+    // GESTIONE ERRORI
+    getErrorMessage(control: AbstractControl): string {
+      if (control.hasError('required')) {
+        return 'Campo obbligatorio';
+      } else if(control.hasError('maxlength')){
+        return 'Troppo lungo';
+      } 
+      else if (this.email.hasError('email')) {
+      return this.email.hasError('email') ? 'Email non valida' : '';
+
       } else if (this.password.hasError('pattern')) {
         return 'Password non valida, inserire almeno un numero e un carattere speciale';
-      } else if (this.password.hasError('minlength')) {
-        return 'Password troppo piccola, minimo 8 caratteri';
-      } else {
-        return this.password.hasError('maxlength') ? 'Password troppo lunga, massimo 16 caratteri' : '';
+      } else { return this.password.hasError('minlength') ?
+        'Password troppo piccola, minimo 8 caratteri' : ' ';
       }
     }
+ 
       //SELECT
-  selected = new FormControl('', [Validators.required]);
-  selectFormControl = new FormControl('', [Validators.required]);
-  nativeSelectFormControl = new FormControl('', [Validators.required ]);
+  selected = new FormControl(false, [Validators.required]);
+  selectFormControl = new FormControl('',[Validators.required]);
+  nativeSelectFormControl = new FormControl('',[Validators.required ]);
   matcher = new MyErrorStateMatcher();
 
-      //SELECT
+    // FORMATO DATA
+    private formatDate(date: Date): string {
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const day = date.getDate().toString().padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
 
+    constructor(private UtenteService : UtenteService, private snackBar: MatSnackBar ) {}
 
- 
+    ngOnInit(): void { } 
 
+    onSubmit(){ 
 
-  togglePasswordVisibility() {
-  throw new Error('Method not implemented.');
-  }
-
-    constructor(private RegistrazioneService : RegistrazioneService ) {}
-  
-    ngOnInit(): void {
-      
-    } 
-    registrazioneform = false;
-    onSubmit(){
-      console.log('Entrato nella onSubmit');
-
+      const isGestore: boolean = this.selected.value!
       const formData = {
+        dataNascita: this.formatDate(this.dataNascita.value),
         nome: this.nome.value,
         cognome: this.cognome.value,
         email: this.email.value,
         password: this.password.value,
-        selected : this.selected.value
       };
 
-      if (this.nome.valid && this.cognome.valid && this.email.valid && this.password.valid) {
-        this.RegistrazioneService.registerUser(formData).subscribe(
-          response => {
-            console.log('Registrazione completata con successo!', response);
-          },
-          error => {
-            console.error('Errore durante la registrazione:', error);
-          }
-        );
+      this.resetForm();
+
+      //INVIO DATI
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+      });
+
+      this.UtenteService.registerUser(isGestore, formData, { headers: headers })
+      .subscribe(
+        (risposta) => {
+          console.log('Risposta dal backend:', risposta);
+          if (risposta.status === 'success') {
+            this.mostraMessaggio ("Utente registrato con successo");
+          } 
+        },
+        (errore: any) => {
+          console.error('Errore durante la richiesta PUT:', errore);
+          if (errore.status === 400) {
+            this.mostraMessaggio ("Utente già registrato");
+          } 
+        }
+      );
+      
+    }
+
+    mostraMessaggio(messaggio: string, errore: boolean = false) {
+      this.snackBar.open(messaggio, 'Chiudi', {
+        duration: 5000, });
+
+    }
+
+    resetForm() {    //RESET CAMPI DEL FORM
+      this.dataNascita.reset();
+      this.nome.reset();
+      this.cognome.reset();
+      this.email.reset();
+      this.password.reset();
+      this.selected.reset();
+        // AZZERA STATO "TOCCATO" E "SPORCO" DEL FORM
+      this.dataNascita.markAsUntouched();
+      this.nome.markAsUntouched();
+      this.cognome.markAsUntouched();
+      this.email.markAsUntouched();
+      this.password.markAsUntouched();
+      this.selected.markAsUntouched();
+      this.dataNascita.markAsPristine();
+      this.nome.markAsPristine();
+      this.cognome.markAsPristine();
+      this.email.markAsPristine();
+      this.password.markAsPristine();
+      this.selected.markAsPristine();
     }
 }
-  
-  
-}
+

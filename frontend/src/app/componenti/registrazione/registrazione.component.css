@@ -1,27 +1,22 @@
 .orientamento{
-    display: flex; 
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh; 
-    margin: 0; 
-  }
-
-  form {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
 
-  }
-
-  .error-message {
-    color: red; /* Colore del testo per il messaggio di errore */
-    font-size: 0.9em; /* Dimensione del carattere per il messaggio di errore */
-    margin-top: 1px; /* Spazio superiore dal campo di input */
-  }
-
-  .container{
-    margin: 15px;
-
-
-  }
+    }
+.color{
+        background-color: black;
+    }  
+form {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+.container{
+      margin: 5%;
+      width: 100%;
+    }
+.btn{
+      display: flex;
+      justify-content: flex-end;
+    }

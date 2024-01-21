@@ -1,6 +1,13 @@
 package it.greentrails.backend.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,30 +16,31 @@ import lombok.Setter;
 @Entity
 @Table(name = "recensione")
 public class Recensione {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_visitatore")
-    private Utente visitatore;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_attivita", nullable = false)
-    private Attivita attivita;
+  @ManyToOne
+  @JoinColumn(name = "id_visitatore")
+  private Utente visitatore;
 
-    @Column(name = "valutazione_stelle_esperienza", nullable = false)
-    private int valutazioneStelleEsperienza;
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "id_attivita", nullable = false)
+  private Attivita attivita;
 
-    @Column(name = "descrizione", nullable = false)
-    private String descrizione;
+  @Column(name = "valutazione_stelle_esperienza", nullable = false)
+  private int valutazioneStelleEsperienza;
 
-    @Column(name = "media", nullable = false)
-    private String media;
+  @Column(name = "descrizione", nullable = false)
+  private String descrizione;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "id_valori", nullable = false)
-    private ValoriEcosostenibilita valoriEcosostenibilita;
+  @Column(name = "media", nullable = false)
+  private String media;
+
+  @ManyToOne(optional = false)
+  @JoinColumn(name = "id_valori", nullable = false)
+  private ValoriEcosostenibilita valoriEcosostenibilita;
 
 }
