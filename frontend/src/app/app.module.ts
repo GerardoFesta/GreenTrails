@@ -62,6 +62,7 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
+import { HomePageComponent } from './componenti/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +78,7 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,54 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: cyan;
+}
+.header{
+    height:30%;
+    background-color: azure;
+    display:flex;
+    flex-direction: row;
+    justify-content: right;
+    align-content: right; 
+}
+.suggeriti{
+    height: 20%;
+    background-color: brown;
+    display:flex;
+    flex-direction: row;
+}
+.attivita{
+    height:20%;
+    background-color: blue;
+    display:flex;
+    flex-direction: row;
+
+}
+.allogi{
+    height:20%;
+    background-color: red;
+    display:flex;
+    flex-direction: row;
+}
+.economici{
+    height:20%;
+    background-color: yellow;
+    display:flex;
+    flex-direction: row;
+}
+.dettagli{
+    height:10%;
+    width:30%;
+    background-color:red;
+}
+.suggeritiPerTe{
+
+}
+mat-grid-list {
+    background: lightblue;
+    display:flex;
+    display-direction: row;
+        width: 10%;
+
+}
