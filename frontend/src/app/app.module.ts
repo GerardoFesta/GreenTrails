@@ -64,6 +64,7 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
 import { ChisiamoComponent } from './componenti/chisiamo/chisiamo.component';
 import { IntroduzioneComponent } from './componenti/chisiamo/introduzione/introduzione.component';
 import { PoliticheEcoComponent } from './componenti/chisiamo/politiche-eco/politiche-eco.component';
+import { FineComponent } from './componenti/chisiamo/fine/fine.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { PoliticheEcoComponent } from './componenti/chisiamo/politiche-eco/polit
     ChisiamoComponent,
     IntroduzioneComponent,
     PoliticheEcoComponent,
+    FineComponent,
   ],
   imports: [
     BrowserModule,

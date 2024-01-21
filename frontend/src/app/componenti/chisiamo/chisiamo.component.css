@@ -1,26 +1,13 @@
 .chisiamo{
-
 margin-left: 20%;
 margin-right: 20%;
-
 }
 
-.mat-dividier{
-
-  background-color: blue;
-  font-size: x-small;
-
-
-
-
-}
 .sfondo{
-
   padding: 4%;
-     text-align: center;
-  background: url(\src\assets\chisiamo\sfondo.png) center center;
-  background-size:cover;
+  text-align: center;
     }
+
 .politiche-eco{
   margin-top: 5%;
     font-size: 300%;
@@ -32,13 +19,13 @@ margin-right: 20%;
     height: auto;
     padding: 5%;
     background: transparent;
-
 }
 .contenitore {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
   }
+
 .card {
     width: 40%;
     background: transparent; /* o qualsiasi larghezza desiderata */
