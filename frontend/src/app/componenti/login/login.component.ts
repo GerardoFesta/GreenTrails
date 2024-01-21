@@ -37,7 +37,7 @@ password= new FormControl('')
           this.mostraMessaggio ("Bentornato");
             if (response && response.status === 'success') {
             if (response.data.ruolo) {
-              this.router.navigate(['/paginaattiva']);
+              this.router.navigate(['']);
             } else {
               this.router.navigate(['/registrazione']);
             }

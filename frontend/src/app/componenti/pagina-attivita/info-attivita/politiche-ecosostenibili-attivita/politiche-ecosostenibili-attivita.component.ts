@@ -1,6 +1,8 @@
+import { PrenotazioniService } from './../../../../servizi/prenotazioni.service';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-politiche-ecosostenibili-attivita',
@@ -8,16 +10,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./politiche-ecosostenibili-attivita.component.css']
 })
 export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
-
+ @Input() attivita: any
   id: number = 0;
   valoriEcosostenibilita: string[] = [];
 
-  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute) {
+  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, public dialog: MatDialog, private prenotazioniService: PrenotazioniService) {
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = +params['id'];
+      this.prenotazioniService.changeId(this.id); // Invia l'ID al servizio
+
     })
     this.visualizzaDettagliAttivita();
   }
@@ -40,6 +44,13 @@ export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
     let result = camelCase.replace(/([A-Z])/g, ' $1');
     result = result.replace('C O2', 'CO2');
     return result.charAt(0).toUpperCase() + result.slice(1);
+}
+
+
+openDialog() {
+
+  this.prenotazioniService.apriDialog();
+  
 }
 
 }

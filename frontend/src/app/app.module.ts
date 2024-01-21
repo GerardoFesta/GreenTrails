@@ -62,8 +62,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
-import { PrenotazioniComponent } from './componenti/prenotazioni/prenotazioni.component';
-import { PrenotAttivitaComponent } from './componenti/prenot-attivita/prenot-attivita.component';
+import { PrenotazioniComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/prenotazioni/prenotazioni.component';
+import { PrenotAttivitaComponent } from './componenti/pagina-attivita/prenot-attivita/prenot-attivita.component';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
@@ -101,7 +101,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     MatAutocompleteModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,

@@ -1,7 +1,7 @@
 import { PrenotazioniService } from './servizi/prenotazioni.service';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PrenotazioniComponent } from './componenti/prenotazioni/prenotazioni.component';
+import { PrenotazioniComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/prenotazioni/prenotazioni.component';
 
 
 @Component({
@@ -19,10 +19,7 @@ export class AppComponent {
   
   }
 
-  openDialog() {
-    this.PrenotazioniService.apriDialog();
-    
-  }
+ 
 
   // Add a method to set the category
   setCategory(categoria: string) {

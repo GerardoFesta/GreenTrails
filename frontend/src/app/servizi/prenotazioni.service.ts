@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PrenotAttivitaComponent } from '../componenti/prenot-attivita/prenot-attivita.component';
-import { PrenotazioniComponent } from '../componenti/prenotazioni/prenotazioni.component';
-import { HttpClient } from '@angular/common/http';
+import { PrenotazioniComponent } from '../componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/prenotazioni/prenotazioni.component';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+import { PoliticheEcosostenibiliAttivitaComponent } from '../componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/politiche-ecosostenibili-attivita.component';
+import { BehaviorSubject } from 'rxjs';
+import { PrenotAttivitaComponent } from '../componenti/pagina-attivita/prenot-attivita/prenot-attivita.component';
 
 @Injectable({
   providedIn: 'root'
@@ -26,22 +28,30 @@ export class PrenotazioniService {
     });
   }
 
+  private idSource = new BehaviorSubject<number>(0);
+  currentId = this.idSource.asObservable();
 
-  isAlloggio(userData: any): Observable<any> {
-    
-    return this.http.get(`${this.baseUrl}api/attivita`);
+  changeId(id: number) {
+    this.idSource.next(id);
   }
 
-  prenotazione(dati: any): Observable<any>{
+  prenotazione(idItinerario: number, idAttivita: number,numAdulti: any, numBambini: any, dataInizio: any, dataFine: any  ): Observable<any>{
     const email = 'e@g.b';
     const password = 'qwerty123!';
     const base64credential = btoa(email + ":" + password);
     const headers = ({Authorization: 'Basic ' + base64credential} );
 
-    return this.http.post(`${this.baseUrl}/api/prenotazioni`, dati, {headers});
+    const params = new HttpParams()
+    .set('idItinerario', idItinerario.toString())
+    .set('idAttivita', idAttivita.toString())
+    .set('numAdulti', numAdulti)
+    .set('numBambini', numBambini)
+    .set('dataInizio', dataInizio)
+    .set('dataFine', dataFine);
+    return this.http.post(`${this.baseUrl}/api/prenotazioni-attivita-turistica`,params, {headers});
   }
 
-  itinerari(): Observable<any>{
+  creaItinerari(): Observable<any>{
     const email = 'e@g.b';
     const password = 'qwerty123!';
     const base64credential = btoa(email + ":" + password);
