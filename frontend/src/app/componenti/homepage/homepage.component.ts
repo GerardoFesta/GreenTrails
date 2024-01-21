@@ -11,15 +11,17 @@ export class HomepageComponent implements OnInit {
 
   listaAttivita?: any;
 
+  limite: number = 0;
+
   constructor(private attivitaService: AttivitaService) { }
 
   ngOnInit(): void {
-    this.getListaAttivita();
+    this.visualizzaAttivitaPerPrezzo(this.limite);
   }
 
-  getListaAttivita() {
-    this.attivitaService.findAllAttivita().subscribe((listaAttivita: any) => {
-      this.listaAttivita = listaAttivita.data;
+  visualizzaAttivitaPerPrezzo(limite: number) {
+    this.attivitaService.visualizzaAttivitaPerPrezzo(limite).subscribe((risposta) => {
+      console.log(risposta);
     })
   }
 

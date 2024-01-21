@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -15,7 +15,12 @@ export class AttivitaService {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
-  findAllAttivita(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/all`);
+  visualizzaAttivitaPerPrezzo(limite: number): Observable<any> {
+    const pararms = new HttpParams()
+    .set('limite', limite.toString());
+
+    console.log('Limite:', limite)
+
+    return this.http.get<any>(`${this.baseUrl}/perPrezzo`);
   }
 }
