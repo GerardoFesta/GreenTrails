@@ -21,6 +21,7 @@ export class AppComponent {
 
   openDialog() {
     this.PrenotazioniService.apriDialog();
+    
   }
 
   // Add a method to set the category

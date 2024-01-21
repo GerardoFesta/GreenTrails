@@ -13,16 +13,7 @@ export class PrenotazioniService {
 
   constructor(private dialog: MatDialog, private http: HttpClient) {}
 
-  private baseUrl = 'http://localhost:8080/api/v1/greentrails';
-
-
-  isAlloggio(userData: any): Observable<any> {
-    return this.http.get(`${this.baseUrl}`, userData);
-  }
-
-
-
-
+  private baseUrl = 'http://localhost:8080';
 
   apriDialog() {
     const dialogRef =
@@ -33,5 +24,28 @@ export class PrenotazioniService {
     dialogRef.afterClosed().subscribe((risultato) => {
       console.log(`Dialog chiuso con risultato: ${risultato}`);
     });
+  }
+
+
+  isAlloggio(userData: any): Observable<any> {
+    
+    return this.http.get(`${this.baseUrl}api/attivita`);
+  }
+
+  prenotazione(dati: any): Observable<any>{
+    const email = 'e@g.b';
+    const password = 'qwerty123!';
+    const base64credential = btoa(email + ":" + password);
+    const headers = ({Authorization: 'Basic ' + base64credential} );
+
+    return this.http.post(`${this.baseUrl}/api/prenotazioni`, dati, {headers});
+  }
+
+  itinerari(): Observable<any>{
+    const email = 'e@g.b';
+    const password = 'qwerty123!';
+    const base64credential = btoa(email + ":" + password);
+    const headers = ({Authorization: 'Basic ' + base64credential} );
+    return this.http.post(`${this.baseUrl}/api/itinerari`,{},  {headers});
   }
 }
