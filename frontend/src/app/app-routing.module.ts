@@ -10,6 +10,8 @@ const routes: Routes = [
   { path: 'paginaattiva', component: PaginaAttivitaComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
+  {path: 'login', component: LoginComponent},
+
 ];
 
 

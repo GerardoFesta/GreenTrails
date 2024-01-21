@@ -23,4 +23,5 @@ export class AttivitaService {
 
     return this.http.get<any>(`${this.baseUrl}/perPrezzo`);
   }
+
 }

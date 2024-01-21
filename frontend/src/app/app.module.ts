@@ -16,7 +16,6 @@ import { ValutazioneAttivitaComponent } from './componenti/pagina-attivita/info-
 import { PoliticheEcosostenibiliAttivitaComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/politiche-ecosostenibili-attivita.component';
 import { SlideshowComponent } from './componenti/pagina-attivita/descrizione-attivita/slideshow/slideshow.component';
 import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map.component';
-import { HomepageComponent } from './componenti/homepage/homepage.component';
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -63,10 +62,10 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
-import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { HomePageComponent } from './componenti/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -82,10 +81,10 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
-    HomepageComponent,
     RecensioneFormComponent,
     RecensioneComponent,
     PopupRecensioneComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,
