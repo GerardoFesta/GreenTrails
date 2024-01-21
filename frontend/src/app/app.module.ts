@@ -6,12 +6,21 @@ import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
+import { InfoAttivitaComponent } from './componenti/pagina-attivita/info-attivita/info-attivita.component';
+import { CardAttivitaComponent } from './componenti/pagina-attivita/info-attivita/card-attivita/card-attivita.component';
+import { RecensioniComponent } from './componenti/pagina-attivita/recensioni/recensioni.component';
+import { DescrizioneAttivitaComponent } from './componenti/pagina-attivita/descrizione-attivita/descrizione-attivita.component';
+import { ValutazioneAttivitaComponent } from './componenti/pagina-attivita/info-attivita/valutazione-attivita/valutazione-attivita.component';
+import { PoliticheEcosostenibiliAttivitaComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/politiche-ecosostenibili-attivita.component';
+import { SlideshowComponent } from './componenti/pagina-attivita/descrizione-attivita/slideshow/slideshow.component';
+import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map.component';
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -54,6 +63,7 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { PrenotazioniComponent } from './componenti/prenotazioni/prenotazioni.component';
 import { PrenotAttivitaComponent } from './componenti/prenot-attivita/prenot-attivita.component';
+import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +71,16 @@ import { PrenotAttivitaComponent } from './componenti/prenot-attivita/prenot-att
     PrenotazioniComponent,
     PrenotAttivitaComponent
 
+    PaginaAttivitaComponent,
+    InfoAttivitaComponent,
+    CardAttivitaComponent,
+    RecensioniComponent,
+    DescrizioneAttivitaComponent,
+    ValutazioneAttivitaComponent,
+    PoliticheEcosostenibiliAttivitaComponent,
+    SlideshowComponent,
+    MapComponent,
+    RegistrazioneComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +90,7 @@ import { PrenotAttivitaComponent } from './componenti/prenot-attivita/prenot-att
     MatAutocompleteModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,

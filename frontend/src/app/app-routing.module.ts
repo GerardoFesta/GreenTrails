@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
+import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: 'paginaattiva', component: PaginaAttivitaComponent },
+  { path: 'registrazione', component: RegistrazioneComponent },
+  { path: '', redirectTo: '/paginaattiva', pathMatch: 'full' },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

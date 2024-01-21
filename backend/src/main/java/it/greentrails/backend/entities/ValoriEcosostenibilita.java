@@ -32,6 +32,7 @@ public class ValoriEcosostenibilita {
   @Column(name = "raccolta_differenziata")
   private Boolean raccoltaDifferenziata;
 
+  @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   @Column(name = "limite_emissione_CO2")
   private Boolean limiteEmissioneCO2;
 
