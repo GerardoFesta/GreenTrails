@@ -32,6 +32,8 @@ export class RecensioneFormComponent implements OnInit {
     { label: '', selectedOption: '' }
   ];
 
+  files!: FileList;
+
   constructor(
     config: NgbRatingConfig,
     private recensioneService: RecensioneService,
@@ -43,6 +45,21 @@ export class RecensioneFormComponent implements OnInit {
     config.max = 5;
     config.readonly = false;
   }
+
+  fileNames: string[] = [];
+
+  onFileSelected(event: any) {
+    this.files = event.target.files;
+    
+    console.log("Files selected: ", this.files);
+    Array.from(this.files).forEach((file, index) => {
+      // formData.append('immagine', immagine[index], immagine[index].name);
+      // console.log('name: ', file.name);
+      // console.log('size: ', file.size);
+      // console.log('type: ', file.type);
+      this.fileNames.push(file.name);
+    })
+}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -135,8 +152,7 @@ export class RecensioneFormComponent implements OnInit {
     });
   }
 
-  inviaRecensione(recensioneForm: NgForm) {
-    console.log(this.valoriEcosostenibilita.politicheAntispreco);
+  inviaRecensione() {
     this.valoriService.creaValoriEcosostenibilitaVisitatore(
       this.valoriEcosostenibilita.politicheAntispreco,
       this.valoriEcosostenibilita.prodottiLocali,
@@ -145,11 +161,10 @@ export class RecensioneFormComponent implements OnInit {
       this.valoriEcosostenibilita.limiteEmissioneCO2,
       this.valoriEcosostenibilita.contattoConNatura,
     ).subscribe((valoreNew) => {
-      console.log(valoreNew.data.id);
 
       this.idValori = valoreNew.data.id;
 
-      this.recensioneService.creaRecensione(this.idAttivita, this.rating, this.valutazioneDiscorsiva, this.idValori)
+      this.recensioneService.creaRecensione(this.idAttivita, this.rating, this.valutazioneDiscorsiva, this.idValori, this.files)
         .subscribe((risposta: any) => {
           console.log(risposta);
           if (risposta?.status === 'success') {

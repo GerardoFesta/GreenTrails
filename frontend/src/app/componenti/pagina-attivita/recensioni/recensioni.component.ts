@@ -33,7 +33,7 @@ export class RecensioniComponent implements OnInit {
     this.recensioneService.visualizzaRecensioniPerAttivita(this.idAttivita).subscribe((risposta) => {
       this.recensioni = risposta.data;
 
-      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'visitatore@visitatore.it');
+      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'visitatore@visitatore.com');
     })
   }
 }
