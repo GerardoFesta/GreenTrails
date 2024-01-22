@@ -15,7 +15,7 @@ export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadNames();
+    // this.loadNames();
   }
 
   // loadNamesAndEmails() {
@@ -26,12 +26,12 @@ export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
   //   });
   // }
 
-  loadNames() {
-    this.studentService.getName().subscribe((nome) => {
-      this.politicheEcosostenibili = nome;
-    }, (error) => {
-       console.error(error);
-    })
-  }
+  // loadNames() {
+  //   this.studentService.getName().subscribe((nome) => {
+  //     this.politicheEcosostenibili = nome;
+  //   }, (error) => {
+  //      console.error(error);
+  //   })
+  // }
 
 }

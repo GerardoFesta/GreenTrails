@@ -60,6 +60,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { HomepageComponent } from './componenti/homepage/homepage.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
 
@@ -75,6 +76,7 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     PoliticheEcosostenibiliAttivitaComponent,
     SlideshowComponent,
     MapComponent,
+    HomepageComponent,
     RegistrazioneComponent,
     PopupsegnalazioneComponent,
   ],
@@ -125,6 +127,7 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -168,6 +171,7 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

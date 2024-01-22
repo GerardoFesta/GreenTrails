@@ -1,39 +1,32 @@
-<!-- Container lista-recensioni -->
-<mat-list role="list">
-    <!-- Container elementi della lista -->
-    <mat-list-item role="listitem">
-        <!-- Container recensione -->
-        <div class="recensione-container">
-            <!-- Container button per visualizzare galleria immagini recensione e immagine del profilo utente -->
-            <div class="img-propic-container">
-                <!-- Container pulsante immagini -->
-                <div class="immagini-container">
-                    <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
-                        <span class="material-symbols-outlined" style="font-size: 48px;">
-                            gallery_thumbnail
-                        </span>
-                    </button>
-                </div>
-                <!-- Container propic e nome utente -->
-                <div class="propic-nome-container">
-                    <!-- Container propic -->
-                    <div class="propic-container">
-
+<div class="lista-container">
+    <ul>
+        <li style="margin: 0" class="elemento-lista">
+            <div class="recensione-container">
+                <div class="img-propic-container">
+                    <div class="immagini-container">
+                        <button mat-icon-button aria-label="gallery_thumbnail" style="color: #32CD32; margin-top: 30px;">
+                            <mat-icon style="font-size: 50px;">collections</mat-icon>
+                        </button>
                     </div>
-                    <!-- Container nome utente -->
-                    <div class="nome-container">
-
+                    <div class="propic-nome-container">
+                        <div class="propic-container">
+                            <mat-icon
+                                style="color: #32CD32; font-size: 60px; margin-right: 30px; margin-top: 20px;">account_box</mat-icon>
+                        </div>
+                        <div class="nome-container">
+                            Nome_utente
+                        </div>
                     </div>
                 </div>
+                <div class="stelle-utente-container">
+                    <ngb-rating [rate]="3" style="color: #32CD32;"></ngb-rating>
+                </div>
+                <div class="valutazione-discorsiva-container">
+                    <p>
+                        mqo3srGQaSybGj2VW0wTn8BiBgK6gEWUZ5qi2n6ziFhj2eDDBHAjH7ruchgA0d8pLRggTfLOpkUHcCiHtagRbyuFC2ZirMLaP8Q1dk6tlAlbH3lZ5ZnqHy9OjNbcLmcErn8l713Z9CFaBGJQWv8kp3vPBLG4SqrRAThWIRryqtMN5TLZE3HjGUg0H6PNNWu6aOMm4o61YMeedLVBfG8ZFCr4TJJVtk2QeD2aYOlyiwFAWz7HuaGbg73Lg2Sirlq
+                    </p>
+                </div>
             </div>
-            <!-- Container stelle valutazione utente -->
-            <div class="stelle-utente-container">
-
-            </div>
-            <!-- Container valutazione discorsiva utente -->
-            <div class="valutazione-discorsiva-container">
-
-            </div>
-        </div>
-    </mat-list-item>
-</mat-list>
+        </li>
+    </ul>
+</div>

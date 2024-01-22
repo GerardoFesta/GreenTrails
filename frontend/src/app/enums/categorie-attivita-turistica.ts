@@ -1,0 +1,6 @@
+export enum CategorieAttivitaTuristica {
+    ALL_APERTO = 'ALL_APERTO',
+    VISITE_CULTURALI_STORICHE = 'VISITE_CULTURALI_STORICHE',
+    RELAX = 'RELAX',
+    GASTRONOMIA = 'GASTRONOMIA',
+}

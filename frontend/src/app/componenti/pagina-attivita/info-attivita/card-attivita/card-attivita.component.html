@@ -7,7 +7,7 @@
             <button mat-icon-button aria-label="report_attivita_button" matTooltip="Segnala attività" matTooltipPosition="left" (click)="apriSegnalazione()">
                 <mat-icon style="color: red;">report_problem</mat-icon>
             </button>
-            {{nomeAttivita}}
+            {{ attivita?.nome }}
             <ng-container *ngIf="mostraPopup">
                 <div class="overlay-background" (click)="chiudiFormPopup()"></div>
                 <div class="popup-container">
@@ -20,7 +20,7 @@
     <mat-card-content class="card-section" style="margin-top: 10px;">
         <!-- Container immagine attivita -->
         <img mat-card-image
-        src="{{immagine_attivita}}"
+        src="{{ immagine_attivita }}"
         alt="immagine-attivita">
     </mat-card-content>
 </mat-card>

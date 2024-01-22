@@ -1,24 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-valutazione-attivita',
   templateUrl: './valutazione-attivita.component.html',
-  styleUrls: ['./valutazione-attivita.component.css']
+  styleUrls: ['./valutazione-attivita.component.css'],
+  providers: [NgbRatingConfig],
 })
 export class ValutazioneAttivitaComponent {
 
-  @Input() preselectedRating: number = 3;
-  maxRating: number = 5;
-  ratings: number[] = [];
-
   ngOnInit() {
-    this.generateRatings();
   }
 
-  private generateRatings(): void {
-    for (let i = 1; i <= this.maxRating; i++) {
-      this.ratings.push(i);
-    }
+  constructor(config: NgbRatingConfig) {
+    config.max = 5;
+		config.readonly = true;
   }
 
 }

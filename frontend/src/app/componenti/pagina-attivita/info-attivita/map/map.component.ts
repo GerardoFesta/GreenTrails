@@ -23,13 +23,8 @@ export class MapComponent implements OnInit, AfterViewInit {
   }).addTo(this.map);
 
   this.marker = L.marker([41.8919300, 12.5113300]).addTo(this.map);
-  this.marker.bindPopup(this.nomeHotel); // Aggiungi questa riga
   }
 
   ngOnInit() {
-  }
-
-  onMarkerCLick(e: any) {
-    this.popup.setLatLng(e.latlng);
   }
 }

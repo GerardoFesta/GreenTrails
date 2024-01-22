@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Attivita } from 'src/app/classi/attivita';
 
 @Component({
   selector: 'app-info-attivita',
@@ -7,9 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InfoAttivitaComponent implements OnInit {
 
-  constructor() { }
+  @Input() attivita?: Attivita;
 
-  userRating: number = 3;
+  constructor() { }
 
   ngOnInit(): void {
   }
