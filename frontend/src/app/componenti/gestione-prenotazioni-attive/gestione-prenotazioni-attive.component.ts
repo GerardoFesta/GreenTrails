@@ -90,17 +90,15 @@ export class GestionePrenotazioniAttiveComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  get filteredData() {
-    return this.showActiveOnly
-    //cambiare con gli effettivi enum del db
-      ? this.dataSource.filteredData.filter(prenotazione => prenotazione.stato.toLowerCase() === 'attivo')
-      : this.dataSource.filteredData;
-  }
+
 
   onDelete(prenotazione: Prenotazione) {
     console.log(`Deleting: ${prenotazione.nome}`);
   }
-
+  ngOnInit() {
+    this.updatePaginatedData();
+  }
+  
 
 
   get slicedData() {
@@ -125,11 +123,12 @@ export class GestionePrenotazioniAttiveComponent {
   updatePaginatedData() {
     const startIndex: number = this.pageIndex * this.pageSize;
     const endIndex: number = startIndex + this.pageSize;
-    Prenotazione.slice(startIndex, endIndex);
+    this.dataSource.data = Prenotazione.slice(startIndex, endIndex);
   }
-
-  updateFilteredData() {
-    this.pageIndex = 0; // Reset page index when applying filters
-    this.updatePaginatedData();
+  get filteredData() {
+    const filteredData = this.showActiveOnly
+      ? this.dataSource.data.filter(prenotazione => prenotazione.stato.toLowerCase() === 'attivo')
+      : this.dataSource.data;
+    return filteredData;
   }
 }
