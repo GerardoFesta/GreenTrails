@@ -9,10 +9,7 @@ const routes: Routes = [
   {path: '', component: HomepageComponent},
   { path: 'login', component: LoginComponent },
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
-  { path: 'paginaattiva', component: PaginaAttivitaComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
-  {path: 'attivita/:id', component: PaginaAttivitaComponent},
-  { path: '', redirectTo: '/paginaattiva', pathMatch: 'full' },
 ];
 
 
