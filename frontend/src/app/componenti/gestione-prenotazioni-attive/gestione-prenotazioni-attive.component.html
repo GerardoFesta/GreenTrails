@@ -5,8 +5,8 @@
   <div class="dettagli">
     <div class="seleziona">
       <section class="example-section">
-        <mat-checkbox 
-          class="example-margin" >mostra solo prenotazioni attive</mat-checkbox>
+        <mat-checkbox [(ngModel)]="showActiveOnly"
+          class="example-margin"  >mostra solo prenotazioni attive</mat-checkbox>
         
       </section>
 
@@ -18,7 +18,7 @@
   </div>
   <div class="attivita">
 
-    <table mat-table [dataSource]="dataSource" class="table">
+    <table mat-table [dataSource]="filteredData" class="table">
       <!--stato column-->
       <ng-container matColumnDef="stato">
         <th mat-header-cell *matHeaderCellDef> stato </th>

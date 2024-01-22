@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDateFormats } from '@angular/material/core';
 import { DateSelectionModelChange } from '@angular/material/datepicker';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface Prenotazione {
   stato: String;
@@ -29,9 +30,27 @@ const Prenotazione: Prenotazione[] = [
 
 export class GestionePrenotazioniAttiveComponent {
 
-  displayedColumns: string[] = ['stato', 'nome', 'check-in', 'check-out', 'bambini', 'adulti','prezzo'];
-  dataSource = Prenotazione;
-Prenotazione: any;
+  displayedColumns: string[] = ['stato', 'nome', 'check-in', 'check-out', 'bambini', 'adulti', 'prezzo'];
+  Prenotazione: any;
+  dataSource = new MatTableDataSource<Prenotazione>(Prenotazione);
+  showActiveOnly: boolean = false;
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
+  get filteredData() {
+    return this.showActiveOnly
+      ? this.dataSource.filteredData.filter(prenotazione => prenotazione.stato.toLowerCase() === 'attivo')
+      : this.dataSource.filteredData;
+  }
+
+  onDelete(prenotazione: Prenotazione) {
+    // Implement your delete logic here
+    console.log(`Deleting: ${prenotazione.nome}`);
+  }
+
+  
 }
+

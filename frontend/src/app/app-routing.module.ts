@@ -5,7 +5,7 @@ import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-preno
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 
 const routes: Routes = [
-  {path: '', component: GestionePrenotazioniAttiveComponent}
+  {path: '', component: GestionePrenotazioniAttiveComponent},
   { path: 'paginaattiva', component: PaginaAttivitaComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
   { path: '', redirectTo: '/paginaattiva', pathMatch: 'full' },
