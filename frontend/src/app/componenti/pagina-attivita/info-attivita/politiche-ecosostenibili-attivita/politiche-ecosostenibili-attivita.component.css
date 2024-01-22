@@ -16,16 +16,21 @@
     /* background-color: blueviolet; */
 }
 
-/* Container lista valori-ecosostenibilita */
 .lista-eco-container {
-    background-color: rgba(221, 221, 221, 0.504);
-    width: 100%;
-    border: 5px solid lightgreen;
-    max-width: 100%;
-    border-radius: 20px;
-    box-shadow: 7px 7px 5px #dedede;
-    max-height: 200px;
+  background-color: rgba(221, 221, 221, 0.504);
+  width: 100%;
+  border: 5px solid lightgreen;
+  max-width: 100%;
+  border-radius: 20px;
+  box-shadow: 7px 7px 5px #dedede;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+/* Container lista valori-ecosostenibilita */
+.lista-eco {
     overflow-y: auto;
+    max-height: 200px;
 }
 /* Elemento della lista */
 mat-list-item {

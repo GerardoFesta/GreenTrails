@@ -1,0 +1,94 @@
+{
+  "attivita": [
+    {
+      "id": "1",
+      "alloggio": true,
+      "nome": "Attivita1",
+      "indirizzo": "Via Indirizzo1, 123",
+      "cap": "12345",
+      "citta": "Citta1",
+      "provincia": "PR",
+      "coordinate": {
+        "x": 41.9027835,
+        "y": 12.4963655
+      },
+      "descrizioneBreve": "Descrizione breve dell'attività 1",
+      "descrizioneLunga": "Descrizione lunga dell'attività 1",
+      "immagine": "base64_encoded_image1",
+      "disponibilita": 10,
+      "categoriaAlloggio": 1,
+      "categoriaAttivitaTuristica": 2,
+      "recensioni": []
+    },
+    {
+      "id": "2",
+      "alloggio": false,
+      "nome": "Attivita2",
+      "indirizzo": "Via Indirizzo2, 456",
+      "cap": "67890",
+      "citta": "Citta2",
+      "provincia": "MI",
+      "coordinate": {
+        "x": 45.678,
+        "y": 9.012
+      },
+      "descrizioneBreve": "Descrizione breve dell'attività 2",
+      "descrizioneLunga": "Descrizione lunga dell'attività 2",
+      "immagine": "base64_encoded_image2",
+      "disponibilita": 5,
+      "categoriaAlloggio": 3,
+      "categoriaAttivitaTuristica": null,
+      "recensioni": []
+    },
+    {
+      "id": "3",
+      "alloggio": true,
+      "nome": "Attivita3",
+      "indirizzo": "Via Indirizzo3, 789",
+      "cap": "54321",
+      "citta": "Citta3",
+      "provincia": "RM",
+      "coordinate": {
+        "x": 41.123,
+        "y": 14.567
+      },
+      "descrizioneBreve": "Descrizione breve dell'attività 3",
+      "descrizioneLunga": "Descrizione lunga dell'attività 3",
+      "immagine": "base64_encoded_image3",
+      "disponibilita": 15,
+      "categoriaAlloggio": 2,
+      "categoriaAttivitaTuristica": 1,
+      "recensioni": []
+    }
+  ],
+  "recensioni": [
+    {
+      "id": "9f93",
+      "idAttivita": 1,
+      "valutazioneStelleEsperienza": 3,
+      "descrizione": null,
+      "idValori": 456
+    },
+    {
+      "id": "3212",
+      "idAttivita": 1,
+      "valutazioneStelleEsperienza": 5,
+      "descrizione": "",
+      "idValori": 456
+    },
+    {
+      "id": "018c",
+      "idAttivita": 1,
+      "valutazioneStelleEsperienza": 4,
+      "descrizione": null,
+      "idValori": 456
+    },
+    {
+      "id": "28d2",
+      "idAttivita": 1,
+      "valutazioneStelleEsperienza": 3,
+      "descrizione": "zoccola",
+      "idValori": 456
+    }
+  ]
+}
