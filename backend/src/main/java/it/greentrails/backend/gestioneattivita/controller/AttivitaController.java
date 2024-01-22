@@ -3,6 +3,7 @@ package it.greentrails.backend.gestioneattivita.controller;
 import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.CategorieAlloggio;
+import it.greentrails.backend.enums.CategorieAttivitaTuristica;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.ValoriEcosostenibilitaService;
 import it.greentrails.backend.gestioneupload.service.ArchiviazioneService;
@@ -88,7 +89,7 @@ public class AttivitaController {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
               "Categoria per attività turistica non presente.");
         }
-        attivita.setCategoriaAlloggio(CategorieAlloggio.values()[categoriaAttivitaTuristica]);
+        attivita.setCategoriaAttivitaTuristica(CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
       }
       attivita = attivitaService.saveAttivita(attivita);
       return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
