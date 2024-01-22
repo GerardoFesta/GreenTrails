@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Prenotazione</h1>
 
 <mat-dialog-content>
-  <div >
+  <div>
     <form name="prenotazioni" #prenotazioni="ngForm">
       <mat-grid-list cols="2" rowHeight="4:1">
         <mat-grid-tile>
@@ -21,7 +21,6 @@
             [for]="picker1"
           ></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
-
         </mat-grid-tile>
 
         <mat-grid-tile>
@@ -101,13 +100,20 @@
 
         <mat-grid-tile>
           <mat-form-field>
-
-            <mat-select class="  testo" [formControl]="tipo" [errorStateMatcher]="matcher">
-              <mat-option value="singola">Singola</mat-option>
-              <mat-option value="matrimoniale">Matrimoniale</mat-option>
+            <mat-select
+              class="testo"
+              [formControl]="idCamera"
+              [errorStateMatcher]="matcher"
+            >
+              <mat-option
+                *ngFor="let camera of camereOptions"
+                [value]="camera.id"
+              >
+                {{ camera.tipoCamera }}
+              </mat-option>
             </mat-select>
-
           </mat-form-field>
+          
         </mat-grid-tile>
       </mat-grid-list>
     </form>
@@ -120,14 +126,14 @@
     type="submit"
     [mat-dialog-close]="true"
     cdkFocusInitial
-    (click)="onSubmit()"
+    (click)="onSubmit1()"
     [disabled]="
       numAdulti.invalid ||
       numBambini.invalid ||
       numCamere.invalid ||
       arrivo.invalid ||
       partenza.invalid ||
-      tipo.invalid
+      idCamera.invalid
     "
   >
     Verifica Disponibilità

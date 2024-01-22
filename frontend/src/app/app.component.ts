@@ -1,8 +1,7 @@
 import { PrenotazioniService } from './servizi/prenotazioni.service';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PrenotazioniComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/prenotazioni/prenotazioni.component';
-
+import { PrenotazioniComponent } from './componenti/pagina-attivita/prenotazioni/prenotazioni.component';
 
 @Component({
   selector: 'app-root',
@@ -11,18 +10,6 @@ import { PrenotazioniComponent } from './componenti/pagina-attivita/info-attivit
 })
 export class AppComponent {
   title = 'frontend';
-
-
-  
-  constructor(public dialog: MatDialog, private PrenotazioniService: PrenotazioniService){
-
-  
-  }
-
- 
-
-  // Add a method to set the category
-  setCategory(categoria: string) {
-    this.PrenotazioniService.categoria = categoria;
+  constructor(){
   }
 }

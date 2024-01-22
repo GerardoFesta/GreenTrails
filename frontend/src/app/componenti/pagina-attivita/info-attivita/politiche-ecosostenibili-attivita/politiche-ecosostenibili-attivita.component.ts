@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
  @Input() attivita: any
   id: number = 0;
+  isAlloggio: boolean = false;
   valoriEcosostenibilita: string[] = [];
 
   constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, public dialog: MatDialog, private prenotazioniService: PrenotazioniService) {
@@ -20,7 +21,9 @@ export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = +params['id'];
-      this.prenotazioniService.changeId(this.id); // Invia l'ID al servizio
+      this.prenotazioniService.changeId(this.id); 
+      console.log(this.id)// Invia l'ID al servizio
+
 
     })
     this.visualizzaDettagliAttivita();
@@ -31,6 +34,10 @@ export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
       let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita)
         .filter(([nomePolitica, valore]) => valore === true)
         .map(([nomePolitica, valore]) => this.convertCamelCaseToReadable(nomePolitica));
+        this.isAlloggio = attivita.data?.alloggio;
+
+        // Puoi fare qualcosa con il valore di isAlloggio
+        console.log('Valore di isAlloggio:', this.isAlloggio);
 
       this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
       
@@ -46,11 +53,15 @@ export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
     return result.charAt(0).toUpperCase() + result.slice(1);
 }
 
-
 openDialog() {
+  console.log(this.isAlloggio)
+      if (this.isAlloggio === true) {
+      this.prenotazioniService.apriDialogAlloggio();
+   } else {
+      this.prenotazioniService.apriDialogAttivita();
+    }
+  }
 
-  this.prenotazioniService.apriDialog();
-  
-}
+
 
 }

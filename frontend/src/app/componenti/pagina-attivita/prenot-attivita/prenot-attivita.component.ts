@@ -11,9 +11,9 @@ export class PrenotAttivitaComponent implements OnInit {
   id: number = 0;
   arrivo1 = new FormControl();
   partenza1= new FormControl();
-  numAdulti1= new FormControl('', [Validators.required]);
+  numAdulti1= new FormControl();
   numBambini1= new FormControl();
-  idItinerari: any;
+  idItinerario: any;
 
   private formatDate(date: Date): string {
     const year = date.getFullYear();
@@ -21,7 +21,6 @@ export class PrenotAttivitaComponent implements OnInit {
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
-
 
   constructor(private prenotazioniService: PrenotazioniService) { }
 
@@ -32,39 +31,51 @@ export class PrenotAttivitaComponent implements OnInit {
       console.log('Dati inviati')
       console.log(response.data)
 
-      this.idItinerari = response.data.id;
+      this.idItinerario = response.data.id;
  
-      console.log('ID ottenuto:', this.idItinerari);
+      console.log('ID ottenuto:', this.idItinerario);
 });
 
     this.prenotazioniService.currentId.subscribe(id => {
       this.id = id;
+      console.log('Id attivita', this.id)
   });
 }
   onSubmit(){
     console.log('Entrato nella onSubmit');
+    console.log(this.formatDate(this.arrivo1.value),
+    this.formatDate(this.partenza1.value),)
 
-
-
+    
     const formData = {
-      arrivo1 :this.formatDate(this.arrivo1.value),
-      partenza1: this.formatDate(this.partenza1.value),
+      arrivo1: new Date(this.arrivo1.value).toISOString(),
+      partenza1: new Date(this.partenza1.value).toISOString(),
       numAdulti: this.numAdulti1.value,
       numBambini1: this.numBambini1.value,      
       id: this.id,
-      idItinerari: this.idItinerari.toString()
+      idItinerario: this.idItinerario.toString()
     };
     console.log(formData)
 
+    const timestampArrivo = new Date(this.arrivo1.value).getTime();
+    const timestampPartenza = new Date(this.partenza1.value).getTime();
 
-    this.prenotazioniService.prenotazione(this.idItinerari, this.id, this.numAdulti1, this.numBambini1,this.arrivo1,this.partenza1).subscribe(
+    console.log(timestampArrivo)
+
+    this.prenotazioniService.prenotazioneAttivita(
+      this.idItinerario,
+      this.id,
+      this.numAdulti1.value,
+      this.numBambini1.value,
+      timestampArrivo,
+      timestampPartenza).subscribe(
       (response) =>{
-        console.log('Dati inviati', formData, response)
+        console.log('Dati inviati', response)
 
       }
     )
 
-
+//this.idItinerario, this.id, this.numAdulti1.value, this.numBambini1.value,this.arrivo1,this.partenza1
 
   }
 }
