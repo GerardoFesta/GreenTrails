@@ -23,15 +23,18 @@ export class RecensioneService {
     formData.append('descrizione', descrizione)
     formData.append('idValori', idValori.toString())
 
-    Array.from(immagine).forEach((file, index) => {
+    if(immagine != null)
+    {Array.from(immagine).forEach((file, index) => {
       formData.append('immagine', immagine[index], immagine[index].name);
       console.log('name: ', file.name);
       console.log('size: ', file.size);
       console.log('type: ', file.type);
-    })
+    })}
 
-    const email = 'visitatore@visitatore.com';
-    const password = 'visitatore123@';
+    // const email = 'visitatore@visitatore.com';
+    // const password = 'visitatore123@';
+    const email = 'mariorossi@gmail.com';
+    const password = 'mario123@';
     const base64credential = btoa(email + ":" + password);
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + base64credential,
@@ -42,6 +45,14 @@ export class RecensioneService {
     console.log("descrizione: " + descrizione);
     console.log("idValori: " + idValori);
     return this.http.post<any>(`${this.baseUrl}`, formData, { headers });
+  }
+
+  visualizzaRecensione(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`);
+  }
+
+  getRecensioneByVisitatoreEmail(recensioni: any[], visitatoreEmail: string): any | null {
+    return recensioni.find(item => item.visitatore.email === visitatoreEmail) || null;
   }
 
 }

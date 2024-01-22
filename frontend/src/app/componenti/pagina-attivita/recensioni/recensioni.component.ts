@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { RecensioneService } from 'src/app/servizi/recensione.service';
+import { UploadService } from 'src/app/servizi/upload.service';
 
 @Component({
   selector: 'app-recensioni',
@@ -11,7 +12,8 @@ import { RecensioneService } from 'src/app/servizi/recensione.service';
 })
 export class RecensioniComponent implements OnInit {
 
-  constructor(config: NgbRatingConfig, private recensioneService: RecensioneService, private route: ActivatedRoute) {
+  constructor(config: NgbRatingConfig, private recensioneService: RecensioneService, private route: ActivatedRoute,
+    private uploadService: UploadService) {
     config.max = 5;
     config.readonly = true;
   }
@@ -32,8 +34,11 @@ export class RecensioniComponent implements OnInit {
   visualizzaListaRecensioni(): void {
     this.recensioneService.visualizzaRecensioniPerAttivita(this.idAttivita).subscribe((risposta) => {
       this.recensioni = risposta.data;
+      console.log("Recensioni: ", this.recensioni);
+      
+      this.recensioni
 
-      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'visitatore@visitatore.com');
-    })
+      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'mariorossi@gmail.com');
+    });
   }
 }

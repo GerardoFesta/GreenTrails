@@ -4,12 +4,11 @@
             <li style="margin: 0" class="elemento-lista">
                 <div class="recensione-container">
                     <div class="img-propic-container">
-                        <div class="immagini-container">
-                            <button mat-icon-button aria-label="gallery_thumbnail"
-                                style="color: #32CD32; margin-top: 30px;">
-                                <mat-icon style="font-size: 50px;">collections</mat-icon>
+                        <div class="immagini-container" *ngIf="recensione.media && recensione.media.length > 0">
+                            <button mat-icon-button aria-label="gallery_thumbnail" style="color: #32CD32; margin-top: 30px;">
+                              <mat-icon style="font-size: 50px;">collections</mat-icon>
                             </button>
-                        </div>
+                          </div>
                         <div class="propic-nome-container">
                             <div class="propic-container">
                                 <mat-icon style="color: #32CD32; font-size: 45px; margin-right: 30px;">account_box
