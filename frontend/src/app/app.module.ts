@@ -61,6 +61,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
+import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
+    PopupsegnalazioneComponent,
   ],
   imports: [
     BrowserModule,

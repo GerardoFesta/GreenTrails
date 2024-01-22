@@ -1,0 +1,47 @@
+.chiudi {
+  text-align: right;
+}
+
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: white;
+  z-index: 2;
+  text-align: center;
+}
+
+.popup-container label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.popup-container textarea {
+  width: 100%;
+  resize: vertical; 
+}
+
+.popup-container input[type="radio"] {
+  margin-right: 5px;
+}
+
+.popup-container button {
+  margin-top: 15px; 
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.popup-container button:hover {
+  background-color: #45a049;
+}

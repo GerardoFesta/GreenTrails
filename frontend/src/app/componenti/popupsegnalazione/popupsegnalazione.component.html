@@ -1,0 +1,20 @@
+<div class="overlay-background"></div>
+<div class="popup-container">
+    <div class="chiudi">
+        <mat-icon (click)="closePopup()"> close</mat-icon>
+    </div>
+    <form (submit)="submitForm()">
+      <mat-form-field class="descrizione" appearance="fill">
+        <mat-label>Scrivi la tua esperienza qui: </mat-label>
+        <textarea matInput id="descrizione" [(ngModel)]="descrizione" required></textarea>
+      </mat-form-field>
+  
+      <div *ngFor="let valore of valoriEcosostenibilita">
+        <label>{{ valore.name }}</label>
+        <input type="radio" name="valore" [value]="true" [(ngModel)]="valore.selected"> Si
+        <input type="radio" name="valore" [value]="false" [(ngModel)]="valore.selected"> No
+      </div>
+  
+      <button type="submit">Invia segnalazione</button>
+    </form>
+  </div>
