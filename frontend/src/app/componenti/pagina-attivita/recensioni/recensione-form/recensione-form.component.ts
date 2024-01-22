@@ -77,7 +77,7 @@ export class RecensioneFormComponent implements OnInit {
   visualizzaDettagliAttivita(): void {
     this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe((attivita) => {
       this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
-      console.log("Valori eco originali: ", this.valoriEcosostenibilita);
+      // console.log("Valori eco originali: ", this.valoriEcosostenibilita);
       this.idValori = attivita.data.valoriEcosostenibilita.id;
       let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita)
         .filter(([nomePolitica, valore]) => valore === true)
@@ -166,7 +166,7 @@ export class RecensioneFormComponent implements OnInit {
 
       this.recensioneService.creaRecensione(this.idAttivita, this.rating, this.valutazioneDiscorsiva, this.idValori, this.files)
         .subscribe((risposta: any) => {
-          console.log(risposta);
+          console.log("Valori eco recensione: ", risposta);
           if (risposta?.status === 'success') {
             this.openPopup('Recensione inviata con successo!');
           } else {

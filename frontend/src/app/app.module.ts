@@ -66,6 +66,7 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
 import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     RecensioneFormComponent,
     RecensioneComponent,
     PopupRecensioneComponent,
+    GalleryDialogComponent,
   ],
   imports: [
     BrowserModule,

@@ -11,7 +11,11 @@ export class UploadService {
 
   constructor(private http: HttpClient) { }
 
-  elencaFileCaricati(media:string): Observable<any> {
+  elencaFileCaricati(media: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/${media}`);
-  } 
+  }
+
+  serviFile(media: string, filename: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${media}/${filename}`, { responseType: 'blob' });
+  }
 }
