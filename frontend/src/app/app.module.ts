@@ -66,7 +66,7 @@ import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -137,7 +137,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
-    Ng2SearchPipeModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -182,9 +181,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
-    Ng2SearchPipeModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
