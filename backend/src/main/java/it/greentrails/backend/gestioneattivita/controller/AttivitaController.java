@@ -3,6 +3,7 @@ package it.greentrails.backend.gestioneattivita.controller;
 import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.CategorieAlloggio;
+import it.greentrails.backend.enums.CategorieAttivitaTuristica;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.ValoriEcosostenibilitaService;
 import it.greentrails.backend.gestioneupload.service.ArchiviazioneService;
@@ -48,6 +49,7 @@ public class AttivitaController {
       @RequestParam("descrizioneLunga") final String descrizioneLunga,
       @RequestParam("valori") final long idValori,
       @RequestParam("immagine") final MultipartFile immagine,
+      @RequestParam(value = "prezzo", required = false) final Double prezzo,
       @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
       @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
       @RequestParam(value = "categoriaAttivitaTuristica", required = false)
@@ -83,11 +85,17 @@ public class AttivitaController {
               "Disponibilità per attività turistica non presente.");
         }
         attivita.setDisponibilita(disponibilita);
+        if (prezzo == null) {
+          return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+              "Prezzo per attività turistica non presente.");
+        }
+        attivita.setPrezzo(prezzo);
         if (categoriaAttivitaTuristica == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
               "Categoria per attività turistica non presente.");
         }
-        attivita.setCategoriaAlloggio(CategorieAlloggio.values()[categoriaAttivitaTuristica]);
+        attivita.setCategoriaAttivitaTuristica(
+            CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
       }
       attivita = attivitaService.saveAttivita(attivita);
       return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
