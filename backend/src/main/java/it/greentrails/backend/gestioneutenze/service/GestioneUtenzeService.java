@@ -36,6 +36,13 @@ public class GestioneUtenzeService implements UserDetailsService {
     return repository.save(utente);
   }
 
+  public Preferenze savePreferenze(Preferenze preferenze) throws Exception {
+    if (preferenze == null) {
+      throw new Exception("Le preferenze sono vuote.");
+    }
+    return preferenzeRepository.save(preferenze);
+  }
+
   public Optional<Utente> findByEmail(String email) {
     return repository.findOneByEmail(email);
   }
