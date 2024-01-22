@@ -1,32 +1,37 @@
-<div class="lista-container">
-    <ul>
-        <li style="margin: 0" class="elemento-lista">
-            <div class="recensione-container">
-                <div class="img-propic-container">
-                    <div class="immagini-container">
-                        <button mat-icon-button aria-label="gallery_thumbnail" style="color: #32CD32; margin-top: 30px;">
-                            <mat-icon style="font-size: 50px;">collections</mat-icon>
-                        </button>
-                    </div>
-                    <div class="propic-nome-container">
-                        <div class="propic-container">
-                            <mat-icon
-                                style="color: #32CD32; font-size: 60px; margin-right: 30px; margin-top: 20px;">account_box</mat-icon>
+<div class="container">
+    <div class="lista-container" *ngFor="let recensione of recensioni">
+        <ul>
+            <li style="margin: 0" class="elemento-lista">
+                <div class="recensione-container">
+                    <div class="img-propic-container">
+                        <div class="immagini-container" *ngIf="recensione.media && recensione.media.length > 0">
+                            <button mat-icon-button aria-label="gallery_thumbnail" style="color: #32CD32; margin-top: 30px;">
+                              <mat-icon style="font-size: 50px;">collections</mat-icon>
+                            </button>
+                          </div>
+                        <div class="propic-nome-container">
+                            <div class="propic-container">
+                                <mat-icon style="color: #32CD32; font-size: 45px; margin-right: 30px;">account_box
+                                </mat-icon>
+                            </div>
+                            <div class="nome-container">
+                                {{recensione.visitatore.nome}} {{recensione.visitatore.cognome}}
+                            </div>
                         </div>
-                        <div class="nome-container">
-                            Nome_utente
-                        </div>
+                    </div>
+                    <div class="stelle-utente-container">
+                        <ngb-rating [rate]="recensione.valutazioneStelleEsperienza"
+                            style="color: #32CD32;"></ngb-rating>
+                    </div>
+
+                    <div class="valutazione-discorsiva-container" *ngIf="recensione.descrizione !== ''">
+                        <p>
+                            {{recensione.descrizione}}
+                        </p>
                     </div>
                 </div>
-                <div class="stelle-utente-container">
-                    <ngb-rating [rate]="3" style="color: #32CD32;"></ngb-rating>
-                </div>
-                <div class="valutazione-discorsiva-container">
-                    <p>
-                        mqo3srGQaSybGj2VW0wTn8BiBgK6gEWUZ5qi2n6ziFhj2eDDBHAjH7ruchgA0d8pLRggTfLOpkUHcCiHtagRbyuFC2ZirMLaP8Q1dk6tlAlbH3lZ5ZnqHy9OjNbcLmcErn8l713Z9CFaBGJQWv8kp3vPBLG4SqrRAThWIRryqtMN5TLZE3HjGUg0H6PNNWu6aOMm4o61YMeedLVBfG8ZFCr4TJJVtk2QeD2aYOlyiwFAWz7HuaGbg73Lg2Sirlq
-                    </p>
-                </div>
-            </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
+    <app-recensione-form *ngIf="!hasRecensione"></app-recensione-form>
 </div>

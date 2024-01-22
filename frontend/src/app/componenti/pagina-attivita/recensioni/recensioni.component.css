@@ -1,19 +1,23 @@
+.container {
+    border: 5px solid lightgreen;
+    border-radius: 20px;
+    box-shadow: 7px 7px 5px #dedede;
+    display: flex;
+    flex-direction: column;
+}
+
 .lista-container {
     display: flex;
     flex-direction: column;
-    margin: 15px;
 }
 
 ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
-    border: 5px solid lightgreen;
-    border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    box-shadow: 7px 7px 5px #dedede;
     width: 100%;
 }
 
@@ -47,6 +51,7 @@ ul {
     flex-direction: row;
     align-content: center;
     align-items: center;
+    margin-top: 25px;
 }
 
 /* Container propic */
@@ -56,8 +61,7 @@ ul {
 
 /* Container nome utente */
 .nome-container {
-    font-size: 25px;
-    margin-top: 15px;
+    font-size: 20px;
 }
 
 /* Container stelle valutazione utente */

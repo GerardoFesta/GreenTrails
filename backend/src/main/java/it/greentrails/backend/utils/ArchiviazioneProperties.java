@@ -9,6 +9,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 public class ArchiviazioneProperties {
 
-  private String location = "upload-dir";
+  private String location = "/var/uploads";
 
 }

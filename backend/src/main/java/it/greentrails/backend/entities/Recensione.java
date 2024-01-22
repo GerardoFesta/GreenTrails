@@ -36,7 +36,7 @@ public class Recensione {
   @Column(name = "descrizione", nullable = false)
   private String descrizione;
 
-  @Column(name = "media", nullable = false)
+  @Column(name = "media")
   private String media;
 
   @ManyToOne(optional = false)

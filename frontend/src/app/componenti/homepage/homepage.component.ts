@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Attivita } from 'src/app/classi/attivita';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 @Component({
@@ -10,19 +9,20 @@ import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 export class HomepageComponent implements OnInit {
 
-  listaAttivita?: Attivita[];
+  listaAttivita?: any;
+
+  limite: number = 0;
 
   constructor(private attivitaService: AttivitaService) { }
 
   ngOnInit(): void {
-    // this.getListaAttivita();
+    this.visualizzaAttivitaPerPrezzo(this.limite);
   }
 
-  // getListaAttivita() {
-  //   this.attivitaService.getListaAttivita().subscribe((data: Attivita[]) => {
-  //     this.listaAttivita = data;
-  //     console.log(this.listaAttivita);
-  //   })
-  // }
+  visualizzaAttivitaPerPrezzo(limite: number) {
+    this.attivitaService.visualizzaAttivitaPerPrezzo(limite).subscribe((risposta) => {
+      console.log(risposta);
+    })
+  }
 
 }

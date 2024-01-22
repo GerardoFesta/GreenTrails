@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Attivita } from 'src/app/classi/attivita';
-import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 @Component({
   selector: 'app-descrizione-attivita',
@@ -9,7 +7,7 @@ import { AttivitaService } from 'src/app/servizi/attivita.service';
 })
 export class DescrizioneAttivitaComponent implements OnInit {
 
-  @Input() attivita?: Attivita;
+  @Input() attivita?: any;
 
   constructor() { }
 

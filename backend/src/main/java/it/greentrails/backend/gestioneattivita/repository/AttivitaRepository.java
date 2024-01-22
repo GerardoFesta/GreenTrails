@@ -22,4 +22,10 @@ public interface AttivitaRepository extends JpaRepository<Attivita, Long> {
   @Query("SELECT a FROM Attivita a JOIN Categoria c WHERE c.id = ?1")
   List<Attivita> findByCategoria(long idCategoria);
 
+  @Query("SELECT a FROM Attivita a WHERE a.media = ?1")
+  Optional<Attivita> findOneByMedia(String media);
+
+  @Query("SELECT a FROM Attivita a WHERE a.prezzo IS NOT NULL ORDER BY a.prezzo ASC")
+  Page<Attivita> getAllByPrezzo(Pageable pageable);
+
 }

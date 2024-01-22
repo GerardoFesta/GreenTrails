@@ -3,9 +3,13 @@ package it.greentrails.backend.gestioneattivita.controller;
 import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.CategorieAlloggio;
+import it.greentrails.backend.enums.CategorieAttivitaTuristica;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
+import it.greentrails.backend.gestioneattivita.service.ValoriEcosostenibilitaService;
+import it.greentrails.backend.gestioneupload.service.ArchiviazioneService;
 import it.greentrails.backend.gestioneutenze.service.GestioneUtenzeService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.geo.Point;
 import org.springframework.http.HttpStatus;
@@ -27,6 +31,8 @@ public class AttivitaController {
 
   private final AttivitaService attivitaService;
   private final GestioneUtenzeService gestioneUtenzeService;
+  private final ValoriEcosostenibilitaService valoriEcosostenibilitaService;
+  private final ArchiviazioneService archiviazioneService;
 
   @PostMapping
   private ResponseEntity<Object> creaAttivita(
@@ -41,11 +47,12 @@ public class AttivitaController {
       @RequestParam("longitudine") final Double longitudine,
       @RequestParam("descrizioneBreve") final String descrizioneBreve,
       @RequestParam("descrizioneLunga") final String descrizioneLunga,
+      @RequestParam("valori") final long idValori,
       @RequestParam("immagine") final MultipartFile immagine,
       @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
       @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
-      @RequestParam(value = "categoriaAttivitaTuristica", required = false)
-      final Integer categoriaAttivitaTuristica
+      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica,
+      @RequestParam(value = "prezzo", required = false) final Double prezzo
   ) {
     try {
       Utente gestore = gestioneUtenzeService.findById(utente.getId());
@@ -60,8 +67,11 @@ public class AttivitaController {
       attivita.setCoordinate(new Point(latitudine, longitudine));
       attivita.setDescrizioneBreve(descrizioneBreve);
       attivita.setDescrizioneLunga(descrizioneLunga);
-      // TODO: implementare gestione media per attività
-      attivita.setMedia("");
+      attivita.setValoriEcosostenibilita(valoriEcosostenibilitaService.findById(idValori));
+      attivita.setPrezzo(prezzo);
+      String media = UUID.randomUUID().toString();
+      attivita.setMedia(media);
+      archiviazioneService.store(media, immagine);
       if (isAlloggio) {
         if (categoriaAlloggio == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
@@ -79,7 +89,7 @@ public class AttivitaController {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
               "Categoria per attività turistica non presente.");
         }
-        attivita.setCategoriaAlloggio(CategorieAlloggio.values()[categoriaAttivitaTuristica]);
+        attivita.setCategoriaAttivitaTuristica(CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
       }
       attivita = attivitaService.saveAttivita(attivita);
       return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
@@ -112,6 +122,16 @@ public class AttivitaController {
     }
   }
 
+  @GetMapping("perPrezzo")
+  private ResponseEntity<Object> visualizzaAttivitaPerPrezzo(
+      @RequestParam(value = "limite", required = false) Integer limite
+  ) {
+    if (limite == 0) {
+      limite = 10;
+    }
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+        attivitaService.getAttivitaTuristicheEconomiche(limite));
+  }
 
   @DeleteMapping("{id}")
   private ResponseEntity<Object> cancellaAttivita(
