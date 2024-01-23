@@ -40,9 +40,8 @@ public class PrenotazioneAlloggioController {
       @AuthenticationPrincipal Utente utente,
       @RequestParam("idItinerario") final Long idItinerario,
       @RequestParam("idCamera") final Long idCamera,
-      @RequestParam("numAdulti") final int numAdulti,
-      @RequestParam(value = "numBambini", defaultValue = "0", required = false)
-      final int numBambini,
+      @RequestParam("numAdulti") final int adulti,
+      @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
       @RequestParam("dataInizio") final Long dataInizioTimestamp,
       @RequestParam("dataFine") final Long dataFineTimestamp,
       @RequestParam("numCamere") final int numCamere
@@ -57,13 +56,18 @@ public class PrenotazioneAlloggioController {
       PrenotazioneAlloggio prenotazioneAlloggio = new PrenotazioneAlloggio();
       prenotazioneAlloggio.setCamera(camera);
       prenotazioneAlloggio.setItinerario(itinerario);
-      prenotazioneAlloggio.setNumAdulti(numAdulti);
-      prenotazioneAlloggio.setNumBambini(numBambini);
+      prenotazioneAlloggio.setNumAdulti(adulti);
+      prenotazioneAlloggio.setNumBambini(bambini);
       prenotazioneAlloggio.setNumCamere(numCamere);
       prenotazioneAlloggio.setDataInizio(dataInizio);
       double prezzo = numCamere * camera.getPrezzo();
       Date dataFine = new Date(dataFineTimestamp * 1000);
       prenotazioneAlloggio.setDataFine(dataFine);
+      if (prenotazioneAlloggioService.controllaDisponibilitaAlloggio(camera.getAlloggio(),
+          dataInizio, dataFine) < numCamere) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Alloggio non disponibile");
+      }
       long durataOre = Duration.between(dataInizio.toInstant(), dataFine.toInstant()).toHours();
       if (durataOre > 24) {
         prezzo = prezzo * Math.ceil((double) durataOre / 24);
@@ -98,7 +102,7 @@ public class PrenotazioneAlloggioController {
   @GetMapping("perAttivita/{idAttivita}")
   private ResponseEntity<Object> visualizzaPrenotazioniAlloggioPerAttivita(
       @AuthenticationPrincipal Utente utente,
-      @PathVariable("idAttivita") final Long idAttivita
+      @PathVariable("idAttivita") final long idAttivita
   ) {
     try {
       Attivita attivita = attivitaService.findById(idAttivita);
@@ -107,6 +111,22 @@ public class PrenotazioneAlloggioController {
       }
       return ResponseGenerator.generateResponse(HttpStatus.OK,
           prenotazioneAlloggioService.getPrenotazioniByAlloggio(attivita));
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
+
+  @GetMapping("perAttivita/{idAttivita}/disponibilita")
+  private ResponseEntity<Object> visualizzaDisponibilitaPerAlloggio(
+      @PathVariable("idAttivita") final long idAttivita,
+      @RequestParam("dataInizio") final Date dataInizio,
+      @RequestParam("dataFine") final Date dataFine
+  ) {
+    try {
+      Attivita attivita = attivitaService.findById(idAttivita);
+      return ResponseGenerator.generateResponse(HttpStatus.OK,
+          prenotazioneAlloggioService.controllaDisponibilitaAlloggio(attivita, dataInizio,
+              dataFine));
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
