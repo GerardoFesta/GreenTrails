@@ -63,7 +63,9 @@ export class RecensioniComponent implements OnInit {
         });
       });
 
-        this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'giuseppe@simone.com');
+      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'visitatore@visitatore.com');
+      // this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'giuseppe@simone.com');
+      // this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'mariorossi@gmail.com');
     });
   }
 
