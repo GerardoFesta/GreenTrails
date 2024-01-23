@@ -11,6 +11,7 @@ import { PrenotazioniComponent } from '../componenti/pagina-attivita/prenotazion
   providedIn: 'root'
 })
 export class PrenotazioniService {
+  ITINERARY_KEY = 'itineraryId';
   categoria: string = 'attivita'; // Default category
 
   constructor(private dialog: MatDialog, private http: HttpClient) {}
@@ -93,8 +94,6 @@ export class PrenotazioniService {
     return this.http.delete(`${this.baseUrl}/api/itinerari/${idItinerario}`,{headers});
   }
 
-
-
   prenotazioneAlloggio(idItinerario: number,idCamera: number,numAdulti: number, numBambini: number, numCamere: number, dataInizio: any, dataFine: any  ): Observable<any>{
   
     const email = 'e@g.b';
@@ -129,4 +128,38 @@ export class PrenotazioniService {
     return this.http.post(`${this.baseUrl}/api/itinerari`,{},  {headers});
   }
   
+  verificaDisponibilita(idAttivita: number,dataInizio: any, dataFine: any):Observable<any> {
+    const email = 'e@g.b';
+    const password = 'qwerty123!';
+    const base64credential = btoa(email + ":" + password);
+    const headers = ({Authorization: 'Basic ' + base64credential} );
+
+
+ 
+
+    const params = new HttpParams()
+    .set('idAttivita', idAttivita)
+    .set('dataInizio', dataInizio.toString())
+    .set('dataFine', dataFine.toString());
+
+
+    return this.http.get(`${this.baseUrl}/api/prenotazioni-alloggio/perAttivita/${idAttivita}/disponibilita`,  { params, headers });
+
+  }
+
+  getItineraryId(): number |null {
+    const storedId = localStorage.getItem(this.ITINERARY_KEY);
+
+    if (storedId) {
+      return +storedId;
+    } else {
+      return null;
+    }
+  }
+
+  generateNewId(): number {
+    return Math.floor(Math.random() * 1000) + 1;
+    
+  }
+
 }

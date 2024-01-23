@@ -2,65 +2,118 @@
   <h1 mat-dialog-title>Prenotazione Attività</h1>
 
   <mat-dialog-content>
-    <div>
-      <form name="prenotattivita" #prenotattivita="ngForm">
-        <mat-grid-list cols="2" rowHeight="4:1">
-
+    <mat-stepper linear #stepper>
+      <mat-step [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup">
+          <ng-template matStepLabel>Inserisci i dati</ng-template>
+          <mat-grid-list cols="2" rowHeight="4:1">
+            <mat-grid-tile>
+              <mat-label class="mat-label">Arrivo:</mat-label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <input
+                class="input"
+                matInput
+                [matDatepicker]="picker1"
+                required
+                formControlName="arrivo1"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+    
+            </mat-grid-tile>
+    
+            <mat-grid-tile>
+              <mat-label class="mat-label">Partenza:</mat-label>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <input
+                class="input"
+                matInput
+                [matDatepicker]="picker2"
+                required
+                formControlName="partenza1"
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker2"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker2 color="primary"></mat-datepicker>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-icon>person</mat-icon>
+              <label class="mat-label">Adulti:</label>
+            </mat-grid-tile>
+    
+            <mat-grid-tile>
+              <input
+                formControlName="numAdulti1"
+                required
+                class="input"
+                type="number"
+                name="numAdulti1"
+                [value]="1"
+                min="1"
+              />
+            </mat-grid-tile>
 
             <mat-grid-tile>
-            <mat-label class="mat-label">Seleziona date</mat-label>
-          </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-date-range-input  [rangePicker]="rangePicker" required >
-              <input matStartDate placeholder="Arrivo" [formControl]="arrivo1">
-              <input matEndDate placeholder="Partenza" [formControl]="partenza1">
-            </mat-date-range-input>
-            <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
- 
-            <mat-date-range-picker #rangePicker>
-              <mat-date-range-picker-actions>
-                <button mat-button matDateRangePickerCancel>Cancel</button>
-                <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
-              </mat-date-range-picker-actions>
-            </mat-date-range-picker>
-        </mat-grid-tile>
+              <mat-icon>child_care</mat-icon>
+              <label class="mat-label">Bambini:</label>
+            </mat-grid-tile>
+    
+            <mat-grid-tile>
+              <input
+                formControlName="numBambini1"
+                required
+                class="input"
+                type="number"
+                name="numBambini"
+                [value]="0"
+                min="0"
+              />
+            </mat-grid-tile>
 
-          <mat-grid-tile>
-            <mat-icon>person</mat-icon>
-            <label class="mat-label">Adulti:</label>
-          </mat-grid-tile>
+            </mat-grid-list>
+          <div> <!--(click)="onVerifica()"-->
+            <button mat-button matStepperNext >Next</button>
+          </div>
+        </form>
+      </mat-step>
 
-          <mat-grid-tile>
-            <input
-              required
-              class="input"
-              type="number"
-              name="numAdulti1"
-              [value]="1"
-              min="1"
-              [formControl]="numAdulti1"
-            />
-          </mat-grid-tile>
-
-          <mat-grid-tile>
-            <mat-icon>child_care</mat-icon>
-            <label class="mat-label">Bambini:</label>
-          </mat-grid-tile>
-
-          <mat-grid-tile>
-            <input
-              required
-              class="input"
-              type="number"
-              name="numBambini"
-              [value]="0"
-              min="0"
-              [formControl]="numBambini1"
-            />
-          </mat-grid-tile>
-        </mat-grid-list>
-      </form>
-    </div>
+      <!--SECONDO STEP-->
+      <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Disponibilità</ng-template>
+          <mat-form-field>
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                   required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <div *ngIf="idItinerario; else noItinerarioFound">
+          <p>Vuoi aggiungere all'itinerario: {{ idItinerario }} oppure crearne uno nuovo?</p>
+          <div>
+            <button mat-button (click)="retrieveOrCreateItinerary()" [disabled]="azioneEseguita || siClicked">Aggiungi all'itinerario</button>
+            <button mat-button (click)="deleteItinerary()" [disabled]="azioneEseguita || creaClicked">Crea un nuovo itinerario</button>
+          </div>
+        </div>
+        
+        <ng-template #noItinerarioFound>
+          <p>Nessun Itinerario trovato</p>
+          <button mat-button (click)="createNewItinerary()" [disabled]="azioneEseguita || creaClicked">Crea un nuovo itinerario</button>
+        </ng-template>
+      </mat-step>
+    </mat-stepper>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close       (click)="onClose()">Cancella</button>
