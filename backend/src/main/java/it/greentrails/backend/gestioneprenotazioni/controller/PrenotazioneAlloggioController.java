@@ -40,8 +40,8 @@ public class PrenotazioneAlloggioController {
       @AuthenticationPrincipal Utente utente,
       @RequestParam("idItinerario") final Long idItinerario,
       @RequestParam("idCamera") final Long idCamera,
-      @RequestParam("numAdulti") final int numAdulti,
-      @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int numBambini,
+      @RequestParam("numAdulti") final int adulti,
+      @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
       @RequestParam("dataInizio") final Long dataInizioTimestamp,
       @RequestParam("dataFine") final Long dataFineTimestamp,
       @RequestParam("numCamere") final int numCamere
@@ -56,8 +56,8 @@ public class PrenotazioneAlloggioController {
       PrenotazioneAlloggio prenotazioneAlloggio = new PrenotazioneAlloggio();
       prenotazioneAlloggio.setCamera(camera);
       prenotazioneAlloggio.setItinerario(itinerario);
-      prenotazioneAlloggio.setNumAdulti(numAdulti);
-      prenotazioneAlloggio.setNumBambini(numBambini);
+      prenotazioneAlloggio.setNumAdulti(adulti);
+      prenotazioneAlloggio.setNumBambini(bambini);
       prenotazioneAlloggio.setNumCamere(numCamere);
       prenotazioneAlloggio.setDataInizio(dataInizio);
       double prezzo = numCamere * camera.getPrezzo();

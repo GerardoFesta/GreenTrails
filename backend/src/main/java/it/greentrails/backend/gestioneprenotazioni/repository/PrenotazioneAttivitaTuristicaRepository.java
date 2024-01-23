@@ -21,12 +21,12 @@ public interface PrenotazioneAttivitaTuristicaRepository extends
   Page<PrenotazioneAttivitaTuristica> findByItinerario(Long idItinerario, Pageable pageable);
 
   @Query("""
-SELECT COALESCE(SUM(p.numAdulti) + SUM(p.numBambini), 0)
-FROM Attivita a
-LEFT JOIN PrenotazioneAttivitaTuristica p
-WHERE a.isAlloggio = FALSE
-AND p.dataInizio = ?1
-""")
+      SELECT COALESCE(SUM(p.numAdulti) + SUM(p.numBambini), 0)
+      FROM Attivita a
+      LEFT JOIN PrenotazioneAttivitaTuristica p
+      WHERE a.isAlloggio = FALSE
+      AND p.dataInizio = ?1
+      """)
   int getPostiOccupatiIn(Date dataInizio);
 
 }
