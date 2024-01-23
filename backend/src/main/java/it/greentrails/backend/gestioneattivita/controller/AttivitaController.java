@@ -52,8 +52,8 @@ public class AttivitaController {
       @RequestParam(value = "prezzo", required = false) final Double prezzo,
       @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
       @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
-      @RequestParam(value = "categoriaAttivitaTuristica", required = false)
-      final Integer categoriaAttivitaTuristica
+      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica,
+      @RequestParam(value = "prezzo", required = false) final Double prezzo
   ) {
     try {
       Utente gestore = gestioneUtenzeService.findById(utente.getId());
@@ -69,6 +69,7 @@ public class AttivitaController {
       attivita.setDescrizioneBreve(descrizioneBreve);
       attivita.setDescrizioneLunga(descrizioneLunga);
       attivita.setValoriEcosostenibilita(valoriEcosostenibilitaService.findById(idValori));
+      attivita.setPrezzo(prezzo);
       String media = UUID.randomUUID().toString();
       attivita.setMedia(media);
       archiviazioneService.store(media, immagine);
@@ -132,7 +133,7 @@ public class AttivitaController {
   private ResponseEntity<Object> visualizzaAttivitaPerPrezzo(
       @RequestParam(value = "limite", required = false) Integer limite
   ) {
-    if (limite == null) {
+    if (limite == 0) {
       limite = 10;
     }
     return ResponseGenerator.generateResponse(HttpStatus.OK,
