@@ -26,7 +26,6 @@ export class RecensioniComponent implements OnInit {
   hasRecensione: boolean = false;
   imageUrls: string[] = [];
   fileNames: string[] = [];
-  fileExtensions: string[] = []
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -39,7 +38,7 @@ export class RecensioniComponent implements OnInit {
   visualizzaListaRecensioni(): void {
     this.recensioneService.visualizzaRecensioniPerAttivita(this.idAttivita).subscribe((recensione) => {
       this.recensioni = recensione.data;
-      console.log("Lista recensioni: ", this.recensioni);
+      // console.log("Lista recensioni: ", this.recensioni);
 
       const promises = this.recensioni.map((item: any, index: number) => {
         return new Promise<void>((resolve) => {
@@ -48,7 +47,7 @@ export class RecensioniComponent implements OnInit {
               const fileName = listaFiles.data[0];
               this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
                 this.fileNames.push(fileName);
-                console.log("FileNames: ", this.fileNames);
+                // console.log("FileNames: ", this.fileNames);
       
                 let reader = new FileReader();
                 reader.onloadend = () => {
@@ -95,7 +94,7 @@ export class RecensioniComponent implements OnInit {
         }
       });
     } else {
-      console.error(`Unsupported file type: ${fileName}`);
+      // console.error(`Unsupported file type: ${fileName}`);
     }
   }
 }
