@@ -116,6 +116,9 @@ public class PrenotazioneAlloggioService {
     if (!alloggio.isAlloggio()) {
       throw new Exception("L'attività non è un alloggio.");
     }
+    if (dataFine.before(dataInizio)) {
+      throw new Exception("La data di fine non può essere precedente alla data di inizio.");
+    }
     return cameraService
         .getCamereByAlloggio(alloggio)
         .stream()

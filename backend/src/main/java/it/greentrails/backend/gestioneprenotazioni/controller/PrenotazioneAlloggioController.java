@@ -13,6 +13,7 @@ import it.greentrails.backend.utils.service.ResponseGenerator;
 import java.time.Duration;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,8 +43,8 @@ public class PrenotazioneAlloggioController {
       @RequestParam("idCamera") final Long idCamera,
       @RequestParam("numAdulti") final int adulti,
       @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
-      @RequestParam("dataInizio") final Long dataInizioTimestamp,
-      @RequestParam("dataFine") final Long dataFineTimestamp,
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam("dataFine") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataFine,
       @RequestParam("numCamere") final int numCamere
   ) {
     try {
@@ -52,7 +53,6 @@ public class PrenotazioneAlloggioController {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Itinerario non trovato");
       }
       Camera camera = cameraService.findById(idCamera);
-      Date dataInizio = new Date(dataInizioTimestamp * 1000);
       PrenotazioneAlloggio prenotazioneAlloggio = new PrenotazioneAlloggio();
       prenotazioneAlloggio.setCamera(camera);
       prenotazioneAlloggio.setItinerario(itinerario);
@@ -61,7 +61,6 @@ public class PrenotazioneAlloggioController {
       prenotazioneAlloggio.setNumCamere(numCamere);
       prenotazioneAlloggio.setDataInizio(dataInizio);
       double prezzo = numCamere * camera.getPrezzo();
-      Date dataFine = new Date(dataFineTimestamp * 1000);
       prenotazioneAlloggio.setDataFine(dataFine);
       if (prenotazioneAlloggioService.controllaDisponibilitaAlloggio(camera.getAlloggio(),
           dataInizio, dataFine) < numCamere) {
@@ -119,8 +118,8 @@ public class PrenotazioneAlloggioController {
   @GetMapping("perAttivita/{idAttivita}/disponibilita")
   private ResponseEntity<Object> visualizzaDisponibilitaPerAlloggio(
       @PathVariable("idAttivita") final long idAttivita,
-      @RequestParam("dataInizio") final Date dataInizio,
-      @RequestParam("dataFine") final Date dataFine
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam("dataFine") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataFine
   ) {
     try {
       Attivita attivita = attivitaService.findById(idAttivita);

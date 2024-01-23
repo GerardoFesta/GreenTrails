@@ -20,8 +20,8 @@ public interface PrenotazioneAlloggioRepository extends JpaRepository<Prenotazio
 
   @Query("""
       SELECT COALESCE(SUM(p.numCamere), 0) FROM Attivita a
-      LEFT JOIN Camera c
-      LEFT JOIN PrenotazioneAlloggio p
+      LEFT JOIN Camera c ON c.alloggio = a
+      LEFT JOIN PrenotazioneAlloggio p ON p.camera = c
       WHERE a.isAlloggio = TRUE
       AND (
       ?1 BETWEEN p.dataInizio AND p.dataFine OR
