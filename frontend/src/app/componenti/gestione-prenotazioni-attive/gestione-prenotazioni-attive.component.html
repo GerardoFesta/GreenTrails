@@ -11,7 +11,7 @@
       </section>
 
 </div>
-  <div class="ricerca" style="background-color: chartreuse;">
+  <div class="ricerca">
     <div class="input" style="height: 50%;"><input type="search" id="site-search" name="q" style="border-radius:10%"/>
       <button>Search</button></div>
     </div>
@@ -67,7 +67,16 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+          </table>
+          <mat-paginator
+          [length]="length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[10, 25, 50, 100]"
+          (page)="updatePaginatedData()"
+          aria-label="Select page"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          showFirstLastButtons
+        ></mat-paginator>
+    
   </div>
 </div>
-
