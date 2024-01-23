@@ -67,6 +67,7 @@ import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/rec
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
+import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
 
 
 @NgModule({
@@ -88,6 +89,7 @@ import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/
     RecensioneComponent,
     PopupRecensioneComponent,
     GalleryDialogComponent,
+    VideoDialogComponent,
   ],
   imports: [
     BrowserModule,
