@@ -45,7 +45,7 @@ export class RecensioniComponent implements OnInit {
         return new Promise<void>((resolve) => {
           this.uploadService.elencaFileCaricati(item.media).subscribe((listaFiles) => {
             if (listaFiles.data.length > 0) {
-              const fileName = listaFiles.data[index];
+              const fileName = listaFiles.data[0];
               this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
                 this.fileNames.push(fileName);
       
@@ -63,7 +63,7 @@ export class RecensioniComponent implements OnInit {
         });
       });
 
-      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === this.cookieService.get('userName').replace(/"/g, ''));
+      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === this.cookieService.get('email').replace(/"/g, ''));
     });
   }
 
