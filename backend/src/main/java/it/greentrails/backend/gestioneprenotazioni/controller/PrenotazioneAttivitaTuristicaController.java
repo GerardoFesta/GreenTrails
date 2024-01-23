@@ -58,6 +58,11 @@ public class PrenotazioneAttivitaTuristicaController {
       prenotazione.setNumAdulti(adulti);
       prenotazione.setNumBambini(bambini);
       prenotazione.setDataInizio(dataInizio);
+      if (prenotazioneAttivitaTuristicaService.controllaDisponibilitaAttivitaTuristica(attivita,
+          dataInizio) < adulti + bambini) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Attività turistica non disponibile");
+      }
       double prezzo = (adulti + bambini) * attivita.getPrezzo();
       if (dataFineTimestamp != null) {
         Date dataFine = new Date(dataFineTimestamp * 1000);
@@ -109,6 +114,21 @@ public class PrenotazioneAttivitaTuristicaController {
       }
       return ResponseGenerator.generateResponse(HttpStatus.OK,
           prenotazioneAttivitaTuristicaService.getPrenotazioniByAttivitaTuristica(attivita));
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
+
+  @GetMapping("perAttivita/{idAttivita}/disponibilita")
+  private ResponseEntity<Object> visualizzaDisponibilitaPerAttivitaTuristica(
+      @PathVariable("idAttivita") final long idAttivita,
+      @RequestParam("dataInizio") final Date dataInizio
+  ) {
+    try {
+      Attivita attivita = attivitaService.findById(idAttivita);
+      return ResponseGenerator.generateResponse(HttpStatus.OK,
+          prenotazioneAttivitaTuristicaService.controllaDisponibilitaAttivitaTuristica(attivita,
+              dataInizio));
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
