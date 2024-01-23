@@ -49,7 +49,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule, NativeDateAdapter } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -60,11 +60,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CookieService } from 'ngx-cookie-service';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 
 @NgModule({
@@ -80,6 +81,7 @@ import { HomePageComponent } from './componenti/home-page/home-page.component';
     PoliticheEcosostenibiliAttivitaComponent,
     SlideshowComponent,
     MapComponent,
+    GestionePrenotazioniAttiveComponent,
     RegistrazioneComponent,
     RecensioneFormComponent,
     RecensioneComponent,
@@ -134,7 +136,6 @@ import { HomePageComponent } from './componenti/home-page/home-page.component';
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
-    Ng2SearchPipeModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -179,9 +180,8 @@ import { HomePageComponent } from './componenti/home-page/home-page.component';
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
-    Ng2SearchPipeModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

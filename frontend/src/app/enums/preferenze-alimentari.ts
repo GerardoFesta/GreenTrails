@@ -1,0 +1,6 @@
+export enum PreferenzeAlimentari {
+    VEGAN = 'VEGAN',
+    VEGETARIAN = 'VEGETARIAN',
+    GLUTEN_FREE = 'GLUTEN_FREE',
+    NESSUNA_PREFERENZA = 'NESSUNA_PREFERENZA',
+}

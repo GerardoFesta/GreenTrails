@@ -1,17 +1,15 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './componenti/login/login.component';
 import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
-  { path: 'paginaattiva', component: PaginaAttivitaComponent },
+  {path: '', component: GestionePrenotazioniAttiveComponent},
   { path: 'registrazione', component: RegistrazioneComponent },
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
-  {path: 'login', component: LoginComponent},
-
 ];
 
 
