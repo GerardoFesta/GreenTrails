@@ -5,43 +5,25 @@
     <div>
       <form name="prenotattivita" #prenotattivita="ngForm">
         <mat-grid-list cols="2" rowHeight="4:1">
-          <mat-grid-tile>
-            <mat-label class="mat-label">Arrivo:</mat-label>
-          </mat-grid-tile>
 
-          <mat-grid-tile>
-            <input
-              class="input"
-              matInput
-              [matDatepicker]="picker3"
-              required
-              [formControl]="arrivo1"
-            />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker3"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker3></mat-datepicker>
-          </mat-grid-tile>
 
-          <mat-grid-tile>
-            <mat-label class="mat-label">Partenza:</mat-label>
+            <mat-grid-tile>
+            <mat-label class="mat-label">Seleziona date</mat-label>
           </mat-grid-tile>
-
-          <mat-grid-tile>
-            <input
-              class="input"
-              matInput
-              [matDatepicker]="picker2"
-              required
-              [formControl]="partenza1"
-            />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker2"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker2 color="primary"></mat-datepicker>
-          </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-date-range-input  [rangePicker]="rangePicker" required >
+              <input matStartDate placeholder="Arrivo" [formControl]="arrivo1">
+              <input matEndDate placeholder="Partenza" [formControl]="partenza1">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+ 
+            <mat-date-range-picker #rangePicker>
+              <mat-date-range-picker-actions>
+                <button mat-button matDateRangePickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+              </mat-date-range-picker-actions>
+            </mat-date-range-picker>
+        </mat-grid-tile>
 
           <mat-grid-tile>
             <mat-icon>person</mat-icon>
@@ -81,7 +63,7 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancella</button>
+    <button mat-button mat-dialog-close       (click)="onClose()">Cancella</button>
     <button
       mat-button
       type="submit"

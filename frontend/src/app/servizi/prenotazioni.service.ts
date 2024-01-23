@@ -83,8 +83,19 @@ export class PrenotazioniService {
 
     return this.http.post(`${this.baseUrl}/api/prenotazioni-attivita-turistica`,params, {headers});
   }
+  
+  cancellaItinerario(idItinerario: number): Observable<any> {
+      
+    const email = 'e@g.b';
+    const password = 'qwerty123!';
+    const base64credential = btoa(email + ":" + password);
+    const headers = ({Authorization: 'Basic ' + base64credential} )
+    return this.http.delete(`${this.baseUrl}/api/itinerari/${idItinerario}`,{headers});
+  }
 
-  prenotazioneAlloggio(idItinerario: number,idCamera: number, idAttivita: number,numAdulti: number, numBambini: number, numCamere: number, dataInizio: any, dataFine: any  ): Observable<any>{
+
+
+  prenotazioneAlloggio(idItinerario: number,idCamera: number,numAdulti: number, numBambini: number, numCamere: number, dataInizio: any, dataFine: any  ): Observable<any>{
   
     const email = 'e@g.b';
     const password = 'qwerty123!';
@@ -97,12 +108,13 @@ export class PrenotazioniService {
 
     const params = new HttpParams()
     .set('idItinerario', idItinerario)
-    .set('idAttivita', idAttivita)
+
+    .set('idCamera', idCamera)
     .set('numAdulti', (numAdulti).toString())
     .set('numBambini', (numBambini).toString())
        .set('dataInizio', timestampInizio.toString())
       .set('dataFine', timestampFine.toString())
-      .set('idCamera', (idCamera).toString()  )
+
       .set('numCamere', (numCamere).toString()  );
 
 

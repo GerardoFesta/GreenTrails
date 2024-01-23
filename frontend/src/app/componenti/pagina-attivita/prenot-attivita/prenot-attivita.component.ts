@@ -1,6 +1,8 @@
 import { PrenotazioniService } from '../../../servizi/prenotazioni.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { PopUpPrenotazioneComponent } from '../pop-up-prenotazione/pop-up-prenotazione.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-prenot-attivita',
@@ -22,31 +24,29 @@ export class PrenotAttivitaComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  constructor(private prenotazioniService: PrenotazioniService) { }
+  constructor(private prenotazioniService: PrenotazioniService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
      
-    this.prenotazioniService.creaItinerari()
-    .subscribe((response) => {
-      console.log('Dati inviati')
-      console.log(response.data)
-
+    this.prenotazioniService.creaItinerari().subscribe((response) => {
       this.idItinerario = response.data.id;
- 
-      console.log('ID ottenuto:', this.idItinerario);
 });
 
     this.prenotazioniService.currentId.subscribe(id => {
       this.id = id;
-      console.log('Id attivita', this.id)
   });
 }
-  onSubmit(){
-    console.log('Entrato nella onSubmit');
-    console.log(this.formatDate(this.arrivo1.value),
-    this.formatDate(this.partenza1.value),)
 
-    
+openPopupPrenotazione(message: string):void{
+  const dialogRef = this.dialog.open(PopUpPrenotazioneComponent, {
+    width: '250px',
+    data: { message },
+    disableClose: true,
+  });
+
+}
+
+  onSubmit(){   
     const formData = {
       arrivo1: new Date(this.arrivo1.value).toISOString(),
       partenza1: new Date(this.partenza1.value).toISOString(),
@@ -55,12 +55,8 @@ export class PrenotAttivitaComponent implements OnInit {
       id: this.id,
       idItinerario: this.idItinerario.toString()
     };
-    console.log(formData)
-
     const timestampArrivo = new Date(this.arrivo1.value).getTime();
     const timestampPartenza = new Date(this.partenza1.value).getTime();
-
-    console.log(timestampArrivo)
 
     this.prenotazioniService.prenotazioneAttivita(
       this.idItinerario,
@@ -70,12 +66,30 @@ export class PrenotAttivitaComponent implements OnInit {
       timestampArrivo,
       timestampPartenza).subscribe(
       (response) =>{
-        console.log('Dati inviati', response)
+        console.log('Dati inviati', response);
+        if(response?.status ==='success'){
+          this.openPopupPrenotazione('Prenotazione inviata');
+        
+        } else{
+          this.openPopupPrenotazione('Prenotazione effettuata')
+        }
 
       }
     )
 
 //this.idItinerario, this.id, this.numAdulti1.value, this.numBambini1.value,this.arrivo1,this.partenza1
+
+  }
+
+  onClose(){
+    this.prenotazioniService.cancellaItinerario(this.idItinerario).subscribe(
+      (response) => {
+        console.log('Itinerario cancellato con successo', response);
+      },
+      (error) => {
+        console.error('Errore durante la cancellazione dell\'itinerario', error);
+      }
+    );
 
   }
 }

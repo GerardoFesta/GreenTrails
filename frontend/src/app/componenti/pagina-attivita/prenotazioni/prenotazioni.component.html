@@ -4,42 +4,23 @@
   <div>
     <form name="prenotazioni" #prenotazioni="ngForm">
       <mat-grid-list cols="2" rowHeight="4:1">
-        <mat-grid-tile>
-          <mat-label class="mat-label">Arrivo:</mat-label>
-        </mat-grid-tile>
 
+            <mat-grid-tile>
+            <mat-label class="mat-label">Seleziona date</mat-label>
+          </mat-grid-tile>
         <mat-grid-tile>
-          <input
-            class="input"
-            matInput
-            [matDatepicker]="picker1"
-            required
-            [formControl]="arrivo"
-          />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker1"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker1></mat-datepicker>
-        </mat-grid-tile>
-
-        <mat-grid-tile>
-          <mat-label class="mat-label">Partenza:</mat-label>
-        </mat-grid-tile>
-
-        <mat-grid-tile>
-          <input
-            class="input"
-            matInput
-            [matDatepicker]="picker2"
-            required
-            [formControl]="partenza"
-          />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker2"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker2 color="primary"></mat-datepicker>
+            <mat-date-range-input  [rangePicker]="rangePicker" required >
+              <input matStartDate placeholder="Arrivo" [formControl]="arrivo">
+              <input matEndDate placeholder="Partenza" [formControl]="partenza">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+ 
+            <mat-date-range-picker #rangePicker>
+              <mat-date-range-picker-actions>
+                <button mat-button matDateRangePickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+              </mat-date-range-picker-actions>
+            </mat-date-range-picker>
         </mat-grid-tile>
 
         <mat-grid-tile>
@@ -99,7 +80,7 @@
         </mat-grid-tile>
 
         <mat-grid-tile>
-          <mat-form-field>
+
             <mat-select
               class="testo"
               [formControl]="idCamera"
@@ -112,7 +93,7 @@
                 {{ camera.tipoCamera }}
               </mat-option>
             </mat-select>
-          </mat-form-field>
+
           
         </mat-grid-tile>
       </mat-grid-list>
@@ -120,7 +101,7 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancella</button>
+  <button mat-button mat-dialog-close        (click)="onClose1()">Cancella</button>
   <button
     mat-button
     type="submit"

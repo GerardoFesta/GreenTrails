@@ -69,6 +69,7 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
 import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { PopUpPrenotazioneComponent } from './componenti/pagina-attivita/pop-up-prenotazione/pop-up-prenotazione.component';
 
 
 @NgModule({
@@ -92,6 +93,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     RecensioneFormComponent,
     RecensioneComponent,
     PopupRecensioneComponent,
+    PopUpPrenotazioneComponent,
     
   ],
   imports: [
