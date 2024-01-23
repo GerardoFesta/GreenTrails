@@ -12,7 +12,6 @@ export class SlideshowComponent implements OnInit {
 
   idAttivita: number = 0;
   imageUrls: { name: string, caption: string }[] = [];
-  attivita: any;
   directoryAttivita: string = '';
 
   constructor(private uploadService: UploadService, private attivitaService: AttivitaService, private route: ActivatedRoute) { }
@@ -27,7 +26,6 @@ export class SlideshowComponent implements OnInit {
 
   visualizzaDettagliAttivita(): void {
     this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe((attivita) => {
-      this.attivita = attivita.data;
       this.directoryAttivita = attivita.data.media;
       console.log("PERCORSO MEDIA ATTIVITA", this.directoryAttivita);
 
@@ -35,7 +33,7 @@ export class SlideshowComponent implements OnInit {
         console.log("IMMAGINI ATTIVITA", risposta);
         
         this.imageUrls = risposta.data.map((fileName: string) => ({
-          name: fileName,
+          name: `${fileName}`,
           caption: 'File non trovato'
         }));
 

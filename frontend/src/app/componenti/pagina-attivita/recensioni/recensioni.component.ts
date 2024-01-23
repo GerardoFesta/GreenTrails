@@ -44,7 +44,7 @@ export class RecensioniComponent implements OnInit {
         return new Promise<void>((resolve) => {
           this.uploadService.elencaFileCaricati(item.media).subscribe((listaFiles) => {
             if (listaFiles.data.length > 0) {
-              const fileName = listaFiles.data[0];
+              const fileName = listaFiles.data[index];
               this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
                 this.fileNames.push(fileName);
                 // console.log("FileNames: ", this.fileNames);
@@ -63,8 +63,8 @@ export class RecensioniComponent implements OnInit {
         });
       });
 
-      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'visitatore@visitatore.com');
-      // this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'giuseppe@simone.com');
+      // this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'visitatore@visitatore.com');
+      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'giuseppe@simone.com');
       // this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'mariorossi@gmail.com');
     });
   }
