@@ -101,10 +101,15 @@ export class RecensioneFormComponent implements OnInit {
 
   selectOption(item: any, option: any) {
     item.selectedOption = option;
-
+    const key = this.convertLabelToCamelCase(item.label);
     if (option === 'no') {
-      const key = this.convertLabelToCamelCase(item.label);
+      console.log("CHIAVE:", key)
       this.valoriEcosostenibilita[key] = false;
+      console.log(this.valoriEcosostenibilita[key])
+    } else {
+      console.log("CHIAVE:", key)
+      this.valoriEcosostenibilita[key] = true;
+      console.log(this.valoriEcosostenibilita[key])
     }
 
     this.updateSubmitButton();
