@@ -16,7 +16,7 @@ export class HomepageComponent implements OnInit {
   constructor(private attivitaService: AttivitaService) { }
 
   ngOnInit(): void {
-    this.visualizzaAttivitaPerPrezzo(this.limite);
+    this.visualizzaAttivitaPerPrezzo(0);
   }
 
   visualizzaAttivitaPerPrezzo(limite: number) {
