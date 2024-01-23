@@ -68,6 +68,7 @@ import { PopupRecensioneComponent } from './componenti/pagina-attivita/recension
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
 import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -186,7 +187,7 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
     MatNativeDateModule,
     Ng2SearchPipeModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
