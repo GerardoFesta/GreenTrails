@@ -1,3 +1,6 @@
+import { ActivatedRoute } from '@angular/router';
+import { ValoriEcosostenibilitaService } from 'src/app/servizi/valori-ecosostenibilita.service';
+import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { SegnalazioneService } from './../../servizi/segnalazione.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
@@ -14,25 +17,89 @@ export class PopupsegnalazioneComponent implements OnInit {
   @Output() formSottomesso = new EventEmitter<void>();
   @Output() chiudiPopup = new EventEmitter<void>();
 
+  idAttivita: number = 1;
+  idValori: number = 1;
+
   descrizione: string = '';
   valoriEcosostenibilita: any [] = [];
+
+  valori = [
+    { label: '', selezionato: '' }
+  ];
+
+  isDescrizioneInserita: boolean;
+  isValoriInseriti: boolean;
+  isSubmitDisponibile: boolean = true;
   
-  constructor(private segnelazioneService :SegnalazioneService, 
+  constructor(
+    private attivitaService: AttivitaService,
+    private valoriService: ValoriEcosostenibilitaService,
+    private route: ActivatedRoute,
+    private segnelazioneService :SegnalazioneService, 
     public dialogRef: MatDialogRef<PopupsegnalazioneComponent>) { }
 
   ngOnInit(): void {
-    /*const attivitaId = 123; 
-    this.segnelazioneService.getValoriEcosostenibilitaPerAttivita(attivitaId).subscribe({
-      next: (valori: any) => {
-        this.valoriEcosostenibilita = valori;
-      },
-      error: (error: any) => {
-        console.error('Errore durante il recupero dei valori di ecosostenibilità', error);
-      }
-    });
-  */
+    this.route.params.subscribe(
+      params => {
+        this.idAttivita = +params['id'];
+      })
+      this.visualizzaPolitiche();
   }
 
+  convertCamelCaseToReadable(camelCase: string): string {
+    let result = camelCase.replace(/([A-Z])/g, ' $1');
+    result = result.replace('C O2', 'CO2');
+    return result.charAt(0).toUpperCase() + result.slice(1);
+  }
+
+  visualizzaPolitiche(){
+    this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe(
+      (attivita) => {
+        this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
+        console.log('valori dichiarati dallattivita', this.valoriEcosostenibilita);
+        this.idValori = attivita.data.valoriEcosostenibilita.id;
+        let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita). filter(([nomePolitica, valore]) =>
+        valore === true).map(([nomePolitica, valore]) => this.convertCamelCaseToReadable(nomePolitica));
+
+        this.valori = valoriEcosostenibilitaTrue.map((label) => ({
+          label: label, 
+          selezionato: ''
+        }));
+      }, (error) => {
+        console.error(error);
+      }
+    )
+  }
+
+  updateSubmit(){
+    const isValoriInseriti = this.valori.every(item => item.selezionato === 'sì' || item.selezionato === 'no');
+    this.isSubmitDisponibile = !isValoriInseriti || !this.isDescrizioneInserita;
+  }
+
+  selezionatoRadio(item: any, option: any){
+    item.selezionato = option;
+    if(option === 'no'){
+      const key = this.convertLabelToCamelCase(item.label);
+      this.valoriEcosostenibilita[key] = false;
+    }
+    this.updateSubmit();
+  }
+
+  convertLabelToCamelCase(label: string): string {
+    const words = label.split(' ');
+    const camelCaseWords = words.map((word, index) =>{
+      if(index === 0){
+        return word.toLowerCase();
+      } else {
+        if (word === 'CO2'){
+          return word;
+        } else {
+          return word.charAt(0).toUpperCase() + word.slice(1).toLocaleLowerCase();
+        }
+      }
+    });
+    return camelCaseWords.join('');
+  }
 
   submitForm(): void{
     const formData = {

@@ -4,15 +4,17 @@
         <mat-icon (click)="closePopup()"> close</mat-icon>
     </div>
     <form (submit)="submitForm()">
+      <h2 style="font-weight: bold; text-align: center;">Scrivi una segnalazione</h2>
       <mat-form-field class="descrizione" appearance="fill">
         <mat-label>Scrivi la tua esperienza qui: </mat-label>
-        <textarea matInput id="descrizione" [(ngModel)]="descrizione" required></textarea>
+        <textarea matInput rows="5" style="font-size: medium; resize: none;" id="descrizione" required></textarea>
       </mat-form-field>
   
-      <div *ngFor="let valore of valoriEcosostenibilita">
-        <label>{{ valore.name }}</label>
-        <input type="radio" name="valore" [value]="true" [(ngModel)]="valore.selected"> Si
-        <input type="radio" name="valore" [value]="false" [(ngModel)]="valore.selected"> No
+      <div *ngFor="let item of valoriEcosostenibilita">
+          <label>{{ item.name }}</label>
+        <div class="radio-container">
+          <input type="radio" value="sì" (change)="selezionatoRadio(item, 'sì')" [checked]="item.selectedOption === 'sì'">Sì
+        <input type="radio" [name]="item.label" value="no" (change)="selezionatoRadio(item, 'no')" [checked]="item.selectedOption === 'no'"> No</div>
       </div>
   
       <button type="submit">Invia segnalazione</button>

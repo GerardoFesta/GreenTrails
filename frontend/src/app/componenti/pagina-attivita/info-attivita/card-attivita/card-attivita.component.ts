@@ -22,7 +22,7 @@ export class CardAttivitaComponent implements OnInit {
 
   apriSegnalazione(): void{
     const dialogRef = this.dialog.open(PopupsegnalazioneComponent, {
-      width: '80%',
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
