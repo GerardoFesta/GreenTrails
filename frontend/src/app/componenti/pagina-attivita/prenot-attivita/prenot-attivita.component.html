@@ -3,6 +3,7 @@
 
   <mat-dialog-content>
     <mat-stepper linear #stepper>
+      <!--PRIMA PARTE-->
       <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
           <ng-template matStepLabel>Inserisci i dati</ng-template>
@@ -79,12 +80,12 @@
 
             </mat-grid-list>
           <div> <!--(click)="onVerifica()"-->
-            <button mat-button matStepperNext >Next</button>
+            <button mat-button matStepperNext >Continua</button>
           </div>
         </form>
       </mat-step>
 
-      <!--SECONDO STEP-->
+      <!--SECONDO PARTE-->
       <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Disponibilità</ng-template>
@@ -99,18 +100,20 @@
           </div>
         </form>
       </mat-step>
+
+      <!--TERZA PARTE-->
       <mat-step>
         <div *ngIf="idItinerario; else noItinerarioFound">
           <p>Vuoi aggiungere all'itinerario: {{ idItinerario }} oppure crearne uno nuovo?</p>
           <div>
-            <button mat-button (click)="retrieveOrCreateItinerary()" [disabled]="azioneEseguita || siClicked">Aggiungi all'itinerario</button>
-            <button mat-button (click)="deleteItinerary()" [disabled]="azioneEseguita || creaClicked">Crea un nuovo itinerario</button>
+            <button mat-button (click)="aggiungiAllItinerario()" [disabled]="azioneEseguita || siClicked">Aggiungi all'itinerario</button>
+            <button mat-button (click)="creaItinerario()" [disabled]="azioneEseguita || creaClicked">Crea un nuovo itinerario</button>
           </div>
         </div>
         
         <ng-template #noItinerarioFound>
           <p>Nessun Itinerario trovato</p>
-          <button mat-button (click)="createNewItinerary()" [disabled]="azioneEseguita || creaClicked">Crea un nuovo itinerario</button>
+          <button mat-button (click)="creaItinerario()" [disabled]="azioneEseguita || creaClicked">Crea un nuovo itinerario</button>
         </ng-template>
       </mat-step>
     </mat-stepper>

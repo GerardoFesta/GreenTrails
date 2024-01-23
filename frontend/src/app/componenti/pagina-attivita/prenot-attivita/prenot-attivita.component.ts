@@ -16,10 +16,9 @@ export class PrenotAttivitaComponent implements OnInit {
   partenza1= new FormControl();
   numAdulti1= new FormControl();
   numBambini1= new FormControl();
-  idItinerario: any;
   firstFormGroup: FormGroup;
 
-  itineraryId: number | null;
+  idItinerario: any | null;
 
   siClicked = false;
   creaClicked = false;
@@ -29,10 +28,6 @@ export class PrenotAttivitaComponent implements OnInit {
     secondCtrl: '',
   });
   isOptional = false;
-
-
-
-
 
   private formatDate(date: Date): string {
     const year = date.getFullYear();
@@ -49,16 +44,17 @@ this.firstFormGroup = this._formBuilder.group({
   numBambini1: ['', Validators.required]
 });
 
-this.itineraryId = this.prenotazioniService.getItineraryId();
+this.idItinerario = this.prenotazioniService.getidItinerario();
     }
 
-  ngOnInit(): void {
+ngOnInit(): void {
+    this.idItinerario = localStorage.getItem('idItinerario');    
  
     this.prenotazioniService.currentId.subscribe(id => {
       this.id = id;
       console.log('ID attivita',id)
 
-      this.idItinerario = localStorage.getItem('itineraryId');
+      this.idItinerario = localStorage.getItem('idItinerario');
   });
 }
 
@@ -71,28 +67,28 @@ openPopupPrenotazione(message: string):void{
 
 }
 
-
-
-retrieveOrCreateItinerary() {
-  this.itineraryId = this.prenotazioniService.getItineraryId();
-  console.log(this.itineraryId)
+aggiungiAllItinerario() {
+  console.log(this.idItinerario)
 
   this.siClicked = false;
   this.creaClicked = true;
   this.azioneEseguita = true;
 }
 
-createNewItinerary() {
-  this.itineraryId = this.prenotazioniService.generateNewId();
-  console.log(this.itineraryId)
-  this.siClicked = true;
-  this.creaClicked = false;
-  this.azioneEseguita = true;
+creaItinerario() {
+  this.prenotazioniService.creaItinerari().subscribe((response) => {
+    const idItinerario = response.data.id;
+    localStorage.setItem('idItinerario', idItinerario.toString());
+    this.idItinerario = idItinerario;
+    this.siClicked = false;
+    this.creaClicked = true;
+    this.azioneEseguita = true;
+  });
 }
  
 deleteItinerary() {
   localStorage.removeItem(this.prenotazioniService.ITINERARY_KEY);
-  this.itineraryId = null;
+  this.idItinerario = null;
 }
 
 
@@ -116,7 +112,44 @@ onVerifica(){
 
   onSubmit(){   
 
-  }
+    const formData = {
+      arrivo1: this.formatDate(this.firstFormGroup.get('arrivo1')?.value),
+      partenza1: this.formatDate(this.firstFormGroup.get('partenza1')?.value),
+      numAdulti1: this.firstFormGroup.get('numAdulti1')?.value,
+      numBambini1: this.firstFormGroup.get('numBambini1')?.value,
+      id: this.id,
+      idItinerario: this.idItinerario
+    }
+    console.log(formData)
+    const timestampArrivo = new Date(this.firstFormGroup.get('arrivo1')?.value).getTime();
+    const timestampPartenza = new Date(this.firstFormGroup.get('partenza1')?.value).getTime();
+    
+    console.log(this.idItinerario)
+    console.log(this.id)
+    console.log(this.firstFormGroup.get('numAdulti1')?.value);
+    console.log(this.firstFormGroup.get('numBambini1')?.value)
+    console.log(timestampPartenza)
+    console.log(timestampArrivo)
+
+
+    this.prenotazioniService.prenotazioneAttivita(
+      this.idItinerario, 
+      this.id,
+      this.firstFormGroup.get('numAdulti1')?.value,
+      this.firstFormGroup.get('numBambini1')?.value,
+      timestampArrivo,
+      timestampPartenza
+      ).subscribe(
+      (response) =>{
+        console.log('Dati inviati', response);
+        if(response?.status ==='success'){
+          this.openPopupPrenotazione('Prenotazione inviata');
+        
+        } else{
+          this.openPopupPrenotazione('Prenotazione effettuata')
+        }
+  })
+}
 
   onClose(){
 

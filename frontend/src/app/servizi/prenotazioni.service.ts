@@ -76,8 +76,8 @@ export class PrenotazioniService {
     const params = new HttpParams()
     .set('idItinerario', idItinerario)
     .set('idAttivita', idAttivita)
-    .set('numAdulti', (numAdulti).toString())
-    .set('numBambini', (numBambini).toString())
+    .set('numAdulti', numAdulti)
+    .set('numBambini', numBambini)
        .set('dataInizio', timestampInizio.toString())
       .set('dataFine', timestampFine.toString());
 
@@ -147,7 +147,9 @@ export class PrenotazioniService {
 
   }
 
-  getItineraryId(): number |null {
+
+  
+  getidItinerario(): number |null {
     const storedId = localStorage.getItem(this.ITINERARY_KEY);
 
     if (storedId) {
@@ -156,10 +158,5 @@ export class PrenotazioniService {
       return null;
     }
   }
-
-  generateNewId(): number {
-    return Math.floor(Math.random() * 1000) + 1;
-    
-  }
-
 }
+
