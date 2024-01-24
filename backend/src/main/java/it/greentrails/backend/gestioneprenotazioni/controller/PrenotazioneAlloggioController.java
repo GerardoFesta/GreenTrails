@@ -67,10 +67,10 @@ public class PrenotazioneAlloggioController {
       prenotazioneAlloggio.setDataInizio(dataInizio);
       double prezzo = numCamere * camera.getPrezzo();
       prenotazioneAlloggio.setDataFine(dataFine);
-      if (prenotazioneAlloggioService.controllaDisponibilitaAlloggio(camera.getAlloggio(),
+      if (prenotazioneAlloggioService.controllaDisponibilitaCamera(camera,
           dataInizio, dataFine) < numCamere) {
         return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-            "Alloggio non disponibile");
+            "Camera non disponibile");
       }
       long durataOre = Duration.between(dataInizio.toInstant(), dataFine.toInstant()).toHours();
       if (durataOre > 24) {
