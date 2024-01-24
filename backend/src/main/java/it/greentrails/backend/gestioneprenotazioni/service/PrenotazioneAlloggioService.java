@@ -123,6 +123,18 @@ public class PrenotazioneAlloggioService {
         .getCamereByAlloggio(alloggio)
         .stream()
         .mapToInt(Camera::getDisponibilita)
-        .sum() - repository.getPostiOccupatiTra(dataInizio, dataFine);
+        .sum() - repository.getPostiOccupatiAlloggioTra(alloggio.getId(), dataInizio, dataFine);
+  }
+
+  public int controllaDisponibilitaCamera(Camera camera, Date dataInizio, Date dataFine)
+      throws Exception {
+    if (camera == null) {
+      throw new Exception("La camera è vuota.");
+    }
+    if (dataFine.before(dataInizio)) {
+      throw new Exception("La data di fine non può essere precedente alla data di inizio.");
+    }
+    return camera.getDisponibilita() - repository.getPostiOccupatiCameraTra(camera.getId(),
+        dataInizio, dataFine);
   }
 }
