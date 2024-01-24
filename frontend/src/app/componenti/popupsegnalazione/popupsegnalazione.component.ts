@@ -27,8 +27,8 @@ export class PopupsegnalazioneComponent implements OnInit {
     { label: '', selezionato: '' }
   ];
 
-  isDescrizioneInserita: boolean;
-  isValoriInseriti: boolean;
+  isDescrizioneInserita: boolean = true;
+  isValoriInseriti: boolean = true;
   isSubmitDisponibile: boolean = true;
   
   constructor(
@@ -80,7 +80,7 @@ export class PopupsegnalazioneComponent implements OnInit {
     item.selezionato = option;
     if(option === 'no'){
       const key = this.convertLabelToCamelCase(item.label);
-      this.valoriEcosostenibilita[key] = false;
+      this.valoriEcosostenibilita[1] = false;
     }
     this.updateSubmit();
   }
