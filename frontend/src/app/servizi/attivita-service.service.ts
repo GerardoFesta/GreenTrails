@@ -14,8 +14,8 @@ export class AttivitaServiceService {
 
   inserimento( dati: any): Observable<any> {
 
-    const email = '';
-    const password = '';
+    const email = 'e@g.v';
+    const password = 'qwerty123!';
     const base64credential = btoa(email + ":" + password);
     const headers = ({Authorization: 'Basic ' + base64credential} );
    
@@ -34,9 +34,8 @@ export class AttivitaServiceService {
 
 
 
-
-    const email = '';
-    const password = '';
+  const email = 'e@g.v';
+  const password = 'qwerty123!';
     const base64credential = btoa(email + ":" + password);
     const headers = ({Authorization: 'Basic ' + base64credential} );
    

@@ -1,3 +1,4 @@
+
 import { HttpParams } from '@angular/common/http';
 import { AttivitaServiceService } from './../../servizi/attivita-service.service';
 import { Component, Input, OnInit } from '@angular/core';
@@ -18,162 +19,140 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./inserimento-attivita.component.css']
 })
 export class InserimentoAttivitaComponent implements OnInit {
-  valori: number | undefined;
+  inserimento: FormGroup;
+  matcher = new MyErrorStateMatcher();
+  idPolitiche: any;
 
-  constructor(private AttivitaServiceService: AttivitaServiceService ) {
- 
+
+  constructor( private formBuilder: FormBuilder, private attivitaServiceService: AttivitaServiceService) {
+    this.inserimento = this.formBuilder.group({
+      nome:['',Validators.required],
+      tipo:['',Validators.required],
+      categoria:[true,Validators.required],
+      disponibilita:[0,Validators.required],
+      indirizzo: ['',Validators.required],
+      cap:['',Validators.required],
+      citta: ['',Validators.required],
+      provincia: ['',Validators.required],
+      latitudine: ['',Validators.required],
+      longitudine: ['', Validators.required],
+      politicheAntispreco: ['', Validators.required],   
+      prodottiLocali: ['', Validators.required],   
+      energiaVerde: ['', Validators.required],   
+      raccoltaDifferenziata: ['', Validators.required],   
+      limiteEmissioneCO2: ['', Validators.required],   
+      contattoConNatura: ['', Validators.required],  
+      descrizioneBreve:['',Validators.required],
+      prezzo:['',Validators.required],
+      descrizioneLunga:['',Validators.required],
+      file:['',Validators.required]
+
+    });
+
   }
-id: any;
-  ngOnInit(): void {}
 
-        selectFormControl = new FormControl('',[Validators.required]);
-        nativeSelectFormControl = new FormControl('',[Validators.required ]);
-        matcher = new MyErrorStateMatcher();
 
-        nome = new FormControl('', [Validators.required, Validators.maxLength(10)]);
-        disponibilita = new FormControl('', [Validators.required, Validators.pattern("^[0-9]+")]);
-        alloggio = new FormControl(false, [Validators.required]);
-        categoriaAlloggio = new FormControl(false, [Validators.required]);
-        indirizzo = new FormControl('', [Validators.required]);
-        cap = new FormControl('', [Validators.required]);
-        citta = new FormControl('', [Validators.required]);
-        provincia = new FormControl('', [Validators.required]);
-        latitudine = new FormControl('', [Validators.required]);
-        longitudine = new FormControl('', [Validators.required]);
-        descrizioneBreve = new FormControl('', [Validators.required]);
-        prezzo = new FormControl('', [Validators.required]);
-        descrizioneLunga = new FormControl('', [Validators.required]);
-        file = new FormControl('', [Validators.required]);
-        politicheAntispreco = new FormControl();   
-        prodottiLocali = new FormControl();   
-        energiaVerde = new FormControl();   
-        raccoltaDifferenziata = new FormControl();   
-        limiteEmissioneCO2 = new FormControl();   
-        contattoConNatura = new FormControl();   
-   
-  
-        getErrorMessage(control: AbstractControl): string {
-          if (control.hasError('required')) {
-            return 'Campo obbligatorio';
-          }
-          else{
-            return '';
-          }
-
-        }
-
-        //File
-        selectedFiles: File[] = [];
-        errorMessage: string | null = null;
-        onFilesSelected(event: any): void {
-          const files: FileList = event.target.files;
-          // Controlla se ci sono file di tipo diverso da immagine
-          const nonImageFiles: File[] = Array.from(files).filter(file => !file.type.startsWith('image/'));
-          if (nonImageFiles.length > 0) {
-            this.errorMessage = 'Puoi selezionare solo file di immagine.';
-          } else {
-            this.errorMessage = null;      
-            // Aggiungi solo i file di tipo immagine alla lista
-            const imageFiles: File[] = Array.from(files).filter(file => file.type.startsWith('image/'));
-            this.selectedFiles.push(...imageFiles);
-          }
-        }
-  
-     ricezione(id: number){
-      console.log("Dato ricevuto dal figlio", id);
-      this.valori = id;
-     }
-     toppings = new FormControl(false, [Validators.required]);
-     salvaDati3() {
-
-      const politicheAntispreco: boolean = this.toppings.value!
-      const prodottiLocali: boolean = this.toppings.value!
-      const energiaVerde: boolean = this.toppings.value!
-      const raccoltaDifferenziata: boolean = this.toppings.value!
-      const limiteEmissioneCO2: boolean = this.toppings.value!
-      const contattoConNatura: boolean = this.toppings.value!
+  categorieAll=[
+    {value: 1, label: 'Hotel'},
+    {value: 2, label: 'Bed & Breakfast'},
+    {value: 3, label: 'Villaggio Turistico'},
+    {value: 4, label: 'Ostello'},
     
-  
-  const formValue = {
-    politicheAntispreco,
-    prodottiLocali,
-    energiaVerde,
-    raccoltaDifferenziata,
-    limiteEmissioneCO2,
-    contattoConNatura
-  
+  ]
+  categorieAtt=[
+    {value: 1, label: 'All\'\aperto'},
+    {value: 2, label: 'Visite Culturali-Storichr'},
+    {value: 3, label: 'Relax'},
+    {value: 4, label:'Gastronomia'}
+  ]
+
+  ngOnInit(): void {  }
+
+  isTipoFalse(): boolean {
+    return this.inserimento.get('tipo')?.value === 'false';
   }
-  console.log(formValue)
-    this.AttivitaServiceService.inserimento(formValue)
-      .subscribe((response) => {
-        console.log('Dati inviati')
 
+ /* ricezione(id: number){
+    console.log("Dato ricevuto dal figlio", this.idPolitiche);
+    this.valori = this.idPolitiche;
+  }*/
 
-        this.id = response.data.id;
-   
-        console.log('ID ottenuto:', this.id);
-          
-      console.log('Dati inviati al componente padre', this.id);
+  toppings = new FormControl(false, [Validators.required]);
 
+  //File
+  selectedFiles: File[] = [];
+  errorMessage: string | null = null;
+ onFilesSelected(event: any): void {
+   const files: FileList = event.target.files;
+   // Controlla se ci sono file di tipo diverso da immagine
+   const nonImageFiles: File[] = Array.from(files).filter(file => !file.type.startsWith('image/'));
+   if (nonImageFiles.length > 0) {
+     this.errorMessage = 'Puoi selezionare solo file di immagine.';
+    } else {
+       this.errorMessage = null;      
+       // Aggiungi solo i file di tipo immagine alla lista
+       const imageFiles: File[] = Array.from(files).filter(file => file.type.startsWith('image/'));
+       this.selectedFiles.push(...imageFiles);
+      }
+  }
 
+  salvaDati3() {
 
-      });
+    const politicheAntispreco: boolean = this.toppings.value!
+    const prodottiLocali: boolean = this.toppings.value!
+    const energiaVerde: boolean = this.toppings.value!
+    const raccoltaDifferenziata: boolean = this.toppings.value!
+    const limiteEmissioneCO2: boolean = this.toppings.value!
+    const contattoConNatura: boolean = this.toppings.value!
   
-  
-  
-     
-  
-    }
 
-  onSubmit() {
-    
+const formValue = {
+  politicheAntispreco,
+  prodottiLocali,
+  energiaVerde,
+  raccoltaDifferenziata,
+  limiteEmissioneCO2,
+  contattoConNatura
 
-     const formData ={
-        alloggio: this.alloggio.value,
-        nome: this.nome.value,
-        categoriaAlloggio: this.categoriaAlloggio.value,
-        indirizzo: this.indirizzo.value,
-        cap: this.cap.value,
-        citta: this.citta.value,
-        provincia: this.provincia.value,
-        latitudine: this.latitudine.value,
-        longitudine: this.longitudine.value,
-        descrizioneBreve: this.descrizioneBreve.value,
-        prezzo: this.prezzo.value,
-        descrizioneLunga: this.descrizioneLunga.value,
-        file: this.file.value,
-        valori : this.id
-     //   formData3: this.myForm.get('sezione3Data')?.value,
-
-    }
-
-    const params = new HttpParams()
-    .set('alloggio', !formData.alloggio)
-    .set('nome', !formData.nome)
-    .set('categoriaAlloggio', !formData.categoriaAlloggio)
-    .set('indirizzo', !formData.indirizzo)
-    .set('cap', !formData.cap)
-    .set('citta', !formData.citta)
-    .set('provincia', !formData.provincia)
-    .set('latitudine', !formData.latitudine)
-    .set('longitudine', !formData.longitudine)
-    .set('descriziooneBreve', !formData.descrizioneBreve)
-    .set('prezzo', !formData.prezzo)
-    .set('descrizioneLunga', !formData.descrizioneLunga)
-    .set('valori', !formData.nome)
-    .set('file', !formData.file)
-
-
-
-
-    // Fai qualcosa con i dati (ad esempio, invia al server)
-    console.log('Tutti i dati', formData);
-
-
-  this.AttivitaServiceService.inserimentoAttivita( formData)
+}
+console.log(formValue)
+  this.attivitaServiceService.inserimento(formValue)
     .subscribe((response) => {
-      console.log('Dati inviati', response)
-            });
+      console.log('Dati inviati')
+      this.idPolitiche = response.data.id;
+      console.log('ID ottenuto:', this.idPolitiche);        
+    console.log('Dati inviati al componente padre', this.idPolitiche);
+
+
+
+    });
   }
-  }
+
+
+ 
+    onSubmit() {
+    
+     const params = new HttpParams()
+     .set('alloggio', this.inserimento.get('alloggio')?.value)
+     .set('nome', this.inserimento.get('nome')?.value)
+     .set('categoria', this.inserimento.get('categoria')?.value)
+     .set('indirizzo', this.inserimento.get('indirizzo')?.value)
+     .set('cap',this.inserimento.get('cap')?.value) 
+     .set('citta', this.inserimento.get('citta')?.value)
+     .set('provincia', this.inserimento.get('provincia')?.value)
+     .set('latitudine', this.inserimento.get('latitudine')?.value)
+     .set('longitudine', this.inserimento.get('longitudine')?.value)
+     .set('descriziooneBreve', this.inserimento.get('descrizioneBreve')?.value)
+     .set('prezzo', this.inserimento.get('prezzo')?.value)
+     .set('descrizioneLunga', this.inserimento.get('descrizioneLunga')?.value)
+     .set('valori', this.inserimento.get('valori')?.value)
+     .set('file', this.inserimento.get('file')?.value)
+ 
+
+   this.attivitaServiceService.inserimentoAttivita( params)
+     .subscribe((response) => {
+       console.log('Dati inviati', response)
+             });
+   }
+}
 
