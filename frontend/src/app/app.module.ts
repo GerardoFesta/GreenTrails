@@ -68,7 +68,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
 import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
-import { CookieService } from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -89,6 +88,7 @@ import { CookieService } from 'ngx-cookie-service';
     PopupRecensioneComponent,
     GalleryDialogComponent,
     VideoDialogComponent,
+    HomePageComponent,
   ],
   imports: [
     BrowserModule,
