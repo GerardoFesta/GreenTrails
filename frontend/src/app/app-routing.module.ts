@@ -7,9 +7,11 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 
 const routes: Routes = [
-  {path: '', component: GestionePrenotazioniAttiveComponent},
+  {path: 'gestionePrenotazioni', component: GestionePrenotazioniAttiveComponent},
   { path: 'registrazione', component: RegistrazioneComponent },
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
+  {path: '', component: HomePageComponent},
+
 ];
 
 

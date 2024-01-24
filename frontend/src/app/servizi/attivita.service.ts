@@ -1,7 +1,6 @@
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -24,4 +23,11 @@ export class AttivitaService {
     return this.http.get<any>(`${this.baseUrl}/perPrezzo`);
   }
 
+  getAlloggi(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/alloggi`);}
+
+
+  getAttivitaTuristiche(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/attivitaTuristiche`);;
+  }
 }
