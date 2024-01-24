@@ -23,9 +23,11 @@
                 matIconSuffix
                 [for]="picker1"
               ></mat-datepicker-toggle>
+
               <mat-datepicker #picker1></mat-datepicker>
-    
-            </mat-grid-tile>
+                          </mat-grid-tile>
+                        
+                          
     
             <mat-grid-tile>
               <mat-label class="mat-label">Partenza:</mat-label>
@@ -79,8 +81,8 @@
             </mat-grid-tile>
 
             </mat-grid-list>
-          <div> <!--(click)="onVerifica()"-->
-            <button mat-button matStepperNext >Continua</button>
+          <div class="button-container"> 
+            <button mat-button matStepperNext (click)="verificaDisponibilita()">Continua</button>
           </div>
         </form>
       </mat-step>
@@ -89,14 +91,16 @@
       <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
         <form [formGroup]="secondFormGroup">
           <ng-template matStepLabel>Disponibilità</ng-template>
-          <mat-form-field>
-            <mat-label>Address</mat-label>
-            <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-                   required>
-          </mat-form-field>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div *ngIf="isDisponibile">
+            Disponibile nelle date selezionate
+            <button mat-button matStepperPrevious >Torna in dietro</button>
+            <button mat-button matStepperNext [disabled]="!isDisponibile" >Continua</button>
+          </div>
+          <div *ngIf="!isDisponibile">
+             Non disponibile, cambia date
+             <button mat-button matStepperPrevious >Torna in dietro</button>
+             <button mat-button matStepperNext [disabled]="!isDisponibile" >Continua</button>
+           
           </div>
         </form>
       </mat-step>
@@ -119,7 +123,7 @@
     </mat-stepper>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close       (click)="onClose()">Cancella</button>
+    <button mat-button mat-dialog-close>Cancella</button>
     <button
       mat-button
       type="submit"
@@ -127,10 +131,7 @@
       cdkFocusInitial
       (click)="onSubmit()"
       [disabled]="
-        numAdulti1.invalid ||
-        numBambini1.invalid ||
-        arrivo1.invalid ||
-        partenza1.invalid
+        !azioneEseguita
       "
     >
       Verifica Disponibilità

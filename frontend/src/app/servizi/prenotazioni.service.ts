@@ -70,17 +70,14 @@ export class PrenotazioniService {
     const headers = ({Authorization: 'Basic ' + base64credential} );
 
 
-    const timestampInizio = new Date(dataInizio).getTime();
-    const timestampFine = new Date(dataFine).getTime();
 
     const params = new HttpParams()
     .set('idItinerario', idItinerario)
     .set('idAttivita', idAttivita)
     .set('numAdulti', numAdulti)
     .set('numBambini', numBambini)
-       .set('dataInizio', timestampInizio.toString())
-      .set('dataFine', timestampFine.toString());
-
+    .set('dataInizio', dataInizio)
+    .set('dataFine', dataFine);
 
     return this.http.post(`${this.baseUrl}/api/prenotazioni-attivita-turistica`,params, {headers});
   }
@@ -101,21 +98,14 @@ export class PrenotazioniService {
     const base64credential = btoa(email + ":" + password);
     const headers = ({Authorization: 'Basic ' + base64credential} );
 
-
-    const timestampInizio = new Date(dataInizio).getTime();
-    const timestampFine = new Date(dataFine).getTime();
-
     const params = new HttpParams()
-    .set('idItinerario', idItinerario)
-
+    .set('idItinerario', idItinerario) 
     .set('idCamera', idCamera)
-    .set('numAdulti', (numAdulti).toString())
-    .set('numBambini', (numBambini).toString())
-       .set('dataInizio', timestampInizio.toString())
-      .set('dataFine', timestampFine.toString())
-
-      .set('numCamere', (numCamere).toString()  );
-
+    .set('numAdulti', numAdulti)
+    .set('numBambini', numBambini)
+    .set('numCamere',numCamere  )
+    .set('dataInizio', dataInizio)
+    .set('dataFine', dataFine);
 
     return this.http.post(`${this.baseUrl}/api/prenotazioni-alloggio`,params, {headers});
   }
@@ -128,19 +118,32 @@ export class PrenotazioniService {
     return this.http.post(`${this.baseUrl}/api/itinerari`,{},  {headers});
   }
   
-  verificaDisponibilita(idAttivita: number,dataInizio: any, dataFine: any):Observable<any> {
+  verificaDisponibilitaAttivita(idAttivita: number,dataInizio: any, dataFine: any):Observable<any> {
     const email = 'e@g.b';
     const password = 'qwerty123!';
     const base64credential = btoa(email + ":" + password);
     const headers = ({Authorization: 'Basic ' + base64credential} );
 
+    const params = new HttpParams()
+    .set('idAttivita', idAttivita)
+    .set('dataInizio', dataInizio)
+    .set('dataFine', dataFine);
 
- 
+
+    return this.http.get(`${this.baseUrl}/api/prenotazioni-attivita-turistica/perAttivita/${idAttivita}/disponibilita`,  { params, headers });
+
+  }
+
+  verificaDisponibilitaAlloggio(idAttivita: number,dataInizio: any, dataFine: any):Observable<any> {
+    const email = 'e@g.b';
+    const password = 'qwerty123!';
+    const base64credential = btoa(email + ":" + password);
+    const headers = ({Authorization: 'Basic ' + base64credential} );
 
     const params = new HttpParams()
     .set('idAttivita', idAttivita)
-    .set('dataInizio', dataInizio.toString())
-    .set('dataFine', dataFine.toString());
+    .set('dataInizio', dataInizio)
+    .set('dataFine', dataFine);
 
 
     return this.http.get(`${this.baseUrl}/api/prenotazioni-alloggio/perAttivita/${idAttivita}/disponibilita`,  { params, headers });

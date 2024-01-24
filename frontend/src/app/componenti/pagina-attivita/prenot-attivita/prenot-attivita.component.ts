@@ -1,9 +1,9 @@
 import { PrenotazioniService } from '../../../servizi/prenotazioni.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { Component, OnInit} from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PopUpPrenotazioneComponent } from '../pop-up-prenotazione/pop-up-prenotazione.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatStepper } from '@angular/material/stepper';
+
 
 @Component({
   selector: 'app-prenot-attivita',
@@ -11,7 +11,8 @@ import { MatStepper } from '@angular/material/stepper';
   styleUrls: ['./prenot-attivita.component.css']
 })
 export class PrenotAttivitaComponent implements OnInit {
-  id: number = 0;
+ 
+  idAttivita: number = 0;
   arrivo1 = new FormControl();
   partenza1= new FormControl();
   numAdulti1= new FormControl();
@@ -19,14 +20,16 @@ export class PrenotAttivitaComponent implements OnInit {
   firstFormGroup: FormGroup;
 
   idItinerario: any | null;
+  disponibilita: any;
+  isDisponibile: boolean = false;
 
   siClicked = false;
   creaClicked = false;
   azioneEseguita = false;
+
   
   secondFormGroup = this._formBuilder.group({
-    secondCtrl: '',
-  });
+    secondCtrl: '',});
   isOptional = false;
 
   private formatDate(date: Date): string {
@@ -43,21 +46,18 @@ this.firstFormGroup = this._formBuilder.group({
   numAdulti1: ['', Validators.required],
   numBambini1: ['', Validators.required]
 });
-
 this.idItinerario = this.prenotazioniService.getidItinerario();
     }
 
 ngOnInit(): void {
     this.idItinerario = localStorage.getItem('idItinerario');    
- 
     this.prenotazioniService.currentId.subscribe(id => {
-      this.id = id;
-      console.log('ID attivita',id)
-
+      this.idAttivita = id;
       this.idItinerario = localStorage.getItem('idItinerario');
   });
 }
 
+//POP-UP CONFERMA/EROORE
 openPopupPrenotazione(message: string):void{
   const dialogRef = this.dialog.open(PopUpPrenotazioneComponent, {
     width: '250px',
@@ -67,14 +67,14 @@ openPopupPrenotazione(message: string):void{
 
 }
 
+//AGGIUNGI ATTIVITA ALL'ITINERARIO
 aggiungiAllItinerario() {
-  console.log(this.idItinerario)
-
   this.siClicked = false;
   this.creaClicked = true;
   this.azioneEseguita = true;
 }
 
+// CREAZIONE ITINERARIO
 creaItinerario() {
   this.prenotazioniService.creaItinerari().subscribe((response) => {
     const idItinerario = response.data.id;
@@ -85,31 +85,26 @@ creaItinerario() {
     this.azioneEseguita = true;
   });
 }
- 
-deleteItinerary() {
-  localStorage.removeItem(this.prenotazioniService.ITINERARY_KEY);
-  this.idItinerario = null;
-}
 
-
-onVerifica(){
+//VERIFICA DISPONIBILITA
+verificaDisponibilita() {
   const formData = {
-    arrivo1:  this.formatDate(this.arrivo1.value),
-    partenza1:  this.formatDate(this.partenza1.value),   
-    idAttivita: this.id,
+    arrivo1: this.formatDate(this.firstFormGroup.get('arrivo1')?.value),
+    partenza1: this.formatDate(this.firstFormGroup.get('partenza1')?.value), 
+    idAttivita: this.idAttivita,
   };
 
-  console.log(formData)
-
-  this.prenotazioniService.verificaDisponibilita(
-    this.id,
-    this.partenza1.value,
-    this.arrivo1.value).subscribe(
+  this.prenotazioniService.verificaDisponibilitaAttivita(
+        this.idAttivita,
+    formData.arrivo1,
+    formData.partenza1).subscribe(
       (response) =>{
-        console.log('Dati inviati', response);
+        this.disponibilita = this.firstFormGroup.get('numAdulti1')?.value + this.firstFormGroup.get('numBambini1')?.value < response.data? 'Disponibile' : 'Non disponibile';
+        this.isDisponibile = this.firstFormGroup.get('numAdulti1')?.value + this.firstFormGroup.get('numBambini1')?.value < response.data? true : false;
+
       })
 }
-
+ // INVIO DEI DATI
   onSubmit(){   
 
     const formData = {
@@ -117,46 +112,30 @@ onVerifica(){
       partenza1: this.formatDate(this.firstFormGroup.get('partenza1')?.value),
       numAdulti1: this.firstFormGroup.get('numAdulti1')?.value,
       numBambini1: this.firstFormGroup.get('numBambini1')?.value,
-      id: this.id,
+      id: this.idAttivita,
       idItinerario: this.idItinerario
     }
-    console.log(formData)
-    const timestampArrivo = new Date(this.firstFormGroup.get('arrivo1')?.value).getTime();
-    const timestampPartenza = new Date(this.firstFormGroup.get('partenza1')?.value).getTime();
-    
-    console.log(this.idItinerario)
-    console.log(this.id)
-    console.log(this.firstFormGroup.get('numAdulti1')?.value);
-    console.log(this.firstFormGroup.get('numBambini1')?.value)
-    console.log(timestampPartenza)
-    console.log(timestampArrivo)
-
 
     this.prenotazioniService.prenotazioneAttivita(
       this.idItinerario, 
-      this.id,
+      this.idAttivita,
       this.firstFormGroup.get('numAdulti1')?.value,
       this.firstFormGroup.get('numBambini1')?.value,
-      timestampArrivo,
-      timestampPartenza
+     formData.arrivo1,
+    formData.partenza1
       ).subscribe(
       (response) =>{
-        console.log('Dati inviati', response);
-        if(response?.status ==='success'){
+        if (response?.status === 'success') {
           this.openPopupPrenotazione('Prenotazione inviata');
-        
-        } else{
-          this.openPopupPrenotazione('Prenotazione effettuata')
+        } else {
+          const errorMessage = response?.error?.message || 'Errore sconosciuto';
+          this.openPopupPrenotazione(errorMessage);
         }
-  })
+      },
+      (error) => {
+        this.openPopupPrenotazione(error.error.data);
+      }
+    );
 }
 
-  onClose(){
-
-        console.log(this.arrivo1.value)
-        console.log(this.partenza1.value)
-        console.log(this.numAdulti1.value)
-        console.log(this.numBambini1.value)
-
-  }
 }
