@@ -23,11 +23,18 @@ export class AttivitaService {
     return this.http.get<any>(`${this.baseUrl}/perPrezzo`);
   }
 
-  getAlloggi(): Observable<any> {
+
+  getAlloggi(limite: number): Observable<any> {
+    const pararms = new HttpParams()
+    .set('limite', limite.toString());
+    console.log('Limite:', limite)
     return this.http.get<any>(`${this.baseUrl}/alloggi`);}
 
 
-  getAttivitaTuristiche(): Observable<any> {
+  getAttivitaTuristiche(limite: number): Observable<any> {
+    const pararms = new HttpParams()
+    .set('limite', limite.toString());
+    console.log('Limite:', limite)
     return this.http.get<any>(`${this.baseUrl}/attivitaTuristiche`);;
   }
 }
