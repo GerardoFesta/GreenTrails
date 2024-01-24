@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class RecensioneService {
 
   private baseUrl = 'http://localhost:8080/api/recensioni';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   visualizzaRecensioniPerAttivita(idAttivita: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/perAttivita/${idAttivita}`);
@@ -30,14 +31,9 @@ export class RecensioneService {
       console.log('size: ', file.size);
       console.log('type: ', file.type);
     })}
-
-    // const email = 'visitatore@visitatore.com';
-    // const password = 'visitatore123@';
-    const email = 'mariorossi@gmail.com';
-    const password = 'mario123@';
-    const base64credential = btoa(email + ":" + password);
+    
     const headers = new HttpHeaders({
-      Authorization: 'Basic ' + base64credential,
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
 
     console.log("idAttivita: " + idAttivita);
@@ -46,13 +42,10 @@ export class RecensioneService {
     console.log("idValori: " + idValori);
     return this.http.post<any>(`${this.baseUrl}`, formData, { headers });
   }
+  
 
   visualizzaRecensione(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);
-  }
-
-  getRecensioneByVisitatoreEmail(recensioni: any[], visitatoreEmail: string): any | null {
-    return recensioni.find(item => item.visitatore.email === visitatoreEmail) || null;
   }
 
 }

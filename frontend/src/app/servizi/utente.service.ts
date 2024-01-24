@@ -8,21 +8,25 @@ import { Observable, catchError, of, tap } from 'rxjs';
 })
 export class UtenteService {
 private isLogged: boolean = false;
- 
+
 private url = 'http://localhost:8080/api/utenti';
 
 constructor(private http: HttpClient, private cookieService: CookieService) {}
 
 registerUser(isGestore: boolean, dati: any, HttpHeaders = { }): Observable<any> {
   const urlWithParams = `${this.url}?isGestore=${isGestore}`;
+
   return this.http.put(urlWithParams, dati);
 }
 
-login(email: string, password: string): Observable<any> {
-  const base64credential = btoa(email + ':' + password);
-  const headers = { Authorization: 'Basic ' + base64credential };
+login(email: String, password: String ): Observable<any> {
+
+  const base64credential = btoa(email + ":" + password);
+  const headers = ({Authorization: 'Basic ' + base64credential} );
+
 
   return this.http.get<any>(`${this.url}`, { headers }).pipe(
+    tap((response) => {
     tap((response) => {
       this.isLogged = true;
       console.log('Login successful:', response);
@@ -48,13 +52,9 @@ logout(): Observable<any> {
 
   return of({ success: true });
 }
+
 isLoggedInUser(): boolean {
-  // Check if the user is logged in by verifying the presence of the 'user' cookie
-  return this.isLogged || this.cookieService.check('user');
-}
-getUserInfo(): any {
-  // Retrieve user information from the 'user' cookie
-  const userData = this.cookieService.get('user');
-  return userData ? JSON.parse(userData) : null;
+  return this.isLogged;
 }
 }
+

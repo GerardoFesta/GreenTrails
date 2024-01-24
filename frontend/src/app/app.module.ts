@@ -16,7 +16,6 @@ import { ValutazioneAttivitaComponent } from './componenti/pagina-attivita/info-
 import { PoliticheEcosostenibiliAttivitaComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/politiche-ecosostenibili-attivita.component';
 import { SlideshowComponent } from './componenti/pagina-attivita/descrizione-attivita/slideshow/slideshow.component';
 import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map.component';
-import { HomepageComponent } from './componenti/homepage/homepage.component';
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -50,7 +49,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatNativeDateModule, MatRippleModule, NativeDateAdapter } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -61,12 +60,15 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
-import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
-import { RecensioneComponent } from './componenti/pagina-attivita/recensioni/recensione/recensione.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { CookieService } from 'ngx-cookie-service';
+import { HomePageComponent } from './componenti/home-page/home-page.component';
+import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
+import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 
 import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
 
@@ -83,14 +85,13 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     PoliticheEcosostenibiliAttivitaComponent,
     SlideshowComponent,
     MapComponent,
-    GestionePrenotazioniAttiveComponent,
-    HomepageComponent,
     RegistrazioneComponent,
-    HomepageComponent,
     RecensioneFormComponent,
-    RecensioneComponent,
     PopupRecensioneComponent,
-    PopupsegnalazioneComponent,
+    GalleryDialogComponent,
+    VideoDialogComponent,
+    HomePageComponent,
+    GestionePrenotazioniAttiveComponent,
   ],
   imports: [
     BrowserModule,

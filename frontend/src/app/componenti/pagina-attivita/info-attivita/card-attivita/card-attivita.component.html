@@ -7,20 +7,14 @@
             <button mat-icon-button aria-label="report_attivita_button" matTooltip="Segnala attività" matTooltipPosition="left" (click)="apriSegnalazione()">
                 <mat-icon style="color: red;">report_problem</mat-icon>
             </button>
-            {{ attivita?.nome }}
-            <ng-container *ngIf="mostraPopup">
-                <div class="overlay-background" (click)="chiudiFormPopup()"></div>
-                <div class="popup-container">
-                    <app-popupsegnalazione (formSottomesso)="handleFormSubmitted()" (chiudiPopup)="chiudiFormPopup()"></app-popupsegnalazione>
-                </div>
-            </ng-container>
-        </mat-card-title> <!-- Closing tag added here -->
+            {{ nomeAttivita }}
+        </mat-card-title>
     </mat-card-header>
     <!-- Container contenuto card-attivita -->
     <mat-card-content class="card-section" style="margin-top: 10px;">
         <!-- Container immagine attivita -->
         <img mat-card-image
-        src="{{ immagine_attivita }}"
+        src="{{ imageUrls[0] }}"
         alt="immagine-attivita">
     </mat-card-content>
 </mat-card>

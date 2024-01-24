@@ -61,14 +61,10 @@ export class GestionePrenotazioniAttiveComponent {
 
   changes = new Subject<void>();
 
-  // For internationalization, the `$localize` function from
-  // the `@angular/localize` package can be used.
   firstPageLabel = $localize`First page`;
   itemsPerPageLabel = $localize`Items per page:`;
   lastPageLabel = $localize`Last page`;
 
-  // You can set labels to an arbitrary string too, or dynamically compute
-  // it through other third-party internationalization libraries.
   nextPageLabel = 'Next page';
   previousPageLabel = 'Previous page';
 
@@ -80,7 +76,7 @@ export class GestionePrenotazioniAttiveComponent {
     return $localize`Page ${page + 1} of ${amountPages}`;
   }
 
-  
+
 
   displayedColumns: string[] = ['stato', 'nome', 'check-in', 'check-out', 'bambini', 'adulti', 'prezzo', "actions"];
   Prenotazione: any;
