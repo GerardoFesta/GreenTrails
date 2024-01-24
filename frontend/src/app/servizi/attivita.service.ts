@@ -37,4 +37,8 @@ export class AttivitaService {
     console.log('Limite:', limite)
     return this.http.get<any>(`${this.baseUrl}/attivitaTuristiche`);;
   }
+
+  findAll(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/all`)
+  }
 }

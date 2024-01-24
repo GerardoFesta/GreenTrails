@@ -65,7 +65,6 @@ export class RegistrazioneComponent implements OnInit {
     ngOnInit(): void { } 
 
     onSubmit(){ 
-
       const isGestore: boolean = this.selected.value!
       const emailValue: string = this.email.value !== null ? this.email.value : '';
       const passwordValue: string = this.password.value !== null ? this.password.value : '';

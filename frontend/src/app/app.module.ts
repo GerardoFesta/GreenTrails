@@ -72,6 +72,7 @@ import { ToolbarComponent } from './componenti/toolbar/toolbar.component';
 import { ToolbarHomepageComponent } from './componenti/toolbar-homepage/toolbar-homepage.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
+import { RicercaComponent } from './componenti/ricerca/ricerca.component';
 
 
 @NgModule({
@@ -97,6 +98,7 @@ import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.com
     ToolbarHomepageComponent,
     GestionePrenotazioniAttiveComponent,
     IconToolbarComponent,
+    RicercaComponent,
   ],
   imports: [
     BrowserModule,

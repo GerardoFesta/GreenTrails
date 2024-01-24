@@ -1,0 +1,15 @@
+<div class="container mt-5">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filterTerm" />
+    </div>
+    <table class="table">
+        <thead class="thead-dark">
+        </thead>
+        <tbody>
+            <tr *ngFor="let attivita of listaAttivita | filter: filterTerm">
+                <td>{{ attivita.nome }}</td>
+                <td>{{ attivita.citta }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
