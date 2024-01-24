@@ -16,7 +16,6 @@ import { ValutazioneAttivitaComponent } from './componenti/pagina-attivita/info-
 import { PoliticheEcosostenibiliAttivitaComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/politiche-ecosostenibili-attivita.component';
 import { SlideshowComponent } from './componenti/pagina-attivita/descrizione-attivita/slideshow/slideshow.component';
 import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map.component';
-import { HomepageComponent } from './componenti/homepage/homepage.component';
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -84,7 +83,6 @@ import { CookieService } from 'ngx-cookie-service';
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
-    HomepageComponent,
     RecensioneFormComponent,
     PopupRecensioneComponent,
     GalleryDialogComponent,
