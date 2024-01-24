@@ -15,6 +15,7 @@ export class HomePageComponent implements OnInit {
 
   attivita?: any;
   id: number = 0;
+  limite:number = 5;
 
   nomeAttivita: string = 'nome';
   immagine_attivita: string = 'https://www.hotelkennedy.org/static/f9f7a02b44b26255144bc1b4086fbd1e/5267c/e825f4c8-e7d7-4693-9895-b012d2879684.jpg';
@@ -43,16 +44,16 @@ i: any;
     });
   }
 
-  private visualizzaListaAlloggi(): void {
-    this.attivitaService.getAlloggi().subscribe((result) => {
+  private visualizzaListaAlloggi(limite:number): void {
+    this.attivitaService.getAlloggi(limite).subscribe((result) => {
       this.attivitaList = result.data;  // Modify this based on your API response structure
 
       this.processMediaFiles();
     });
   }
 
-  private visualizzaListaAttivitaTuristiche(): void {
-    this.attivitaService.getAttivitaTuristiche().subscribe((result) => {
+  private visualizzaListaAttivitaTuristiche(limite:number): void {
+    this.attivitaService.getAttivitaTuristiche(limite).subscribe((result) => {
       this.attivitaList = result.data;  // Modify this based on your API response structure
 
       this.processMediaFiles();
