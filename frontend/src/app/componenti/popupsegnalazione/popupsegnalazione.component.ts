@@ -17,11 +17,11 @@ export class PopupsegnalazioneComponent implements OnInit {
   @Output() formSottomesso = new EventEmitter<void>();
   @Output() chiudiPopup = new EventEmitter<void>();
 
-  idAttivita: number = 0;
+  idAttivita: number;
   idValori: number = 0;
 
   descrizione: string = '';
-  valoriEcosostenibilita: any [] = [];
+  valoriEcosostenibilita: any;
 
   valori = [
     { label: '', selezionato: '' }
@@ -30,20 +30,26 @@ export class PopupsegnalazioneComponent implements OnInit {
   isDescrizioneInserita: boolean = true;
   isValoriInseriti: boolean = true;
   isSubmitDisponibile: boolean = true;
-  
+
+  files!: FileList;
+
   constructor(
     private attivitaService: AttivitaService,
     private route: ActivatedRoute,
-    private segnelazioneService :SegnalazioneService,
-    private valoriService: ValoriEcosostenibilitaService, 
+    private segnelazioneService :SegnalazioneService, 
+    private valoriService: ValoriEcosostenibilitaService,
     public dialogRef: MatDialogRef<PopupsegnalazioneComponent>) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.idAttivita = +params['id'];
+      this.idAttivita = +params['id'] || 1;
+      console.log('Id dell\'attività:', this.idAttivita);
     })
     this.visualizzaPolitiche();
+
   }
+
+
 
   convertCamelCaseToReadable(camelCase: string): string {
     let result = camelCase.replace(/([A-Z])/g, ' $1');
@@ -51,29 +57,25 @@ export class PopupsegnalazioneComponent implements OnInit {
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 
-  visualizzaPolitiche(){
+  visualizzaPolitiche(): void {
     this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe(
       (attivita) => {
+        this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
         this.idValori = attivita.data.valoriEcosostenibilita.id;
-        console.log('valori dichiarati dall\'attivita: ', attivita.data.valoriEcosostenibilita);
-        this.valoriService.visualizzaValoriById(this.idValori).subscribe(
-          (risposta) => {
-            console.log('valori dichiarati dallattivita', risposta);
-          }
-        )
-        
-        //this.idValori = attivita.data.valoriEcosostenibilita.id;
-        let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita). filter(([nomePolitica, valore]) =>
-        valore === true).map(([nomePolitica, valore]) => this.convertCamelCaseToReadable(nomePolitica));
-
+  
+        let valoriEcosostenibilitaTrue: string[] = Object.keys(this.valoriEcosostenibilita)
+          .filter(key => this.valoriEcosostenibilita[key] === true)
+          .map(key => this.convertCamelCaseToReadable(key));
+  
         this.valori = valoriEcosostenibilitaTrue.map((label) => ({
-          label: label, 
+          label: label,
           selezionato: ''
         }));
-      }, (error) => {
+      }, 
+      (error) => {
         console.error(error);
       }
-    )
+    );
   }
 
   updateSubmit(){
@@ -81,16 +83,22 @@ export class PopupsegnalazioneComponent implements OnInit {
     this.isSubmitDisponibile = !isValoriInseriti || !this.isDescrizioneInserita;
   }
 
-  selezionatoRadio(item: any, option: any){
-    item.selezionato = option;
-    if(option === 'no'){
-      const key = this.convertLabelToCamelCase(item.label);
-      this.valoriEcosostenibilita[1] = false;
+  selezionatoRadio(item: any, option: any) {
+    item.selectedOption = option;
+    const key = this.convertLabelToCamelCase(item.label);
+    if (option === 'no') {
+      console.log("CHIAVE:", key)
+      this.valoriEcosostenibilita[key] = false;
+      console.log(this.valoriEcosostenibilita[key])
+    } else {
+      console.log("CHIAVE:", key)
+      this.valoriEcosostenibilita[key] = true;
+      console.log(this.valoriEcosostenibilita[key])
     }
     this.updateSubmit();
   }
 
-  convertLabelToCamelCase(label: string): string {
+    convertLabelToCamelCase(label: string): string {
     const words = label.split(' ');
     const camelCaseWords = words.map((word, index) =>{
       if(index === 0){
@@ -107,23 +115,28 @@ export class PopupsegnalazioneComponent implements OnInit {
   }
 
   submitForm(): void{
-    const formData = {
-      descrizione: this.descrizione,
-      valoriEcosostenibilita: this.valoriEcosostenibilita,
-    };
+    this.valoriService.creaValoriEcosostenibilitaVisitatore(
+      this.valoriEcosostenibilita.politicheAntispreco,
+      this.valoriEcosostenibilita.prodottiLocali,
+      this.valoriEcosostenibilita.energiaVerde,
+      this.valoriEcosostenibilita.raccoltaDifferenziata,
+      this.valoriEcosostenibilita.limiteEmissioneCO2,
+      this.valoriEcosostenibilita.contattoConNatura,
+    ).subscribe((valoriSegnalazione) => {
+      this.idValori = valoriSegnalazione.data.id;
+    })
 
-    this.segnelazioneService.mandaDatiSegnalazione(formData).subscribe({
-      next: () => {
+    this.segnelazioneService.mandaDatiSegnalazione(this.idAttivita, this.descrizione, this.idValori)
+    .subscribe((risposta: any) => {
+        console.log(risposta);
+        if(risposta?.status === 'success'){
         this.chiudiPopup.emit();
         this.formSottomesso.emit();
         this.dialogRef.close();
-      }, 
-      error: (error: any) => {
-        console.error('Errore durante l\'invio del form', error);
+        }
+      }, (error) => {
         console.log('Dettagli richiesta API:', error);
-
-      }
-    });
+      });
   }
 
   closePopup(){

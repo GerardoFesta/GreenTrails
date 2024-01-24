@@ -9,12 +9,14 @@
         <mat-label>Scrivi la tua esperienza qui: </mat-label>
         <textarea matInput rows="5" style="font-size: medium; resize: none;" id="descrizione" required></textarea>
       </mat-form-field>
-  
-      <div *ngFor="let item of valoriEcosostenibilita">
-          <label>{{ item.name }}</label>
+      <p style="font-size: medium;"> Quali valori di ecosostenibilità sono rispettati dall'attivita</p>
+      <div *ngFor="let item of valori">
+          <label style="font-size: medium;">{{ item.label }}</label>
         <div class="radio-container">
-          <input type="radio" value="sì" (change)="selezionatoRadio(item, 'sì')" [checked]="item.selectedOption === 'sì'">Sì
-        <input type="radio" [name]="item.label" value="no" (change)="selezionatoRadio(item, 'no')" [checked]="item.selectedOption === 'no'"> No</div>
+          <input type="radio" [name]="item.label" value="sì" (change)="selezionatoRadio(item, 'sì')" [checked]="item.selezionato === 'sì'"
+          style="font-size: medium;">Sì
+          <input type="radio" [name]="item.label" value="no" (change)="selezionatoRadio(item, 'no')" [checked]="item.selezionato === 'no'"
+          style="font-size: medium;"> No</div>
       </div>
   
       <button type="submit">Invia segnalazione</button>
