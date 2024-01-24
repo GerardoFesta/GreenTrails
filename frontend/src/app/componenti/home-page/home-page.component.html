@@ -1,26 +1,42 @@
 <div class="container">
     <div class="header">
-        <div class="dettagli">
-            <a href="" class="chisiamo">chi siamo?</a>
-        </div>
+      <div class="dettagli">
+        <a href="" class="chisiamo">chi siamo?</a>
+      </div>
     </div>
+  
     <div class="suggeriti">
-        <label for="suggeritiPerTe" style="font-size:20px;"> Suggeriti per te</label>
-        <div class="mostra">
-            <img mat-card-image
-            src="   "
-            alt="immagine-attivita">  
-        </div>
+      <label for="suggeritiPerTe" style="font-size: 20px;">Suggeriti per te</label>
+      <div class="mostra" *ngIf="attivitaList && attivitaList.length > 0">
+        <img mat-card-image [src]="attivitaList[0].immagine_attivita" alt="immagine-attivita">
+      </div>
     </div>
-    <div class="attivita">
-        <label for="ATuristica" style="font-size:20px;" > Attività turistica</label>
+  
+    <div class="attivita" *ngIf="attivitaList && attivitaList.length > 0">
+      <label for="ATuristica" style="font-size: 20px;">Attività turistiche</label>
+      <div *ngFor="let attivitaItem of attivitaList; let i = index">
+        <p>{{ attivitaItem.nome }}</p>
+        <img [src]="imageUrls[0]" alt="attivita-image">
+        <!-- Add other details based on your data structure -->
+      </div>
     </div>
-    <div class="allogi">
-        <label for="Allogi" style="font-size:20px;"> Allogi</label>
-
+  
+    <div class="allogi" *ngIf="attivitaList && attivitaList.length > 0">
+      <label for="Allogi" style="font-size: 20px;">Allogi</label>
+      <div *ngFor="let allogio of attivitaList; let i = index">
+        <p>{{ allogio.nome }}</p>
+        <img [src]="imageUrls[i]" alt="allogio-image">
+        <!-- Add other details based on your data structure -->
+      </div>
     </div>
-    <div class="economici">
-        <label for="eco" style="font-size:20px;" > I più economici</label>
-
+  
+    <div class="economici" *ngIf="attivitaList && attivitaList.length > 0">
+      <label for="eco" style="font-size: 20px;">I più economici</label>
+      <div *ngFor="let economico of attivitaList; let i = index">
+        <p>{{ economico.nome }}</p>
+        <img [src]="imageUrls[i]" alt="economico-image">
+        <!-- Add other details based on your data structure -->
+      </div>
     </div>
-</div>
+  </div>
+  

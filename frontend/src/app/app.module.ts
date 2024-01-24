@@ -58,7 +58,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 // Material Data tables
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
@@ -139,6 +139,8 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
     HttpClientModule,
     MatNativeDateModule,
     Ng2SearchPipeModule,
+    MatTableModule,
+    MatCheckboxModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -184,6 +186,8 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
     HttpClientModule,
     MatNativeDateModule,
     Ng2SearchPipeModule,
+    MatTableModule,
+    MatCheckboxModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
