@@ -58,7 +58,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 // Material Data tables
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
@@ -68,6 +68,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
 import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
     GalleryDialogComponent,
     VideoDialogComponent,
     HomePageComponent,
+    GestionePrenotazioniAttiveComponent,
   ],
   imports: [
     BrowserModule,
@@ -138,9 +140,6 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
-    Ng2SearchPipeModule,
-    MatTableModule,
-    MatCheckboxModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -185,9 +184,6 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
-    Ng2SearchPipeModule,
-    MatTableModule,
-    MatCheckboxModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
