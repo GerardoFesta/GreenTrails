@@ -5,8 +5,6 @@ import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-att
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
-import { HomepageComponent } from './componenti/homepage/homepage.component';
-import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 
 const routes: Routes = [
   { path: 'registrazione', component: RegistrazioneComponent },

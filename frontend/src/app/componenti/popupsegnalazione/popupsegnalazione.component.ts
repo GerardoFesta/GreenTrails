@@ -40,15 +40,12 @@ export class PopupsegnalazioneComponent implements OnInit {
     private valoriService: ValoriEcosostenibilitaService,
     public dialogRef: MatDialogRef<PopupsegnalazioneComponent>) { }
 
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.idAttivita = +params['id'] || 1;
-      console.log('Id dell\'attività:', this.idAttivita);
-    })
-    this.visualizzaPolitiche();
-
-  }
-
+    ngOnInit(): void {
+      this.route.params.subscribe(params => {
+        const idAttivita = +params['id'];
+        this.visualizzaPolitiche(idAttivita);
+      });
+    }
 
 
   convertCamelCaseToReadable(camelCase: string): string {
@@ -57,27 +54,32 @@ export class PopupsegnalazioneComponent implements OnInit {
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 
-  visualizzaPolitiche(): void {
-    this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe(
+  visualizzaPolitiche(idAttivita: number): void {
+    this.attivitaService.visualizzaAttivita(idAttivita).subscribe(
       (attivita) => {
-        this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
-        this.idValori = attivita.data.valoriEcosostenibilita.id;
-  
-        let valoriEcosostenibilitaTrue: string[] = Object.keys(this.valoriEcosostenibilita)
-          .filter(key => this.valoriEcosostenibilita[key] === true)
-          .map(key => this.convertCamelCaseToReadable(key));
-  
+        const idValori = attivita.data.valoriEcosostenibilita.id;
+        console.log('valori dichiarati dall\'attivita: ', attivita.data.valoriEcosostenibilita);
+
+        this.valoriService.visualizzaValoriById(idValori).subscribe(
+          (risposta) => {
+            console.log('valori dichiarati dallattivita', risposta);
+          }
+        );
+
+        let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita)
+          .filter(([nomePolitica, valore]) => valore === true)
+          .map(([nomePolitica, valore]) => this.convertCamelCaseToReadable(nomePolitica));
+
         this.valori = valoriEcosostenibilitaTrue.map((label) => ({
           label: label,
-          selezionato: ''
+          selezionato: '',
         }));
-      }, 
+      },
       (error) => {
         console.error(error);
       }
     );
   }
-
   updateSubmit(){
     const isValoriInseriti = this.valori.every(item => item.selezionato === 'sì' || item.selezionato === 'no');
     this.isSubmitDisponibile = !isValoriInseriti || !this.isDescrizioneInserita;

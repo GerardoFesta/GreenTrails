@@ -1,9 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupsegnalazioneComponent } from 'src/app/componenti/popupsegnalazione/popupsegnalazione.component';
-import { ActivatedRoute } from '@angular/router';
-import { AttivitaService } from 'src/app/servizi/attivita.service';
-import { UploadService } from 'src/app/servizi/upload.service';
 
 @Component({
   selector: 'app-card-attivita',
@@ -11,7 +8,7 @@ import { UploadService } from 'src/app/servizi/upload.service';
   styleUrls: ['./card-attivita.component.css']
 })
 export class CardAttivitaComponent implements OnInit {
-
+  
   idAttivita: number = 0;
   nomeAttivita: string = '';
   directoryAttivita: string = '';
@@ -19,7 +16,9 @@ export class CardAttivitaComponent implements OnInit {
   imageUrls: string[] = [];
   fileNames: string[] = [];
 
-  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, private uploadService: UploadService) { }
+
+  immagine_attivita: string = 'https://www.hotelkennedy.org/static/f9f7a02b44b26255144bc1b4086fbd1e/5267c/e825f4c8-e7d7-4693-9895-b012d2879684.jpg';
+
   mostraPopup: boolean = false;
 
   constructor(private dialog:MatDialog) { }
@@ -27,4 +26,23 @@ export class CardAttivitaComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  apriSegnalazione(): void{
+    const dialogRef = this.dialog.open(PopupsegnalazioneComponent, {
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog chiuso:', result);
+      // Puoi gestire i dati restituiti dal dialogo qui, se necessario
+    });
+  }
+
+  chiudiFormPopup(): void{
+    this.mostraPopup = false;
+  }
+
+  handleFormSubmitted(): void {
+    //logica per gestire l'invio del form
+    console.log('Form inviato con successo!');
+  }
 }

@@ -12,10 +12,6 @@ export class SegnalazioneService {
 
   constructor(private http : HttpClient, private cookie: CookieService) { }
 
-  getValoriEcosostenibilita() : Observable<any>{
-    return this.http.get<any>(`${this.Url}/valori`);
-  }
-
   mandaDatiSegnalazione(idAttivita: number, descrizione: string, idValori: number): Observable<any>{
     const formData: FormData = new FormData();
     formData.append('idAttivita', idAttivita.toString())
@@ -31,10 +27,6 @@ export class SegnalazioneService {
       Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
     });
     return this.http.post<any>(`${this.Url}`, formData, {headers});
-  }
-
-  getValoriEcosostenibilitaPerAttivita(attivitaId: number, idValori: number): Observable<any> {
-    return this.http.get<any>(`${this.Url}/valori/${attivitaId}`);
   }
  
 }

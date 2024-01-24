@@ -1,7 +1,6 @@
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -45,7 +44,7 @@ export class ValoriEcosostenibilitaService {
       .set('contattoConNatura', contattoConNatura);
 
     const headers = new HttpHeaders({
-      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+      Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
     });
 
     return this.http.post<any>(`${this.baseUrl}/${id}`, params, { headers });

@@ -27,7 +27,6 @@ login(email: String, password: String ): Observable<any> {
 
   return this.http.get<any>(`${this.url}`, { headers }).pipe(
     tap((response) => {
-    tap((response) => {
       this.isLogged = true;
       console.log('Login successful:', response);
 
