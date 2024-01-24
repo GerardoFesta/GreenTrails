@@ -1,5 +1,6 @@
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -9,10 +10,13 @@ export class AttivitaService {
 
   private baseUrl= 'http://localhost:8080/api/attivita';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookie:CookieService) { }
 
   visualizzaAttivita(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}`);
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
+    });
+    return this.http.get<any>(`${this.baseUrl}/${id}` , {headers});
   }
 
   visualizzaAttivitaPerPrezzo(limite: number): Observable<any> {

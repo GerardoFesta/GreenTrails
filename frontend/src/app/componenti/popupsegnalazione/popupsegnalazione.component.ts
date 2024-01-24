@@ -17,8 +17,8 @@ export class PopupsegnalazioneComponent implements OnInit {
   @Output() formSottomesso = new EventEmitter<void>();
   @Output() chiudiPopup = new EventEmitter<void>();
 
-  idAttivita: number = 1;
-  idValori: number = 1;
+  idAttivita: number = 0;
+  idValori: number = 0;
 
   descrizione: string = '';
   valoriEcosostenibilita: any [] = [];
@@ -33,17 +33,16 @@ export class PopupsegnalazioneComponent implements OnInit {
   
   constructor(
     private attivitaService: AttivitaService,
-    private valoriService: ValoriEcosostenibilitaService,
     private route: ActivatedRoute,
-    private segnelazioneService :SegnalazioneService, 
+    private segnelazioneService :SegnalazioneService,
+    private valoriService: ValoriEcosostenibilitaService, 
     public dialogRef: MatDialogRef<PopupsegnalazioneComponent>) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(
-      params => {
-        this.idAttivita = +params['id'];
-      })
-      this.visualizzaPolitiche();
+    this.route.params.subscribe(params => {
+      this.idAttivita = +params['id'];
+    })
+    this.visualizzaPolitiche();
   }
 
   convertCamelCaseToReadable(camelCase: string): string {
@@ -55,9 +54,15 @@ export class PopupsegnalazioneComponent implements OnInit {
   visualizzaPolitiche(){
     this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe(
       (attivita) => {
-        this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
-        console.log('valori dichiarati dallattivita', this.valoriEcosostenibilita);
         this.idValori = attivita.data.valoriEcosostenibilita.id;
+        console.log('valori dichiarati dall\'attivita: ', attivita.data.valoriEcosostenibilita);
+        this.valoriService.visualizzaValoriById(this.idValori).subscribe(
+          (risposta) => {
+            console.log('valori dichiarati dallattivita', risposta);
+          }
+        )
+        
+        //this.idValori = attivita.data.valoriEcosostenibilita.id;
         let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita). filter(([nomePolitica, valore]) =>
         valore === true).map(([nomePolitica, valore]) => this.convertCamelCaseToReadable(nomePolitica));
 

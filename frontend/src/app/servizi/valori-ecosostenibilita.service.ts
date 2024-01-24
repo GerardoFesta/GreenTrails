@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -9,7 +10,7 @@ export class ValoriEcosostenibilitaService {
 
   baseUrl: string = "http://localhost:8080/api/valori";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookie:CookieService) { }
 
   creaValoriEcosostenibilitaVisitatore(politicheAntispreco: boolean, prodottiLocali: boolean,
     energiaVerde: boolean, raccoltaDifferenziata: boolean,
@@ -55,5 +56,14 @@ export class ValoriEcosostenibilitaService {
     });
 
     return this.http.post<any>(`${this.baseUrl}/${id}`, params, { headers });
+  }
+
+  visualizzaValoriById(idValori: number){
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
+    });
+    const url = `${this.baseUrl}/attivita/${idValori}/valoriEcosostenibilita`;
+    return this.http.get(url, {headers});
+    
   }
 }

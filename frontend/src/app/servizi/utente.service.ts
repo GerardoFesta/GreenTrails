@@ -23,18 +23,15 @@ login(email: string, password: string): Observable<any> {
   const headers = { Authorization: 'Basic ' + base64credential };
 
   return this.http.get<any>(`${this.url}`, { headers }).pipe(
-    tap((response: { data: { id: any; email: any; password: ((this: any, key: string, value: any) => any) | undefined; }; }) => {
+    tap((response) => {
       this.isLogged = true;
       console.log('Login successful:', response);
 
-      // Save user data in a cookie
       this.cookieService.set('user', JSON.stringify(response.data));
-
-      // Optionally, you can set other user-related information in separate cookies
-
-      // For example:
-      this.cookieService.set('userId',JSON.stringify(response.data.id));
-      this.cookieService.set('userName', JSON.stringify(response.data.email,  response.data.password));
+      this.cookieService.set('credenziali', JSON.stringify(base64credential));
+      this.cookieService.set('userId', (response.data.id));
+      this.cookieService.set('email', (response.data.email));
+      this.cookieService.set('password', (response.data.password));
 
     }),
     catchError((error) => {
