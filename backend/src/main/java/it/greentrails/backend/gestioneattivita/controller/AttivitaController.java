@@ -126,7 +126,7 @@ public class AttivitaController {
   private ResponseEntity<Object> visualizzaAttivitaPerPrezzo(
       @RequestParam(value = "limite", required = false) Integer limite
   ) {
-    if (limite == 0) {
+    if (limite == null) {
       limite = 10;
     }
     return ResponseGenerator.generateResponse(HttpStatus.OK,
