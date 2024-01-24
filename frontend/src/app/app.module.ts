@@ -71,7 +71,6 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
 import { ToolbarComponent } from './componenti/toolbar/toolbar.component';
 import { ToolbarHomepageComponent } from './componenti/toolbar-homepage/toolbar-homepage.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
-import { RicercaComponent } from './componenti/ricerca/ricerca.component';
 import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
 
 
@@ -97,8 +96,7 @@ import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.com
     ToolbarComponent,
     ToolbarHomepageComponent,
     GestionePrenotazioniAttiveComponent,
-    RicercaComponent,
-    IconToolbarComponent
+    IconToolbarComponent,
   ],
   imports: [
     BrowserModule,

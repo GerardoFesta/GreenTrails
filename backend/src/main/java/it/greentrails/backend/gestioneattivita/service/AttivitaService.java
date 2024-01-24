@@ -69,4 +69,8 @@ public class AttivitaService {
     return  repository.getAttivitaTuristiche(Pageable.ofSize(limite)).toList();
   }
 
+  public List<Attivita> findAll() {
+    return repository.findAll();
+  }
+
 }

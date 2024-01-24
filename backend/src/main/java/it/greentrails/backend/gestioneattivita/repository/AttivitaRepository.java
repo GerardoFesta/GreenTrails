@@ -33,4 +33,7 @@ public interface AttivitaRepository extends JpaRepository<Attivita, Long> {
   @Query("SELECT a FROM Attivita a WHERE a.isAlloggio = false")
   Page<Attivita> getAttivitaTuristiche(Pageable pageable);
 
+  @Query("SELECT a FROM Attivita a")
+  List<Attivita> findALl();
+
 }
