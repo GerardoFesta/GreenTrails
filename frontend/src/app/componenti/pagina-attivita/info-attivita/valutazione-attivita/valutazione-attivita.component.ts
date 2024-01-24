@@ -32,7 +32,7 @@ export class ValutazioneAttivitaComponent {
       if (risposta.data && risposta.data.length > 0) {
         const sommaValutazioni = risposta.data.reduce((acc: any, recensione: any) => acc + recensione.valutazioneStelleEsperienza, 0);
         this.rating = Math.floor(sommaValutazioni / risposta.data.length);
-        console.log("Media delle valutazioni:", this.rating);
+        // console.log("Media delle valutazioni:", this.rating);
       } else {
         console.log("Nessuna recensione disponibile per calcolare la media.");
       }

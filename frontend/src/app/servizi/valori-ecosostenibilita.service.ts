@@ -23,8 +23,12 @@ export class ValoriEcosostenibilitaService {
       .set('limiteEmissioneCO2', limiteEmissioneCO2)
       .set('contattoConNatura', contattoConNatura);
 
-    const email = 'visitatore@visitatore.it';
-    const password = 'visitatore123@';
+    // const email = 'visitatore@visitatore.com';
+    // const password = 'visitatore123@';
+    const email = 'giuseppe@simone.com';
+    const password = 'giuseppe123@';
+    // const email = 'mariorossi@gmail.com';
+    // const password = 'mario123@';
     const base64credential = btoa(email + ":" + password);
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + base64credential

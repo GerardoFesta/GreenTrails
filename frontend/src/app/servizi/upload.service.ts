@@ -13,7 +13,7 @@ export class UploadService {
   elencaFileCaricati(media: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${media}`);
   }
-  
+
   serviFile(media: string, filename: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/${media}/${filename}`, { responseType: 'blob' });
   }
