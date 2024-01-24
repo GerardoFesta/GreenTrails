@@ -1,0 +1,35 @@
+.example-form {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .example-form input {
+    border: 3px solid gray;
+    width: 100%;
+    border-radius: 20px;
+    padding: 5px;
+  }
+  
+  .example-form input:focus {
+    outline: none;
+    border: 3px solid #00FF00;
+  }
+  
+  .example-form input.blurred {
+    border: 2px solid lightgray;
+  }
+
+  .search-icon {
+    font-size: 20px;
+    margin-top: 5px;
+  }
+
+  .search-button:hover {
+    filter: brightness(90%); 
+  }
+  
+  .search-button:active {
+    filter: brightness(80%); 
+  }
+  

@@ -28,10 +28,13 @@ public class RicercaController {
   private ResponseEntity<Object> cerca(
       @RequestParam(value = "query") final String query,
       @RequestParam(value = "idCategorie", required = false) final Long[] idCategorie,
-      @RequestParam(value = "coordinate", required = false) final Point coordinate,
+      /*@RequestParam(value = "coordinate", required = false) final Point coordinate,*/
+      @RequestParam(value = "latitudine", required = false) final Double latitudine,
+      @RequestParam(value = "longitudine", required = false) final Double longitudine,
       @RequestParam(value = "raggio", required = false) final Double raggio
   ) {
     List<Attivita> risultati = ricercaService.findAttivita(query);
+    Point coordinate = new Point(latitudine, longitudine);
     if (idCategorie != null && idCategorie.length > 0) {
       risultati = ricercaService.findAttivitaByCategorie(
               Arrays.stream(idCategorie).map(idCategoria -> {

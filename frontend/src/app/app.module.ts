@@ -68,6 +68,11 @@ import { CookieService } from 'ngx-cookie-service';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
 import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { ToolbarComponent } from './componenti/toolbar/toolbar.component';
+import { ToolbarHomepageComponent } from './componenti/toolbar-homepage/toolbar-homepage.component';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { RicercaComponent } from './componenti/ricerca/ricerca.component';
+import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
 
 
 @NgModule({
@@ -89,6 +94,11 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
     GalleryDialogComponent,
     VideoDialogComponent,
     HomePageComponent,
+    ToolbarComponent,
+    ToolbarHomepageComponent,
+    GestionePrenotazioniAttiveComponent,
+    RicercaComponent,
+    IconToolbarComponent
   ],
   imports: [
     BrowserModule,

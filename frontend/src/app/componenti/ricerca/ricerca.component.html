@@ -1,0 +1,11 @@
+<form class="example-form" (submit)="submitForm()">
+    <input #message maxlength="256" placeholder="Cerca..."
+        style="width: calc(100% - 24px); border-radius: 20px; padding: 5px;">
+    <button type="button" aria-label="filter_list" style="background-color: #00FF00; margin-left: 5px; border-radius: 20px; border-color: transparent; color: white;"
+        class="search-button">
+        <mat-icon class="search-icon">filter_list</mat-icon>
+    </button>
+    <button type="submit" mat-mini-fab aria-label="search" style="background-color: #00FF00; margin-left: 5px;" class="search-button">
+        <mat-icon class="search-icon">search</mat-icon>
+    </button>
+</form>
