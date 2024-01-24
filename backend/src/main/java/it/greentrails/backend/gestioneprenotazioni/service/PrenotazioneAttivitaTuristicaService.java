@@ -111,7 +111,8 @@ public class PrenotazioneAttivitaTuristicaService {
     if (attivita.isAlloggio()) {
       throw new Exception("L'attività non può essere un alloggio.");
     }
-    return attivita.getDisponibilita() - repository.getPostiOccupatiIn(dataInizio);
+    return attivita.getDisponibilita() - repository.getPostiOccupatiIn(
+        attivita.getId(), dataInizio);
   }
 
 }

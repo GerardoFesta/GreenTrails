@@ -19,15 +19,26 @@ public interface PrenotazioneAlloggioRepository extends JpaRepository<Prenotazio
   Page<PrenotazioneAlloggio> findByItinerario(Long idItinerario, Pageable pageable);
 
   @Query("""
-      SELECT COALESCE(SUM(p.numCamere), 0) FROM Attivita a
-      LEFT JOIN Camera c ON c.alloggio = a
+      SELECT COALESCE(SUM(p.numCamere), 0) FROM Camera c
       LEFT JOIN PrenotazioneAlloggio p ON p.camera = c
-      WHERE a.isAlloggio = TRUE
+      WHERE c.alloggio.id = ?1
       AND (
-      ?1 BETWEEN p.dataInizio AND p.dataFine OR
       ?2 BETWEEN p.dataInizio AND p.dataFine OR
-      p.dataInizio BETWEEN ?1 AND ?2
-      OR p.dataFine BETWEEN ?1 AND ?2)
+      ?3 BETWEEN p.dataInizio AND p.dataFine OR
+      p.dataInizio BETWEEN ?2 AND ?3
+      OR p.dataFine BETWEEN ?2 AND ?3)
       """)
-  int getPostiOccupatiTra(Date dataInizio, Date dataFine);
+  int getPostiOccupatiAlloggioTra(long idAttivita, Date dataInizio, Date dataFine);
+
+  @Query("""
+      SELECT COALESCE(SUM(p.numCamere), 0) FROM Camera c
+      LEFT JOIN PrenotazioneAlloggio p ON p.camera = c
+      WHERE c.id = ?1
+      AND (
+      ?2 BETWEEN p.dataInizio AND p.dataFine OR
+      ?3 BETWEEN p.dataInizio AND p.dataFine OR
+      p.dataInizio BETWEEN ?2 AND ?3
+      OR p.dataFine BETWEEN ?2 AND ?3)
+      """)
+  int getPostiOccupatiCameraTra(long idCamera, Date dataInizio, Date dataFine);
 }

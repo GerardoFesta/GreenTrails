@@ -50,9 +50,14 @@ public class PrenotazioneAlloggioController {
     try {
       Itinerario itinerario = gestioneItinerariService.findById(idItinerario);
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
-        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Itinerario non trovato");
+        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,
+            "Itinerario non trovato");
       }
       Camera camera = cameraService.findById(idCamera);
+      if (adulti + bambini > camera.getCapienza() * numCamere) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Numero camere non sufficienti");
+      }
       PrenotazioneAlloggio prenotazioneAlloggio = new PrenotazioneAlloggio();
       prenotazioneAlloggio.setCamera(camera);
       prenotazioneAlloggio.setItinerario(itinerario);
@@ -131,6 +136,20 @@ public class PrenotazioneAlloggioController {
     }
   }
 
+  @GetMapping("perCamera/{idCamera}/disponibilita")
+  private ResponseEntity<Object> visualizzaDisponibilitaPerCamera(
+      @PathVariable("idCamera") final long idCamera,
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam("dataFine") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataFine
+  ) {
+    try {
+      Camera camera = cameraService.findById(idCamera);
+      return ResponseGenerator.generateResponse(HttpStatus.OK,
+          prenotazioneAlloggioService.controllaDisponibilitaCamera(camera, dataInizio, dataFine));
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
 
   @GetMapping
   private ResponseEntity<Object> visualizzaPrenotazioniAlloggioPerVisitatore(
