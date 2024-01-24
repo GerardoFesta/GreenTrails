@@ -25,17 +25,17 @@ login(email: String, password: String ): Observable<any> {
   const headers = ({Authorization: 'Basic ' + base64credential} );
 
 
-  return this.http.get<any>(`${this.url}`, {headers}).pipe(
+  return this.http.get<any>(`${this.url}`, { headers }).pipe(
     tap((response) => {
       this.isLogged = true;
       console.log('Login successful:', response);
-      
+
+      // Save user data in a cookie
       this.cookieService.set('user', JSON.stringify(response.data));
       this.cookieService.set('credenziali', JSON.stringify(base64credential));
       this.cookieService.set('userId', (response.data.id));
       this.cookieService.set('email', (response.data.email));
       this.cookieService.set('password', (response.data.password));
-
     }),
     catchError((error) => {
       console.error('Error during login:', error);

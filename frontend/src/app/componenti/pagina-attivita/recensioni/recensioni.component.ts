@@ -6,6 +6,7 @@ import { RecensioneService } from 'src/app/servizi/recensione.service';
 import { UploadService } from 'src/app/servizi/upload.service';
 import { GalleryDialogComponent } from './gallery-dialog/gallery-dialog.component';
 import { VideoDialogComponent } from './video-dialog/video-dialog.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-recensioni',
@@ -16,7 +17,7 @@ import { VideoDialogComponent } from './video-dialog/video-dialog.component';
 export class RecensioniComponent implements OnInit {
 
   constructor(public dialog: MatDialog, config: NgbRatingConfig, private recensioneService: RecensioneService, private route: ActivatedRoute,
-    private uploadService: UploadService) {
+    private uploadService: UploadService, private cookieService: CookieService) {
     config.max = 5;
     config.readonly = true;
   }
@@ -36,9 +37,9 @@ export class RecensioniComponent implements OnInit {
   }
 
   visualizzaListaRecensioni(): void {
+
     this.recensioneService.visualizzaRecensioniPerAttivita(this.idAttivita).subscribe((recensione) => {
       this.recensioni = recensione.data;
-      // console.log("Lista recensioni: ", this.recensioni);
 
       const promises = this.recensioni.map((item: any, index: number) => {
         return new Promise<void>((resolve) => {
@@ -47,7 +48,6 @@ export class RecensioniComponent implements OnInit {
               const fileName = listaFiles.data[0];
               this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
                 this.fileNames.push(fileName);
-                // console.log("FileNames: ", this.fileNames);
       
                 let reader = new FileReader();
                 reader.onloadend = () => {
@@ -63,9 +63,7 @@ export class RecensioniComponent implements OnInit {
         });
       });
 
-      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'visitatore@visitatore.com');
-      // this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'giuseppe@simone.com');
-      // this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === 'mariorossi@gmail.com');
+      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === this.cookieService.get('email').replace(/"/g, ''));
     });
   }
 
