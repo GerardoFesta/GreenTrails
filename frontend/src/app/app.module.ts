@@ -64,6 +64,7 @@ import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
 import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
+import { PopUpConfermaComponent } from './componenti/inserimento-attivita/pop-up-conferma/pop-up-conferma.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up
     RegistrazioneComponent,
     InserimentoAttivitaComponent,
     PopUpAlloggioComponent,
+    PopUpConfermaComponent,
 
   ],
   imports: [

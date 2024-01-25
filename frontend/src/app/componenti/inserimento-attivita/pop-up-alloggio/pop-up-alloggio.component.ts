@@ -1,7 +1,8 @@
 import { AttivitaServiceService } from './../../../servizi/attivita-service.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { PopUpConfermaComponent } from '../pop-up-conferma/pop-up-conferma.component';
 
 @Component({
   selector: 'app-pop-up-alloggio',
@@ -14,13 +15,13 @@ id: any
 camereInserite: any[] = []
 
   constructor(public dialogRef: MatDialogRef<PopUpAlloggioComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
-   private formBuilder: FormBuilder, private attivitaServiceService: AttivitaServiceService) { 
+   private formBuilder: FormBuilder, private attivitaServiceService: AttivitaServiceService, private dialog: MatDialog) { 
     this.camere = this.formBuilder.group({
-      capienza:['',Validators.required],
-      prezzo:['',Validators.required],
+      capienza:['',[Validators.required,Validators.pattern(/^[0-9]+$/)]],
+      prezzo:['',[Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
       categoria:['', Validators.required],
       descrizione:['',Validators.required],
-      disponibilita:['',Validators.required],
+      disponibilita:['',[Validators.required,Validators.pattern(/^[0-9]+$/)]],
 
   });
 }
@@ -34,7 +35,14 @@ camereInserite: any[] = []
     window.location.reload();
   }
 
+  openPopupConferma(message: string):void{
+    const dialogRef = this.dialog.open(PopUpConfermaComponent, {
+      width: '60%',
+      data: { message },
+      disableClose: true,
 
+    });
+  }
 
   aggiungiCamera(){
     console.log(this.id)
@@ -63,6 +71,11 @@ camereInserite: any[] = []
   }
 
   inviaCamere(){
-    console.log('Inviati')
+    if (this.camereInserite.length > 0) {
+      this.openPopupConferma('Attivita inserita con successo');
+    } else {
+      
+    }
   }
-}
+  }
+

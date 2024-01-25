@@ -6,6 +6,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirectiv
 import { ErrorStateMatcher } from '@angular/material/core';
 import { PopUpAlloggioComponent } from './pop-up-alloggio/pop-up-alloggio.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PopUpConfermaComponent } from './pop-up-conferma/pop-up-conferma.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -39,13 +40,13 @@ export class InserimentoAttivitaComponent implements OnInit {
       nome:['',Validators.required],
       tipo:['',Validators.required],
       categoria:[true,Validators.required],
-      disponibilita:[0,Validators.required],
+      disponibilita:[0, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       indirizzo: ['',Validators.required],
-      cap:['',Validators.required],
+      cap:['',[Validators.required,Validators.maxLength(5),Validators.pattern(/^[0-9]+$/)]],
       citta: ['',Validators.required],
-      provincia: ['',Validators.required],
-      latitudine: ['',Validators.required],
-      longitudine: ['', Validators.required],
+      provincia: ['',[Validators.required,Validators.maxLength(2)]],
+      latitudine: ['',[Validators.required, Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
+      longitudine: ['', [Validators.required,Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
       politicheAntispreco: false,   
       prodottiLocali: false,   
       energiaVerde: false,   
@@ -53,7 +54,7 @@ export class InserimentoAttivitaComponent implements OnInit {
       limiteEmissioneCO2: false,   
       contattoConNatura: false,  
       descrizioneBreve:['',Validators.required],
-      costo:['',Validators.required, Validators],
+      costo:[0, [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
       descrizioneLunga:['',Validators.required],
       file:['',Validators.required]
 
@@ -105,44 +106,32 @@ export class InserimentoAttivitaComponent implements OnInit {
     const dialogRef = this.dialog.open(PopUpAlloggioComponent, {
       width: '60%',
       data: { idAttivita: idAttivita}
-
     });
   }
 
-  salvaDati3() {
-
-  this.attivitaServiceService.inserimento(
-    this.politica1 =  this.inserimento.get('politicheAntispreco')?.value, 
-    this.politica2 =  this.inserimento.get('prodottiLocali')?.value,
-    this.politica3 = this.inserimento.get('energiaVerde')?.value,
-    this.politica4 = this.inserimento.get('raccoltaDifferenziata')?.value,
-    this.politica5 = this.inserimento.get('limiteEmissioneCO2')?.value,
-    this.politica6 = this.inserimento.get('contattoConNatura')?.value).subscribe((response) => {
-      console.log('Dati inviati')
-      console.log('Dati inviati',this.politica1)
-      console.log('Dati inviati',this.politica2)
-      console.log('Dati inviati',this.politica3)
-      console.log('Dati inviati',this.politica4)
-      console.log('Dati inviati',this.politica5)
-      console.log('Dati inviati',this.politica6)
-
-      this.idPolitiche = response.data.id;
-      console.log('ID ottenuto:', this.idPolitiche);        
-    console.log('Dati inviati al componente padre', this.idPolitiche);
-
-console.log(this.inserimento.get('tipo')?.value )
-
-if(this.inserimento.get('tipo')?.value === 'true'){   
-  console.log('categoriaAlloggio', this.inserimento.get('categoria')?.value);
-}else{
-console.log('categoriaAttivitaTuristica', this.inserimento.get('categoria')?.value);
-
-}
+  openPopupConferma(message: string):void{
+    const dialogRef = this.dialog.open(PopUpConfermaComponent, {
+      width: '60%',
+      data: { message },
+      disableClose: true,
 
     });
   }
 
     onSubmit() {
+
+      this.attivitaServiceService.inserimento(
+        this.politica1 =  this.inserimento.get('politicheAntispreco')?.value, 
+        this.politica2 =  this.inserimento.get('prodottiLocali')?.value,
+        this.politica3 = this.inserimento.get('energiaVerde')?.value,
+        this.politica4 = this.inserimento.get('raccoltaDifferenziata')?.value,
+        this.politica5 = this.inserimento.get('limiteEmissioneCO2')?.value,
+        this.politica6 = this.inserimento.get('contattoConNatura')?.value).subscribe((response) => {
+    
+    
+          this.idPolitiche = response.data.id
+    
+      
     
      const formData = new FormData()
      formData.append('alloggio', this.inserimento.get('tipo')?.value);
@@ -176,16 +165,23 @@ console.log('categoriaAttivitaTuristica', this.inserimento.get('categoria')?.val
    this.attivitaServiceService.inserimentoAttivita( formData)
      .subscribe((response) => {
        console.log('Dati inviati', response)
-       if(this.inserimento.get('tipo')?.value === 'true'){ 
+       if(this.inserimento.get('tipo')?.value === 'true' && response?.status === 'success'){ 
         const idAttivita = response.data.id;
         this.openPopupAlloggio(idAttivita)
-            }else{
-        console.log('Attivita')
-                    
+            }else if (response?.status === 'success'){
+        this.openPopupConferma('Attivita inserita con successo')         
            }
+           else{
+            const errorMessage = response?.error?.message || 'Errore sconosciuto';
+            this.openPopupConferma(errorMessage);
+           }
+
+             },
+             (error) =>{
+              this.openPopupConferma(error.error.data)
              });
 
-
+            });
     
    }
 }

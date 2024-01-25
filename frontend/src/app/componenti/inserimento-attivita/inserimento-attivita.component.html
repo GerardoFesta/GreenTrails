@@ -78,6 +78,9 @@
           >
             Campo obbligatorio
           </mat-error>
+          <mat-error *ngIf="inserimento.get('disponibilita')?.hasError('pattern')">
+            Consentiti solo numeri
+          </mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -104,6 +107,13 @@
           <mat-error *ngIf="inserimento.get('cap')?.hasError('required')">
             Campo obbligatorio
           </mat-error>
+          <mat-error *ngIf="inserimento.get('cap')?.hasError('pattern')">
+            Consentiti solo numeri
+          </mat-error>
+          <mat-error *ngIf="inserimento.get('cap')?.hasError('maxlength')">
+            Massimo 5 numeri
+          </mat-error>
+
         </mat-form-field>
         <!--Città-->
         <mat-form-field appearance="outline" style="margin: 2%; width: 60%">
@@ -120,6 +130,9 @@
           <mat-error *ngIf="inserimento.get('provincia')?.hasError('required')">
             Campo obbligatorio
           </mat-error>
+          <mat-error *ngIf="inserimento.get('provincia')?.hasError('maxlength')">
+            Massimo 2 caratteri
+          </mat-error>
         </mat-form-field>
         <!--Coordinate-->
         <div style="margin: 5%">
@@ -132,6 +145,9 @@
             >
               Campo obbligatorio
             </mat-error>
+            <mat-error *ngIf="inserimento.get('latitudine')?.hasError('pattern')">
+              Valore non valido
+            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" style="margin: 2%; width: 300px">
@@ -141,6 +157,9 @@
               *ngIf="inserimento.get('longitudine')?.hasError('required')"
             >
               Campo obbligatorio
+            </mat-error>
+            <mat-error *ngIf="inserimento.get('longitudine')?.hasError('pattern')">
+              Valore non valido
             </mat-error>
           </mat-form-field>
           <!-- sezione 3-->
@@ -180,7 +199,6 @@
                   >A contatto con la natura</mat-checkbox >
               </p>
             </section>
-            <button (click)="salvaDati3()">Salva</button>
           </mat-card-content>
         </mat-card>
       </div>
@@ -197,15 +215,22 @@
       </mat-error>
     </mat-form-field>
   <!--Prezzo-->
-    <mat-icon>money</mat-icon>
-    <mat-form-field appearance="outline" style="width: 150px;">
+  <mat-icon *ngIf="inserimento.get('tipo')?.value !== 'true'">money</mat-icon>
+    <mat-form-field *ngIf="inserimento.get('tipo')?.value !== 'true'" appearance="outline" style="width: 150px;">
+
       <mat-label>Prezzo</mat-label>
       <input formControlName="costo" matInput placeholder="xx.xx" />
       <mat-error *ngIf="inserimento.get('costo')?.hasError('required')">
         Campo obbligatorio
       </mat-error>
+      <mat-error *ngIf="inserimento.get('costo')?.hasError('pattern')">
+        Prezzo errato
+      </mat-error>
+      
+      
     </mat-form-field>
-        <mat-icon>euro</mat-icon>
+        <mat-icon *ngIf="inserimento.get('tipo')?.value !== 'true'">euro</mat-icon>
+
     </div>
 </div>
 <!-- sezione 5-->
