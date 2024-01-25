@@ -1,5 +1,5 @@
+import { UtenteService } from './../../servizi/utente.service';
 import { HttpHeaders } from '@angular/common/http';
-import { RegistrazioneService } from './../../servizi/registrazione.service';
 import { Component, OnInit } from '@angular/core';
 import {  AbstractControl, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -60,7 +60,7 @@ export class RegistrazioneComponent implements OnInit {
       return `${year}-${month}-${day}`;
     }
 
-    constructor(private RegistrazioneService : RegistrazioneService, private snackBar: MatSnackBar ) {}
+    constructor(private UtenteService : UtenteService, private snackBar: MatSnackBar ) {}
 
     ngOnInit(): void { } 
 
@@ -82,7 +82,7 @@ export class RegistrazioneComponent implements OnInit {
         'Content-Type': 'application/json',
       });
 
-      this.RegistrazioneService.registerUser(isGestore, formData, { headers: headers })
+      this.UtenteService.registerUser(isGestore, formData, { headers: headers })
       .subscribe(
         (risposta) => {
           console.log('Risposta dal backend:', risposta);

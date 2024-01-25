@@ -60,12 +60,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
     PaginaAttivitaComponent,
     InfoAttivitaComponent,
     CardAttivitaComponent,

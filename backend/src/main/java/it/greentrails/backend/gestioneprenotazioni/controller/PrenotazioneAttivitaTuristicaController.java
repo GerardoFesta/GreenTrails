@@ -11,6 +11,7 @@ import it.greentrails.backend.utils.service.ResponseGenerator;
 import java.time.Duration;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -39,8 +40,9 @@ public class PrenotazioneAttivitaTuristicaController {
       @RequestParam("idAttivita") final Long idAttivita,
       @RequestParam("numAdulti") final int adulti,
       @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
-      @RequestParam("dataInizio") final Long dataInizioTimestamp,
-      @RequestParam(value = "dataFine", required = false) final Long dataFineTimestamp
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam(value = "dataFine", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")
+      final Date dataFine
   ) {
     try {
       Itinerario itinerario = gestioneItinerariService.findById(idItinerario);
@@ -51,16 +53,23 @@ public class PrenotazioneAttivitaTuristicaController {
       if (attivita.isAlloggio()) {
         throw new Exception("L'attività non è un'attività turistica.");
       }
-      Date dataInizio = new Date(dataInizioTimestamp * 1000);
       PrenotazioneAttivitaTuristica prenotazione = new PrenotazioneAttivitaTuristica();
       prenotazione.setAttivitaTuristica(attivita);
       prenotazione.setItinerario(itinerario);
       prenotazione.setNumAdulti(adulti);
       prenotazione.setNumBambini(bambini);
       prenotazione.setDataInizio(dataInizio);
+      if (prenotazioneAttivitaTuristicaService.controllaDisponibilitaAttivitaTuristica(attivita,
+          dataInizio) < adulti + bambini) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Attività turistica non disponibile");
+      }
       double prezzo = (adulti + bambini) * attivita.getPrezzo();
-      if (dataFineTimestamp != null) {
-        Date dataFine = new Date(dataFineTimestamp * 1000);
+      if (dataFine != null) {
+        if (dataFine.before(dataInizio)) {
+          return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+              "La data di fine non può essere precedente alla data di inizio.");
+        }
         prenotazione.setDataFine(dataFine);
         long durataOre = Duration.between(dataInizio.toInstant(), dataFine.toInstant()).toHours();
         if (durataOre > 24) {
@@ -109,6 +118,21 @@ public class PrenotazioneAttivitaTuristicaController {
       }
       return ResponseGenerator.generateResponse(HttpStatus.OK,
           prenotazioneAttivitaTuristicaService.getPrenotazioniByAttivitaTuristica(attivita));
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
+
+  @GetMapping("perAttivita/{idAttivita}/disponibilita")
+  private ResponseEntity<Object> visualizzaDisponibilitaPerAttivitaTuristica(
+      @PathVariable("idAttivita") final long idAttivita,
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio
+  ) {
+    try {
+      Attivita attivita = attivitaService.findById(idAttivita);
+      return ResponseGenerator.generateResponse(HttpStatus.OK,
+          prenotazioneAttivitaTuristicaService.controllaDisponibilitaAttivitaTuristica(attivita,
+              dataInizio));
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
