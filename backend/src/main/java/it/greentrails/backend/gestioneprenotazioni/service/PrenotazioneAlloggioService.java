@@ -7,8 +7,10 @@ import it.greentrails.backend.entities.PrenotazioneAlloggio;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.RuoloUtente;
 import it.greentrails.backend.enums.StatoPrenotazione;
+import it.greentrails.backend.gestioneattivita.service.CameraService;
 import it.greentrails.backend.gestioneprenotazioni.repository.PrenotazioneAlloggioRepository;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class PrenotazioneAlloggioService {
 
   private final PrenotazioneAlloggioRepository repository;
+  private final CameraService cameraService;
 
   public PrenotazioneAlloggio savePrenotazioneAlloggio(Camera camera,
       PrenotazioneAlloggio prenotazioneAlloggio) throws Exception {
@@ -103,5 +106,35 @@ public class PrenotazioneAlloggioService {
       throw new Exception("L'itinerario è vuoto.");
     }
     return repository.findByItinerario(itinerario.getId(), Pageable.unpaged()).toList();
+  }
+
+  public int controllaDisponibilitaAlloggio(Attivita alloggio, Date dataInizio, Date dataFine)
+      throws Exception {
+    if (alloggio == null) {
+      throw new Exception("L'alloggio è vuoto.");
+    }
+    if (!alloggio.isAlloggio()) {
+      throw new Exception("L'attività non è un alloggio.");
+    }
+    if (dataFine.before(dataInizio)) {
+      throw new Exception("La data di fine non può essere precedente alla data di inizio.");
+    }
+    return cameraService
+        .getCamereByAlloggio(alloggio)
+        .stream()
+        .mapToInt(Camera::getDisponibilita)
+        .sum() - repository.getPostiOccupatiAlloggioTra(alloggio.getId(), dataInizio, dataFine);
+  }
+
+  public int controllaDisponibilitaCamera(Camera camera, Date dataInizio, Date dataFine)
+      throws Exception {
+    if (camera == null) {
+      throw new Exception("La camera è vuota.");
+    }
+    if (dataFine.before(dataInizio)) {
+      throw new Exception("La data di fine non può essere precedente alla data di inizio.");
+    }
+    return camera.getDisponibilita() - repository.getPostiOccupatiCameraTra(camera.getId(),
+        dataInizio, dataFine);
   }
 }

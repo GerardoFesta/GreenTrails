@@ -8,6 +8,7 @@ import it.greentrails.backend.enums.RuoloUtente;
 import it.greentrails.backend.enums.StatoPrenotazione;
 import it.greentrails.backend.gestioneprenotazioni.repository.PrenotazioneAttivitaTuristicaRepository;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -100,6 +101,18 @@ public class PrenotazioneAttivitaTuristicaService {
       throw new Exception("L'itinerario è vuoto.");
     }
     return repository.findByItinerario(itinerario.getId(), Pageable.unpaged()).toList();
+  }
+
+  public int controllaDisponibilitaAttivitaTuristica(Attivita attivita, Date dataInizio)
+      throws Exception {
+    if (attivita == null) {
+      throw new Exception("L'attività è vuota.");
+    }
+    if (attivita.isAlloggio()) {
+      throw new Exception("L'attività non può essere un alloggio.");
+    }
+    return attivita.getDisponibilita() - repository.getPostiOccupatiIn(
+        attivita.getId(), dataInizio);
   }
 
 }

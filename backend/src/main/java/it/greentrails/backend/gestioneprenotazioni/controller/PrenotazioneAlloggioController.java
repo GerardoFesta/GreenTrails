@@ -13,6 +13,7 @@ import it.greentrails.backend.utils.service.ResponseGenerator;
 import java.time.Duration;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -40,30 +41,37 @@ public class PrenotazioneAlloggioController {
       @AuthenticationPrincipal Utente utente,
       @RequestParam("idItinerario") final Long idItinerario,
       @RequestParam("idCamera") final Long idCamera,
-      @RequestParam("numAdulti") final int numAdulti,
-      @RequestParam(value = "numBambini", defaultValue = "0", required = false)
-      final int numBambini,
-      @RequestParam("dataInizio") final Long dataInizioTimestamp,
-      @RequestParam("dataFine") final Long dataFineTimestamp,
+      @RequestParam("numAdulti") final int adulti,
+      @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam("dataFine") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataFine,
       @RequestParam("numCamere") final int numCamere
   ) {
     try {
       Itinerario itinerario = gestioneItinerariService.findById(idItinerario);
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
-        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Itinerario non trovato");
+        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,
+            "Itinerario non trovato");
       }
       Camera camera = cameraService.findById(idCamera);
-      Date dataInizio = new Date(dataInizioTimestamp * 1000);
+      if (adulti + bambini > camera.getCapienza() * numCamere) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Numero camere non sufficienti");
+      }
       PrenotazioneAlloggio prenotazioneAlloggio = new PrenotazioneAlloggio();
       prenotazioneAlloggio.setCamera(camera);
       prenotazioneAlloggio.setItinerario(itinerario);
-      prenotazioneAlloggio.setNumAdulti(numAdulti);
-      prenotazioneAlloggio.setNumBambini(numBambini);
+      prenotazioneAlloggio.setNumAdulti(adulti);
+      prenotazioneAlloggio.setNumBambini(bambini);
       prenotazioneAlloggio.setNumCamere(numCamere);
       prenotazioneAlloggio.setDataInizio(dataInizio);
       double prezzo = numCamere * camera.getPrezzo();
-      Date dataFine = new Date(dataFineTimestamp * 1000);
       prenotazioneAlloggio.setDataFine(dataFine);
+      if (prenotazioneAlloggioService.controllaDisponibilitaCamera(camera,
+          dataInizio, dataFine) < numCamere) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Camera non disponibile");
+      }
       long durataOre = Duration.between(dataInizio.toInstant(), dataFine.toInstant()).toHours();
       if (durataOre > 24) {
         prezzo = prezzo * Math.ceil((double) durataOre / 24);
@@ -98,7 +106,7 @@ public class PrenotazioneAlloggioController {
   @GetMapping("perAttivita/{idAttivita}")
   private ResponseEntity<Object> visualizzaPrenotazioniAlloggioPerAttivita(
       @AuthenticationPrincipal Utente utente,
-      @PathVariable("idAttivita") final Long idAttivita
+      @PathVariable("idAttivita") final long idAttivita
   ) {
     try {
       Attivita attivita = attivitaService.findById(idAttivita);
@@ -112,6 +120,36 @@ public class PrenotazioneAlloggioController {
     }
   }
 
+  @GetMapping("perAttivita/{idAttivita}/disponibilita")
+  private ResponseEntity<Object> visualizzaDisponibilitaPerAlloggio(
+      @PathVariable("idAttivita") final long idAttivita,
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam("dataFine") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataFine
+  ) {
+    try {
+      Attivita attivita = attivitaService.findById(idAttivita);
+      return ResponseGenerator.generateResponse(HttpStatus.OK,
+          prenotazioneAlloggioService.controllaDisponibilitaAlloggio(attivita, dataInizio,
+              dataFine));
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
+
+  @GetMapping("perCamera/{idCamera}/disponibilita")
+  private ResponseEntity<Object> visualizzaDisponibilitaPerCamera(
+      @PathVariable("idCamera") final long idCamera,
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam("dataFine") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataFine
+  ) {
+    try {
+      Camera camera = cameraService.findById(idCamera);
+      return ResponseGenerator.generateResponse(HttpStatus.OK,
+          prenotazioneAlloggioService.controllaDisponibilitaCamera(camera, dataInizio, dataFine));
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
 
   @GetMapping
   private ResponseEntity<Object> visualizzaPrenotazioniAlloggioPerVisitatore(

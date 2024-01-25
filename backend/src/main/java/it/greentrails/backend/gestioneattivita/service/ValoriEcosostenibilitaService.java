@@ -35,7 +35,7 @@ public class ValoriEcosostenibilitaService {
     }
     Optional<ValoriEcosostenibilita> valori = repository.findById(id);
     if (valori.isEmpty()) {
-      throw new Exception("La categoria non è stata trovata.");
+      throw new Exception("I valori non sono stati trovati.");
     }
     return valori.get();
   }
