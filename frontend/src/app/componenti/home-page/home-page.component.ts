@@ -183,4 +183,6 @@ export class HomePageComponent implements OnInit {
     this.router.navigate(['/attivita', id]);
     this.cookieService.set('idAttivita', JSON.stringify(id));
   }
+
+  
 }

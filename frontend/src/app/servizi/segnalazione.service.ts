@@ -23,7 +23,7 @@ export class SegnalazioneService {
     formData.append('idAttivita', idAttivita.toString())
     formData.append('idValori', idValori.toString())
 
-  
+
 
 
     const headers = new HttpHeaders({

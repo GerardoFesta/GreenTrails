@@ -4,6 +4,10 @@ import { AttivitaService } from '../servizi/attivita.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ValoriEcosostenibilitaService } from '../servizi/valori-ecosostenibilita.service';
 import { NgForm } from '@angular/forms';
+import { UploadService } from '../servizi/upload.service';
+import { SuccessPopupComponent } from './success-popup/success-popuo.component';
+import { ErrorPopupComponent } from './errorPopup/errorPopup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -13,19 +17,23 @@ import { NgForm } from '@angular/forms';
 })
 export class GestioneValoriComponent implements OnInit {
 
-
+  imageUrl: string = '';
   id: number = 0;
   selectedValoreId: number = 0; 
   valoriEcosostenibilita: string[] = [];
   valoriEcosostenibilitaSelected: { [key: string]: string } = {};
   isGestoreAttivita: boolean = false;
 nome: any;
+originalValoriEcosostenibilitaSelected: { [key: string]: string } = {};
+  changesMade: boolean = false;
 
   constructor(
     private attivitaService: AttivitaService,
     private route: ActivatedRoute,
     private cookieService: CookieService,
-    private valorieco: ValoriEcosostenibilitaService
+    private valorieco: ValoriEcosostenibilitaService,
+    private uploadService: UploadService,
+    protected dialog: MatDialog
   ) {}
 
   valori = [
@@ -34,10 +42,9 @@ nome: any;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.id = +params['id'] || 11;
+      this.id = +params['id'] || 10;
     });
 
-    // Verifica il ruolo dell'utente
     const ruolo = this.getRuoloFromCookie();
     this.isGestoreAttivita = ruolo === 'GESTORE_ATTIVITA';
 
@@ -52,23 +59,51 @@ nome: any;
         this.selectedValoreId = attivita.data.valoriEcosostenibilita.id;
         console.log('valori dichiarati dall\'attivita: ', attivita.data.valoriEcosostenibilita);
 
+        this.originalValoriEcosostenibilitaSelected = {};
+        this.valoriEcosostenibilitaSelected = {};
         this.valoriEcosostenibilita = Object.keys(attivita.data.valoriEcosostenibilita)
           .filter(key => key !== 'id');
-  
+
         this.valoriEcosostenibilita.forEach(valore => {
           const valoreId = attivita.data.valoriEcosostenibilita[valore].id;
-          this.valoriEcosostenibilitaSelected[valore] = attivita.data.valoriEcosostenibilita[valore] ? 'true' : 'false';
+          this.originalValoriEcosostenibilitaSelected[valore] = attivita.data.valoriEcosostenibilita[valore] ? 'true' : 'false';
+          this.valoriEcosostenibilitaSelected[valore] = this.originalValoriEcosostenibilitaSelected[valore];
         });
+
+        // Call the function to display the image for the activity
+        this.getImmagineUrl(attivita.data.media);
+        
+        // Assign the name from the activity object
+        this.nome = attivita.data.nome; // Assuming there is a 'nome' property in the activity object
       },
       (error) => {
         console.error(error);
       }
     );
   }
+  async getImmagineUrl(media: any): Promise<void> {
+    try {
+      const listaFiles = await this.uploadService.elencaFileCaricati(media).toPromise();
+      if (listaFiles.data.length > 0) {
+        const fileName = listaFiles.data[0];
+        const file = await this.uploadService.serviFile(media, fileName).toPromise();
+
+        // Read the file and set the image URL
+        let reader = new FileReader();
+        reader.onloadend = () => {
+          this.imageUrl = reader.result as string;
+        };
+        reader.readAsDataURL(file);
+      }
+    } catch (error) {
+      console.error('Errore durante il recupero dell\'URL dell\'immagine', error);
+    }
+  }
   
 // Gestione del cambiamento dell'opzione selezionata
 selezionatoRadio(valore: string, option: string) {
   this.valoriEcosostenibilitaSelected[valore] = option;
+  this.changesMade = true; // Track changes
   this.updateSubmit();
 }
 
@@ -116,6 +151,10 @@ updateSubmit() {
       console.error('ID dei valori di ecosostenibilità non valido.');
       return;
     }
+    if (!this.changesMade) {
+      this.openErrorPopup('Nessuna modifica effettuata.');
+      return;  // Stop further execution
+    }
   
     const politicheAntispreco = this.valoriEcosostenibilitaSelected['politicheAntispreco'] === 'true';
     const prodottiLocali = this.valoriEcosostenibilitaSelected['prodottiLocali'] === 'true';
@@ -137,11 +176,39 @@ updateSubmit() {
       (response) => {
         // Gestisci la risposta in base alle tue esigenze
         console.log('Modifica effettuata con successo', response);
+        this.openSuccessPopup();
+
+        
       },
       (error) => {
         console.error('Errore durante la modifica', error);
       }
     );
+  }
+
+ rollbackChanges(): void {
+  const changesDetected = Object.keys(this.valoriEcosostenibilitaSelected).some(valore => 
+    this.valoriEcosostenibilitaSelected[valore] !== this.originalValoriEcosostenibilitaSelected[valore]
+  );
+
+  if (changesDetected) {
+    this.valoriEcosostenibilitaSelected = { ...this.originalValoriEcosostenibilitaSelected };
+    this.changesMade = false; // Reset changes
+  }
+}
+
+  //i popup
+  openErrorPopup(message: string): void {
+    this.dialog.open(ErrorPopupComponent, {
+      width: '300px', 
+      data: { message } 
+    });
+  }
+
+  openSuccessPopup(): void {
+    this.dialog.open(SuccessPopupComponent, {
+      width: '300px',
+    });
   }
 
 }

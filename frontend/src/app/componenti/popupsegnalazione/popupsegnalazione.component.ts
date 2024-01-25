@@ -55,11 +55,10 @@ export class PopupsegnalazioneComponent implements OnInit {
       limiteEmissioneCO2: '',
       contattoConNatura: ''
     };
-  convertCamelCaseToReadable(camelCase: string): string {
-    let result = camelCase.replace(/([A-Z])/g, ' $1');
-    result = result.replace('C O2', 'CO2');
-    return result.charAt(0).toUpperCase() + result.slice(1);
-  }
+    convertCamelCaseToReadable(camelCase: string): string {
+      const result = camelCase.replace(/([a-z])([A-Z])/g, '$1 $2');
+      return result.charAt(0).toUpperCase() + result.slice(1);
+    }
 
   visualizzaPolitiche(idAttivita: number): void {
     this.attivitaService.visualizzaAttivita(idAttivita).subscribe(

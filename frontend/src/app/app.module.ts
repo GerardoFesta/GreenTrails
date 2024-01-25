@@ -95,6 +95,7 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     GestionePrenotazioniAttiveComponent,
     PopupsegnalazioneComponent,
     GestioneValoriComponent,
+    PopupsegnalazioneComponent
   ],
   imports: [
     BrowserModule,
