@@ -5,12 +5,13 @@ import it.greentrails.backend.entities.Itinerario;
 import it.greentrails.backend.entities.PrenotazioneAttivitaTuristica;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
-import it.greentrails.backend.gestioneitinerari.service.GestioneItinerariService;
+import it.greentrails.backend.gestioneitinerari.service.ItinerariService;
 import it.greentrails.backend.gestioneprenotazioni.service.PrenotazioneAttivitaTuristicaService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
 import java.time.Duration;
 import java.util.Date;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PrenotazioneAttivitaTuristicaController {
 
-  private final GestioneItinerariService gestioneItinerariService;
+  private final ItinerariService itinerariService;
   private final AttivitaService attivitaService;
   private final PrenotazioneAttivitaTuristicaService prenotazioneAttivitaTuristicaService;
 
@@ -39,11 +40,12 @@ public class PrenotazioneAttivitaTuristicaController {
       @RequestParam("idAttivita") final Long idAttivita,
       @RequestParam("numAdulti") final int adulti,
       @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
-      @RequestParam("dataInizio") final Long dataInizioTimestamp,
-      @RequestParam(value = "dataFine", required = false) final Long dataFineTimestamp
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam(value = "dataFine", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")
+      final Date dataFine
   ) {
     try {
-      Itinerario itinerario = gestioneItinerariService.findById(idItinerario);
+      Itinerario itinerario = itinerariService.findById(idItinerario);
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Itinerario non trovato");
       }
@@ -51,7 +53,6 @@ public class PrenotazioneAttivitaTuristicaController {
       if (attivita.isAlloggio()) {
         throw new Exception("L'attività non è un'attività turistica.");
       }
-      Date dataInizio = new Date(dataInizioTimestamp * 1000);
       PrenotazioneAttivitaTuristica prenotazione = new PrenotazioneAttivitaTuristica();
       prenotazione.setAttivitaTuristica(attivita);
       prenotazione.setItinerario(itinerario);
@@ -64,8 +65,11 @@ public class PrenotazioneAttivitaTuristicaController {
             "Attività turistica non disponibile");
       }
       double prezzo = (adulti + bambini) * attivita.getPrezzo();
-      if (dataFineTimestamp != null) {
-        Date dataFine = new Date(dataFineTimestamp * 1000);
+      if (dataFine != null) {
+        if (dataFine.before(dataInizio)) {
+          return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+              "La data di fine non può essere precedente alla data di inizio.");
+        }
         prenotazione.setDataFine(dataFine);
         long durataOre = Duration.between(dataInizio.toInstant(), dataFine.toInstant()).toHours();
         if (durataOre > 24) {
@@ -76,7 +80,7 @@ public class PrenotazioneAttivitaTuristicaController {
       prenotazione = prenotazioneAttivitaTuristicaService.savePrenotazioneAttivitaTuristica(
           attivita, prenotazione);
       itinerario.setTotale(prezzo + itinerario.getTotale());
-      gestioneItinerariService.saveItinerario(itinerario);
+      itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK, prenotazione);
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
@@ -122,7 +126,7 @@ public class PrenotazioneAttivitaTuristicaController {
   @GetMapping("perAttivita/{idAttivita}/disponibilita")
   private ResponseEntity<Object> visualizzaDisponibilitaPerAttivitaTuristica(
       @PathVariable("idAttivita") final long idAttivita,
-      @RequestParam("dataInizio") final Date dataInizio
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio
   ) {
     try {
       Attivita attivita = attivitaService.findById(idAttivita);
@@ -160,7 +164,7 @@ public class PrenotazioneAttivitaTuristicaController {
       }
       Itinerario itinerario = prenotazione.getItinerario();
       itinerario.setTotale(itinerario.getTotale() - prenotazione.getPrezzo());
-      gestioneItinerariService.saveItinerario(itinerario);
+      itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK,
           prenotazioneAttivitaTuristicaService.deletePrenotazioneAttivitaTuristica(
               prenotazione));

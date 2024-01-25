@@ -23,10 +23,10 @@ public interface PrenotazioneAttivitaTuristicaRepository extends
   @Query("""
       SELECT COALESCE(SUM(p.numAdulti) + SUM(p.numBambini), 0)
       FROM Attivita a
-      LEFT JOIN PrenotazioneAttivitaTuristica p
-      WHERE a.isAlloggio = FALSE
-      AND p.dataInizio = ?1
+      LEFT JOIN PrenotazioneAttivitaTuristica p ON p.attivitaTuristica = a
+      WHERE a.id = ?1
+      AND p.dataInizio = ?2
       """)
-  int getPostiOccupatiIn(Date dataInizio);
+  int getPostiOccupatiIn(long idAttivita, Date dataInizio);
 
 }
