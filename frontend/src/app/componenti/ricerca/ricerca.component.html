@@ -1,14 +1,15 @@
-<div class="container mt-5">
-    <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filterTerm" />
-    </div>
-    <table class="table">
-        <thead class="thead-dark">
-        </thead>
+<div class="barraricerca">
+    <input type="text" class="searchbar" placeholder="Cerca per nome, città, categoria..." [(ngModel)]="filterTerm"
+        (input)="onSearch()" onkeypress="return (event.charCode > 64 && 
+        event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"/>
+    <button matTooltip="Ricerca per posizione" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+        <mat-icon class="filtericon">travel_explore</mat-icon>
+    </button>
+    <table class="results" *ngIf="showresultcontainer">
         <tbody>
-            <tr *ngFor="let attivita of listaAttivita | filter: filterTerm">
+            <tr (click)="navigateToAttivita(attivita.id)" *ngFor="let attivita of listaAttivita | filter: filterTerm"
+                class="risultato">
                 <td>{{ attivita.nome }}</td>
-                <td>{{ attivita.citta }}</td>
             </tr>
         </tbody>
     </table>

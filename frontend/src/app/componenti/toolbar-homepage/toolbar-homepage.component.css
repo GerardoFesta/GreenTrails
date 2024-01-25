@@ -4,9 +4,13 @@
     padding: 30px;
 }
 
-.title:hover, .title:active {
+.title {
+    transition: all 0.3s ease;
+}
+
+.title:hover,
+.title:active {
     filter: brightness(90%);
-    
 }
 
 .leftSide {
@@ -55,9 +59,11 @@
     flex-wrap: wrap;
     color: #00FF00;
     font-weight: bold;
+    transition: all 0.3 ease;
 }
 
-.iconContainer a:hover, .iconContainer a:active {
+.iconContainer a:hover,
+.iconContainer a:active {
     filter: brightness(90%);
 }
 
