@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +10,7 @@ export class ValoriEcosostenibilitaService {
 
   baseUrl: string = "http://localhost:8080/api/valori";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   creaValoriEcosostenibilitaVisitatore(politicheAntispreco: boolean, prodottiLocali: boolean,
     energiaVerde: boolean, raccoltaDifferenziata: boolean,
@@ -23,11 +24,8 @@ export class ValoriEcosostenibilitaService {
       .set('limiteEmissioneCO2', limiteEmissioneCO2)
       .set('contattoConNatura', contattoConNatura);
 
-    const email = 'visitatore@visitatore.it';
-    const password = 'visitatore123@';
-    const base64credential = btoa(email + ":" + password);
     const headers = new HttpHeaders({
-      Authorization: 'Basic ' + base64credential
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
 
     return this.http.post<any>(`${this.baseUrl}`, params, { headers });
@@ -45,11 +43,8 @@ export class ValoriEcosostenibilitaService {
       .set('limiteEmissioneCO2', limiteEmissioneCO2)
       .set('contattoConNatura', contattoConNatura);
 
-    const email = 'visitatore@visitatore.it';
-    const password = 'visitatore123@';
-    const base64credential = btoa(email + ":" + password);
     const headers = new HttpHeaders({
-      Authorization: 'Basic ' + base64credential
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
 
     return this.http.post<any>(`${this.baseUrl}/${id}`, params, { headers });

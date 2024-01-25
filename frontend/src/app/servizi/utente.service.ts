@@ -8,34 +8,34 @@ import { Observable, catchError, of, tap } from 'rxjs';
 })
 export class UtenteService {
 private isLogged: boolean = false;
- 
+
 private url = 'http://localhost:8080/api/utenti';
 
 constructor(private http: HttpClient, private cookieService: CookieService) {}
 
 registerUser(isGestore: boolean, dati: any, HttpHeaders = { }): Observable<any> {
   const urlWithParams = `${this.url}?isGestore=${isGestore}`;
+
   return this.http.put(urlWithParams, dati);
 }
 
-login(email: string, password: string): Observable<any> {
-  const base64credential = btoa(email + ':' + password);
-  const headers = { Authorization: 'Basic ' + base64credential };
+login(email: String, password: String ): Observable<any> {
+
+  const base64credential = btoa(email + ":" + password);
+  const headers = ({Authorization: 'Basic ' + base64credential} );
+
 
   return this.http.get<any>(`${this.url}`, { headers }).pipe(
-    tap((response: { data: { id: any; email: any; password: ((this: any, key: string, value: any) => any) | undefined; }; }) => {
+    tap((response) => {
       this.isLogged = true;
       console.log('Login successful:', response);
 
       // Save user data in a cookie
       this.cookieService.set('user', JSON.stringify(response.data));
-
-      // Optionally, you can set other user-related information in separate cookies
-
-      // For example:
-      this.cookieService.set('userId',JSON.stringify(response.data.id));
-      this.cookieService.set('userName', JSON.stringify(response.data.email,  response.data.password));
-
+      this.cookieService.set('credenziali', JSON.stringify(base64credential));
+      this.cookieService.set('userId', (response.data.id));
+      this.cookieService.set('email', (response.data.email));
+      this.cookieService.set('password', (response.data.password));
     }),
     catchError((error) => {
       console.error('Error during login:', error);
@@ -51,13 +51,9 @@ logout(): Observable<any> {
 
   return of({ success: true });
 }
+
 isLoggedInUser(): boolean {
-  // Check if the user is logged in by verifying the presence of the 'user' cookie
-  return this.isLogged || this.cookieService.check('user');
-}
-getUserInfo(): any {
-  // Retrieve user information from the 'user' cookie
-  const userData = this.cookieService.get('user');
-  return userData ? JSON.parse(userData) : null;
+  return this.isLogged;
 }
 }
+

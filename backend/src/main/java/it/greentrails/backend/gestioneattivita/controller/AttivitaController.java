@@ -95,8 +95,7 @@ public class AttivitaController {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
               "Categoria per attività turistica non presente.");
         }
-        attivita.setCategoriaAttivitaTuristica(
-            CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
+        attivita.setCategoriaAttivitaTuristica(CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
       }
       attivita = attivitaService.saveAttivita(attivita);
       return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
@@ -133,7 +132,7 @@ public class AttivitaController {
   private ResponseEntity<Object> visualizzaAttivitaPerPrezzo(
       @RequestParam(value = "limite", required = false) Integer limite
   ) {
-    if (limite == 0) {
+    if (limite == null) {
       limite = 10;
     }
     return ResponseGenerator.generateResponse(HttpStatus.OK,
@@ -156,5 +155,25 @@ public class AttivitaController {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
   }
+  @GetMapping("alloggi")
+  private ResponseEntity<Object> getAlloggi(
+  @RequestParam(value = "limite", required = false) Integer limite
+  ) {
+    if (limite == null) {
+      limite = 5;
+    }
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+            attivitaService.getAlloggi(limite));
+  }
 
+  @GetMapping("attivitaTuristiche")
+  private ResponseEntity<Object> getAttivitaTuristiche(
+          @RequestParam(value = "limite", required = false) Integer limite
+  ) {
+    if (limite == null) {
+      limite = 5;
+    }
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+            attivitaService.getAttivitaTuristiche(limite));
+  }
 }
