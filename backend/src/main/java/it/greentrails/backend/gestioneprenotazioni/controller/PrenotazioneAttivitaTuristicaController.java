@@ -5,7 +5,7 @@ import it.greentrails.backend.entities.Itinerario;
 import it.greentrails.backend.entities.PrenotazioneAttivitaTuristica;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
-import it.greentrails.backend.gestioneitinerari.service.GestioneItinerariService;
+import it.greentrails.backend.gestioneitinerari.service.ItinerariService;
 import it.greentrails.backend.gestioneprenotazioni.service.PrenotazioneAttivitaTuristicaService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
 import java.time.Duration;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PrenotazioneAttivitaTuristicaController {
 
-  private final GestioneItinerariService gestioneItinerariService;
+  private final ItinerariService itinerariService;
   private final AttivitaService attivitaService;
   private final PrenotazioneAttivitaTuristicaService prenotazioneAttivitaTuristicaService;
 
@@ -45,7 +45,7 @@ public class PrenotazioneAttivitaTuristicaController {
       final Date dataFine
   ) {
     try {
-      Itinerario itinerario = gestioneItinerariService.findById(idItinerario);
+      Itinerario itinerario = itinerariService.findById(idItinerario);
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Itinerario non trovato");
       }
@@ -80,7 +80,7 @@ public class PrenotazioneAttivitaTuristicaController {
       prenotazione = prenotazioneAttivitaTuristicaService.savePrenotazioneAttivitaTuristica(
           attivita, prenotazione);
       itinerario.setTotale(prezzo + itinerario.getTotale());
-      gestioneItinerariService.saveItinerario(itinerario);
+      itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK, prenotazione);
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
@@ -164,7 +164,7 @@ public class PrenotazioneAttivitaTuristicaController {
       }
       Itinerario itinerario = prenotazione.getItinerario();
       itinerario.setTotale(itinerario.getTotale() - prenotazione.getPrezzo());
-      gestioneItinerariService.saveItinerario(itinerario);
+      itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK,
           prenotazioneAttivitaTuristicaService.deletePrenotazioneAttivitaTuristica(
               prenotazione));
