@@ -32,7 +32,6 @@ export class RecensioniComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.idAttivita = +params['id'];
     })
-
     this.visualizzaListaRecensioni();
   }
 
@@ -63,7 +62,7 @@ export class RecensioniComponent implements OnInit {
         });
       });
 
-      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === this.cookieService.get('email').replace(/"/g, ''));
+      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === this.cookieService.get('email').replace(/"/g, '') || this.cookieService.get('ruolo') === 'ROLE_GESTORE_ATTIVITA');
     });
   }
 

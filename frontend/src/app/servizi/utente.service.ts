@@ -36,6 +36,7 @@ login(email: String, password: String ): Observable<any> {
       this.cookieService.set('userId', (response.data.id));
       this.cookieService.set('email', (response.data.email));
       this.cookieService.set('password', (response.data.password));
+      this.cookieService.set('ruolo', (response.data.authorities[0].authority))
     }),
     catchError((error) => {
       console.error('Error during login:', error);
