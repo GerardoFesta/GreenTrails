@@ -5,12 +5,15 @@ import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-att
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { GestioneValoriComponent } from './gestione-valori/gestione-valori.component';
 
 const routes: Routes = [
   { path: 'registrazione', component: RegistrazioneComponent },
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
-  {path: '', component: GestionePrenotazioniAttiveComponent},
+  {path: '', component: GestioneValoriComponent},
   {path: 'homepage', component: HomePageComponent},
+  {path: 'login', component: LoginComponent},
+
 
 ];
 

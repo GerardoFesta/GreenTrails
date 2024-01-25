@@ -69,6 +69,7 @@ import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
 import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { GestioneValoriComponent } from './gestione-valori/gestione-valori.component';
 
 
 @NgModule({
@@ -91,6 +92,7 @@ import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-preno
     VideoDialogComponent,
     HomePageComponent,
     GestionePrenotazioniAttiveComponent,
+    GestioneValoriComponent,
   ],
   imports: [
     BrowserModule,

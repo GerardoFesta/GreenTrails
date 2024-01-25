@@ -8,9 +8,8 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
   datasource:
     url: jdbc:mysql://localhost:3306/greentrails
-    username: ${DB_USER}
-    password: ${DB_PASS}
-
+    username: orfie
+    password: Zutuxe98!
 server:
   error:
     include-message: always
