@@ -35,6 +35,7 @@ public class SecurityConfig {
         .authorizeHttpRequests((authorize) -> authorize
             .requestMatchers(HttpMethod.PUT, "/api/utenti").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/utenti").authenticated()
+            .requestMatchers(HttpMethod.POST, "/api/utenti/questionario").hasRole(ROLE_VISITATORE)
 
             .requestMatchers(HttpMethod.POST, "/api/file").authenticated()
             .requestMatchers(HttpMethod.DELETE, "/api/file/**").authenticated()
