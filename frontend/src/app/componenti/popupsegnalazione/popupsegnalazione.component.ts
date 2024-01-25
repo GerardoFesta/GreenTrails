@@ -20,9 +20,6 @@ export class PopupsegnalazioneComponent implements OnInit {
   immagine: File | null = null;
   descrizione: string = '';
 
-  //files!: FileList;
-  //fileNames: string[] = [];
-
 
   constructor(
     private segnelazioneService :SegnalazioneService, 
@@ -43,7 +40,6 @@ export class PopupsegnalazioneComponent implements OnInit {
       }
     }
 
-    //selectedFiles: { name: string; url: SafeUrl }[] = [];
 
     @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
     fileNames: string[] = [];
@@ -69,13 +65,13 @@ export class PopupsegnalazioneComponent implements OnInit {
     }
   
 
-submitForm(): void {
-  const fileArray = this.files;
-  const fileInput = this.fileInput.nativeElement;
-  const dataTransfer = new DataTransfer();
+  submitForm(): void {
+    const fileArray = this.files;
+    const fileInput = this.fileInput.nativeElement;
+    const dataTransfer = new DataTransfer();
 
-  fileArray.forEach(file => {
-   dataTransfer.items.add(file);
+    fileArray.forEach(file => {
+    dataTransfer.items.add(file);
   });
 
   fileInput.files = dataTransfer.files;
