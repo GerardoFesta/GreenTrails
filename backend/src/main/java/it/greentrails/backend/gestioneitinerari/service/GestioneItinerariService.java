@@ -25,6 +25,7 @@ public class GestioneItinerariService {
   private final PrenotazioneAttivitaTuristicaService prenotazioneAttivitaTuristicaService;
   private final PrenotazioneAlloggioRepository prenotazioneAlloggioRepository;
   private final PrenotazioneAttivitaTuristicaRepository prenotazioneAttivitaTuristicaRepository;
+  private final GestioneItinerariAdapter gestioneItinerariStubAdapter;
 
   public Itinerario saveItinerario(Itinerario itinerario) throws Exception {
     if (itinerario == null) {
@@ -38,8 +39,7 @@ public class GestioneItinerariService {
     if (preferenze == null) {
       throw new Exception("Le preferenze sono vuote.");
     }
-    // TODO: modificare dopo integrazione modulo AI
-    return new GestioneItinerariAdapter().pianificazioneAutomatica(preferenze);
+    return gestioneItinerariStubAdapter.pianificazioneAutomatica(preferenze);
   }
 
   public List<Itinerario> findItinerariByUtente(Utente utente) throws Exception {
