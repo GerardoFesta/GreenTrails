@@ -12,19 +12,15 @@ export class SegnalazioneService {
 
   constructor(private http : HttpClient, private cookie: CookieService) { }
 
-  mandaDatiSegnalazione(idAttivita: number, descrizione: string, idValori: number): Observable<any>{
+  mandaDatiSegnalazione(descrizione: string, immagine: FileList, idAttivita: number): Observable<any>{
     const formData: FormData = new FormData();
-    const dataSegnalazione = new Date().toISOString();
-    formData.append('dataSegnalazione', dataSegnalazione);
-    
-    formData.append('descrizione', descrizione.toString());
-    formData.append('isForRecensione', 'false');
-    
-    formData.append('idAttivita', idAttivita.toString())
-    formData.append('idValori', idValori.toString())
 
-  
-
+    formData.append('descrizione', descrizione);
+    if(immagine != null)
+    {Array.from(immagine).forEach((file, index) => {
+      formData.append('immagine', immagine[index], immagine[index].name);
+    })}
+    formData.append('idAttivita', idAttivita.toString());
 
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')

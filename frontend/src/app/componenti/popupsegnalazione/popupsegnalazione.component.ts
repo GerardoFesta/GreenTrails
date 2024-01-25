@@ -1,11 +1,9 @@
 import { CookieService } from 'ngx-cookie-service';
-import { ActivatedRoute } from '@angular/router';
-import { ValoriEcosostenibilitaService } from 'src/app/servizi/valori-ecosostenibilita.service';
-import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { SegnalazioneService } from './../../servizi/segnalazione.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-popupsegnalazione',
@@ -19,26 +17,19 @@ export class PopupsegnalazioneComponent implements OnInit {
   @Output() chiudiPopup = new EventEmitter<void>();
 
   idAttivita: number;
-  idValori: number = 0;
-
+  immagine: File | null = null;
   descrizione: string = '';
-  valoriEcosostenibilita: any;
 
-  valori = [
-    { label: '', selezionato: '' }
-  ];
+  //files!: FileList;
+  //fileNames: string[] = [];
 
-  isDescrizioneInserita: boolean = true;
-  isValoriInseriti: boolean = true;
-  isSubmitDisponibile: boolean = true;
 
   constructor(
-    private attivitaService: AttivitaService,
-    private route: ActivatedRoute,
     private segnelazioneService :SegnalazioneService, 
     private cookie: CookieService,
-    private valoriService: ValoriEcosostenibilitaService,
-    public dialogRef: MatDialogRef<PopupsegnalazioneComponent>) { }
+    public dialogRef: MatDialogRef<PopupsegnalazioneComponent>, 
+    private sanitizer: DomSanitizer,
+    ) { }
 
     ngOnInit(): void {
       const idAttivitaFromCookie = this.cookie.get('idAttivita');
@@ -46,106 +37,70 @@ export class PopupsegnalazioneComponent implements OnInit {
       if (idAttivitaFromCookie) {
         this.idAttivita = +idAttivitaFromCookie;
         console.log('Id dell\'attività:', this.idAttivita);
-  
-        this.visualizzaPolitiche();
+
       } else {
         console.error('idAttivita not found in the cookie');
       }
     }
 
+    //selectedFiles: { name: string; url: SafeUrl }[] = [];
 
-  convertCamelCaseToReadable(camelCase: string): string {
-    let result = camelCase.replace(/([A-Z])/g, ' $1');
-    result = result.replace('C O2', 'CO2');
-    return result.charAt(0).toUpperCase() + result.slice(1);
-  }
+    @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
+    fileNames: string[] = [];
+    files: File[] = [];
+    filesWithPreview: { name: string; url: SafeUrl }[] = [];
 
-  visualizzaPolitiche(): void {
-    if (!this.idAttivita) {
-      console.error('idAttivita is not set');
-      return;
-    }
-
-    this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe(
-      (attivita) => {
-        this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
-        this.idValori = attivita.data.valoriEcosostenibilita.id;
-
-        let valoriEcosostenibilitaTrue: string[] = Object.keys(this.valoriEcosostenibilita)
-          .filter(key => this.valoriEcosostenibilita[key] === true)
-          .map(key => this.convertCamelCaseToReadable(key));
-
-        this.valori = valoriEcosostenibilitaTrue.map((label) => ({
-          label: label,
-          selezionato: ''
-        }));
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
-  }
-
-  updateSubmit(){
-    const isValoriInseriti = this.valori.every(item => item.selezionato === 'sì' || item.selezionato === 'no');
-    this.isSubmitDisponibile = !isValoriInseriti || !this.isDescrizioneInserita;
-  }
-
-  selezionatoRadio(item: any, option: any) {
-    item.selectedOption = option;
-    const key = this.convertLabelToCamelCase(item.label);
-    if (option === 'no') {
-      console.log("CHIAVE:", key)
-      this.valoriEcosostenibilita[key] = false;
-      console.log(this.valoriEcosostenibilita[key])
-    } else {
-      console.log("CHIAVE:", key)
-      this.valoriEcosostenibilita[key] = true;
-      console.log(this.valoriEcosostenibilita[key])
-    }
-    this.updateSubmit();
-  }
-
-    convertLabelToCamelCase(label: string): string {
-    const words = label.split(' ');
-    const camelCaseWords = words.map((word, index) =>{
-      if(index === 0){
-        return word.toLowerCase();
-      } else {
-        if (word === 'CO2'){
-          return word;
-        } else {
-          return word.charAt(0).toUpperCase() + word.slice(1).toLocaleLowerCase();
+        
+    onFileSelected(event: any): void {
+      
+      const selectedFiles: FileList | null = event.target.files;
+      if (selectedFiles && selectedFiles.length > 0) {
+        for (let i = 0; i < selectedFiles.length; i++) {
+          const file = selectedFiles[i];
+          this.files.push(file);
+          this.fileNames.push(file.name);
         }
       }
-    });
-    return camelCaseWords.join('');
-  }
+    }
+  
+    removeFile(index: number): void {
+      this.files.splice(index, 1);
+      this.fileNames.splice(index, 1);
+    }
+  
 
-  submitForm(): void{
-    this.valoriService.creaValoriEcosostenibilitaVisitatore(
-      this.valoriEcosostenibilita.politicheAntispreco,
-      this.valoriEcosostenibilita.prodottiLocali,
-      this.valoriEcosostenibilita.energiaVerde,
-      this.valoriEcosostenibilita.raccoltaDifferenziata,
-      this.valoriEcosostenibilita.limiteEmissioneCO2,
-      this.valoriEcosostenibilita.contattoConNatura,
-    ).subscribe((valoriSegnalazione) => {
-      this.idValori = valoriSegnalazione.data.id;
-    })
+submitForm(): void {
+  const fileArray = this.files;
+  const fileInput = this.fileInput.nativeElement;
+  const dataTransfer = new DataTransfer();
 
-    this.segnelazioneService.mandaDatiSegnalazione(this.idAttivita, this.descrizione, this.idValori)
-    .subscribe((risposta: any) => {
-        console.log(risposta);
-        if(risposta?.status === 'success'){
-        this.chiudiPopup.emit();
-        this.formSottomesso.emit();
-        this.dialogRef.close();
-        }
-      }, (error) => {
-        console.log('Dettagli richiesta API:', error);
-      });
-  }
+  fileArray.forEach(file => {
+   dataTransfer.items.add(file);
+  });
+
+  fileInput.files = dataTransfer.files;
+
+  this.fileNames = [];
+  fileArray.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.fileNames.push(file.name);
+    };
+    reader.readAsDataURL(file);
+  });
+  
+  this.segnelazioneService.mandaDatiSegnalazione(this.descrizione, fileInput.files, this.idAttivita)
+  .subscribe((risposta: any) => {
+    console.log(risposta);
+    if (risposta?.status === 'success') {
+      this.chiudiPopup.emit();
+      this.formSottomesso.emit();
+      this.dialogRef.close();
+    }
+  }, (error) => {
+    console.log('Dettagli richiesta API:', error);
+  });
+}
 
   closePopup(){
     this.chiudiPopup.emit();
