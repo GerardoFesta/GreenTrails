@@ -52,8 +52,7 @@ public class AttivitaController {
       @RequestParam(value = "prezzo", required = false) final Double prezzo,
       @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
       @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
-      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica,
-      @RequestParam(value = "prezzo", required = false) final Double prezzo
+      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica
   ) {
     try {
       Utente gestore = gestioneUtenzeService.findById(utente.getId());
