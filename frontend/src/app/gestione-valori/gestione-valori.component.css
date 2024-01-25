@@ -23,14 +23,12 @@
   max-width: 100%;
   border-radius: 20px;
   box-shadow: 7px 7px 5px #dedede;
-  max-height: 200px;
-  overflow: hidden;
+  max-height: 50%;
 }
 
 /* Container lista valori-ecosostenibilita */
 .lista-eco {
-    overflow-y: auto;
-    max-height: 200px;
+        max-height: fit-content;
 }
 /* Elemento della lista */
 mat-list-item {

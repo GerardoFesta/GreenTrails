@@ -14,7 +14,14 @@
                     <!-- Lista valori-ecosostenibilita (devono essere generati dinamicamente)-->
                     <mat-list role="list">
                         <!-- Elemento della lista -->
-                        <mat-list-item role="listitem" *ngFor="let valore of valoriEcosostenibilita;">{{ valore }}</mat-list-item>
+                        <mat-list-item role="listitem" *ngFor="let valore of valoriEcosostenibilita;">
+                            {{ valore }}
+                            <!-- Aggiungi radio button -->
+                            <mat-radio-group [(ngModel)]="valoriEcosostenibilitaSelected[valore]">
+                                <mat-radio-button value="true">Si</mat-radio-button>
+                                <mat-radio-button value="false">No</mat-radio-button>
+                            </mat-radio-group>
+                        </mat-list-item>
                     </mat-list>
                 </div>
             </div>

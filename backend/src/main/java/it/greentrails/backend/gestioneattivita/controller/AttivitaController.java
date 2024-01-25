@@ -115,7 +115,7 @@ public class AttivitaController {
     }
   }
 
-  @GetMapping
+  @GetMapping("g")
   private ResponseEntity<Object> visualizzaAttivitaPerGestore(
       @AuthenticationPrincipal Utente utente
   ) {

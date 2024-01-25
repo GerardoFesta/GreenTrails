@@ -52,7 +52,7 @@ export class ValoriEcosostenibilitaService {
 
   visualizzaValoriById(idValori: number){
     const headers = new HttpHeaders({
-      Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
     const url = `${this.baseUrl}/attivita/${idValori}/valoriEcosostenibilita`;
     return this.http.get(url, {headers});
