@@ -1,8 +1,10 @@
 package it.greentrails.backend.gestioneitinerari.adapter;
 
 import it.greentrails.backend.entities.Attivita;
+import it.greentrails.backend.entities.Camera;
 import it.greentrails.backend.entities.Itinerario;
 import it.greentrails.backend.entities.Preferenze;
+import it.greentrails.backend.entities.PrenotazioneAlloggio;
 import it.greentrails.backend.entities.PrenotazioneAttivitaTuristica;
 import it.greentrails.backend.gestioneattivita.repository.AttivitaRepository;
 import it.greentrails.backend.gestioneattivita.repository.CameraRepository;
@@ -13,7 +15,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +33,7 @@ public class ItinerariStubAdapter implements ItinerariAdapter {
     Itinerario itinerario = new Itinerario();
     itinerario.setVisitatore(preferenze.getVisitatore());
     Itinerario itinerarioFinal = itinerariRepository.save(itinerario);
-    List<Attivita> attivitaTuristiche = attivitaRepository.findAll(Pageable.unpaged()).toList();
+    List<Attivita> attivitaTuristiche = attivitaRepository.findAll();
     Collections.shuffle(attivitaTuristiche);
     attivitaTuristiche.stream().filter(a -> !a.isAlloggio()).limit(2).forEach(a -> {
       PrenotazioneAttivitaTuristica p = new PrenotazioneAttivitaTuristica();
@@ -42,6 +43,20 @@ public class ItinerariStubAdapter implements ItinerariAdapter {
       p.setNumAdulti(1);
       p.setPrezzo(a.getPrezzo());
       prenotazioneAttivitaTuristicaRepository.save(p);
+    });
+    List<Camera> camere = cameraRepository.findAll();
+    Collections.shuffle(camere);
+    camere.stream().limit(3).forEach(c -> {
+      PrenotazioneAlloggio p = new PrenotazioneAlloggio();
+      p.setCamera(c);
+      p.setItinerario(itinerarioFinal);
+      p.setDataInizio(new Date());
+      p.setDataFine(new Date());
+      p.setNumAdulti(1);
+      p.setNumBambini(0);
+      p.setNumCamere(1);
+      p.setPrezzo(c.getPrezzo());
+      prenotazioneAlloggioRepository.save(p);
     });
     return itinerario;
   }

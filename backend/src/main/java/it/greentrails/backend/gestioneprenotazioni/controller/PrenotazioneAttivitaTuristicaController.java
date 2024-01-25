@@ -4,6 +4,7 @@ import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Itinerario;
 import it.greentrails.backend.entities.PrenotazioneAttivitaTuristica;
 import it.greentrails.backend.entities.Utente;
+import it.greentrails.backend.enums.StatoPrenotazione;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneitinerari.service.ItinerariService;
 import it.greentrails.backend.gestioneprenotazioni.service.PrenotazioneAttivitaTuristicaService;
@@ -59,8 +60,63 @@ public class PrenotazioneAttivitaTuristicaController {
       prenotazione.setNumAdulti(adulti);
       prenotazione.setNumBambini(bambini);
       prenotazione.setDataInizio(dataInizio);
+      prenotazione.setStato(StatoPrenotazione.CREATA);
       if (prenotazioneAttivitaTuristicaService.controllaDisponibilitaAttivitaTuristica(attivita,
           dataInizio) < adulti + bambini) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Attività turistica non disponibile");
+      }
+      double prezzo = (adulti + bambini) * attivita.getPrezzo();
+      if (dataFine != null) {
+        if (dataFine.before(dataInizio)) {
+          return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+              "La data di fine non può essere precedente alla data di inizio.");
+        }
+        prenotazione.setDataFine(dataFine);
+        long durataOre = Duration.between(dataInizio.toInstant(), dataFine.toInstant()).toHours();
+        if (durataOre > 24) {
+          prezzo = prezzo * Math.ceil((double) durataOre / 24);
+        }
+      }
+      prenotazione.setPrezzo(prezzo);
+      prenotazione = prenotazioneAttivitaTuristicaService.savePrenotazioneAttivitaTuristica(
+          attivita, prenotazione);
+      itinerario.setTotale(prezzo + itinerario.getTotale());
+      itinerariService.saveItinerario(itinerario);
+      return ResponseGenerator.generateResponse(HttpStatus.OK, prenotazione);
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
+
+  @PostMapping("{id}")
+  private ResponseEntity<Object> confermaPrenotazioneAttivitaTuristica(
+      @AuthenticationPrincipal Utente utente,
+      @PathVariable("id") final long id,
+      @RequestParam("numAdulti") final int adulti,
+      @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam(value = "dataFine", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")
+      final Date dataFine
+  ) {
+    try {
+      PrenotazioneAttivitaTuristica prenotazione = prenotazioneAttivitaTuristicaService.findById(id);
+      Itinerario itinerario = prenotazione.getItinerario();
+      if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
+        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,
+            "Prenotazione non trovata");
+      }
+      if (prenotazione.getStato() != StatoPrenotazione.NON_CONFERMATA) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Prenotazione non modificabile");
+      }
+      prenotazione.setNumAdulti(adulti);
+      prenotazione.setNumBambini(bambini);
+      prenotazione.setDataInizio(dataInizio);
+      prenotazione.setStato(StatoPrenotazione.CREATA);
+      Attivita attivita = prenotazione.getAttivitaTuristica();
+      if (prenotazioneAttivitaTuristicaService.controllaDisponibilitaAttivitaTuristica(
+          attivita, dataInizio) < adulti + bambini) {
         return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
             "Attività turistica non disponibile");
       }
