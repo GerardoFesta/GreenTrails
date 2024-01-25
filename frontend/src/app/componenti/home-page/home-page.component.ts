@@ -181,5 +181,6 @@ export class HomePageComponent implements OnInit {
 
   navigateToAttivita(id: number): void {
     this.router.navigate(['/attivita', id]);
+    this.cookieService.set('idAttivita', JSON.stringify(id));
   }
 }

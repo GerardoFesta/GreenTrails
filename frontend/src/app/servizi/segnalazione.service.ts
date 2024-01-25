@@ -14,13 +14,16 @@ export class SegnalazioneService {
 
   mandaDatiSegnalazione(idAttivita: number, descrizione: string, idValori: number): Observable<any>{
     const formData: FormData = new FormData();
-    formData.append('idAttivita', idAttivita.toString())
-    formData.append('descrizione', descrizione.toString())
-    formData.append('idValori', idValori.toString())
-
     const dataSegnalazione = new Date().toISOString();
     formData.append('dataSegnalazione', dataSegnalazione);
+    
+    formData.append('descrizione', descrizione.toString());
     formData.append('isForRecensione', 'false');
+    
+    formData.append('idAttivita', idAttivita.toString())
+    formData.append('idValori', idValori.toString())
+
+  
 
 
     const headers = new HttpHeaders({

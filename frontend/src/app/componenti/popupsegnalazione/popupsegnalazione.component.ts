@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute } from '@angular/router';
 import { ValoriEcosostenibilitaService } from 'src/app/servizi/valori-ecosostenibilita.service';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
@@ -31,20 +32,25 @@ export class PopupsegnalazioneComponent implements OnInit {
   isValoriInseriti: boolean = true;
   isSubmitDisponibile: boolean = true;
 
-  files!: FileList;
-
   constructor(
     private attivitaService: AttivitaService,
     private route: ActivatedRoute,
     private segnelazioneService :SegnalazioneService, 
+    private cookie: CookieService,
     private valoriService: ValoriEcosostenibilitaService,
     public dialogRef: MatDialogRef<PopupsegnalazioneComponent>) { }
 
     ngOnInit(): void {
-      this.route.params.subscribe(params => {
-        const idAttivita = +params['id'];
-        this.visualizzaPolitiche(idAttivita);
-      });
+      const idAttivitaFromCookie = this.cookie.get('idAttivita');
+  
+      if (idAttivitaFromCookie) {
+        this.idAttivita = +idAttivitaFromCookie;
+        console.log('Id dell\'attività:', this.idAttivita);
+  
+        this.visualizzaPolitiche();
+      } else {
+        console.error('idAttivita not found in the cookie');
+      }
     }
 
 
@@ -54,25 +60,24 @@ export class PopupsegnalazioneComponent implements OnInit {
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 
-  visualizzaPolitiche(idAttivita: number): void {
-    this.attivitaService.visualizzaAttivita(idAttivita).subscribe(
+  visualizzaPolitiche(): void {
+    if (!this.idAttivita) {
+      console.error('idAttivita is not set');
+      return;
+    }
+
+    this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe(
       (attivita) => {
-        const idValori = attivita.data.valoriEcosostenibilita.id;
-        console.log('valori dichiarati dall\'attivita: ', attivita.data.valoriEcosostenibilita);
+        this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
+        this.idValori = attivita.data.valoriEcosostenibilita.id;
 
-        this.valoriService.visualizzaValoriById(idValori).subscribe(
-          (risposta) => {
-            console.log('valori dichiarati dallattivita', risposta);
-          }
-        );
-
-        let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita)
-          .filter(([nomePolitica, valore]) => valore === true)
-          .map(([nomePolitica, valore]) => this.convertCamelCaseToReadable(nomePolitica));
+        let valoriEcosostenibilitaTrue: string[] = Object.keys(this.valoriEcosostenibilita)
+          .filter(key => this.valoriEcosostenibilita[key] === true)
+          .map(key => this.convertCamelCaseToReadable(key));
 
         this.valori = valoriEcosostenibilitaTrue.map((label) => ({
           label: label,
-          selezionato: '',
+          selezionato: ''
         }));
       },
       (error) => {
@@ -80,6 +85,7 @@ export class PopupsegnalazioneComponent implements OnInit {
       }
     );
   }
+
   updateSubmit(){
     const isValoriInseriti = this.valori.every(item => item.selezionato === 'sì' || item.selezionato === 'no');
     this.isSubmitDisponibile = !isValoriInseriti || !this.isDescrizioneInserita;
