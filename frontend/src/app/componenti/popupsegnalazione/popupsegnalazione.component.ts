@@ -1,4 +1,3 @@
-import { CookieService } from 'ngx-cookie-service';
 import { ActivatedRoute } from '@angular/router';
 import { ValoriEcosostenibilitaService } from 'src/app/servizi/valori-ecosostenibilita.service';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
@@ -32,52 +31,55 @@ export class PopupsegnalazioneComponent implements OnInit {
   isValoriInseriti: boolean = true;
   isSubmitDisponibile: boolean = true;
 
+  files!: FileList;
+
   constructor(
     private attivitaService: AttivitaService,
     private route: ActivatedRoute,
     private segnelazioneService :SegnalazioneService, 
-    private cookie: CookieService,
     private valoriService: ValoriEcosostenibilitaService,
     public dialogRef: MatDialogRef<PopupsegnalazioneComponent>) { }
 
     ngOnInit(): void {
-      const idAttivitaFromCookie = this.cookie.get('idAttivita');
-  
-      if (idAttivitaFromCookie) {
-        this.idAttivita = +idAttivitaFromCookie;
-        console.log('Id dell\'attività:', this.idAttivita);
-  
-        this.visualizzaPolitiche();
-      } else {
-        console.error('idAttivita not found in the cookie');
-      }
+      this.route.params.subscribe(params => {
+        const idAttivita = +params['id'];
+        this.visualizzaPolitiche(idAttivita);
+      });
     }
 
-
+    valoriEcosostenibilitaSelected: { politicheAntispreco: string, prodottiLocali: string, energiaVerde: string, raccoltaDifferenziata: string, limiteEmissioneCO2: string, contattoConNatura: string } = {
+      politicheAntispreco: '',
+      prodottiLocali: '',
+      energiaVerde: '',
+      raccoltaDifferenziata: '',
+      limiteEmissioneCO2: '',
+      contattoConNatura: ''
+    };
   convertCamelCaseToReadable(camelCase: string): string {
     let result = camelCase.replace(/([A-Z])/g, ' $1');
     result = result.replace('C O2', 'CO2');
     return result.charAt(0).toUpperCase() + result.slice(1);
   }
 
-  visualizzaPolitiche(): void {
-    if (!this.idAttivita) {
-      console.error('idAttivita is not set');
-      return;
-    }
-
-    this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe(
+  visualizzaPolitiche(idAttivita: number): void {
+    this.attivitaService.visualizzaAttivita(idAttivita).subscribe(
       (attivita) => {
-        this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
-        this.idValori = attivita.data.valoriEcosostenibilita.id;
+        const idValori = attivita.data.valoriEcosostenibilita.id;
+        console.log('valori dichiarati dall\'attivita: ', attivita.data.valoriEcosostenibilita);
 
-        let valoriEcosostenibilitaTrue: string[] = Object.keys(this.valoriEcosostenibilita)
-          .filter(key => this.valoriEcosostenibilita[key] === true)
-          .map(key => this.convertCamelCaseToReadable(key));
+        this.valoriService.visualizzaValoriById(idValori).subscribe(
+          (risposta) => {
+            console.log('valori dichiarati dallattivita', risposta);
+          }
+        );
+
+        let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita)
+          .filter(([nomePolitica, valore]) => valore === true)
+          .map(([nomePolitica, valore]) => this.convertCamelCaseToReadable(nomePolitica));
 
         this.valori = valoriEcosostenibilitaTrue.map((label) => ({
           label: label,
-          selezionato: ''
+          selezionato: '',
         }));
       },
       (error) => {
@@ -85,24 +87,13 @@ export class PopupsegnalazioneComponent implements OnInit {
       }
     );
   }
-
   updateSubmit(){
     const isValoriInseriti = this.valori.every(item => item.selezionato === 'sì' || item.selezionato === 'no');
     this.isSubmitDisponibile = !isValoriInseriti || !this.isDescrizioneInserita;
   }
 
-  selezionatoRadio(item: any, option: any) {
-    item.selectedOption = option;
-    const key = this.convertLabelToCamelCase(item.label);
-    if (option === 'no') {
-      console.log("CHIAVE:", key)
-      this.valoriEcosostenibilita[key] = false;
-      console.log(this.valoriEcosostenibilita[key])
-    } else {
-      console.log("CHIAVE:", key)
-      this.valoriEcosostenibilita[key] = true;
-      console.log(this.valoriEcosostenibilita[key])
-    }
+  selezionatoRadio(propertyName: string, option: string) {
+    this.valoriEcosostenibilitaSelected[propertyName] = option;
     this.updateSubmit();
   }
 

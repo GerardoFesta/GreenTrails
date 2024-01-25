@@ -1,33 +1,50 @@
-<!-- Container card valori-ecosostenibilita -->
-<mat-card class="example-card">
-    <!-- Container header valori-ecosostenibilita -->
-    <mat-card-header class="card-section">
-        <!-- Container valori-ecosostenibilita -->
-        <mat-card-content>
-            <!-- Container titolo -->
-            <mat-card-title style="width: 100%;">
-                Politiche ecosostenibili
-            </mat-card-title>
-            <div class="lista-eco-container">
-                <!-- Lista valori-ecosostenibilita -->
-                <div class="lista-eco">
-                    <!-- Lista valori-ecosostenibilita (devono essere generati dinamicamente)-->
-                    <mat-list role="list">
-                        <!-- Elemento della lista -->
-                        <mat-list-item role="listitem" *ngFor="let valore of valoriEcosostenibilita;">
-                            {{ valore }}
-                            <!-- Aggiungi radio button -->
-                            <mat-radio-group [(ngModel)]="valoriEcosostenibilitaSelected[valore]">
-                                <mat-radio-button value="true">Si</mat-radio-button>
-                                <mat-radio-button value="false">No</mat-radio-button>
-                            </mat-radio-group>
-                        </mat-list-item>
-                    </mat-list>
+<div class="a"><mat-card class="example-card">
+    <form #moduloEcosostenibilita="ngForm" (ngSubmit)="submitForm()" novalidate>
+        <!-- Container header valori-ecosostenibilita -->
+        <mat-card-header class="card-section">
+            <!-- Container valori-ecosostenibilita -->
+            <mat-card-content>
+                <!-- Container titolo -->
+                <mat-card-title style="width: 100%; margin-left:30px;">
+                    {{nome}}
+                    Politiche ecosostenibili
+                </mat-card-title>
+                <div class="lista-eco-container">
+                    <!-- Lista valori-ecosostenibilita -->
+                    <div class="lista-eco">
+                        <!-- Lista valori-ecosostenibilita (devono essere generati dinamicamente)-->
+                        <mat-list role="list">
+                            <!-- Elemento della lista -->
+                            <mat-list role="list">
+                                <!-- Elemento della lista -->
+                                <mat-list-item role="listitem" *ngFor="let valore of valoriEcosostenibilita;">
+                                    {{ valore }}
+                                    <!-- Aggiungi radio button -->
+                                    <div class="radio-container" style="margin-left:20px;">
+                                        <input type="radio" [name]="valore" value="true" (change)="selezionatoRadio(valore, 'true')" [checked]="valoriEcosostenibilitaSelected[valore] === 'true'"
+                                            style="font-size: medium;"> Sì
+                                        <input type="radio" [name]="valore" value="false" (change)="selezionatoRadio(valore, 'false')" [checked]="valoriEcosostenibilitaSelected[valore] === 'false'"
+                                            style="font-size: medium;"> No
+                                    </div>
+                                </mat-list-item>
+                            </mat-list>
+                        </mat-list>
+                    </div>
                 </div>
+            </mat-card-content>
+            <div class="button">
+                <!-- Pulsante prenotazione -->
+                <button mat-raised-button color="primary" style="margin-top: 20px; color: white; background-color: #32CD32; margin-right:100px;">Annulla</button>
+                <button mat-raised-button color="primary" style="margin-top: 20px; color: white; background-color: #32CD32; margin-left:100px" type="submit" [disabled]="!moduloEcosostenibilita.valid">Modifica</button>
             </div>
-        </mat-card-content>
-        <!-- Pulsante prenotazione -->
-        <button mat-raised-button color="primary"
-            style="margin-top: 20px; color: white; background-color: #32CD32;">Prenota</button>
-    </mat-card-header>
+        </mat-card-header>
+    </form>
 </mat-card>
+<div class="activity-image">
+    <mat-card-content class="card-section" style="margin-top: 10px;">
+        <!-- Container immagine attivita -->
+        <img mat-card-image
+        src="{{ imageUrls[0] }}"
+        alt="immagine-attivita">
+    </mat-card-content></div>
+</div>

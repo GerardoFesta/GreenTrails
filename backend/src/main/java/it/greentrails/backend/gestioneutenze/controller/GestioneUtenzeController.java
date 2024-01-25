@@ -1,4 +1,4 @@
-package it.greentrails.backend.gestioneutenze.controller;
+package it.greentrails.backend.gestioneUtenze.controller;
 
 
 import it.greentrails.backend.entities.Preferenze;
