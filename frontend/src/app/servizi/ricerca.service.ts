@@ -11,18 +11,12 @@ export class RicercaService {
 
   constructor(private http: HttpClient) { }
 
-  cerca(query: string, idCategorie?: number[], coordinate?: any, raggio?: number): Observable<any> {
-    const params: any = {query: query}
-    if(idCategorie) {
-      params.idCategorie = idCategorie
-    }
-    if(coordinate) {
-      params.coordinate = coordinate
-    }
-    if(raggio) {
-      params.raggio = raggio
-    }
+  cerca(latitudine: number, longitudine: number, raggio: number): Observable<any> {
+    const params: any = { 
+      coordinate: { x: latitudine, y: longitudine },
+      raggio: raggio
+    };
 
-    return this.http.post(this.baseUrl, params)
+    return this.http.post(this.baseUrl, params);
   }
 }

@@ -22,7 +22,6 @@ export class RicercaComponent implements OnInit, OnDestroy {
     nearSea: false,
     localShops: false
   };
-  showFilterContainer = false;
 
   constructor(private attivitaService: AttivitaService, private uploadService: UploadService, private router: Router, private route: ActivatedRoute) {
     this.router.events.subscribe(event => {
