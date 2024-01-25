@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>
+Aggiungi camere
+  </h1>
+  <div [formGroup]="camere">
+
+    
+    <label>Categoria: </label>
+    <input formControlName="categoria" matInput>
+
+    
+    <label>Disponibilita: </label>
+    <input formControlName="disponibilita" matInput>
+
+    <label>Descrizione: </label>
+    <input formControlName="descrizione" matInput>
+
+    <label>Capienza: </label>
+    <input formControlName="capienza"matInput >
+
+    <label>Prezzo: </label>
+    <input formControlName="prezzo" matInput>
+
+
+
+
+    
+    <button (click)="aggiungiCamera()">Aggiungi Camera</button>
+   </div>
+
+   <div *ngIf="camereInserite.length > 0">
+    <h4>Camere Inserite:</h4>
+    <ul>
+      <li *ngFor="let camera of camereInserite">
+        Categoria: {{ camera.categoria }}, Disponibilità: {{ camera.disponibilita }}, Descrizione: {{ camera.descrizione }}, Capienza: {{ camera.capienza }}
+      </li>
+    </ul>
+  </div>
+   
+   <button (click)="inviaCamere()">Invia Camere</button>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Chiudi</button>
+  </div>

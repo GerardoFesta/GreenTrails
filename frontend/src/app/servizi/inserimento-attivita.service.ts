@@ -12,6 +12,6 @@ export class InserimentoAttivitaService {
   apriDialog() {
     const dialogRef =
       this.dialog.open(InserimentoAttivitaComponent, { width: '100%' })
-
   }
+  
 }

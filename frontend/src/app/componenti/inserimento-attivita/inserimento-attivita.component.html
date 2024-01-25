@@ -198,13 +198,13 @@
     </mat-form-field>
   <!--Prezzo-->
     <mat-icon>money</mat-icon>
-        <mat-form-field appearance="outline" style= "width: 150px;">
-          <mat-label>Prezzo</mat-label>
-          <input formControlName="prezzo" matInput placeholder="xx.xx" />
-          <mat-error *ngIf="inserimento.get('prezzo')?.hasError('required')">
-            Campo obbligatorio
-          </mat-error>
-        </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 150px;">
+      <mat-label>Prezzo</mat-label>
+      <input formControlName="costo" matInput placeholder="xx.xx" />
+      <mat-error *ngIf="inserimento.get('costo')?.hasError('required')">
+        Campo obbligatorio
+      </mat-error>
+    </mat-form-field>
         <mat-icon>euro</mat-icon>
     </div>
 </div>

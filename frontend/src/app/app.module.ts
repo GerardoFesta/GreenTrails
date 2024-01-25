@@ -63,6 +63,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
+import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/
     MapComponent,
     RegistrazioneComponent,
     InserimentoAttivitaComponent,
+    PopUpAlloggioComponent,
 
   ],
   imports: [
