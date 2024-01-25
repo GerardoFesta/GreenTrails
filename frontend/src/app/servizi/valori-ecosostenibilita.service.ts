@@ -24,9 +24,9 @@ export class ValoriEcosostenibilitaService {
       .set('limiteEmissioneCO2', limiteEmissioneCO2)
       .set('contattoConNatura', contattoConNatura);
 
-    const headers = new HttpHeaders({
-      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
-    });
+      const headers = new HttpHeaders({
+        Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+      });
 
     return this.http.post<any>(`${this.baseUrl}`, params, { headers });
   }
@@ -48,5 +48,14 @@ export class ValoriEcosostenibilitaService {
     });
 
     return this.http.post<any>(`${this.baseUrl}/${id}`, params, { headers });
+  }
+
+  visualizzaValoriById(idValori: number){
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
+    });
+    const url = `${this.baseUrl}/attivita/${idValori}/valoriEcosostenibilita`;
+    return this.http.get(url, {headers});
+    
   }
 }

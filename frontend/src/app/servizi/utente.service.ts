@@ -30,7 +30,6 @@ login(email: String, password: String ): Observable<any> {
       this.isLogged = true;
       console.log('Login successful:', response);
 
-      // Save user data in a cookie
       this.cookieService.set('user', JSON.stringify(response.data));
       this.cookieService.set('credenziali', JSON.stringify(base64credential));
       this.cookieService.set('userId', (response.data.id));

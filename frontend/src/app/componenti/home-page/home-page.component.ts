@@ -26,7 +26,7 @@ export class HomePageComponent implements OnInit {
     private attivitaService: AttivitaService,
     private route: ActivatedRoute,
     private uploadService: UploadService,
-    private router: Router, // Add this line to include the Router
+    private router: Router, 
 
     private cookieService: CookieService ){}
       
@@ -38,7 +38,7 @@ export class HomePageComponent implements OnInit {
         this.loadDataForAlloggi(5),
         this.loadDataForAttivitaTuristiche(5)
       ]).then(() => {
-        this.filterByPrezzo(); // Call the filter method after loading data
+        this.filterByPrezzo(); 
       });
     
     }
@@ -83,7 +83,6 @@ export class HomePageComponent implements OnInit {
   
             this.attivitaPerPrezzoList.push(...newAttivita);
   
-            // Iterate over results and set a cookie for each prezzo
             newAttivita.forEach((item: { id: any; prezzo: { toString: () => any; }; }) => {
               this.cookieService.set(`prezzo_${item.id}`, item.prezzo.toString());
             });
@@ -94,13 +93,12 @@ export class HomePageComponent implements OnInit {
             });
           } else {
             console.error("Unexpected API response structure:", result);
-            resolve(); // or reject(error) based on your error handling strategy
+            resolve(); 
           }
         },
         (error) => {
           console.error("Error fetching AttivitaPerPrezzo:", error);
-          // Handle error here, display a user-friendly message, etc.
-          resolve(); // or reject(error) based on your error handling strategy
+          resolve();
         }
       );
     });
@@ -139,7 +137,6 @@ export class HomePageComponent implements OnInit {
           if (listaFiles.data.length > 0) {
             const fileNames = listaFiles.data;
             const imageUrlsForItem: string[] = [];  
-
             const filePromises = fileNames.map((fileName: string) => {
               return new Promise<void>((fileResolve) => {
                 this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
@@ -152,7 +149,6 @@ export class HomePageComponent implements OnInit {
                 });
               });
             });
-
             Promise.all(filePromises).then(() => {
               this.imageUrls[item.id] = [...imageUrlsForItem];
               resolve();

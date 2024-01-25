@@ -71,6 +71,7 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { GestioneValoriComponent } from './gestione-valori/gestione-valori.component';
 
+import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { GestioneValoriComponent } from './gestione-valori/gestione-valori.compo
     VideoDialogComponent,
     HomePageComponent,
     GestionePrenotazioniAttiveComponent,
+    PopupsegnalazioneComponent,
     GestioneValoriComponent,
   ],
   imports: [

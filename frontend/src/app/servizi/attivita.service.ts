@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { Observable, catchError } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';

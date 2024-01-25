@@ -3,8 +3,8 @@
     <!-- Container header card-attivita -->
     <mat-card-header class="card-section">
         <!-- Container titolo attivita con pulsante segnalazione -->
-        <mat-card-title style="font-weight: bold;">
-            <button mat-icon-button aria-label="report_attivita_button" matTooltip="Segnala attività" matTooltipPosition="left">
+        <mat-card-title>
+            <button mat-icon-button aria-label="report_attivita_button" matTooltip="Segnala attività" matTooltipPosition="left" (click)="apriSegnalazione()">
                 <mat-icon style="color: red;">report_problem</mat-icon>
             </button>
             {{ nomeAttivita }}
