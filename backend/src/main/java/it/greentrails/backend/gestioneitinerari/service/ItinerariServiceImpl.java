@@ -25,7 +25,7 @@ public class ItinerariServiceImpl implements ItinerariService {
   private final PrenotazioneAttivitaTuristicaService prenotazioneAttivitaTuristicaService;
   private final PrenotazioneAlloggioRepository prenotazioneAlloggioRepository;
   private final PrenotazioneAttivitaTuristicaRepository prenotazioneAttivitaTuristicaRepository;
-  private final GestioneItinerariAdapter gestioneItinerariStubAdapter;
+  private final ItinerariAdapter itinerariStubAdapter;
 
   @Override
   public Itinerario saveItinerario(Itinerario itinerario) throws Exception {
@@ -41,7 +41,7 @@ public class ItinerariServiceImpl implements ItinerariService {
     if (preferenze == null) {
       throw new Exception("Le preferenze sono vuote.");
     }
-    return gestioneItinerariStubAdapter.pianificazioneAutomatica(preferenze);
+    return itinerariStubAdapter.pianificazioneAutomatica(preferenze);
   }
 
   @Override

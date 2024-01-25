@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 // TODO: inserire integrazione modulo AI
 @Service
-public class GestioneItinerariAiAdapter implements GestioneItinerariAdapter {
+public class ItinerariAiAdapter implements ItinerariAdapter {
 
   @Override
   public Itinerario pianificazioneAutomatica(Preferenze preferenze) {

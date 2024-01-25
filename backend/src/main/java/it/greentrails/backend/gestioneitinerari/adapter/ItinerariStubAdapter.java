@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GestioneItinerariStubAdapter implements GestioneItinerariAdapter {
+public class ItinerariStubAdapter implements ItinerariAdapter {
 
   private final AttivitaRepository attivitaRepository;
   private final CameraRepository cameraRepository;
