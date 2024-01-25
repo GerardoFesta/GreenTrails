@@ -1,14 +1,18 @@
+import { PrenotazioniAttivitaTuristicheService } from './../../servizi/prenotazioni-attivita-turistiche.service';
+import { PrenotazioniAlloggiService } from './../../servizi/prenotazioni-alloggi.service';
+import { CookieService } from 'ngx-cookie-service';
 
 import { MatDateFormats } from '@angular/material/core';
 import { DateSelectionModelChange } from '@angular/material/datepicker';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { $localize } from '@angular/localize/init';
 import { Component, ViewChild } from '@angular/core';
 
 
 export interface Prenotazione {
+  id: number;
   stato: String;
   nome: String;
   check_in: Date;
@@ -18,6 +22,7 @@ export interface Prenotazione {
   prezzo: number;
 }
 
+/*
 const Prenotazione: Prenotazione[] = [
   { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
   { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
@@ -50,6 +55,7 @@ const Prenotazione: Prenotazione[] = [
   { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
   { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
 ];
+*/
 
 @Component({
   selector: 'app-gestione-prenotazioni-attive',
@@ -68,6 +74,14 @@ export class GestionePrenotazioniAttiveComponent {
   nextPageLabel = 'Next page';
   previousPageLabel = 'Previous page';
 
+  prenotazione: Prenotazione[] = [];
+
+  constructor(
+    private cookie: CookieService,
+    private prenotazioniAlloggiService: PrenotazioniAlloggiService,
+    private prenotazioniAttivitaTurService: PrenotazioniAttivitaTuristicheService,
+  ) { }
+
   getRangeLabel(page: number, pageSize: number, length: number): string {
     if (length === 0) {
       return $localize`Page 1 of 1`;
@@ -80,24 +94,40 @@ export class GestionePrenotazioniAttiveComponent {
 
   displayedColumns: string[] = ['stato', 'nome', 'check-in', 'check-out', 'bambini', 'adulti', 'prezzo', "actions"];
   Prenotazione: any;
-  dataSource = new MatTableDataSource<Prenotazione>(Prenotazione.slice(0, 10));
+  dataSource = new MatTableDataSource<Prenotazione>();
 
   showActiveOnly: boolean = false;
+  idVisitatore: string = '';
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-
-
-  onDelete(prenotazione: Prenotazione) {
-    console.log(`Deleting: ${prenotazione.nome}`);
-  }
   ngOnInit() {
-    this.updatePaginatedData();
-  }
+    const idVisitatoreFromCookie = this.cookie.get('idVisitatore');
   
+      if (idVisitatoreFromCookie) {
+        this.idVisitatore = idVisitatoreFromCookie;
+        console.log('Id visitatore', this.idVisitatore);
+  
+        this.getPrenotazioni();
+      } else {
+        console.error('idVisitatore not found in the cookie');
+      }
+  }
+
+  getPrenotazioni(){
+    const prenotazioniAlloggi$ = this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore(this.idVisitatore);
+    const prenotazioniAttivita$ = this.prenotazioniAttivitaTurService.getPrenotazioniAttivitaTuristicaVisitatore(this.idVisitatore);
+    forkJoin([prenotazioniAlloggi$, prenotazioniAttivita$]).subscribe(([prenotazioniAlloggi, prenotazioniAttivita]) =>{
+      const prenotazioni = [...prenotazioniAlloggi, ...prenotazioniAttivita];
+      prenotazioni.sort((a, b) => a.check_in.getTime() - b.check_in.getTime());
+      this.dataSource.data = prenotazioni;
+      this.updatePaginatedData();
+    });
+  }
+    
 
 
   get slicedData() {
@@ -106,7 +136,7 @@ export class GestionePrenotazioniAttiveComponent {
     return this.dataSource.data.slice(startIndex, endIndex);
   }
 
-  length = Prenotazione.length;
+  length = this.dataSource.data.length;
   pageSize = 10;
   pageIndex = 0;
 
@@ -122,12 +152,26 @@ export class GestionePrenotazioniAttiveComponent {
   updatePaginatedData() {
     const startIndex: number = this.pageIndex * this.pageSize;
     const endIndex: number = startIndex + this.pageSize;
-    this.dataSource.data = Prenotazione.slice(startIndex, endIndex);
+    this.dataSource.data = this.dataSource.data.slice(startIndex, endIndex);
   }
   get filteredData() {
     const filteredData = this.showActiveOnly
       ? this.dataSource.data.filter(prenotazione => prenotazione.stato.toLowerCase() === 'attivo')
       : this.dataSource.data;
     return filteredData;
+  }
+
+  onDelete(prenotazione: Prenotazione){
+    if(prenotazione.stato.toLowerCase() === 'attivo'){
+      this.prenotazioniAlloggiService.deletePrenotazioneAlloggio(prenotazione.id).subscribe(
+        () => {
+          this.getPrenotazioni();
+    });
+    } else {
+      this.prenotazioniAttivitaTurService.deletePrenotazioneAttivitaTuristica(prenotazione.id).subscribe(
+        () => {
+          this.getPrenotazioni();
+        });
+    }
   }
 }

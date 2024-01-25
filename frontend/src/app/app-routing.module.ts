@@ -11,6 +11,7 @@ const routes: Routes = [
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
   {path: '', component: GestionePrenotazioniAttiveComponent},
   {path: 'homepage', component: HomePageComponent},
+  {path: 'login', component: LoginComponent}
 
 ];
 
