@@ -83,10 +83,10 @@ export class HomePageComponent implements OnInit {
             const newAttivita = result.data;
             console.log("New Attivita from API:", newAttivita);
   
-            const filteredAttivita = this.filterByDisponibilita(newAttivita);
-    
+            const filteredAttivita = newAttivita.filter((item: { id: any; prezzo: number; }) => item.prezzo < 300);
+  
             this.attivitaPerPrezzoList.push(...filteredAttivita);
-    
+  
             this.processMediaFiles().then(() => {
               console.log("Data loaded for AttivitaPerPrezzo:", this.attivitaPerPrezzoList);
               resolve();
@@ -107,7 +107,7 @@ export class HomePageComponent implements OnInit {
     return new Promise<void>((resolve) => {
       this.attivitaService.getAlloggi(limite).subscribe((result) => {
         const newAlloggi = result.data;
-        this.alloggiList.push(...this.filterByDisponibilita(newAlloggi));
+        this.alloggiList.push(...newAlloggi);
         resolve();
       });
     });
@@ -117,13 +117,11 @@ export class HomePageComponent implements OnInit {
     return new Promise<void>((resolve) => {
       this.attivitaService.getAttivitaTuristiche(limite).subscribe((result) => {
         const newAttivitaTuristiche = result.data;
-        this.attivitaTuristicheList.push(...this.filterByDisponibilita(newAttivitaTuristiche));
+        this.attivitaTuristicheList.push(...newAttivitaTuristiche);
         resolve();
       });
     });
   }
-  
-  
   private processMediaFiles(): Promise<void[]> {
     const allItems = [
       ...this.attivitaList,
@@ -166,14 +164,11 @@ export class HomePageComponent implements OnInit {
     return Promise.all(promises);
   }
   private filterByPrezzo(): void {
-    this.filteredAttivitaPerPrezzoList = this.filterByDisponibilita(this.attivitaPerPrezzoList)
-      .filter((item: { prezzo: number }) => item.prezzo < 300);
+    this.filteredAttivitaPerPrezzoList = this.attivitaPerPrezzoList.filter((item: { prezzo: number }) => {
+      return item.prezzo < 300;
+    });
     console.log("Filtered List:", this.filteredAttivitaPerPrezzoList);
   }
-  private filterByDisponibilita(items: any[]): any[] {
-    return items.filter((item: { disponibilita: number }) => item.disponibilita > 0);
-  }
-  
   shuffleArray(array: any[]): any[] {
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
