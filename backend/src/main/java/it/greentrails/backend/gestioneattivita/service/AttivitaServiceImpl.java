@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class AttivitaServiceImpl {
+public class AttivitaServiceImpl implements AttivitaService {
 
   private final AttivitaRepository repository;
 
+  @Override
   public Attivita saveAttivita(Attivita attivita) throws Exception {
     if (attivita == null) {
       throw new Exception("L'attività è vuota.");
@@ -22,6 +23,7 @@ public class AttivitaServiceImpl {
     return repository.save(attivita);
   }
 
+  @Override
   public Attivita findById(Long id) throws Exception {
     if (id == null || id < 0) {
       throw new Exception("L'id non è valido.");
@@ -33,6 +35,7 @@ public class AttivitaServiceImpl {
     return attivita.get();
   }
 
+  @Override
   public List<Attivita> findAllAttivitaByGestore(Long idGestore) throws Exception {
     if (idGestore == null || idGestore < 0) {
       throw new Exception("L'id non è valido.");
@@ -40,18 +43,21 @@ public class AttivitaServiceImpl {
     return repository.findByGestore(idGestore, Pageable.unpaged()).toList();
   }
 
+  @Override
   public Optional<Attivita> findByValori(ValoriEcosostenibilita valoriEcosostenibilita)
-      throws Exception {
+          throws Exception {
     if (valoriEcosostenibilita == null) {
       throw new Exception("I valori sono vuoti.");
     }
     return repository.findByValori(valoriEcosostenibilita.getId());
   }
 
+  @Override
   public List<Attivita> getAttivitaTuristicheEconomiche(int limite) {
     return repository.getAllByPrezzo(Pageable.ofSize(limite)).toList();
   }
 
+  @Override
   public boolean deleteAttivita(Attivita attivita) throws Exception {
     if (attivita == null) {
       throw new Exception("L'attività è vuota.");
@@ -59,6 +65,21 @@ public class AttivitaServiceImpl {
     repository.delete(attivita);
     repository.flush();
     return repository.findById(attivita.getId()).isEmpty();
+  }
+
+  @Override
+  public List<Attivita> getAttivitaTuristiche(int limite) {
+    return  repository.getAttivitaTuristiche(Pageable.ofSize(limite)).toList();
+  }
+
+  @Override
+  public List<Attivita> getAlloggi(int limite) {
+    return  repository.getAlloggi(Pageable.ofSize(limite)).toList();
+  }
+
+  @Override
+  public List<Attivita> findAll() {
+    return repository.findAll();
   }
 
 
