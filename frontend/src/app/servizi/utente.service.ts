@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of, tap } from 'rxjs';
 
@@ -49,4 +49,34 @@ logout(): Observable<any> {
 isLoggedInUser(): boolean {
   return this.isLogged;
 }
+
+invioQuestionario(
+  viaggioPreferito: any,
+  alloggioPreferito:any,
+  attivitaPreferita:any,
+  preferenzaAlimentare:any,
+  animaleDomestico:any,
+  budgetPreferito:any,
+  souvenir:any,
+  stagioniPreferite:any
+   ): Observable<any> {
+    const email = 'e@g.b';
+    const password = 'qwerty123!';
+    const base64credential = btoa(email + ":" + password);
+    const headers = ({Authorization: 'Basic ' + base64credential} );
+
+    const params = new HttpParams()
+    .set('viaggioPreferito', viaggioPreferito)
+    .set('alloggioPreferito', alloggioPreferito)
+    .set('attivitaPreferita', attivitaPreferita)
+    .set('preferenzaAlimentare', preferenzaAlimentare)
+    .set('animaleDomestico' , animaleDomestico)
+    .set('budgetPreferito', budgetPreferito)
+    .set('souvenir', souvenir)
+    .set('stagioniPreferite', stagioniPreferite)
+
+    return this.http.post<any>(`${this.url}/questionario`,params, {headers});
+   }
+
+
 }
