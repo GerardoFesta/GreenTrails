@@ -31,7 +31,7 @@ export class RisultatiComponent implements OnInit {
   }
 
   visualizzaMappa() {
-    this.map = L.map('map').setView([40.6824408, 14.7680961], 5);
+    this.map = L.map('map').setView([40.6824408, 14.7680961], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 20,
       attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
