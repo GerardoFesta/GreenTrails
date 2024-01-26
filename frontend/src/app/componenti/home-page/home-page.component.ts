@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { UploadService } from 'src/app/servizi/upload.service';
+import { UtenteService } from 'src/app/servizi/utente.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,6 +11,7 @@ import { UploadService } from 'src/app/servizi/upload.service';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
+
   attivitaList: any[] = [];
   fileNames: string[] = [];
   imageUrls: string[][] = [];
@@ -26,8 +28,8 @@ export class HomePageComponent implements OnInit {
     private attivitaService: AttivitaService,
     private route: ActivatedRoute,
     private uploadService: UploadService,
-    private router: Router, // Add this line to include the Router
-
+    private router: Router, 
+    private userService: UtenteService,
     private cookieService: CookieService ){}
       
   
@@ -185,5 +187,17 @@ export class HomePageComponent implements OnInit {
 
   navigateToAttivita(id: number): void {
     this.router.navigate(['/attivita', id]);
+  }
+  logout() {
+    this.userService.logout().subscribe(
+      (response) => {
+        console.log('Logout eseguito con successo:', response);
+        // Aggiungi qui la logica aggiuntiva, se necessario
+      },
+      (error) => {
+        console.error('Errore durante il logout:', error);
+        // Gestisci l'errore se necessario
+      }
+    );
   }
 }

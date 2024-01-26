@@ -1,9 +1,10 @@
 import { UtenteService } from './../../servizi/utente.service';
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { PopupErrorPassComponent } from './popup-errorPass/popup-errorPass.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,9 @@ email= new FormControl('')
 password= new FormControl('')
 
 
-  constructor(private utenteService: UtenteService, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router, private cookieService: CookieService) {
+  constructor(private utenteService: UtenteService,
+     private fb: FormBuilder, 
+     private dialog: MatDialog, private router: Router, private cookieService: CookieService) {
     this.loginForm = this.fb.group({
       email: [''],
       password: ['']
@@ -35,40 +38,35 @@ password= new FormControl('')
       this.utenteService.login(email, password).subscribe(
         (response: any) => {
           console.log('Login avvenuto con successo:', response);
-          this.mostraMessaggio('Bentornato');
-
+          this.openPopup("Bentornato!");
           if (response && response.status === 'success') {
             if (response.data.ruolo) {
-              this.router.navigate(['']);
+              this.router.navigate(['/home']);
             } else {
-              this.router.navigate(['/registrazione']);
+              this.router.navigate(['/home']);
             }
           } else {
             console.error('La risposta dal servizio non è valida:', response);
-            this.mostraMessaggio('Email o Password errate');
+            this.openPopup('Email o Password errate');
           }
         },
         (error: any) => {
           console.error('Errore durante il login:', error);
           if (error.status === 401) {
-            this.mostraMessaggio('Email o password errate');
+            this.openPopup('Email o password errate');
           }
         }
       );
     } else {
-      this.mostraMessaggio('Email o password errate');
+      this.openPopup('Email o password errate');
     }
   }
 
   click() {
-    this.mostraMessaggio("Ti abbiamo inviato una mail. Controlla la posta elettronica e segui le istruzioni per cambiare la password");
+    this.openPopup("Ti abbiamo inviato una mail. Controlla la posta elettronica e segui le istruzioni per cambiare la password");
   }
 
-  mostraMessaggio(messaggio: string, errore: boolean = false) {
-    this.snackBar.open(messaggio, 'Chiudi', {
-      duration: 5000
-    });
-  }
+
 
   onLogoutClick(): void {
     this.utenteService.logout().subscribe(
@@ -79,6 +77,20 @@ password= new FormControl('')
         console.error('Error during logout:', error);
       }
     );
+  }
+  openPopup(message: string): void {
+    const dialogRef = this.dialog.open(PopupErrorPassComponent, {
+      width: '250px',
+      data: { message },
+      disableClose: true,
+    });
+    setTimeout(() => {
+      dialogRef.close(); // Close the dialog
+    }, 2000);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Il popup è stato chiuso');
+    });
   }
 }
 

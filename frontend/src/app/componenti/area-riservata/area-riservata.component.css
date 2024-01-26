@@ -1,0 +1,26 @@
+.corpo{
+    display:flex;
+    background-color:cyan;
+    width:100%;
+    height:100%;
+}
+.dati{
+    height:100%;
+    width:20%;
+    background-color:brown;
+    display:flex;
+    flex-direction:column;
+}
+.elementi{
+    height:100%;
+    width:60%;
+    background-color: azure;
+    display:flex;
+    flex-direction:column;
+
+}
+.vuoto{
+    background-color:violet;
+    height:100%;
+    width:20%;
+}

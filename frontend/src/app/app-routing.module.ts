@@ -5,12 +5,19 @@ import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-att
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
 
 const routes: Routes = [
   { path: 'registrazione', component: RegistrazioneComponent },
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
-  {path: '', component: GestionePrenotazioniAttiveComponent},
-  {path: 'homepage', component: HomePageComponent},
+  {path: 'tabellaP', component: GestionePrenotazioniAttiveComponent},
+  {path: 'home', component: HomePageComponent},
+  {path: 'tabellaP', component: GestionePrenotazioniAttiveComponent},
+  {path: 'login', component: LoginComponent},
+  {path: '', component: AreaRiservataComponent},
+
+
+
 
 ];
 

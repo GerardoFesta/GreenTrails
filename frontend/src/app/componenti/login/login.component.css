@@ -17,7 +17,9 @@
     padding-top: 10px;
     padding-bottom: 10px; 
   }
-
+  .underline-link {
+    text-decoration: underline;
+  }
   .error-message {
     color: red; 
     font-size: 0.9em; 

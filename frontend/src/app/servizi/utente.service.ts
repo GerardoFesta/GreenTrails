@@ -47,9 +47,17 @@ login(email: String, password: String ): Observable<any> {
 logout(): Observable<any> {
   this.isLogged = false;
 
-  this.cookieService.delete('user');
+  const allCookies = this.cookieService.getAll();
+    
+    for (const cookieName in allCookies) {
+      if (allCookies.hasOwnProperty(cookieName)) {
+        this.cookieService.delete(cookieName);
+      }
+    }
 
-  return of({ success: true });
+    return of({ success: true });
+  
+
 }
 
 isLoggedInUser(): boolean {
