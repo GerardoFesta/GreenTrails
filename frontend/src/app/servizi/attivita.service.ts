@@ -1,8 +1,7 @@
-import { CookieService } from 'ngx-cookie-service';
 import { Observable, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { CookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root'
 })
@@ -60,7 +59,6 @@ export class AttivitaService {
     return this.http.delete(`${this.baseUrl}/${id}`, {headers});
   }
 
-
   inserimentoAttivita(dati: any): Observable<any> {
 
     let params = new HttpParams();
@@ -81,7 +79,4 @@ export class AttivitaService {
   }
 
  
-
-
-
 }

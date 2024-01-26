@@ -7,7 +7,7 @@ import it.greentrails.backend.entities.PrenotazioneAlloggio;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.CameraService;
-import it.greentrails.backend.gestioneitinerari.service.GestioneItinerariService;
+import it.greentrails.backend.gestioneitinerari.service.ItinerariService;
 import it.greentrails.backend.gestioneprenotazioni.service.PrenotazioneAlloggioService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
 import java.time.Duration;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PrenotazioneAlloggioController {
 
-  private final GestioneItinerariService gestioneItinerariService;
+  private final ItinerariService itinerariService;
   private final AttivitaService attivitaService;
   private final CameraService cameraService;
   private final PrenotazioneAlloggioService prenotazioneAlloggioService;
@@ -48,7 +48,7 @@ public class PrenotazioneAlloggioController {
       @RequestParam("numCamere") final int numCamere
   ) {
     try {
-      Itinerario itinerario = gestioneItinerariService.findById(idItinerario);
+      Itinerario itinerario = itinerariService.findById(idItinerario);
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,
             "Itinerario non trovato");
@@ -80,7 +80,7 @@ public class PrenotazioneAlloggioController {
       prenotazioneAlloggio = prenotazioneAlloggioService.savePrenotazioneAlloggio(camera,
           prenotazioneAlloggio);
       itinerario.setTotale(prezzo + itinerario.getTotale());
-      gestioneItinerariService.saveItinerario(itinerario);
+      itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK, prenotazioneAlloggio);
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
@@ -175,7 +175,7 @@ public class PrenotazioneAlloggioController {
       }
       Itinerario itinerario = prenotazioneAlloggio.getItinerario();
       itinerario.setTotale(itinerario.getTotale() - prenotazioneAlloggio.getPrezzo());
-      gestioneItinerariService.saveItinerario(itinerario);
+      itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK,
           prenotazioneAlloggioService.deletePrenotazioneAlloggio(prenotazioneAlloggio));
     } catch (Exception e) {

@@ -1,6 +1,6 @@
-import { InserimentoAttivitaService } from './servizi/inserimento-attivita.service';
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -9,16 +9,6 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AppComponent {
   title = 'frontend';
-  
 
-  
-  constructor(public dialog: MatDialog, private InserimentoAttivitaService: InserimentoAttivitaService){
-
-  
-  }
-
-  openDialog() {
-    this.InserimentoAttivitaService.apriDialog();
-  }
-
+  constructor(public router: Router) {}
 }

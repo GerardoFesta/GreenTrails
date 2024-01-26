@@ -16,16 +16,22 @@
     /* background-color: blueviolet; */
 }
 
-/* Container lista valori-ecosostenibilita */
 .lista-eco-container {
-    background-color: rgba(221, 221, 221, 0.504);
-    width: 100%;
-    border: 5px solid lightgreen;
-    max-width: 100%;
-    border-radius: 20px;
-    box-shadow: 7px 7px 5px #dedede;
-    max-height: 200px;
+  background-color: rgba(221, 221, 221, 0.504);
+  width: 100%;
+  border: 5px solid lightgreen;
+  max-width: 100%;
+  border-radius: 20px;
+  box-shadow: 7px 7px 5px #dedede;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+/* Container lista valori-ecosostenibilita */
+.lista-eco {
     overflow-y: auto;
+    max-height: 200px;
+    padding-bottom: 5px;
 }
 /* Elemento della lista */
 mat-list-item {
@@ -42,16 +48,17 @@ mat-list-item {
   
   /* Traccia scrollbar */
   ::-webkit-scrollbar-track {
-    background: #f1f8e9; /* HEX: #f1f8e9, RGB: (241, 248, 233) */
+    background: #f1f8e9; 
   }
    
   /* Maniglia scrollbar */
   ::-webkit-scrollbar-thumb {
-    background: #dcedc8; /* HEX: #dcedc8, RGB: (220, 237, 200) */
+    background: #dcedc8; 
   }
   
   /* Maniglia della scrollbar al passaggio del mouse */
   ::-webkit-scrollbar-thumb:hover {
-    background: #c5e1a5; /* HEX: #c5e1a5, RGB: (197, 225, 165) */
+    background: #c5e1a5;   
   }
+
   
