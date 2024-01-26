@@ -72,6 +72,7 @@ import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-preno
 import { GestioneValoriComponent } from './gestione-valori/gestione-valori.component';
 
 import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
+import { PopupComponent } from './gestione-valori/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     GestionePrenotazioniAttiveComponent,
     PopupsegnalazioneComponent,
     GestioneValoriComponent,
-    PopupsegnalazioneComponent
+    PopupsegnalazioneComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,

@@ -44,8 +44,7 @@
             </div>
           </mat-card-content>
           <div class="button">
-            <!-- Pulsante prenotazione -->
-            <button mat-raised-button color="primary" style="margin-top: 20px; color: white; background-color: #32CD32; margin-right:100px;">Annulla</button>
+            <button type="button" mat-raised-button color="primary" style="margin-top: 20px; color: white; background-color: #32CD32; margin-right:100px;" (click)="rollbackChanges()">Annulla</button>
             <button mat-raised-button color="primary" style="margin-top: 20px; color: white; background-color: #32CD32; margin-left:100px" type="submit" [disabled]="!moduloEcosostenibilita.valid">Modifica</button>
           </div>
         </mat-card-header>

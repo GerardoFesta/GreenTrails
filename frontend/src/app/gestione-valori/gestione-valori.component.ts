@@ -5,9 +5,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { ValoriEcosostenibilitaService } from '../servizi/valori-ecosostenibilita.service';
 import { NgForm } from '@angular/forms';
 import { UploadService } from '../servizi/upload.service';
-import { SuccessPopupComponent } from './success-popup/success-popuo.component';
-import { ErrorPopupComponent } from './errorPopup/errorPopup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PopupComponent } from './popup/popup.component';
 
 
 @Component({
@@ -152,7 +151,7 @@ updateSubmit() {
       return;
     }
     if (!this.changesMade) {
-      this.openErrorPopup('Nessuna modifica effettuata.');
+      this.openPopup('Nessuna modifica effettuata.');
       return;  // Stop further execution
     }
   
@@ -176,7 +175,7 @@ updateSubmit() {
       (response) => {
         // Gestisci la risposta in base alle tue esigenze
         console.log('Modifica effettuata con successo', response);
-        this.openSuccessPopup();
+        this.openPopup("Modifica effettuata con successo");
 
         
       },
@@ -193,21 +192,20 @@ updateSubmit() {
 
   if (changesDetected) {
     this.valoriEcosostenibilitaSelected = { ...this.originalValoriEcosostenibilitaSelected };
-    this.changesMade = false; // Reset changes
+    this.changesMade = false;
   }
 }
 
   //i popup
-  openErrorPopup(message: string): void {
-    this.dialog.open(ErrorPopupComponent, {
-      width: '300px', 
-      data: { message } 
+  openPopup(message: string): void {
+    const dialogRef = this.dialog.open(PopupComponent, {
+      width: '250px',
+      data: { message },
+      disableClose: true,
     });
-  }
 
-  openSuccessPopup(): void {
-    this.dialog.open(SuccessPopupComponent, {
-      width: '300px',
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Il popup è stato chiuso');
     });
   }
 
