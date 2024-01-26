@@ -45,7 +45,7 @@ public class RicercaController {
           .filter(risultati::contains)
           .collect(Collectors.toList());
     }
-    if (latitudine != null && longitudine != null && raggio != null) {
+    if (coordinate != null && raggio != null) {
       risultati = ricercaService.findAttivitaByPosizione(coordinate, raggio)
           .stream()
           .filter(risultati::contains)
