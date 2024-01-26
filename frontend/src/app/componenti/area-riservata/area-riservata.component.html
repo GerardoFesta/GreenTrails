@@ -1,6 +1,33 @@
 <div class="corpo">
     <div class="dati">
+<mat-card class="example-card">
+    <img src="https://cdn.icon-icons.com/icons2/212/PNG/256/User-green256_25015.png" alt="User Image" style="max-width: 100%; height:70%;">
 
+    <mat-card-header class="card-section">
+        <mat-card-content>
+            <mat-card-title style="width: 100%; " >
+            </mat-card-title>
+            <div class="lista-container">
+                <!-- Lista dati utente -->
+                <div class="lista-dati">
+                    <!-- Lista dati-->
+                    <mat-list role="list">
+                        <!-- Elemento della lista -->
+                        <mat-list-item role="listitem" *ngIf="userData">
+                            <div class="list">
+                            <p><strong>Nome:</strong> {{ userData.nome }}</p>
+                             <p><strong>Cognome:</strong> {{ userData.cognome }}</p>
+                            <p><strong>Data di Nascita:</strong> {{ userData.dataNascita | date: 'dd/MM/yyyy' }}</p>
+                            <p><strong>Email:</strong> {{ userData.email }}</p>
+                        </div>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </div>
+        </mat-card-content>       
+    </mat-card-header>
+</mat-card>
+  
     </div>
     <div class="elementi">
     </div>

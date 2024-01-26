@@ -7,9 +7,10 @@
 .dati{
     height:100%;
     width:20%;
-    background-color:brown;
+    /* background-color:brown; */
     display:flex;
     flex-direction:column;
+ 
 }
 .elementi{
     height:100%;
@@ -19,8 +20,87 @@
     flex-direction:column;
 
 }
+.data{
+    display:flex;
+    flex-direction:column;
+}
 .vuoto{
     background-color:violet;
     height:100%;
     width:20%;
 }
+
+
+.list
+{
+    display:flex;
+    flex-direction:column;
+    height:200px;
+    margin-top:100%;
+}
+/* Container card valori-ecosostenibilita */
+.example-card {
+    background-color: transparent;
+    color: black;
+    border: none;
+    box-shadow: none;
+    height:70%;
+    display:flex;
+    flex-direction:column;
+ 
+}
+
+/* Classe che viene assegnata all'header */
+.card-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ align-content:center;  
+ height:100%;
+}
+
+.lista-container {
+  background-color: rgba(221, 221, 221, 0.504);
+  width: 100%;
+  border: 5px solid lightgreen;
+  max-width: 100%;
+  border-radius: 20px;
+  box-shadow: 7px 7px 5px #dedede;
+  height: 100%;
+}
+
+/* Container lista dati */
+.lista-dati {
+    height: 200px;
+    align-content:center;
+    justify-content:center;
+}
+/* Elemento della lista */
+mat-list-item {
+    display: flex;
+    width: 100%;
+    display: flex;
+    height:fit-content;
+    flex-wrap: wrap;;
+}
+
+/* Larghezza */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Traccia scrollbar */
+  ::-webkit-scrollbar-track {
+    background: #f1f8e9; /* HEX: #f1f8e9, RGB: (241, 248, 233) */
+  }
+   
+  /* Maniglia scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background: #dcedc8; /* HEX: #dcedc8, RGB: (220, 237, 200) */
+  }
+  
+  /* Maniglia della scrollbar al passaggio del mouse */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c5e1a5; /* HEX: #c5e1a5, RGB: (197, 225, 165) */
+  }
+  
