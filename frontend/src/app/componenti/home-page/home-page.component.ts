@@ -83,36 +83,31 @@ export class HomePageComponent implements OnInit {
             const newAttivita = result.data;
             console.log("New Attivita from API:", newAttivita);
   
-            this.attivitaPerPrezzoList.push(...newAttivita);
-  
-            // Iterate over results and set a cookie for each prezzo
-            newAttivita.forEach((item: { id: any; prezzo: { toString: () => any; }; }) => {
-              this.cookieService.set(`prezzo_${item.id}`, item.prezzo.toString());
-            });
-  
+            const filteredAttivita = this.filterByDisponibilita(newAttivita);
+    
+            this.attivitaPerPrezzoList.push(...filteredAttivita);
+    
             this.processMediaFiles().then(() => {
               console.log("Data loaded for AttivitaPerPrezzo:", this.attivitaPerPrezzoList);
               resolve();
             });
           } else {
             console.error("Unexpected API response structure:", result);
-            resolve(); // or reject(error) based on your error handling strategy
+            resolve();
           }
         },
         (error) => {
           console.error("Error fetching AttivitaPerPrezzo:", error);
-          // Handle error here, display a user-friendly message, etc.
-          resolve(); // or reject(error) based on your error handling strategy
+          resolve();
         }
       );
     });
   }
-
   private visualizzaListaAlloggi(limite: number): Promise<void> {
     return new Promise<void>((resolve) => {
       this.attivitaService.getAlloggi(limite).subscribe((result) => {
         const newAlloggi = result.data;
-        this.alloggiList.push(...newAlloggi);
+        this.alloggiList.push(...this.filterByDisponibilita(newAlloggi));
         resolve();
       });
     });
@@ -122,11 +117,13 @@ export class HomePageComponent implements OnInit {
     return new Promise<void>((resolve) => {
       this.attivitaService.getAttivitaTuristiche(limite).subscribe((result) => {
         const newAttivitaTuristiche = result.data;
-        this.attivitaTuristicheList.push(...newAttivitaTuristiche);
+        this.attivitaTuristicheList.push(...this.filterByDisponibilita(newAttivitaTuristiche));
         resolve();
       });
     });
   }
+  
+  
   private processMediaFiles(): Promise<void[]> {
     const allItems = [
       ...this.attivitaList,
@@ -169,13 +166,14 @@ export class HomePageComponent implements OnInit {
     return Promise.all(promises);
   }
   private filterByPrezzo(): void {
-    this.filteredAttivitaPerPrezzoList = this.attivitaPerPrezzoList.filter((item: any) => {
-      const prezzoCookie = this.cookieService.get(`prezzo_${item.id}`);
-      const prezzoFromCookie = parseInt(prezzoCookie, 10);
-      return prezzoFromCookie < 300;
-    });
+    this.filteredAttivitaPerPrezzoList = this.filterByDisponibilita(this.attivitaPerPrezzoList)
+      .filter((item: { prezzo: number }) => item.prezzo < 300);
     console.log("Filtered List:", this.filteredAttivitaPerPrezzoList);
   }
+  private filterByDisponibilita(items: any[]): any[] {
+    return items.filter((item: { disponibilita: number }) => item.disponibilita > 0);
+  }
+  
   shuffleArray(array: any[]): any[] {
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
