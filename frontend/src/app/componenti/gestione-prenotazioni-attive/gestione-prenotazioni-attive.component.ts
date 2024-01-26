@@ -2,13 +2,11 @@ import { PrenotazioniAttivitaTuristicheService } from './../../servizi/prenotazi
 import { PrenotazioniAlloggiService } from './../../servizi/prenotazioni-alloggi.service';
 import { CookieService } from 'ngx-cookie-service';
 
-import { MatDateFormats } from '@angular/material/core';
-import { DateSelectionModelChange } from '@angular/material/datepicker';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject } from 'rxjs';
 import { $localize } from '@angular/localize/init';
-import { ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
+import { Component,  ViewChild } from '@angular/core';
 
 
 export interface Prenotazione {
@@ -39,14 +37,14 @@ export class GestionePrenotazioniAttiveComponent {
   nextPageLabel = 'Next page';
   previousPageLabel = 'Previous page';
 
-  prenotazione: Prenotazione[] = [];
+  prenotazioniAlloggioList: any [] = [];
+  prenotazioniAttivitaTurList: any [] = [];
+  prenotazioniListaTotale: any [] = [];
 
   constructor(
     private cookie: CookieService,
     private prenotazioniAlloggiService: PrenotazioniAlloggiService,
     private prenotazioniAttivitaTurService: PrenotazioniAttivitaTuristicheService,
-    private zone: NgZone,
-    private cdr: ChangeDetectorRef,
   ) { }
 
   getRangeLabel(page: number, pageSize: number, length: number): string {
@@ -57,9 +55,7 @@ export class GestionePrenotazioniAttiveComponent {
     return $localize`Page ${page + 1} of ${amountPages}`;
   }
 
-
-
-  displayedColumns: string[] = ['stato', 'nome', 'check-in', 'check-out', 'bambini', 'adulti', 'prezzo', "actions"];
+  displayedColumns: string[] = ['stato', 'nome', 'check-in', 'check-out', 'bambini', 'adulti', 'prezzo', 'actions'];
   dataSource = new MatTableDataSource<Prenotazione>();
 
   showActiveOnly: boolean = false;
@@ -76,40 +72,51 @@ export class GestionePrenotazioniAttiveComponent {
       if (idVisitatoreFromCookie) {
         this.idVisitatore = idVisitatoreFromCookie;
         console.log('Id visitatore', this.idVisitatore);
-  
-        this.getPrenotazioni();
+
+        Promise.all([
+          this.visualizzaPrenotazioniAlloggio(),
+          this.visualizzaPrenotazioniAttivitaTur()
+        ]).then(() => {
+          console.log('prenotazioni alloggio: ', this.prenotazioniAlloggioList);
+          console.log('prenotazioni attivita turistica:', this.prenotazioniAttivitaTurList);
+          this.updatePaginatedData(); 
+      
+        });
       } else {
         console.error('idVisitatore not found in the cookie');
-      }
+      }   
   }
 
-  getPrenotazioni(){
-    const prenotazioniAlloggi$ = this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore(this.idVisitatore);
-    const prenotazioniAttivita$ = this.prenotazioniAttivitaTurService.getPrenotazioniAttivitaTuristicaVisitatore(this.idVisitatore);
-    forkJoin([prenotazioniAlloggi$, prenotazioniAttivita$]).subscribe(([prenotazioniAlloggi, prenotazioniAttivita]) => {
-      this.zone.run(() => {
-        const prenotazioniAlloggiArray = Array.isArray(prenotazioniAlloggi)
-          ? prenotazioniAlloggi as Prenotazione[]
-          : Object.values(prenotazioniAlloggi || {}) as Prenotazione[];
-        const prenotazioniAttivitaArray = Array.isArray(prenotazioniAttivita)
-          ? prenotazioniAttivita as Prenotazione[]
-          : Object.values(prenotazioniAttivita || {}) as Prenotazione[];
-  
-        console.log('Prenotazioni Alloggi:', prenotazioniAlloggi);
-        console.log('Prenotazioni Attività Turistiche:', prenotazioniAttivita);
-  
-        const prenotazioni = [...prenotazioniAlloggiArray, ...prenotazioniAttivitaArray];
-        console.log('Prenotazioni finali:', prenotazioni);
-        this.dataSource.data = prenotazioni;
-        this.updatePaginatedData();
-        this.changes.next();
-        this.cdr.detectChanges();
+  visualizzaPrenotazioniAlloggio(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore(this.idVisitatore).subscribe((result: any) => {
+        const newPrenotazioniAlloggio = Array.isArray(result) ? result: Object.values(result || {}) as Prenotazione[];
+        this.prenotazioniAlloggioList.push(...newPrenotazioniAlloggio);
+        resolve()
+      })
+    })
+  }
+
+  visualizzaPrenotazioniAttivitaTur(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.prenotazioniAttivitaTurService.getPrenotazioniAttivitaTuristicaVisitatore(this.idVisitatore).subscribe((result: any) => {
+        const newPrenotazioniAttivita = Array.isArray(result) ? result : Object.values(result || {}) as Prenotazione[];
+        this.prenotazioniAttivitaTurList.push(...newPrenotazioniAttivita);
+        resolve();
       });
     });
   }
-    
 
-
+  /*sortByData(array: any[]): any[] {
+    const sortedArray = [...array];
+    sortedArray.sort((a, b) => {
+      const dateA = new Date(a.check_in).getTime();
+      const dateB = new Date(b.check_in).getTime();
+      return dateA - dateB;
+    });
+    return sortedArray;
+  */
+  
   get slicedData() {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
@@ -123,18 +130,19 @@ export class GestionePrenotazioniAttiveComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
-    console.log('ngAfterViewInit called');
     this.paginator.page.subscribe((event: PageEvent) => {
       this.pageIndex = event.pageIndex;
       this.pageSize = event.pageSize;
       this.updatePaginatedData();
     });
   }
+
   updatePaginatedData() {
     const startIndex: number = this.pageIndex * this.pageSize;
     const endIndex: number = startIndex + this.pageSize;
     this.dataSource.data = this.dataSource.data.slice(startIndex, endIndex);
   }
+
   get filteredData() {
     const filteredData = this.showActiveOnly
       ? this.dataSource.data.filter(prenotazione => prenotazione.stato.toLowerCase() === 'attivo')
@@ -146,13 +154,14 @@ export class GestionePrenotazioniAttiveComponent {
     if(prenotazione.stato.toLowerCase() === 'attivo'){
       this.prenotazioniAlloggiService.deletePrenotazioneAlloggio(prenotazione.id).subscribe(
         () => {
-          this.getPrenotazioni();
+          this.visualizzaPrenotazioniAlloggio();
     });
     } else {
       this.prenotazioniAttivitaTurService.deletePrenotazioneAttivitaTuristica(prenotazione.id).subscribe(
         () => {
-          this.getPrenotazioni();
+          this.visualizzaPrenotazioniAttivitaTur();
         });
     }
+    console.log('Prenotazione eliminata con successo');
   }
 }

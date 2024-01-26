@@ -76,6 +76,7 @@ td.mat-footer-cell {
     padding: 10px;
     border-right: 1px;
     border-right-style: solid;
+    border: 1px transparent;
 }
 
 /* Larghezza */
@@ -100,14 +101,3 @@ td.mat-footer-cell {
     background: #c5e1a5;
     /* HEX: #c5e1a5, RGB: (197, 225, 165) */
 }
-
-.mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
-    opacity: 0.03 !important;
-    background-color: #005691!important;
-  }
-  
-  .mat-checkbox-checked.mat-accent .mat-checkbox-background,
-  .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
-    background-color: #005691;
-  }
-  
