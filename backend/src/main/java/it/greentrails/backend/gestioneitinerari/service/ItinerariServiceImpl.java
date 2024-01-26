@@ -4,7 +4,7 @@ import it.greentrails.backend.entities.Itinerario;
 import it.greentrails.backend.entities.Preferenze;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.RuoloUtente;
-import it.greentrails.backend.gestioneitinerari.adapter.GestioneItinerariAdapter;
+import it.greentrails.backend.gestioneitinerari.adapter.ItinerariAdapter;
 import it.greentrails.backend.gestioneitinerari.repository.ItinerariRepository;
 import it.greentrails.backend.gestioneprenotazioni.repository.PrenotazioneAlloggioRepository;
 import it.greentrails.backend.gestioneprenotazioni.repository.PrenotazioneAttivitaTuristicaRepository;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class GestioneItinerariService {
+public class ItinerariServiceImpl implements ItinerariService {
 
   private final ItinerariRepository repository;
   private final PrenotazioneAlloggioService prenotazioneAlloggioService;
@@ -26,6 +26,7 @@ public class GestioneItinerariService {
   private final PrenotazioneAlloggioRepository prenotazioneAlloggioRepository;
   private final PrenotazioneAttivitaTuristicaRepository prenotazioneAttivitaTuristicaRepository;
 
+  @Override
   public Itinerario saveItinerario(Itinerario itinerario) throws Exception {
     if (itinerario == null) {
       throw new Exception("L'itinerario è vuoto.");
@@ -34,14 +35,16 @@ public class GestioneItinerariService {
   }
 
 
+  @Override
   public Itinerario createByPreferenze(Preferenze preferenze) throws Exception {
     if (preferenze == null) {
       throw new Exception("Le preferenze sono vuote.");
     }
     // TODO: modificare dopo integrazione modulo AI
-    return new GestioneItinerariAdapter().pianificazioneAutomatica(preferenze);
+    return new ItinerariAdapter().pianificazioneAutomatica(preferenze);
   }
 
+  @Override
   public List<Itinerario> findItinerariByUtente(Utente utente) throws Exception {
     if (utente == null) {
       throw new Exception("L'utente è vuoto.");
@@ -52,6 +55,7 @@ public class GestioneItinerariService {
     return repository.findByVisitatore(utente.getId(), Pageable.unpaged()).toList();
   }
 
+  @Override
   public boolean deleteItinerario(Itinerario itinerario) throws Exception {
     if (itinerario == null) {
       throw new Exception("L'itinerario è vuoto.");
@@ -67,6 +71,7 @@ public class GestioneItinerariService {
     return repository.findById(itinerario.getId()).isEmpty();
   }
 
+  @Override
   public Itinerario findById(Long id) throws Exception {
     if (id == null || id < 0) {
       throw new Exception("L'id non è valido.");
