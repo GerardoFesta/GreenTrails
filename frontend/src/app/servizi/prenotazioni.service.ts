@@ -134,19 +134,19 @@ export class PrenotazioniService {
 
   }
 
-  verificaDisponibilitaAlloggio(idAttivita: number,dataInizio: any, dataFine: any):Observable<any> {
+  verificaDisponibilitaAlloggio(idCamera: number,dataInizio: any, dataFine: any):Observable<any> {
     const email = 'e@g.b';
     const password = 'qwerty123!';
     const base64credential = btoa(email + ":" + password);
     const headers = ({Authorization: 'Basic ' + base64credential} );
 
     const params = new HttpParams()
-    .set('idAttivita', idAttivita)
+    .set('idCamera', idCamera)
     .set('dataInizio', dataInizio)
     .set('dataFine', dataFine);
 
 
-    return this.http.get(`${this.baseUrl}/api/prenotazioni-alloggio/perAttivita/${idAttivita}/disponibilita`,  { params, headers });
+    return this.http.get(`${this.baseUrl}/api/prenotazioni-alloggio/perCamera/${idCamera}/disponibilita`,  { params, headers });
 
   }
 

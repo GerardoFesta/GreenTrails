@@ -22,6 +22,7 @@ export class PrenotazioniComponent implements OnInit {
 
   camereOptions: { id: number, tipoCamera: string }[] = [];
   idAttivita: number = 0;
+  idCamera: number = 0;
 
   selectFormControl = new FormControl('', [Validators.required]);
   nativeSelectFormControl = new FormControl('', [Validators.required ]);
@@ -73,7 +74,9 @@ this.prenotazioniService.getCamereDisponibili(this.idAttivita).subscribe((data) 
       const cameraId = element.id;
       const tipoCamera = element.tipoCamera;
       this.camereOptions.push({ id: cameraId, tipoCamera: tipoCamera });
+      this.idCamera = element.id
     });
+
   }
 });
   }
@@ -90,18 +93,19 @@ this.prenotazioniService.getCamereDisponibili(this.idAttivita).subscribe((data) 
 
   //VERIFICA DISPONIBILITA
   verificaDisponibilita() {
+    console.log('Camera',this.idCamera)
   const formData = {
     arrivo: this.formatDate(this.firstFormGroup.get('arrivo')?.value),
     partenza: this.formatDate(this.firstFormGroup.get('partenza')?.value), 
-    idAttivita: this.idAttivita,
+    idCamera: this.idCamera,
   };
   this.prenotazioniService.verificaDisponibilitaAlloggio(
-        this.idAttivita,
+        this.idCamera,
     formData.arrivo,
     formData.partenza).subscribe(
       (response) =>{
-        this.disponibilita = this.firstFormGroup.get('numAdulti')?.value + this.firstFormGroup.get('numBambini')?.value < response.data? 'Disponibile' : 'Non disponibile';
-        this.isDisponibile = this.firstFormGroup.get('numAdulti')?.value + this.firstFormGroup.get('numBambini')?.value < response.data? true : false;
+        this.disponibilita = this.firstFormGroup.get('numCamere')?.value < response.data? 'Disponibile' : 'Non disponibile';
+        this.isDisponibile = this.firstFormGroup.get('numCamere')?.value < response.data? true : false;
 
       })
   }
