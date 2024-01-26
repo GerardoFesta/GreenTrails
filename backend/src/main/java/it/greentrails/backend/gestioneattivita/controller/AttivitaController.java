@@ -52,8 +52,7 @@ public class AttivitaController {
       @RequestParam(value = "prezzo", required = false) final Double prezzo,
       @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
       @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
-      @RequestParam(value = "categoriaAttivitaTuristica", required = false)
-      final Integer categoriaAttivitaTuristica
+      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica
   ) {
     try {
       Utente gestore = gestioneUtenzeService.findById(utente.getId());
@@ -69,6 +68,7 @@ public class AttivitaController {
       attivita.setDescrizioneBreve(descrizioneBreve);
       attivita.setDescrizioneLunga(descrizioneLunga);
       attivita.setValoriEcosostenibilita(valoriEcosostenibilitaService.findById(idValori));
+      attivita.setPrezzo(prezzo);
       String media = UUID.randomUUID().toString();
       attivita.setMedia(media);
       archiviazioneService.store(media, immagine);
@@ -94,8 +94,7 @@ public class AttivitaController {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
               "Categoria per attività turistica non presente.");
         }
-        attivita.setCategoriaAttivitaTuristica(
-            CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
+        attivita.setCategoriaAttivitaTuristica(CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
       }
       attivita = attivitaService.saveAttivita(attivita);
       return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
@@ -116,7 +115,7 @@ public class AttivitaController {
     }
   }
 
-  @GetMapping
+  @GetMapping("g")
   private ResponseEntity<Object> visualizzaAttivitaPerGestore(
       @AuthenticationPrincipal Utente utente
   ) {
@@ -155,5 +154,25 @@ public class AttivitaController {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
   }
+  @GetMapping("alloggi")
+  private ResponseEntity<Object> getAlloggi(
+  @RequestParam(value = "limite", required = false) Integer limite
+  ) {
+    if (limite == null) {
+      limite = 5;
+    }
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+            attivitaService.getAlloggi(limite));
+  }
 
+  @GetMapping("attivitaTuristiche")
+  private ResponseEntity<Object> getAttivitaTuristiche(
+          @RequestParam(value = "limite", required = false) Integer limite
+  ) {
+    if (limite == null) {
+      limite = 5;
+    }
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+            attivitaService.getAttivitaTuristiche(limite));
+  }
 }

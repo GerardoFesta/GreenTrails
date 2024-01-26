@@ -18,5 +18,20 @@ public interface AttivitaService {
 
   List<Attivita> getAttivitaTuristicheEconomiche(int limite);
 
-  boolean deleteAttivita(Attivita attivita) throws Exception;
+  public boolean deleteAttivita(Attivita attivita) throws Exception {
+    if (attivita == null) {
+      throw new Exception("L'attività è vuota.");
+    }
+    repository.delete(attivita);
+    repository.flush();
+    return repository.findById(attivita.getId()).isEmpty();
+  }
+  public List<Attivita> getAlloggi(int limite) {
+    return  repository.getAlloggi(Pageable.ofSize(limite)).toList();
+  }
+
+  public List<Attivita> getAttivitaTuristiche(int limite) {
+    return  repository.getAttivitaTuristiche(Pageable.ofSize(limite)).toList();
+  }
+
 }

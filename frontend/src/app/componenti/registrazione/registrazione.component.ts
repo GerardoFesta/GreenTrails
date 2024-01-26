@@ -67,13 +67,17 @@ export class RegistrazioneComponent implements OnInit {
     onSubmit(){ 
 
       const isGestore: boolean = this.selected.value!
+      const emailValue: string = this.email.value !== null ? this.email.value : '';
+      const passwordValue: string = this.password.value !== null ? this.password.value : '';
+  
       const formData = {
         dataNascita: this.formatDate(this.dataNascita.value),
         nome: this.nome.value,
         cognome: this.cognome.value,
-        email: this.email.value,
-        password: this.password.value,
+        email: emailValue,
+        password: passwordValue,
       };
+    
 
       this.resetForm();
 
@@ -82,23 +86,33 @@ export class RegistrazioneComponent implements OnInit {
         'Content-Type': 'application/json',
       });
 
-      this.UtenteService.registerUser(isGestore, formData, { headers: headers })
+      this.UtenteService.registerUser(isGestore, formData)
       .subscribe(
         (risposta) => {
           console.log('Risposta dal backend:', risposta);
           if (risposta.status === 'success') {
-            this.mostraMessaggio ("Utente registrato con successo");
-          } 
+            // Set user information in a cookie upon successful registration
+            this.UtenteService.login(formData.email, formData.password)
+              .subscribe(
+                (loginResponse) => {
+                  console.log('Login successful after registration:', loginResponse);
+                  this.mostraMessaggio('Utente registrato con successo');
+                },
+                (loginError) => {
+                  console.error('Error during login after registration:', loginError);
+                  this.mostraMessaggio('Errore durante il login dopo la registrazione', true);
+                }
+              );
+          }
         },
         (errore: any) => {
           console.error('Errore durante la richiesta PUT:', errore);
           if (errore.status === 400) {
-            this.mostraMessaggio ("Utente già registrato");
-          } 
+            this.mostraMessaggio('Utente già registrato');
+          }
         }
       );
-      
-    }
+  }
 
     mostraMessaggio(messaggio: string, errore: boolean = false) {
       this.snackBar.open(messaggio, 'Chiudi', {

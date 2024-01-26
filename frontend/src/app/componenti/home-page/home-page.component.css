@@ -1,0 +1,74 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: cyan;
+  }
+  
+  .header {
+    height: 30%;
+    background-color: azure;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-content: right;
+  }
+  
+  .suggeriti {
+    height: 20%;
+    background-color: brown;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .attivita {
+    height: 40%;
+    background-color: blue;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .allogi {
+    height: 40%;
+    background-color: red;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .per-prezzo {
+    height: 40%;
+    background-color: yellow;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .dettagli {
+    height: 10%;
+    width: 30%;
+    background-color: red;
+  }
+  
+  .mat-card {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .mat-card-image {
+    border: 5px solid lightgreen;
+    height: 60%;
+    border-radius: 20px;
+    box-shadow: 7px 7px 5px #dedede;
+    margin-top: 10%;
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  .mostra {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Add other styles as needed */
+  

@@ -1,9 +1,10 @@
+import { RecensioneFormComponent } from './componenti/pagina-attivita/recensioni/recensione-form/recensione-form.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
@@ -20,7 +21,6 @@ import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -49,7 +49,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -62,6 +62,17 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
+import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CookieService } from 'ngx-cookie-service';
+import { HomePageComponent } from './componenti/home-page/home-page.component';
+import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
+import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { GestioneValoriComponent } from './gestione-valori/gestione-valori.component';
+
+import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
+import { PopupComponent } from './gestione-valori/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +88,16 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
+    RecensioneFormComponent,
+    PopupRecensioneComponent,
+    GalleryDialogComponent,
+    VideoDialogComponent,
+    HomePageComponent,
+    GestionePrenotazioniAttiveComponent,
+    PopupsegnalazioneComponent,
+    GestioneValoriComponent,
+    PopupsegnalazioneComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,
@@ -125,6 +146,7 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -168,8 +190,9 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
