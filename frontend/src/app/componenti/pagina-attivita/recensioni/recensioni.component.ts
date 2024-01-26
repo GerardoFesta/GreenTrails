@@ -25,6 +25,7 @@ export class RecensioniComponent implements OnInit {
   recensioni: any;
   idAttivita: number = 0;
   hasRecensione: boolean = false;
+  isGestore: boolean = false;
   imageUrls: string[] = [];
   fileNames: string[] = [];
 
@@ -62,7 +63,9 @@ export class RecensioniComponent implements OnInit {
         });
       });
 
-      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === this.cookieService.get('email').replace(/"/g, '') || this.cookieService.get('ruolo') === 'ROLE_GESTORE_ATTIVITA');
+      console.log(this.cookieService.get('ruolo'));
+      this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === this.cookieService.get('email').replace(/"/g, ''));
+      this.isGestore = this.cookieService.get('ruolo') === 'ROLE_GESTORE_ATTIVITA'
     });
   }
 
