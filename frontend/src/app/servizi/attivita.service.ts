@@ -2,6 +2,8 @@ import { Observable, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { InserimentoAttivitaComponent } from '../componenti/inserimento-attivita/inserimento-attivita.component';
+import { MatDialog } from '@angular/material/dialog';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +11,12 @@ export class AttivitaService {
 
   private baseUrl= 'http://localhost:8080/api/attivita';
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService, private dialog: MatDialog ) { }
+
+  apriDialog() {
+    const dialogRef =
+      this.dialog.open(InserimentoAttivitaComponent, { width: '100%' })
+  }
 
   visualizzaAttivita(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
@@ -65,16 +72,10 @@ export class AttivitaService {
   Object.keys(dati).forEach(key => {
     params = params.set(key, dati[key]);
   });
-
-
-
-  const email = 'e@g.v';
-  const password = 'qwerty123!';
-    const base64credential = btoa(email + ":" + password);
-    const headers = ({Authorization: 'Basic ' + base64credential} );
-   
-    
-    return this.http.post<any>(`${this.baseUrl}/api/attivita`, dati, {headers, params});
+  const headers = new HttpHeaders({
+    Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+  });
+    return this.http.post<any>(`${this.baseUrl}`, dati, {headers, params});
 
   }
 

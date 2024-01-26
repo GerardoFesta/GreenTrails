@@ -1,7 +1,7 @@
 import { ValoriEcosostenibilitaService } from 'src/app/servizi/valori-ecosostenibilita.service';
+import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 import { HttpParams } from '@angular/common/http';
-import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -37,8 +37,9 @@ export class InserimentoAttivitaComponent implements OnInit {
 
 
   constructor( private formBuilder: FormBuilder,
-     private attivitaService: AttivitaService,
-     private valoriEcosostenibilitaService: ValoriEcosostenibilitaService, private dialog: MatDialog) {
+     private attivitaService: AttivitaService, 
+     private dialog: MatDialog,
+     private valoriEcosostenibilitaService: ValoriEcosostenibilitaService) {
     this.inserimento = this.formBuilder.group({
       nome:['',Validators.required],
       tipo:['',Validators.required],
@@ -188,4 +189,3 @@ export class InserimentoAttivitaComponent implements OnInit {
     
    }
 }
-

@@ -1,5 +1,5 @@
 import { CamereService } from './../../../servizi/camere.service';
-import { AttivitaService } from 'src/app/servizi/attivita.service';
+import { AttivitaService } from './../../../servizi/attivita.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
@@ -16,7 +16,9 @@ id: any
 camereInserite: any[] = []
 
   constructor(public dialogRef: MatDialogRef<PopUpAlloggioComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
-   private formBuilder: FormBuilder, private attivitaService: AttivitaService, private camereService: CamereService, private dialog: MatDialog) { 
+   private formBuilder: FormBuilder,
+    private attivitaService: AttivitaService,
+    private camereService: CamereService, private dialog: MatDialog) { 
     this.camere = this.formBuilder.group({
       capienza:['',[Validators.required,Validators.pattern(/^[0-9]+$/)]],
       prezzo:['',[Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
@@ -79,4 +81,3 @@ camereInserite: any[] = []
     }
   }
   }
-

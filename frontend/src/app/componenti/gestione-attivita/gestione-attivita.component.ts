@@ -25,9 +25,8 @@ export class GestioneAttivitaComponent implements OnInit {
   idAttivita: number = 0;
 
   createAttivita() {
-    throw new Error('Method not implemented.');
+    this.attivitaService.apriDialog();
   }
-
   filterTerm!: string;
 
   constructor(private attivitaService: AttivitaService, private dialog: MatDialog) {

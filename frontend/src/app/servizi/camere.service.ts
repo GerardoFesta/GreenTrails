@@ -1,4 +1,5 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -9,7 +10,7 @@ export class CamereService {
 
   private baseUrl= 'http://localhost:8080/api/camere';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   inserimentoCamere(idAlloggio: any, tipoCamera: string, disponibilita: any, 
     descrizione: string, capienza: any): Observable<any> {
@@ -21,14 +22,9 @@ export class CamereService {
       .set('descrizione', descrizione)
       .set('capienza', capienza)
       
-
-    
-
-  const email = 'e@g.v';
-  const password = 'qwerty123!';
-    const base64credential = btoa(email + ":" + password);
-    const headers = ({Authorization: 'Basic ' + base64credential} );
-   
+      const headers = new HttpHeaders({
+        Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+      });
     
     return this.http.post<any>(`${this.baseUrl}`, params, {headers});
   }
