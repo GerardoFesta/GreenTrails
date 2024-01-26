@@ -1,6 +1,7 @@
+import { ValoriEcosostenibilitaService } from 'src/app/servizi/valori-ecosostenibilita.service';
 
 import { HttpParams } from '@angular/common/http';
-import { AttivitaServiceService } from './../../servizi/attivita-service.service';
+import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -35,7 +36,9 @@ export class InserimentoAttivitaComponent implements OnInit {
 
 
 
-  constructor( private formBuilder: FormBuilder, private attivitaServiceService: AttivitaServiceService, private dialog: MatDialog) {
+  constructor( private formBuilder: FormBuilder,
+     private attivitaService: AttivitaService,
+     private valoriEcosostenibilitaService: ValoriEcosostenibilitaService, private dialog: MatDialog) {
     this.inserimento = this.formBuilder.group({
       nome:['',Validators.required],
       tipo:['',Validators.required],
@@ -120,7 +123,7 @@ export class InserimentoAttivitaComponent implements OnInit {
 
     onSubmit() {
 
-      this.attivitaServiceService.inserimento(
+      this.valoriEcosostenibilitaService.creaValoriEcosostenibilitaVisitatore(
         this.politica1 =  this.inserimento.get('politicheAntispreco')?.value, 
         this.politica2 =  this.inserimento.get('prodottiLocali')?.value,
         this.politica3 = this.inserimento.get('energiaVerde')?.value,
@@ -162,7 +165,7 @@ export class InserimentoAttivitaComponent implements OnInit {
 
 
 
-   this.attivitaServiceService.inserimentoAttivita( formData)
+   this.attivitaService.inserimentoAttivita( formData)
      .subscribe((response) => {
        console.log('Dati inviati', response)
        if(this.inserimento.get('tipo')?.value === 'true' && response?.status === 'success'){ 

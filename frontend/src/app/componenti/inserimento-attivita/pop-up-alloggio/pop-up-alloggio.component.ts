@@ -1,4 +1,5 @@
-import { AttivitaServiceService } from './../../../servizi/attivita-service.service';
+import { CamereService } from './../../../servizi/camere.service';
+import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
@@ -15,7 +16,7 @@ id: any
 camereInserite: any[] = []
 
   constructor(public dialogRef: MatDialogRef<PopUpAlloggioComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
-   private formBuilder: FormBuilder, private attivitaServiceService: AttivitaServiceService, private dialog: MatDialog) { 
+   private formBuilder: FormBuilder, private attivitaService: AttivitaService, private camereService: CamereService, private dialog: MatDialog) { 
     this.camere = this.formBuilder.group({
       capienza:['',[Validators.required,Validators.pattern(/^[0-9]+$/)]],
       prezzo:['',[Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
@@ -56,7 +57,7 @@ camereInserite: any[] = []
     // Aggiungi la camera all'array
     this.camereInserite.push(camera);
 
-    this.attivitaServiceService.inserimentoCamere(
+    this.camereService.inserimentoCamere(
       this.id,
       this.camere.get('categoria')?.value,
       this.camere.get('disponibilita')?.value,
