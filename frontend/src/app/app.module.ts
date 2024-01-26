@@ -76,6 +76,7 @@ import { RicercaComponent } from './componenti/ricerca/ricerca.component';
 import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
 import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
 import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup-eliminazione/popup-eliminazione.component';
+import { PopupModificaComponent } from './componenti/gestione-attivita/popup-modifica/popup-modifica.component';
 
 
 @NgModule({
@@ -105,6 +106,7 @@ import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup
     RisultatiComponent,
     GestioneAttivitaComponent,
     PopupEliminazioneComponent,
+    PopupModificaComponent,
   ],
   imports: [
     BrowserModule,

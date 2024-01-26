@@ -83,7 +83,12 @@ export class GestioneAttivitaComponent implements OnInit {
   }
 
   edit() {
+    const dialogRef = this.dialog.open(PopupEliminazioneComponent, {
+      width: '250px',
+      data: { message: 'Sei sicuro di voler modificare questa attività?' }
+    });
 
+    
   }
 
   delete(): void {
