@@ -29,8 +29,6 @@ public class RicercaController {
       @RequestParam(value = "query") final String query,
       @RequestParam(value = "idCategorie", required = false) final Long[] idCategorie,
       @RequestParam(value = "coordinate", required = false) final Point coordinate,
-      @RequestParam(value = "latitudine", required = false) final Double latitudine,
-      @RequestParam(value = "longitudine", required = false) final Double longitudine,
       @RequestParam(value = "raggio", required = false) final Double raggio
   ) {
     List<Attivita> risultati = ricercaService.findAttivita(query);
@@ -47,7 +45,7 @@ public class RicercaController {
           .filter(risultati::contains)
           .collect(Collectors.toList());
     }
-    if (coordinate != null && raggio != null) {
+    if (latitudine != null && longitudine != null && raggio != null) {
       risultati = ricercaService.findAttivitaByPosizione(coordinate, raggio)
           .stream()
           .filter(risultati::contains)

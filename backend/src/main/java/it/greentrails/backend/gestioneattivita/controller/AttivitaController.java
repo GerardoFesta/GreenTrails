@@ -49,10 +49,10 @@ public class AttivitaController {
       @RequestParam("descrizioneLunga") final String descrizioneLunga,
       @RequestParam("valori") final long idValori,
       @RequestParam("immagine") final MultipartFile immagine,
+      @RequestParam(value = "prezzo", required = false) final Double prezzo,
       @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
       @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
-      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica,
-      @RequestParam(value = "prezzo", required = false) final Double prezzo
+      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica
   ) {
     try {
       Utente gestore = gestioneUtenzeService.findById(utente.getId());
@@ -85,11 +85,17 @@ public class AttivitaController {
               "Disponibilità per attività turistica non presente.");
         }
         attivita.setDisponibilita(disponibilita);
+        if (prezzo == null) {
+          return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+              "Prezzo per attività turistica non presente.");
+        }
+        attivita.setPrezzo(prezzo);
         if (categoriaAttivitaTuristica == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
               "Categoria per attività turistica non presente.");
         }
-        attivita.setCategoriaAttivitaTuristica(CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
+        attivita.setCategoriaAttivitaTuristica(
+            CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
       }
       attivita = attivitaService.saveAttivita(attivita);
       return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
