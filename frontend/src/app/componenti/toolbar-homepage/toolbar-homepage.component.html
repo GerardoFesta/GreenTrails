@@ -1,4 +1,4 @@
-<div class="navContainer">
+<div class="navContainer" style="user-select: none;">
     <div class="leftSide">
         <a routerLink="" style="cursor: pointer; text-decoration: none;" class="title">
             <h1
@@ -9,17 +9,22 @@
     </div>
     <div class="rightSide">
         <div class="iconContainer">
-            <a routerLink="" class="iconLink">
+            <a routerLink="login" class="iconLink"  (click)="navigate()">
                 <i class="fa-regular fa-user icon"></i>
-                <p class="icon-text">Accedi/ Registrati</p>
+                <p class="icon-text" *ngIf="!isLoggedIn">Accedi/Registrati</p>
+                <p class="icon-text" *ngIf="isLoggedIn">Area Riservata</p>
             </a>
             <a routerLink="" class="iconLink">
                 <i class="fa-solid fa-question icon"></i>
                 <p class="icon-text">Chi Siamo?</p>
             </a>
-            <a routerLink="" class="iconLink">
+            <a routerLink="" class="iconLink" *ngIf="!isGestore && isLoggedIn">
                 <i class="fa-regular fa-paper-plane icon"></i>
                 <p class="icon-text">Itinerario</p>
+            </a>
+            <a routerLink="" class="iconLink" *ngIf="isGestore">
+                <i class="fa-regular fa-building"></i>
+                <p class="icon-text">Le mie attività</p>
             </a>
         </div>
     </div>
