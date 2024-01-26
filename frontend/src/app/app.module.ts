@@ -73,6 +73,7 @@ import { GestioneValoriComponent } from './gestione-valori/gestione-valori.compo
 
 import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
 import { PopupComponent } from './gestione-valori/popup/popup.component';
+import { ModificaValoriAdminComponent } from './componenti/modifica-valori-admin/modifica-valori-admin.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +98,8 @@ import { PopupComponent } from './gestione-valori/popup/popup.component';
     PopupsegnalazioneComponent,
     GestioneValoriComponent,
     PopupsegnalazioneComponent,
-    PopupComponent
+    PopupComponent,
+    ModificaValoriAdminComponent
   ],
   imports: [
     BrowserModule,

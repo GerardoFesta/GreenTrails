@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { UploadService } from 'src/app/servizi/upload.service';
+import { ModificaValoriAdminComponent } from '../modifica-valori-admin/modifica-valori-admin.component';
 
 @Component({
   selector: 'app-home-page',
@@ -27,7 +29,7 @@ export class HomePageComponent implements OnInit {
     private route: ActivatedRoute,
     private uploadService: UploadService,
     private router: Router, 
-
+    private dialog: MatDialog,
     private cookieService: CookieService ){}
       
   
