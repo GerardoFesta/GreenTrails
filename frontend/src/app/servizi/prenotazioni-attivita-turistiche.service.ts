@@ -9,7 +9,7 @@ import { Prenotazione } from '../componenti/gestione-prenotazioni-attive/gestion
 })
 export class PrenotazioniAttivitaTuristicheService {
 
-  private baseUrl = 'http//localhost:8080/api/prenotazioni-attivita-turistica'
+  private baseUrl = 'http://localhost:8080/api/prenotazioni-attivita-turistica'
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
 

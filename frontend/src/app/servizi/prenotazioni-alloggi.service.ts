@@ -1,6 +1,6 @@
 import { CookieService } from 'ngx-cookie-service';
 import { Prenotazione } from './../componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 

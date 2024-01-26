@@ -8,7 +8,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject, forkJoin } from 'rxjs';
 import { $localize } from '@angular/localize/init';
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, ViewChild } from '@angular/core';
 
 
 export interface Prenotazione {
@@ -21,41 +21,6 @@ export interface Prenotazione {
   adulti: number;
   prezzo: number;
 }
-
-/*
-const Prenotazione: Prenotazione[] = [
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-];
-*/
 
 @Component({
   selector: 'app-gestione-prenotazioni-attive',
@@ -80,6 +45,8 @@ export class GestionePrenotazioniAttiveComponent {
     private cookie: CookieService,
     private prenotazioniAlloggiService: PrenotazioniAlloggiService,
     private prenotazioniAttivitaTurService: PrenotazioniAttivitaTuristicheService,
+    private zone: NgZone,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   getRangeLabel(page: number, pageSize: number, length: number): string {
@@ -93,7 +60,6 @@ export class GestionePrenotazioniAttiveComponent {
 
 
   displayedColumns: string[] = ['stato', 'nome', 'check-in', 'check-out', 'bambini', 'adulti', 'prezzo', "actions"];
-  Prenotazione: any;
   dataSource = new MatTableDataSource<Prenotazione>();
 
   showActiveOnly: boolean = false;
@@ -105,7 +71,7 @@ export class GestionePrenotazioniAttiveComponent {
   }
 
   ngOnInit() {
-    const idVisitatoreFromCookie = this.cookie.get('idVisitatore');
+    const idVisitatoreFromCookie = this.cookie.get('userId');
   
       if (idVisitatoreFromCookie) {
         this.idVisitatore = idVisitatoreFromCookie;
@@ -120,11 +86,25 @@ export class GestionePrenotazioniAttiveComponent {
   getPrenotazioni(){
     const prenotazioniAlloggi$ = this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore(this.idVisitatore);
     const prenotazioniAttivita$ = this.prenotazioniAttivitaTurService.getPrenotazioniAttivitaTuristicaVisitatore(this.idVisitatore);
-    forkJoin([prenotazioniAlloggi$, prenotazioniAttivita$]).subscribe(([prenotazioniAlloggi, prenotazioniAttivita]) =>{
-      const prenotazioni = [...prenotazioniAlloggi, ...prenotazioniAttivita];
-      prenotazioni.sort((a, b) => a.check_in.getTime() - b.check_in.getTime());
-      this.dataSource.data = prenotazioni;
-      this.updatePaginatedData();
+    forkJoin([prenotazioniAlloggi$, prenotazioniAttivita$]).subscribe(([prenotazioniAlloggi, prenotazioniAttivita]) => {
+      this.zone.run(() => {
+        const prenotazioniAlloggiArray = Array.isArray(prenotazioniAlloggi)
+          ? prenotazioniAlloggi as Prenotazione[]
+          : Object.values(prenotazioniAlloggi || {}) as Prenotazione[];
+        const prenotazioniAttivitaArray = Array.isArray(prenotazioniAttivita)
+          ? prenotazioniAttivita as Prenotazione[]
+          : Object.values(prenotazioniAttivita || {}) as Prenotazione[];
+  
+        console.log('Prenotazioni Alloggi:', prenotazioniAlloggi);
+        console.log('Prenotazioni Attività Turistiche:', prenotazioniAttivita);
+  
+        const prenotazioni = [...prenotazioniAlloggiArray, ...prenotazioniAttivitaArray];
+        console.log('Prenotazioni finali:', prenotazioni);
+        this.dataSource.data = prenotazioni;
+        this.updatePaginatedData();
+        this.changes.next();
+        this.cdr.detectChanges();
+      });
     });
   }
     
@@ -143,6 +123,7 @@ export class GestionePrenotazioniAttiveComponent {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   ngAfterViewInit() {
+    console.log('ngAfterViewInit called');
     this.paginator.page.subscribe((event: PageEvent) => {
       this.pageIndex = event.pageIndex;
       this.pageSize = event.pageSize;
