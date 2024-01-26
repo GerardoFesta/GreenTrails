@@ -13,9 +13,10 @@ const routes: Routes = [
   { path: 'registrazione', component: RegistrazioneComponent },
   { path: 'attivita/:id', component: PaginaAttivitaComponent },
   { path: 'prenotazioni', component: GestionePrenotazioniAttiveComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'ricerca/posizione', component: RisultatiComponent },
   { path: 'mieAttivita', component: GestioneAttivitaComponent },
+  { path: 'login', component: LoginComponent },
+
 ];
 
 @NgModule({

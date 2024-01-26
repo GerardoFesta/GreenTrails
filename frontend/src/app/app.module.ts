@@ -76,6 +76,9 @@ import { RicercaComponent } from './componenti/ricerca/ricerca.component';
 import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
 import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
 import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup-eliminazione/popup-eliminazione.component';
+import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
+import { PopUpConfermaComponent } from './componenti/inserimento-attivita/pop-up-conferma/pop-up-conferma.component';
+import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
 import { PopupModificaComponent } from './componenti/gestione-attivita/popup-modifica/popup-modifica.component';
 
 
@@ -106,6 +109,9 @@ import { PopupModificaComponent } from './componenti/gestione-attivita/popup-mod
     RisultatiComponent,
     GestioneAttivitaComponent,
     PopupEliminazioneComponent,
+    InserimentoAttivitaComponent,
+    PopUpConfermaComponent,
+    PopUpAlloggioComponent,
     PopupModificaComponent,
   ],
   imports: [
