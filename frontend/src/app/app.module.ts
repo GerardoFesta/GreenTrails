@@ -74,6 +74,8 @@ import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-preno
 import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
 import { RicercaComponent } from './componenti/ricerca/ricerca.component';
 import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
+import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
+import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup-eliminazione/popup-eliminazione.component';
 
 
 @NgModule({
@@ -101,6 +103,8 @@ import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.com
     IconToolbarComponent,
     RicercaComponent,
     RisultatiComponent,
+    GestioneAttivitaComponent,
+    PopupEliminazioneComponent,
   ],
   imports: [
     BrowserModule,

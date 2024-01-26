@@ -6,14 +6,16 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
+import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
 
 const routes: Routes = [
+  { path: '', component: HomePageComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
-  {path: 'attivita/:id', component: PaginaAttivitaComponent},
-  {path: 'prenotazioni', component: GestionePrenotazioniAttiveComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'ricerca/posizione', component: RisultatiComponent},
-  {path: '', component: HomePageComponent},
+  { path: 'attivita/:id', component: PaginaAttivitaComponent },
+  { path: 'prenotazioni', component: GestionePrenotazioniAttiveComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'ricerca/posizione', component: RisultatiComponent },
+  { path: 'mieAttivita', component: GestioneAttivitaComponent },
 ];
 
 @NgModule({
