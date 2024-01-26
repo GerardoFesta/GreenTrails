@@ -105,7 +105,7 @@ export class GestionePrenotazioniAttiveComponent {
   }
 
   ngOnInit() {
-    const idVisitatoreFromCookie = this.cookie.get('idVisitatore');
+    const idVisitatoreFromCookie = this.cookie.get('userId');
   
       if (idVisitatoreFromCookie) {
         this.idVisitatore = idVisitatoreFromCookie;
