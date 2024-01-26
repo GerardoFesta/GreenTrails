@@ -7,7 +7,7 @@ import it.greentrails.backend.entities.PrenotazioneAlloggio;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.CameraService;
-import it.greentrails.backend.gestioneitinerari.service.GestioneItinerariService;
+import it.greentrails.backend.gestioneitinerari.service.ItinerariService;
 import it.greentrails.backend.gestioneprenotazioni.service.PrenotazioneAlloggioService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
 import java.time.Duration;
@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class PrenotazioneAlloggioController {
 
-  private final GestioneItinerariService gestioneItinerariService;
+  private final ItinerariService itinerariService;
   private final AttivitaService attivitaService;
   private final CameraService cameraService;
   private final PrenotazioneAlloggioService prenotazioneAlloggioService;
@@ -48,11 +48,16 @@ public class PrenotazioneAlloggioController {
       @RequestParam("numCamere") final int numCamere
   ) {
     try {
-      Itinerario itinerario = gestioneItinerariService.findById(idItinerario);
+      Itinerario itinerario = itinerariService.findById(idItinerario);
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
-        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Itinerario non trovato");
+        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,
+            "Itinerario non trovato");
       }
       Camera camera = cameraService.findById(idCamera);
+      if (adulti + bambini > camera.getCapienza() * numCamere) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Numero camere non sufficienti");
+      }
       PrenotazioneAlloggio prenotazioneAlloggio = new PrenotazioneAlloggio();
       prenotazioneAlloggio.setCamera(camera);
       prenotazioneAlloggio.setItinerario(itinerario);
@@ -62,10 +67,10 @@ public class PrenotazioneAlloggioController {
       prenotazioneAlloggio.setDataInizio(dataInizio);
       double prezzo = numCamere * camera.getPrezzo();
       prenotazioneAlloggio.setDataFine(dataFine);
-      if (prenotazioneAlloggioService.controllaDisponibilitaAlloggio(camera.getAlloggio(),
+      if (prenotazioneAlloggioService.controllaDisponibilitaCamera(camera,
           dataInizio, dataFine) < numCamere) {
         return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-            "Alloggio non disponibile");
+            "Camera non disponibile");
       }
       long durataOre = Duration.between(dataInizio.toInstant(), dataFine.toInstant()).toHours();
       if (durataOre > 24) {
@@ -75,7 +80,7 @@ public class PrenotazioneAlloggioController {
       prenotazioneAlloggio = prenotazioneAlloggioService.savePrenotazioneAlloggio(camera,
           prenotazioneAlloggio);
       itinerario.setTotale(prezzo + itinerario.getTotale());
-      gestioneItinerariService.saveItinerario(itinerario);
+      itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK, prenotazioneAlloggio);
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
@@ -131,6 +136,20 @@ public class PrenotazioneAlloggioController {
     }
   }
 
+  @GetMapping("perCamera/{idCamera}/disponibilita")
+  private ResponseEntity<Object> visualizzaDisponibilitaPerCamera(
+      @PathVariable("idCamera") final long idCamera,
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam("dataFine") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataFine
+  ) {
+    try {
+      Camera camera = cameraService.findById(idCamera);
+      return ResponseGenerator.generateResponse(HttpStatus.OK,
+          prenotazioneAlloggioService.controllaDisponibilitaCamera(camera, dataInizio, dataFine));
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
 
   @GetMapping
   private ResponseEntity<Object> visualizzaPrenotazioniAlloggioPerVisitatore(
@@ -156,7 +175,7 @@ public class PrenotazioneAlloggioController {
       }
       Itinerario itinerario = prenotazioneAlloggio.getItinerario();
       itinerario.setTotale(itinerario.getTotale() - prenotazioneAlloggio.getPrezzo());
-      gestioneItinerariService.saveItinerario(itinerario);
+      itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK,
           prenotazioneAlloggioService.deletePrenotazioneAlloggio(prenotazioneAlloggio));
     } catch (Exception e) {
