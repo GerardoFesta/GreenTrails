@@ -62,6 +62,9 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
+import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
+import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
+import { PopUpConfermaComponent } from './componenti/inserimento-attivita/pop-up-conferma/pop-up-conferma.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { CookieService } from 'ngx-cookie-service';
@@ -92,6 +95,7 @@ import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
+    PopUpConfermaComponent,
     RecensioneFormComponent,
     PopupRecensioneComponent,
     GalleryDialogComponent,
@@ -105,6 +109,8 @@ import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup
     RisultatiComponent,
     GestioneAttivitaComponent,
     PopupEliminazioneComponent,
+    InserimentoAttivitaComponent,
+    PopUpAlloggioComponent,
   ],
   imports: [
     BrowserModule,

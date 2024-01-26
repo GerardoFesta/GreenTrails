@@ -1,3 +1,4 @@
+import { InserimentoAttivitaService } from './servizi/inserimento-attivita.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
