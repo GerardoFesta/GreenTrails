@@ -2,7 +2,7 @@ import { PrenotazioniAttivitaTuristicheService } from './../../servizi/prenotazi
 import { PrenotazioniAlloggiService } from './../../servizi/prenotazioni-alloggi.service';
 import { forkJoin } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { Component} from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import { PopupDeleteConfermaComponent } from './popupDeleteConferma/popupDeleteConferma.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -134,6 +134,8 @@ throw new Error('Method not implemented.');
           bambini: item.numBambini,
           adulti: item.numAdulti,
           prezzo: item.prezzo,
+          tipo: item.attivitaTuristica ? 'attivita' : 'alloggio',
+
         }));
   
         this.dataSource.data = mappedData;
@@ -217,36 +219,94 @@ throw new Error('Method not implemented.');
   
   
 
-  toggleMostraSoloInCorso() {
-    this.mostraSoloInCorso = !this.mostraSoloInCorso;
-  }
 
-
+  onDeletePrenotazioneAlloggio(idPrenotazione: number, statoAlloggio: string) {
+    if (statoAlloggio === 'IN_CORSO') {
+      const dialogRef = this.dialog.open(PopupDeleteConfermaComponent, {
+        data: {
+          message: 'Conferma eliminazione',
+          action: 'Sei sicuro di voler eliminare questa prenotazione?',
+        },
+      });
   
-
-  updateTable(): void {
-    this.getPrenotazioni(); // You can replace this with any method that fetches the updated data
-    this.dataSource.data = [...this.prenotazioniAlloggio, ...this.prenotazioniAttivita];
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        if (result) {
+          this.prenotazioniAlloggiService.deletePrenotazioneAlloggio(idPrenotazione).subscribe(
+            () => {
+              console.log(`Prenotazione Alloggio con ID ${idPrenotazione} eliminata con successo`);
+              this.populateTable();
+            },
+            error => {
+              console.error('Errore nell\'eliminazione della prenotazione alloggio:', error);
+            }
+          );
+        } else {
+          console.log(`L'utente ha annullato l'eliminazione della prenotazione con ID ${idPrenotazione}.`);
+        }
+      });
+    } else {
+      console.log(`La prenotazione con ID ${idPrenotazione} non è nello stato "IN_CORSO" e non può essere eliminata.`);
+    }
   }
-  // deletePrenotazione(prenotazione: any): void {
-  //   if (prenotazione.stato.toLowerCase() === 'attivo') {
-  //     this.prenotazioniAlloggiService.deletePrenotazioneAlloggio(prenotazione.id).subscribe(
-  //       () => {
-  //         this.getPrenotazioniAlloggio();
-  //       },
-  //       error => {
-  //         console.error('Errore nella cancellazione della prenotazione alloggio:', error);
-  //       }
-  //     );
-  //   } else {
-  //     this.prenotazioniAttivitaTurService.deletePrenotazioneAttivitaTuristica(prenotazione.id).subscribe(
-  //       () => {
-  //         this.getPrenotazioniAttivita();
-  //       },
-  //       error => {
-  //         console.error('Errore nella cancellazione della prenotazione attività:', error);
-  //       }
-  //     );
-  //   }
-  // }
+  
+  onDeletePrenotazioneAttivita(idPrenotazione: number, statoAttivita: string) {
+  if (statoAttivita === 'IN_CORSO') {
+    const dialogRef = this.dialog.open(PopupDeleteConfermaComponent, {
+      data: {
+        message: 'Conferma eliminazione',
+        action: 'Sei sicuro di voler eliminare questa prenotazione di attività?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.prenotazioniAttivitaTurService.deletePrenotazioneAttivitaTuristica(idPrenotazione).subscribe(
+          () => {
+            console.log(`Prenotazione Attività con ID ${idPrenotazione} eliminata con successo`);
+            this.populateTable(); 
+          },
+          error => {
+            console.error('Errore nell\'eliminazione della prenotazione attività:', error);
+          }
+        );
+      } else {
+        console.log(`L'utente ha annullato l'eliminazione della prenotazione con ID ${idPrenotazione}.`);
+      }
+    });
+  } else {
+    console.log(`La prenotazione con ID ${idPrenotazione} non è nello stato "IN_CORSO" e non può essere eliminata.`);
+  }
+}
+toggleMostraSoloInCorso() {
+  this.mostraSoloInCorso = !this.mostraSoloInCorso;
+  console.log('Stato mostraSoloInCorso:', this.mostraSoloInCorso);
+  this.updateTable();
+}
+
+updateTable() {
+  if (this.mostraSoloInCorso) {
+    const prenotazioniInCorso = this.dataSource.data.filter(prenotazione => prenotazione.stato === 'IN_CORSO');
+    this.dataSource.data = prenotazioniInCorso;
+  } else {
+    // Se non è selezionata, ripristina i dati originali
+    this.populateTable();
+  }
+}
+
+
+  @ViewChild('tableContainer')
+  tableContainer!: ElementRef;
+
+@HostListener('window:scroll', ['$event'])
+onScroll(event: Event) {
+  const tableContainer = this.tableContainer.nativeElement;
+  const scrollPosition = window.pageYOffset + window.innerHeight;
+  const tableBottom = tableContainer.offsetTop + tableContainer.offsetHeight;
+
+}
+
+formatStato(stato: string): string {
+  return stato.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 }
