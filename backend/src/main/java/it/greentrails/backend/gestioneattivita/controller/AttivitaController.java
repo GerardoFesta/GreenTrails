@@ -51,8 +51,7 @@ public class AttivitaController {
       @RequestParam("immagine") final MultipartFile immagine,
       @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
       @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
-      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica,
-      @RequestParam(value = "prezzo", required = false) final Double prezzo
+      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica
   ) {
     try {
       Utente gestore = gestioneUtenzeService.findById(utente.getId());
@@ -116,7 +115,7 @@ public class AttivitaController {
     }
   }
 
-  @GetMapping
+  @GetMapping("perGestore")
   private ResponseEntity<Object> visualizzaAttivitaPerGestore(
       @AuthenticationPrincipal Utente utente
   ) {
@@ -250,4 +249,5 @@ public class AttivitaController {
     return ResponseGenerator.generateResponse(HttpStatus.OK,
             attivitaService.findAll());
   }
+
 }

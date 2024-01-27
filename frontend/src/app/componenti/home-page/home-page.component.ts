@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { ActivatedRoute } from '@angular/router';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { UploadService } from 'src/app/servizi/upload.service';
 
@@ -10,152 +9,67 @@ import { UploadService } from 'src/app/servizi/upload.service';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  attivitaList: any[] = [];
+  attivitaList: any[] = [];  // Modify the type based on your API response structure
   fileNames: string[] = [];
-  imageUrls: string[][] = [];
+  imageUrls: string[] = [];
 
-  limite: number = 5;
+  attivita?: any;
+  id: number = 0;
+  limite:number = 5;
+
   nomeAttivita: string = 'nome';
-  attivitaTuristicheList: any[] = [];
-  alloggiList: any[] = [];
-  attivitaPerPrezzoList: any[] = [];
-  filteredAttivitaPerPrezzoList: any[] = [];
 
+  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, private uploadService: UploadService ) { }
+  ngOnInit(): void {
 
-  constructor(
-    private attivitaService: AttivitaService,
-    private route: ActivatedRoute,
-    private uploadService: UploadService,
-    private router: Router, // Add this line to include the Router
+  }
+  private visualizzaListaAttivita(idAttivita: number): void {
+    this.attivitaService.visualizzaAttivita(idAttivita).subscribe((result) => {
+      this.attivitaList = result.data;  // Modify this based on your API response structure
 
-    private cookieService: CookieService ){}
-      
-  
-
-    ngOnInit(): void {
-      Promise.all([
-        this.loadDataForAttivitaPerPrezzo(5),
-        this.loadDataForAlloggi(5),
-        this.loadDataForAttivitaTuristiche(5)
-      ]).then(() => {
-        this.filterByPrezzo(); // Call the filter method after loading data
-      });
-    
-    }
-
-
-    loadDataForAttivitaPerPrezzo(limite: number): Promise<void> {
-      return new Promise<void>((resolve) => {
-        this.visualizzaListaAttivitaPerPrezzo(limite).then(() => {
-          this.processMediaFiles().then(() => {
-            console.log('Data loaded for AttivitaPerPrezzo:', this.attivitaPerPrezzoList);
-            resolve();
-          });
-        });
-      });
-    }
-  
-  loadDataForAlloggi(limite: number): void {
-    this.visualizzaListaAlloggi(limite).then(() => {
-      this.processMediaFiles().then(() => {
-        console.log('Data loaded for Alloggi:', this.alloggiList);
-      });
+      this.processMediaFiles();
     });
   }
 
-  loadDataForAttivitaTuristiche(limite: number): void {
-    this.visualizzaListaAttivitaTuristiche(limite).then(() => {
-      this.processMediaFiles().then(() => {
-        console.log('Data loaded for AttivitaTuristiche:', this.attivitaTuristicheList);
-      });
+  private visualizzaListaAttivitaPerPrezzo(limite: number): void {
+    this.attivitaService.visualizzaAttivitaPerPrezzo(limite).subscribe((result) => {
+      this.attivitaList = result.data;  // Modify this based on your API response structure
+
+      this.processMediaFiles();
     });
   }
 
-  private visualizzaListaAttivitaPerPrezzo(limite: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-      this.attivitaService.visualizzaAttivitaPerPrezzo(limite).subscribe(
-        (result) => {
-          console.log("API Response:", result);
-  
-          if (result.data) {
-            const newAttivita = result.data;
-            console.log("New Attivita from API:", newAttivita);
-  
-            this.attivitaPerPrezzoList.push(...newAttivita);
-  
-            // Iterate over results and set a cookie for each prezzo
-            newAttivita.forEach((item: { id: any; prezzo: { toString: () => any; }; }) => {
-              this.cookieService.set(`prezzo_${item.id}`, item.prezzo.toString());
-            });
-  
-            this.processMediaFiles().then(() => {
-              console.log("Data loaded for AttivitaPerPrezzo:", this.attivitaPerPrezzoList);
-              resolve();
-            });
-          } else {
-            console.error("Unexpected API response structure:", result);
-            resolve(); // or reject(error) based on your error handling strategy
-          }
-        },
-        (error) => {
-          console.error("Error fetching AttivitaPerPrezzo:", error);
-          // Handle error here, display a user-friendly message, etc.
-          resolve(); // or reject(error) based on your error handling strategy
-        }
-      );
+  private visualizzaListaAlloggi(limite:number): void {
+    this.attivitaService.getAlloggi(limite).subscribe((result) => {
+      this.attivitaList = result.data;  // Modify this based on your API response structure
+
+      this.processMediaFiles();
     });
   }
 
-  private visualizzaListaAlloggi(limite: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-      this.attivitaService.getAlloggi(limite).subscribe((result) => {
-        const newAlloggi = result.data;
-        this.alloggiList.push(...newAlloggi);
-        resolve();
-      });
+  private visualizzaListaAttivitaTuristiche(limite:number): void {
+    this.attivitaService.getAttivitaTuristiche(limite).subscribe((result) => {
+      this.attivitaList = result.data;  // Modify this based on your API response structure
+
+      this.processMediaFiles();
     });
   }
 
-  private visualizzaListaAttivitaTuristiche(limite: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-      this.attivitaService.getAttivitaTuristiche(limite).subscribe((result) => {
-        const newAttivitaTuristiche = result.data;
-        this.attivitaTuristicheList.push(...newAttivitaTuristiche);
-        resolve();
-      });
-    });
-  }
-  private processMediaFiles(): Promise<void[]> {
-    const allItems = [
-      ...this.attivitaList,
-      ...this.alloggiList,
-      ...this.attivitaTuristicheList,
-      ...this.attivitaPerPrezzoList
-    ];
-
-    const promises = allItems.map((item: any) => {
+  private processMediaFiles(): void {
+    const promises = this.attivitaList.map((item: any, index: number) => {
       return new Promise<void>((resolve) => {
         this.uploadService.elencaFileCaricati(item.media).subscribe((listaFiles) => {
           if (listaFiles.data.length > 0) {
-            const fileNames = listaFiles.data;
-            const imageUrlsForItem: string[] = [];  
+            const fileName = listaFiles.data[0];
+            this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
+              this.fileNames.push(fileName);
 
-            const filePromises = fileNames.map((fileName: string) => {
-              return new Promise<void>((fileResolve) => {
-                this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
-                  let reader = new FileReader();
-                  reader.onloadend = () => {
-                    imageUrlsForItem.push(reader.result as string);
-                    fileResolve();
-                  };
-                  reader.readAsDataURL(file);
-                });
-              });
-            });
-
-            Promise.all(filePromises).then(() => {
-              this.imageUrls[item.id] = [...imageUrlsForItem];
-              resolve();
+              let reader = new FileReader();
+              reader.onloadend = () => {
+                this.imageUrls[index] = reader.result as string;
+                resolve();
+              };
+              reader.readAsDataURL(file);
             });
           } else {
             resolve();
@@ -164,26 +78,9 @@ export class HomePageComponent implements OnInit {
       });
     });
 
-    return Promise.all(promises);
-  }
-  private filterByPrezzo(): void {
-    this.filteredAttivitaPerPrezzoList = this.attivitaPerPrezzoList.filter((item: any) => {
-      const prezzoCookie = this.cookieService.get(`prezzo_${item.id}`);
-      const prezzoFromCookie = parseInt(prezzoCookie, 10);
-      return prezzoFromCookie < 300;
-    });
-    console.log("Filtered List:", this.filteredAttivitaPerPrezzoList);
-  }
-  shuffleArray(array: any[]): any[] {
-    const shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-    }
-    return shuffledArray;
+    Promise.all(promises);
   }
 
-  navigateToAttivita(id: number): void {
-    this.router.navigate(['/attivita', id]);
-  }
+
+
 }

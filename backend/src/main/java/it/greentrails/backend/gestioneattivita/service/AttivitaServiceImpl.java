@@ -63,9 +63,13 @@ public class AttivitaServiceImpl implements AttivitaService {
     if (attivita == null) {
       throw new Exception("L'attività è vuota.");
     }
-    repository.delete(attivita);
-    repository.flush();
-    return repository.findById(attivita.getId()).isEmpty();
+    attivita.setEliminata(true);
+    try {
+      saveAttivita(attivita);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
   }
 
   @Override
@@ -82,5 +86,6 @@ public class AttivitaServiceImpl implements AttivitaService {
   public List<Attivita> findAll() {
     return repository.findAll();
   }
+
 
 }

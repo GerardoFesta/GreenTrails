@@ -1,0 +1,14 @@
+<div class="toolbarContainer">
+    <app-ricerca></app-ricerca>
+    <div class="iconContainer">
+        <a routerLink="" class="iconLink" (click)="navigate()">
+            <i class="fa-regular fa-user icon"></i>
+        </a>
+        <a routerLink="" class="iconLink" *ngIf="!isGestore && isLoggedIn">
+            <i class="fa-regular fa-paper-plane icon"></i>
+        </a>
+        <a routerLink="mieAttivita" class="iconLink" *ngIf="isGestore && isLoggedIn">
+            <i class="fa-regular fa-building"></i>
+        </a>
+    </div>
+</div>

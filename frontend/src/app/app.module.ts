@@ -68,7 +68,22 @@ import { CookieService } from 'ngx-cookie-service';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
 import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { ToolbarComponent } from './componenti/toolbar/toolbar.component';
+import { ToolbarHomepageComponent } from './componenti/toolbar-homepage/toolbar-homepage.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
+import { RicercaComponent } from './componenti/ricerca/ricerca.component';
+import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
+import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
+import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup-eliminazione-attivita/popup-eliminazione-attivita.component';
+import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
+import { PopUpConfermaComponent } from './componenti/inserimento-attivita/pop-up-conferma/pop-up-conferma.component';
+import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
+import { PopupModificaComponent } from './componenti/gestione-attivita/popup-modifica-attivita-turistica/popup-modifica-attivita-turistica.component';
+import { PopupModificaAlloggioComponent } from './componenti/gestione-attivita/popup-modifica-alloggio/popup-modifica-alloggio.component';
+import { PopupConfermaModificaComponent } from './componenti/gestione-attivita/popup-conferma-modifica/popup-conferma-modifica.component';
+import { PopupModificaDatiAlloggioComponent } from './componenti/gestione-attivita/popup-modifica-dati-alloggio/popup-modifica-dati-alloggio.component';
+import { PopupEliminazioneCameraComponent } from './componenti/gestione-attivita/popup-eliminazione-camera/popup-eliminazione-camera.component';
 import { PopupDeleteConfermaComponent } from './componenti/gestione-prenotazioni-attive/popupDeleteConferma/popupDeleteConferma.component';
 
 
@@ -91,7 +106,22 @@ import { PopupDeleteConfermaComponent } from './componenti/gestione-prenotazioni
     GalleryDialogComponent,
     VideoDialogComponent,
     HomePageComponent,
+    ToolbarComponent,
+    ToolbarHomepageComponent,
     GestionePrenotazioniAttiveComponent,
+    IconToolbarComponent,
+    RicercaComponent,
+    RisultatiComponent,
+    GestioneAttivitaComponent,
+    PopupEliminazioneComponent,
+    InserimentoAttivitaComponent,
+    PopUpConfermaComponent,
+    PopUpAlloggioComponent,
+    PopupModificaComponent,
+    PopupModificaAlloggioComponent,
+    PopupConfermaModificaComponent,
+    PopupModificaDatiAlloggioComponent,
+    PopupEliminazioneCameraComponent,
     PopupDeleteConfermaComponent
   ],
   imports: [
@@ -142,6 +172,7 @@ import { PopupDeleteConfermaComponent } from './componenti/gestione-prenotazioni
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
+    Ng2SearchPipeModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -186,6 +217,7 @@ import { PopupDeleteConfermaComponent } from './componenti/gestione-prenotazioni
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
+    Ng2SearchPipeModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

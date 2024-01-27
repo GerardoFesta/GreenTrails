@@ -1,87 +1,21 @@
 <div class="container">
-  <div class="header">
-    <div class="dettagli">
-      <a href="" class="chisiamo">chi siamo?</a>
+    <div class="suggeriti">
+        <label for="suggeritiPerTe" style="font-size:20px;"> Suggeriti per te</label>
+        <div class="mostra">
+            <img mat-card-image
+            src="   "
+            alt="immagine-attivita">  
+        </div>
     </div>
-  </div>
+    <div class="attivita">
+        <label for="ATuristica" style="font-size:20px;" > Attività turistica</label>
+    </div>
+    <div class="allogi">
+        <label for="Allogi" style="font-size:20px;"> Allogi</label>
 
-  <!-- Suggeriti per te -->
-  <label for="suggeritiPerTe" style="font-size: 20px;">Suggeriti per te</label>
-  <div class="suggeriti" *ngIf="attivitaTuristicheList && attivitaTuristicheList.length > 0 || alloggiList && alloggiList.length > 0">
-    <div *ngFor="let attivitaItem of shuffleArray((attivitaTuristicheList || []).concat(alloggiList || [])); let i = index">
-    
-      <!-- Use mat-card for name and image -->
-      <mat-card (click)="navigateToAttivita(attivitaItem.id)">
-        <mat-card-header>
-          <div mat-card-avatar></div>
-          <mat-card-title>{{ attivitaItem.nome }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div *ngFor="let imageUrl of imageUrls[attivitaItem.id]; let j = index">
-            <img [src]="imageUrl" alt="suggeriti-image {{i + 1}} - {{j + 1}}">
-          </div>
-        </mat-card-content>
-      </mat-card>
-    
-      <!-- Add other details based on your data structure -->
     </div>
-  </div>
+    <div class="economici">
+        <label for="eco" style="font-size:20px;" > I più economici</label>
 
-    <!-- Attività turistiche -->
-    <label for="ATuristica" style="font-size: 20px;">Attività turistiche</label>
-    <div class="attivita" *ngIf="attivitaTuristicheList && attivitaTuristicheList.length > 0">
-      <div *ngFor="let attivitaItem of attivitaTuristicheList; let i = index">
-        <!-- Use mat-card for name and image -->
-        <mat-card (click)="navigateToAttivita(attivitaItem.id)">
-          <mat-card-header>
-            <div mat-card-avatar></div>
-            <mat-card-title>{{ attivitaItem.nome }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div *ngFor="let imageUrl of imageUrls[attivitaItem.id]; let j = index">
-              <img [src]="imageUrl" alt="attivita-image {{i + 1}} - {{j + 1}}">
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
     </div>
-  
-    <!-- Alloggi --> 
-    <label for="Allogi" style="font-size: 20px;">Allogi</label>
-    <div class="allogi" *ngIf="alloggiList && alloggiList.length > 0">
-      <div *ngFor="let allogio of alloggiList; let i = index">
-        <!-- Use mat-card for name and image -->
-        <mat-card (click)="navigateToAttivita(allogio.id)">
-          <mat-card-header>
-            <div mat-card-avatar></div>
-            <mat-card-title>{{ allogio.nome }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div *ngFor="let imageUrl of imageUrls[allogio.id]; let j = index">
-              <img [src]="imageUrl" alt="allogio-image{{i + 1}} - {{j + 1}}">
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-  
-    <!-- I più economici -->
-    <label for="Allogi" style="font-size: 20px;">I più economici</label>
-    <div class="per-prezzo" *ngIf="filteredAttivitaPerPrezzoList && filteredAttivitaPerPrezzoList.length > 0">
-      <div *ngFor="let attivitaItem of filteredAttivitaPerPrezzoList; let i = index">
-        <!-- Use mat-card for name and image -->
-        <mat-card (click)="navigateToAttivita(attivitaItem.id)">
-          <mat-card-header>
-            <div mat-card-avatar></div>
-            <mat-card-title>{{ attivitaItem.nome }}</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div *ngFor="let imageUrl of imageUrls[attivitaItem.id]; let j = index">
-              <img [src]="imageUrl" alt="per-prezzo-image {{i + 1}} - {{j + 1}}">
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
-  </div>
-  
+</div>

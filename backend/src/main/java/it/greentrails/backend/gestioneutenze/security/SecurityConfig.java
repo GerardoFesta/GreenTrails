@@ -46,6 +46,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET, "/api/attivita/alloggi").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/attivita/attivitaTuristiche").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/attivita/all").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/attivita/perGestore").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/attivita").hasRole(ROLE_GESTORE)
                     .requestMatchers(HttpMethod.POST, "/api/attivita").hasRole(ROLE_GESTORE)
                     .requestMatchers(HttpMethod.DELETE, "/api/attivita/*").hasRole(ROLE_GESTORE)
