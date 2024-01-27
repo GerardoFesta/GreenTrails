@@ -28,6 +28,7 @@ export class GestioneAttivitaComponent implements OnInit {
   createAttivita() {
     this.attivitaService.apriDialog();
   }
+  
   filterTerm!: string;
 
   constructor(private attivitaService: AttivitaService, private dialog: MatDialog) {
@@ -89,14 +90,13 @@ export class GestioneAttivitaComponent implements OnInit {
       const dialogRef = this.dialog.open(PopupModificaComponent, {
         data: {
           id: id,
-          tipo: risposta.data.alloggio,
           cap: risposta.data.cap,
           categoriaAlloggio: risposta.data.categoriaAlloggio,
           categoriaAttivitaTuristica: risposta.data.categoriaAttivitaTuristica,
           categorie: risposta.data.categorie,
           citta: risposta.data.citta,
-          x: risposta.data.coordinate.x,
-          y: risposta.data.coordinate.y,
+          latitudine: risposta.data.coordinate.x,
+          longitudine: risposta.data.coordinate.y,
           descrizioneBreve: risposta.data.descrizioneBreve,
           descrizioneLunga: risposta.data.descrizioneLunga,
           disponibilita: risposta.data.disponibilita,
@@ -106,7 +106,7 @@ export class GestioneAttivitaComponent implements OnInit {
           nome: risposta.data.nome,
           prezzo: risposta.data.prezzo,
           provincia: risposta.data.provincia,
-          valoriEcosostenibilita: risposta.data.valoriEcosostenibilita,
+          valori: risposta.data.valoriEcosostenibilita.id,
         }
       })
     })

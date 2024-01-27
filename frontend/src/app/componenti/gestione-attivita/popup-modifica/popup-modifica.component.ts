@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Valida
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PopupModificaAlloggioComponent } from '../popup-modifica-alloggio/popup-modifica-alloggio.component';
-import { Subject, takeUntil } from 'rxjs';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { PopupConfermaModificaComponent } from '../popup-conferma-modifica/popup-conferma-modifica.component';
 
@@ -19,26 +18,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './popup-modifica.component.html',
   styleUrls: ['./popup-modifica.component.css']
 })
-export class PopupModificaComponent implements OnInit, OnDestroy {
+export class PopupModificaComponent implements OnInit {
 
   inserimento: FormGroup;
   matcher = new MyErrorStateMatcher();
   prezzo: any;
-  private destroy$ = new Subject<void>();
-  isNomeCompiled: boolean = false;
-  isTipoSelected: boolean = false;
-  isCategoriaSelected: boolean = false;
-  isDisponibilitaCompiled: boolean = false;
-  isIndirizzoCompiled: boolean = false;
-  isCapCompiled: boolean = false;
-  isCittaCompiled: boolean = false;
-  isProvinciaCompiled: boolean = false;
-  isLatitudineCompiled: boolean = false;
-  isLongitudineCompiled: boolean = false;
-  isDescrizioneBreveCompiled: boolean = false;
-  isDescrizioneLungaCompiled: boolean = false;
-  isCostoCompiled: boolean = false;
-
+  latitudine?: number;
+  longitudine?: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,160 +32,27 @@ export class PopupModificaComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
+    private attivitaService: AttivitaService
   ) {
     this.inserimento = this.formBuilder.group({
-      nome: [this.data.nome],
-      tipo: [''],
-      categoria: [true],
-      disponibilita: [this.data.disponibilita],
-      indirizzo: [this.data.indirizzo],
-      cap: [this.data.cap],
-      citta: [this.data.citta],
-      provincia: [this.data.provincia],
-      latitudine: [this.data.x],
-      longitudine: [this.data.y],
-      descrizioneBreve: [this.data.descrizioneBreve],
-      costo: [this.data.prezzo],
-      descrizioneLunga: [this.data.descrizioneLunga],
+      nome: ['', Validators.required],
+      tipo: ['', Validators.required],
+      categoria: [, Validators.required],
+      disponibilita: [0, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
+      indirizzo: ['', Validators.required],
+      cap: ['', [Validators.required, Validators.maxLength(5), Validators.pattern(/^[0-9]+$/)]],
+      citta: ['', Validators.required],
+      provincia: ['', [Validators.required, Validators.maxLength(2)]],
+      latitudine: ['', [Validators.required, Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
+      longitudine: ['', [Validators.required, Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
+      descrizioneBreve: ['', Validators.required],
+      costo: [0, [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
+      descrizioneLunga: ['', Validators.required],
     });
 
-    this.inserimento.get('nome')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isNomeCompiled = !!value;
-      console.log('nome:', value);
-      console.log('nome is valid:', this.inserimento.get('nome')?.valid);
-      console.log('isNomeCompiled:', this.isNomeCompiled);
-    });
-    
-    this.inserimento.get('tipo')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isTipoSelected = !!value;
-      console.log('tipo:', value);
-      console.log('tipo is valid:', this.inserimento.get('tipo')?.valid);
-      console.log('isTipoSelected:', this.isTipoSelected);
-    });
-    
-    this.inserimento.get('categoria')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isCategoriaSelected = !!value;
-      console.log('categoria:', value);
-      console.log('categoria is valid:', this.inserimento.get('categoria')?.valid);
-      console.log('isCategoriaSelected:', this.isCategoriaSelected);
-    });
-    
-    this.inserimento.get('disponibilita')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isDisponibilitaCompiled = !!value;
-      console.log('disponibilita:', value);
-      console.log('disponibilita is valid:', this.inserimento.get('disponibilita')?.valid);
-      console.log('isDisponibilitaCompiled:', this.isDisponibilitaCompiled);
-    });
-    
-    this.inserimento.get('indirizzo')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isIndirizzoCompiled = !!value;
-      console.log('indirizzo:', value);
-      console.log('indirizzo is valid:', this.inserimento.get('indirizzo')?.valid);
-      console.log('isIndirizzoCompiled:', this.isIndirizzoCompiled);
-    });
-    
-    this.inserimento.get('cap')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isCapCompiled = !!value;
-      console.log('cap:', value);
-      console.log('cap is valid:', this.inserimento.get('cap')?.valid);
-      console.log('isCapCompiled:', this.isCapCompiled);
-    });
-    
-    this.inserimento.get('citta')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isCittaCompiled = !!value;
-      console.log('citta:', value);
-      console.log('citta is valid:', this.inserimento.get('citta')?.valid);
-      console.log('isCittaCompiled:', this.isCittaCompiled);
-    });
-    
-    this.inserimento.get('provincia')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isProvinciaCompiled = !!value;
-      console.log('provincia:', value);
-      console.log('provincia is valid:', this.inserimento.get('provincia')?.valid);
-      console.log('isProvinciaCompiled:', this.isProvinciaCompiled);
-    });
-    
-    this.inserimento.get('latitudine')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isLatitudineCompiled = !!value;
-      console.log('latitudine:', value);
-      console.log('latitudine is valid:', this.inserimento.get('latitudine')?.valid);
-      console.log('isLatitudineCompiled:', this.isLatitudineCompiled);
-    });
-    
-    this.inserimento.get('longitudine')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isLongitudineCompiled = !!value;
-      console.log('longitudine:', value);
-      console.log('longitudine is valid:', this.inserimento.get('longitudine')?.valid);
-      console.log('isLongitudineCompiled:', this.isLongitudineCompiled);
-    });
-    
-    this.inserimento.get('descrizioneBreve')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isDescrizioneBreveCompiled = !!value;
-      console.log('descrizioneBreve:', value);
-      console.log('descrizioneBreve is valid:', this.inserimento.get('descrizioneBreve')?.valid);
-      console.log('isDescrizioneBreveCompiled:', this.isDescrizioneBreveCompiled);
-    });
-    
-    this.inserimento.get('costo')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isCostoCompiled = !!value;
-      console.log('costo:', value);
-      console.log('costo is valid:', this.inserimento.get('costo')?.valid);
-      console.log('isCostoCompiled:', this.isCostoCompiled);
-    });
-    
-    this.inserimento.get('descrizioneLunga')?.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      this.isDescrizioneLungaCompiled = !!value;
-      console.log('descrizioneLunga:', value);
-      console.log('descrizioneLunga is valid:', this.inserimento.get('descrizioneLunga')?.valid);
-      console.log('isDescrizioneLungaCompiled:', this.isDescrizioneLungaCompiled);
-    });
   }
 
   ngOnInit(): void {
-    let nome = this.inserimento.get('nome')?.value;
-    console.log('nome:', nome);
-
-    let tipo = this.inserimento.get('tipo')?.value;
-    console.log('tipo:', tipo);
-
-    let categoria = this.inserimento.get('categoria')?.value;
-    console.log('categoria:', categoria);
-
-    let disponibilita = this.inserimento.get('disponibilita')?.value;
-    console.log('disponibilita:', disponibilita);
-
-    let indirizzo = this.inserimento.get('indirizzo')?.value;
-    console.log('indirizzo:', indirizzo);
-
-    let cap = this.inserimento.get('cap')?.value;
-    console.log('cap:', cap);
-
-    let citta = this.inserimento.get('citta')?.value;
-    console.log('citta:', citta);
-
-    let provincia = this.inserimento.get('provincia')?.value;
-    console.log('provincia:', provincia);
-
-    let latitudine = this.inserimento.get('latitudine')?.value;
-    console.log('latitudine:', latitudine);
-
-    let longitudine = this.inserimento.get('longitudine')?.value;
-    console.log('longitudine:', longitudine);
-
-    let descrizioneBreve = this.inserimento.get('descrizioneBreve')?.value;
-    console.log('descrizioneBreve:', descrizioneBreve);
-
-    let costo = this.inserimento.get('costo')?.value;
-    console.log('costo:', costo);
-
-    let descrizioneLunga = this.inserimento.get('descrizioneLunga')?.value;
-    console.log('descrizioneLunga:', descrizioneLunga);
-
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   categorieAll = [
@@ -221,9 +74,6 @@ export class PopupModificaComponent implements OnInit, OnDestroy {
   }
 
   toppings = new FormControl(false, [Validators.required]);
-
-  // File
-  selectedFiles: File[] = [];
   errorMessage: string | null = null;
 
   openPopupAlloggio(idAttivita: number): void {
@@ -242,49 +92,104 @@ export class PopupModificaComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+
+    console.log("id:", this.data.id)
+    console.log("nome:", this.data.nome)
+    console.log("indirizzo:", this.data.indirizzo)
+    console.log("cap:", this.data.cap)
+    console.log("citta:", this.data.citta)
+    console.log("provincia:", this.data.provincia)
+    console.log("latitudine:", this.data.latitudine)
+    console.log("longitudine:", this.data.longitudine)
+    console.log("descrizioneBreve:", this.data.descrizioneBreve)
+    console.log("descrizioneLunga:", this.data.descrizioneLunga)
+    console.log("valori:", this.data.valori)
+    console.log("prezzo:", this.data.prezzo)
+    console.log("disponibilita:", this.data.disponibilita)
+    console.log("categoriaAlloggio:", this.data.categoriaAlloggio)
+    console.log("categoriaAttivitaTuristica:", this.data.categoriaAttivitaTuristica)
+
     const formData = new FormData();
-    formData.append('alloggio', this.inserimento.get('tipo')?.value);
-    formData.append('nome', this.inserimento.get('nome')?.value);
-    formData.append('disponibilita', this.inserimento.get('disponibilita')?.value)
-    if (this.inserimento.get('tipo')?.value === 'true') {
-      formData.append('categoriaAlloggio', this.inserimento.get('categoria')?.value);
-    } else {
-      formData.append('categoriaAttivitaTuristica', this.inserimento.get('categoria')?.value);
-    }
-    formData.append('indirizzo', this.inserimento.get('indirizzo')?.value);
-    formData.append('cap', this.inserimento.get('cap')?.value);
-    formData.append('citta', this.inserimento.get('citta')?.value);
-    formData.append('provincia', this.inserimento.get('provincia')?.value);
-    formData.append('latitudine', this.inserimento.get('latitudine')?.value);
-    formData.append('longitudine', this.inserimento.get('longitudine')?.value);
-    formData.append('descrizioneBreve', this.inserimento.get('descrizioneBreve')?.value);
-    this.prezzo = formData.append('prezzo', this.inserimento.get('costo')?.value);
-    formData.append('descrizioneLunga', this.inserimento.get('descrizioneLunga')?.value);
-    console.log(formData.getAll)
 
-    if (this.inserimento.get('tipo')?.value === 'true') {
-      this.openPopupAlloggio(this.data.id)
+    const nomeValue = this.inserimento.get('nome')?.value;
+    console.log("NOME: ", nomeValue);
+    formData.append('nome', nomeValue);
+
+    const disponibilitaValue = this.inserimento.get('disponibilita')?.value;
+    console.log("DISPONIBILITA: ", disponibilitaValue);
+    formData.append('disponibilita', disponibilitaValue);
+
+    const tipoValue = this.inserimento.get('tipo')?.value;
+    if (tipoValue === 'true') {
+      const categoriaAlloggioValue = this.inserimento.get('categoria')?.value;
+      console.log("CATEGORIA ALLOGGIO: ", categoriaAlloggioValue);
+      formData.append('categoriaAlloggio', categoriaAlloggioValue);
     } else {
-      this.openPopupConferma('Attivita inserita con successo')
+      const categoriaAttivitaTuristicaValue = this.inserimento.get('categoria')?.value;
+      console.log("CATEGORIA ATTIVITA TURISTICA: ", categoriaAttivitaTuristicaValue);
+      formData.append('categoriaAttivitaTuristica', categoriaAttivitaTuristicaValue);
     }
 
-    // this.attivitaService.inserimentoAttivita(formData)
-    //   .subscribe((response) => {
-    //     console.log('Dati inviati', response)
-    //     if (this.inserimento.get('tipo')?.value === 'true' && response?.status === 'success') {
-    //       const idAttivita = response.data.id;
-    //       this.openPopupAlloggio(idAttivita)
-    //     } else if (response?.status === 'success') {
-    //       this.openPopupConferma('Attivita inserita con successo')
-    //     }
-    //     else {
-    //       const errorMessage = response?.error?.message || 'Errore sconosciuto';
-    //       this.openPopupConferma(errorMessage);
-    //     }
-    //   },
-    //     (error) => {
-    //       this.openPopupConferma(error.error.data)
-    //       console.error(error)
-    //     });
+    const indirizzoValue = this.inserimento.get('indirizzo')?.value;
+    console.log("INDIRIZZO: ", indirizzoValue);
+    formData.append('indirizzo', indirizzoValue);
+
+    const capValue = this.inserimento.get('cap')?.value;
+    console.log("CAP: ", capValue);
+    formData.append('cap', capValue);
+
+    const cittaValue = this.inserimento.get('citta')?.value;
+    console.log("CITTA: ", cittaValue);
+    formData.append('citta', cittaValue);
+
+    const provinciaValue = this.inserimento.get('provincia')?.value;
+    console.log("PROVINCIA: ", provinciaValue);
+    formData.append('provincia', provinciaValue);
+
+    const latitudineValue = this.inserimento.get('latitudine')?.value;
+    console.log("LATITUDINE: ", latitudineValue);
+    formData.append('latitudine', latitudineValue);
+
+    const longitudineValue = this.inserimento.get('longitudine')?.value;
+    console.log("LONGITUDINE: ", longitudineValue);
+    formData.append('longitudine', longitudineValue);
+
+    const descrizioneBreveValue = this.inserimento.get('descrizioneBreve')?.value;
+    console.log("DESCRIZIONE BREVE: ", descrizioneBreveValue);
+    formData.append('descrizioneBreve', descrizioneBreveValue);
+
+    const prezzoValue = this.inserimento.get('costo')?.value;
+    console.log("PREZZO: ", prezzoValue);
+    formData.append('prezzo', prezzoValue);
+
+    const descrizioneLungaValue = this.inserimento.get('descrizioneLunga')?.value;
+    console.log("DESCRIZIONE LUNGA: ", descrizioneLungaValue);
+    formData.append('descrizioneLunga', descrizioneLungaValue);
+
+    const valori = this.data.valori;
+    formData.append('valori', valori);
+
+    console.log(formData);
+
+
+    this.attivitaService.modificaAttivita(this.data.id, formData)
+      .subscribe((risposta) => {
+        console.log(risposta);
+
+        if (this.inserimento.get('tipo')?.value === 'true' && risposta?.status === 'success') {
+          const idAttivita = risposta.data.id;
+          this.openPopupAlloggio(idAttivita)
+        } else if (risposta?.status === 'success') {
+          this.openPopupConferma('Attivita inserita con successo')
+        }
+        else {
+          const errorMessage = risposta?.error?.message || 'Errore sconosciuto';
+          this.openPopupConferma(errorMessage);
+        }
+      }, (error) => {
+        console.error(error);
+      })
+
+
   }
 }

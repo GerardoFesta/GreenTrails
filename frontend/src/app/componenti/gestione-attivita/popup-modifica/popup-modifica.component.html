@@ -181,7 +181,8 @@
 <!--PULSANTI DELLA FINESTRA-->
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancella</button>
-  <button mat-button type="submit" [mat-dialog-close]="true" (click)="onSubmit()">
+  <button mat-button type="submit" [mat-dialog-close]="true" (click)="onSubmit()" 
+  [disabled]="inserimento.invalid">
     Inserisci
   </button>
 </mat-dialog-actions>

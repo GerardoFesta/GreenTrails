@@ -4,18 +4,23 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { InserimentoAttivitaComponent } from '../componenti/inserimento-attivita/inserimento-attivita.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PopupModificaComponent } from '../componenti/gestione-attivita/popup-modifica/popup-modifica.component';
 @Injectable({
   providedIn: 'root'
 })
 export class AttivitaService {
 
-  private baseUrl= 'http://localhost:8080/api/attivita';
+  private baseUrl = 'http://localhost:8080/api/attivita';
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private dialog: MatDialog ) { }
+  constructor(private http: HttpClient, private cookieService: CookieService, private dialog: MatDialog) { }
 
   apriDialog() {
     const dialogRef =
       this.dialog.open(InserimentoAttivitaComponent, { width: '100%' })
+  }
+
+  apriDialogModifica(id: number) {
+    const dialogRef = this.dialog.open(PopupModificaComponent, { width: '100%' })
   }
 
   visualizzaAttivita(id: number): Observable<any> {
@@ -24,7 +29,7 @@ export class AttivitaService {
 
   visualizzaAttivitaPerPrezzo(limite: number): Observable<any> {
     const pararms = new HttpParams()
-    .set('limite', limite.toString());
+      .set('limite', limite.toString());
 
     console.log('Limite:', limite)
 
@@ -34,14 +39,15 @@ export class AttivitaService {
 
   getAlloggi(limite: number): Observable<any> {
     const pararms = new HttpParams()
-    .set('limite', limite.toString());
+      .set('limite', limite.toString());
     console.log('Limite:', limite)
-    return this.http.get<any>(`${this.baseUrl}/alloggi`);}
+    return this.http.get<any>(`${this.baseUrl}/alloggi`);
+  }
 
 
   getAttivitaTuristiche(limite: number): Observable<any> {
     const pararms = new HttpParams()
-    .set('limite', limite.toString());
+      .set('limite', limite.toString());
     console.log('Limite:', limite)
     return this.http.get<any>(`${this.baseUrl}/attivitaTuristiche`);;
   }
@@ -54,8 +60,8 @@ export class AttivitaService {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
-    
-    return this.http.get<any>(`${this.baseUrl}`, {headers});
+
+    return this.http.get<any>(`${this.baseUrl}`, { headers });
   }
 
   cancellaAttivita(id: number): Observable<any> {
@@ -63,21 +69,35 @@ export class AttivitaService {
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
 
-    return this.http.delete(`${this.baseUrl}/${id}`, {headers});
+    return this.http.delete(`${this.baseUrl}/${id}`, { headers });
   }
 
   inserimentoAttivita(dati: any): Observable<any> {
 
     let params = new HttpParams();
-  Object.keys(dati).forEach(key => {
-    params = params.set(key, dati[key]);
-  });
-  const headers = new HttpHeaders({
-    Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
-  });
-    return this.http.post<any>(`${this.baseUrl}`, dati, {headers, params});
+    Object.keys(dati).forEach(key => {
+      params = params.set(key, dati[key]);
+    });
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+    return this.http.post<any>(`${this.baseUrl}`, dati, { headers, params });
 
   }
 
- 
+  modificaAttivita(id: number, dati: any): Observable<any> {
+
+    let params = new HttpParams();
+    Object.keys(dati).forEach(key => {
+      params = params.set(key, dati[key]);
+      console.log("KEY: ", key)
+      console.log("DATI[KEY]", dati[key])
+    });
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+    return this.http.post<any>(`${this.baseUrl}/${id}`, dati, { headers, params });
+  }
+
+
 }
