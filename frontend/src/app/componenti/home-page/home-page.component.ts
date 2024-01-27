@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { UploadService } from 'src/app/servizi/upload.service';
+import { UtenteService } from 'src/app/servizi/utente.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,6 +11,7 @@ import { UploadService } from 'src/app/servizi/upload.service';
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
+
   attivitaList: any[] = [];
   fileNames: string[] = [];
   imageUrls: string[][] = [];
@@ -26,8 +28,8 @@ export class HomePageComponent implements OnInit {
     private attivitaService: AttivitaService,
     private route: ActivatedRoute,
     private uploadService: UploadService,
-    private router: Router, // Add this line to include the Router
-
+    private router: Router, 
+    private userService: UtenteService,
     private cookieService: CookieService ){}
       
   
@@ -81,12 +83,9 @@ export class HomePageComponent implements OnInit {
             const newAttivita = result.data;
             console.log("New Attivita from API:", newAttivita);
   
-            this.attivitaPerPrezzoList.push(...newAttivita);
+            const filteredAttivita = newAttivita.filter((item: { id: any; prezzo: number; }) => item.prezzo < 300);
   
-            // Iterate over results and set a cookie for each prezzo
-            newAttivita.forEach((item: { id: any; prezzo: { toString: () => any; }; }) => {
-              this.cookieService.set(`prezzo_${item.id}`, item.prezzo.toString());
-            });
+            this.attivitaPerPrezzoList.push(...filteredAttivita);
   
             this.processMediaFiles().then(() => {
               console.log("Data loaded for AttivitaPerPrezzo:", this.attivitaPerPrezzoList);
@@ -94,18 +93,16 @@ export class HomePageComponent implements OnInit {
             });
           } else {
             console.error("Unexpected API response structure:", result);
-            resolve(); // or reject(error) based on your error handling strategy
+            resolve();
           }
         },
         (error) => {
           console.error("Error fetching AttivitaPerPrezzo:", error);
-          // Handle error here, display a user-friendly message, etc.
-          resolve(); // or reject(error) based on your error handling strategy
+          resolve();
         }
       );
     });
   }
-
   private visualizzaListaAlloggi(limite: number): Promise<void> {
     return new Promise<void>((resolve) => {
       this.attivitaService.getAlloggi(limite).subscribe((result) => {
@@ -167,10 +164,8 @@ export class HomePageComponent implements OnInit {
     return Promise.all(promises);
   }
   private filterByPrezzo(): void {
-    this.filteredAttivitaPerPrezzoList = this.attivitaPerPrezzoList.filter((item: any) => {
-      const prezzoCookie = this.cookieService.get(`prezzo_${item.id}`);
-      const prezzoFromCookie = parseInt(prezzoCookie, 10);
-      return prezzoFromCookie < 300;
+    this.filteredAttivitaPerPrezzoList = this.attivitaPerPrezzoList.filter((item: { prezzo: number }) => {
+      return item.prezzo < 300;
     });
     console.log("Filtered List:", this.filteredAttivitaPerPrezzoList);
   }
@@ -186,5 +181,17 @@ export class HomePageComponent implements OnInit {
   navigateToAttivita(id: number): void {
     this.router.navigate(['/attivita', id]);
     this.cookieService.set('idAttivita', JSON.stringify(id));
+  }
+  logout() {
+    this.userService.logout().subscribe(
+      (response) => {
+        console.log('Logout eseguito con successo:', response);
+        // Aggiungi qui la logica aggiuntiva, se necessario
+      },
+      (error) => {
+        console.error('Errore durante il logout:', error);
+        // Gestisci l'errore se necessario
+      }
+    );
   }
 }

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="header">
     <div class="dettagli">
-      <a href="" class="chisiamo">chi siamo?</a>
+      <a href="/home" class="chisiamo" (click)="logout()">logout test?</a>
     </div>
   </div>
 
@@ -47,17 +47,17 @@
     </div>
   
     <!-- Alloggi --> 
-    <label for="Allogi" style="font-size: 20px;">Allogi</label>
-    <div class="allogi" *ngIf="alloggiList && alloggiList.length > 0">
-      <div *ngFor="let allogio of alloggiList; let i = index">
+    <label for="Alloggi" style="font-size: 20px;">Alloggi</label>
+    <div class="alloggi" *ngIf="alloggiList && alloggiList.length > 0">
+      <div *ngFor="let alloggio of alloggiList; let i = index">
         <!-- Use mat-card for name and image -->
-        <mat-card (click)="navigateToAttivita(allogio.id)">
+        <mat-card (click)="navigateToAttivita(alloggio.id)">
           <mat-card-header>
             <div mat-card-avatar></div>
-            <mat-card-title>{{ allogio.nome }}</mat-card-title>
+            <mat-card-title>{{ alloggio.nome }}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <div *ngFor="let imageUrl of imageUrls[allogio.id]; let j = index">
+            <div *ngFor="let imageUrl of imageUrls[alloggio.id]; let j = index">
               <img [src]="imageUrl" alt="allogio-image{{i + 1}} - {{j + 1}}">
             </div>
           </mat-card-content>
@@ -66,6 +66,7 @@
     </div>
   
     <!-- I più economici -->
+    <label for="Allogi" style="font-size: 20px;">I più economici</label>
     <div class="per-prezzo" *ngIf="filteredAttivitaPerPrezzoList && filteredAttivitaPerPrezzoList.length > 0">
       <div *ngFor="let attivitaItem of filteredAttivitaPerPrezzoList; let i = index">
         <!-- Use mat-card for name and image -->

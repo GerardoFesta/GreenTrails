@@ -1,10 +1,9 @@
 import { RecensioneFormComponent } from './componenti/pagina-attivita/recensioni/recensione-form/recensione-form.component';
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
@@ -69,6 +68,8 @@ import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
 import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
+import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popup-errorPass.component';
 
 import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
 
@@ -92,7 +93,8 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     VideoDialogComponent,
     HomePageComponent,
     GestionePrenotazioniAttiveComponent,
-    PopupsegnalazioneComponent,
+    AreaRiservataComponent,
+    PopupErrorPassComponent,
   ],
   imports: [
     BrowserModule,
@@ -142,6 +144,7 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
+    MatIconModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -186,6 +189,7 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
+    MatIconModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
