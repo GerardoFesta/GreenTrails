@@ -61,7 +61,7 @@ export class AttivitaService {
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
 
-    return this.http.get<any>(`${this.baseUrl}`, { headers });
+    return this.http.get<any>(`${this.baseUrl}/perGestore`, { headers });
   }
 
   cancellaAttivita(id: number): Observable<any> {
