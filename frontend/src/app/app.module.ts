@@ -70,6 +70,7 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
 import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popup-errorPass.component';
+import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica/generazione-automatica.component';
 
 import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
 
@@ -95,7 +96,8 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     GestionePrenotazioniAttiveComponent,
     AreaRiservataComponent,
     PopupErrorPassComponent,
-    PopupsegnalazioneComponent
+    PopupsegnalazioneComponent,
+    GenerazioneAutomaticaComponent,
   ],
   imports: [
     BrowserModule,

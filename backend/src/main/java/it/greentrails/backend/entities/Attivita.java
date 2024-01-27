@@ -88,6 +88,9 @@ public class Attivita {
   @Column(name = "is_alloggio", nullable = false)
   private boolean isAlloggio = false;
 
+  @Column(name = "eliminata", nullable = false)
+  private boolean eliminata = false;
+
   @ManyToMany
   @JoinTable(name = "assegnazione_categorie",
       joinColumns = @JoinColumn(name = "id_attivita"),

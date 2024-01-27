@@ -1,3 +1,4 @@
+import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica/generazione-automatica.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './componenti/login/login.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'tabellaP', component: GestionePrenotazioniAttiveComponent},
   {path: 'login', component: LoginComponent},
   {path: 'area-riservata', component: AreaRiservataComponent},
+  {path: 'generazione-automatica', component: GenerazioneAutomaticaComponent},
 
 
 
