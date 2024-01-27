@@ -42,11 +42,11 @@ public class PrenotazioneAlloggio {
   @Column(name = "num_bambini", nullable = false)
   private int numBambini;
 
-  @Temporal(TemporalType.TIME)
+  @Temporal(TemporalType.DATE)
   @Column(name = "data_inizio", nullable = false)
   private Date dataInizio;
 
-  @Temporal(TemporalType.TIME)
+  @Temporal(TemporalType.DATE)
   @Column(name = "data_fine", nullable = false)
   private Date dataFine;
 
