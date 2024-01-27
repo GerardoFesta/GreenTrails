@@ -4,22 +4,19 @@
       <table matSort (matSortChange)="sortData($event)">
         <tr>
           <th mat-sort-header="numero">N.</th>
-          <th mat-sort-header="idUtente">idUtente</th>
-          <th mat-sort-header="idAttivita">idAttivita</th>
+          <th mat-sort-header="Utente">idUtente</th>
+          <th mat-sort-header="Attivita">idAttivita</th>
           <th mat-sort-header="descrizione">Descrizione</th>
         </tr>
   
-        <tr *ngFor="let segnalazione of sortedData.filter(filterData)">
+        <tr *ngFor="let segnalazione of sortedData">
             <td style="width: 30px;">{{segnalazione.numero}}</td>
           <td>{{segnalazione.idUtente}}</td>
           <td>{{segnalazione.idAttivita}}</td>
           <td>{{segnalazione.descrizione}}</td>
           <td style="border: none;">
-            <button mat-icon-button aria-label="edit">
-              <i class="fa-regular fa-pen-to-square" style="font-size: x-large; color: #00FF00;"></i>
-            </button>
-            <button mat-icon-button aria-label="delete_forever" color="warn">
-              <mat-icon style="font-size: x-large;">delete_forever</mat-icon>
+            <button mat-icon-button aria-label="edit" (click)="modifica()">
+                    <mat-icon>edit</mat-icon>
             </button>
           </td>
         </tr>

@@ -2,7 +2,7 @@ import { SegnalazioneService } from './../../servizi/segnalazione.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-
+import { MatSortModule } from '@angular/material/sort';
 
 export interface Segnalazione {
   numero: number;
@@ -22,18 +22,14 @@ export class ListaSegnalazioniComponent implements OnInit {
     { numero: 0, idUtente: '', idAttivita: '', descrizione: '' },
   ];
 
-  sortedData: Segnalazione[];
+  sortedData: Segnalazione[] = [];
   idAttivita: number = 0;
-  filterTerm: string = '';
 
-  constructor(private segnalazioneService: SegnalazioneService, private dialog: MatDialog) {
-    this.sortedData = this.listaSegnalazione.slice();
-  }
+  constructor(private segnalazioneService: SegnalazioneService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.visualizzaSegnalazioni();
   }
-
 
   sortData(sort: Sort) {
     const data = this.listaSegnalazione.slice();
@@ -51,8 +47,8 @@ export class ListaSegnalazioniComponent implements OnInit {
           return this.compare(a.idUtente, b.idUtente, isAsc);
         case 'idAttivita':
           return this.compare(a.idAttivita, b.idAttivita, isAsc);
-          case 'descrizione':
-            return this.compare(a.descrizione, b.descrizione, isAsc);
+        case 'descrizione':
+          return this.compare(a.descrizione, b.descrizione, isAsc);
         default:
           return 0;
       }
@@ -70,22 +66,21 @@ export class ListaSegnalazioniComponent implements OnInit {
   }
 
   visualizzaSegnalazioni() {
-    this.segnalazioneService.recuperoSegnalazioni().subscribe((risposta) => {
-      console.log("Segnalazioni: ", risposta);
-      this.listaSegnalazione = risposta.map((segnalazione: any, index: any) => ({
-        numero: index + 1,
-        idUtente: segnalazione.idUtente,
-        idAttivita: segnalazione.idAttivita,
-        descrizione: segnalazione.descrizione,
-      }));
-      this.sortedData = this.listaSegnalazione.slice();
+    this.segnalazioneService.recuperoSegnalazioni(false).subscribe((risposta) => {
+      console.log("Segnalazioni risposta:", risposta);
+        this.listaSegnalazione = risposta.data.map((segnalazione: any, index: any) => ({
+          numero: index + 1,
+          idUtente: segnalazione.utente.email,
+          idAttivita: segnalazione.attivita.nome,
+          descrizione: segnalazione.descrizione,
+        }));
+        console.log("listaSegnalazione:", this.listaSegnalazione);
+        this.sortedData = this.listaSegnalazione.slice();
     });
   }
 
-  // Metodo di filtro personalizzato
-  filterData(segnalazione: Segnalazione): boolean {
-    const searchTerm = this.filterTerm.toLowerCase();
-    return segnalazione.idUtente.toLowerCase().includes(searchTerm) ||
-           segnalazione.idAttivita.toLowerCase().includes(searchTerm);
+  modifica(){
+    
   }
+ 
 }

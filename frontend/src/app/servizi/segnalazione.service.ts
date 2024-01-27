@@ -1,5 +1,5 @@
 import { CookieService } from 'ngx-cookie-service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -32,12 +32,15 @@ export class SegnalazioneService {
     return this.http.post<any>(`${this.Url}`, formData, {headers});
   }
 
-  recuperoSegnalazioni(): Observable<any>{
+  recuperoSegnalazioni(isForRecensione: any): Observable<any>{
+
+    const params = new HttpParams()
+    .set('isForRecensione', isForRecensione)
 
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
     });
-    return this.http.post<any>(`${this.Url}`, {headers});
+    return this.http.get<any>(`${this.Url}`, {headers, params});
   }
 
  
