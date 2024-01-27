@@ -56,4 +56,29 @@ public class RicercaController {
     return ResponseGenerator.generateResponse(HttpStatus.OK, risultati);
   }
 
+  @PostMapping("perPosizione")
+  private ResponseEntity<Object> cercaSenzaQuery(
+      @RequestParam(value = "latitudine") final long latitudine,
+      @RequestParam(value = "longitudine") final long longitudine,
+      @RequestParam(value = "raggio") final Double raggio,
+      @RequestParam(value = "idCategorie", required = false) final Long[] idCategorie
+  ) {
+    Point coordinate = new Point(latitudine, longitudine);
+    List<Attivita> risultati = ricercaService.findAttivitaByPosizione(coordinate, raggio);
+    if (idCategorie != null && idCategorie.length > 0) {
+      risultati = ricercaService.findAttivitaByCategorie(
+              Arrays.stream(idCategorie).map(idCategoria -> {
+                try {
+                  return categoriaService.findById(idCategoria);
+                } catch (Exception e) {
+                  throw new RuntimeException(e);
+                }
+              }).collect(Collectors.toList()))
+          .stream()
+          .filter(risultati::contains)
+          .collect(Collectors.toList());
+    }
+    return ResponseGenerator.generateResponse(HttpStatus.OK, risultati);
+  }
+
 }
