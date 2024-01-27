@@ -36,7 +36,7 @@ public class Segnalazione {
 
   @Enumerated
   @Column(name = "stato", nullable = false)
-  private StatoSegnalazione stato;
+  private StatoSegnalazione stato = StatoSegnalazione.CREATA;
 
   @Column(name = "is_for_recensione", nullable = false)
   private boolean isForRecensione = false;
