@@ -11,10 +11,10 @@ const routes: Routes = [
   { path: 'registrazione', component: RegistrazioneComponent },
   {path: 'attivita/:id', component: PaginaAttivitaComponent},
   {path: 'tabellaP', component: GestionePrenotazioniAttiveComponent},
-  {path: 'home', component: HomePageComponent},
+  {path: 'homepage', component: HomePageComponent},
   {path: 'tabellaP', component: GestionePrenotazioniAttiveComponent},
   {path: 'login', component: LoginComponent},
-  {path: '', component: AreaRiservataComponent},
+  {path: 'area-riservata', component: AreaRiservataComponent},
 
 
 
