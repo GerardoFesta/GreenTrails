@@ -49,6 +49,7 @@ public class AttivitaController {
       @RequestParam("descrizioneLunga") final String descrizioneLunga,
       @RequestParam("valori") final long idValori,
       @RequestParam("immagine") final MultipartFile immagine,
+      @RequestParam(value = "prezzo", required = false) final Double prezzo,
       @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
       @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
       @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica
