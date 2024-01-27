@@ -35,19 +35,23 @@ userData: any;
   }
 
   clickedQuestionario(){
-    this.route.navigate(['']); // inserire path della pagina dedicata al questionario
+    this.route.navigate(['/']); // inserire path della pagina dedicata al questionario
   }
 
   clickedGenera(){
-    this.route.navigate(['']); // inserire path della pagina dedicata alla generazione dell'itinerario automatico
+    this.route.navigate(['/']); // inserire path della pagina dedicata alla generazione dell'itinerario automatico
   }
 
   clickedLeMieAttivita(){
-    this.route.navigate(['']); // inserire path della pagina con la lista di attività di un gestore
+    this.route.navigate(['/']); // inserire path della pagina con la lista di attività di un gestore
   }
 
   clickedAggiungiAttivita(){
-    this.route.navigate(['']); // inserire path per l'aggiunta di attività
+    this.route.navigate(['/']); // inserire path per l'aggiunta di attività
+  }
+
+  clickedListaSegnalazioni(){
+    this.route.navigate(['/'])// inserire path per visualizzare la lista delle segnalazioni
   }
 
 }

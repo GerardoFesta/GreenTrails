@@ -118,8 +118,22 @@
                     </div>
                 </mat-card>
             </mat-grid-tile>
-
         </ng-container>
+
+        <ng-container *ngIf="userData.ruolo==='AMMINISTRATORE'">
+            <mat-grid-tile>
+                <mat-card class="custom-card" (click)="clickedListaSegnalazioni()">
+                    <div class="header">
+                        <p> <strong>Segnalazioni</strong></p>
+                        <mat-icon>warning</mat-icon>
+                    </div>
+                    <div class="content">
+                        <p>Visualizza la lista di tutte le segnalazioni.</p>
+                    </div>
+                </mat-card>
+            </mat-grid-tile>
+        </ng-container>
+        
           </mat-grid-list>
     </div>
     <div class="vuoto">
