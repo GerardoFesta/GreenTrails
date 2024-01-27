@@ -54,6 +54,18 @@ public class GestioneUtenzeController {
     }
   }
 
+  @GetMapping("preferenze")
+  private ResponseEntity<Object> visualizzaPreferenze(
+      @AuthenticationPrincipal Utente utente
+  ) {
+    try {
+      return ResponseGenerator.generateResponse(HttpStatus.OK,
+          service.getPreferenzeById(utente.getId()));
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
+
   @PostMapping("questionario")
   private ResponseEntity<Object> compilaQuestionario(
       @AuthenticationPrincipal Utente utente,
