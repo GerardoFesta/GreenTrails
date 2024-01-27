@@ -6,6 +6,7 @@ import it.greentrails.backend.enums.PreferenzeAttivita;
 import it.greentrails.backend.enums.PreferenzeBudget;
 import it.greentrails.backend.enums.PreferenzeStagione;
 import it.greentrails.backend.enums.PreferenzeViaggio;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -13,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,9 +29,8 @@ public class Preferenze {
   @Column(name = "id_visitatore", nullable = false)
   private Long id;
 
-  @OneToOne
-  @MapsId
-  @JoinColumn(name = "id_visitatore", nullable = false)
+  @OneToOne(optional = false, cascade = CascadeType.ALL)
+  @PrimaryKeyJoinColumn
   private Utente visitatore;
 
   @Enumerated
