@@ -73,6 +73,7 @@ import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popu
 import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica/generazione-automatica.component';
 
 import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
+import { EffettuataComponent } from './componenti/popupsegnalazione/effettuata/effettuata.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     PopupErrorPassComponent,
     PopupsegnalazioneComponent,
     GenerazioneAutomaticaComponent,
+    EffettuataComponent,
   ],
   imports: [
     BrowserModule,

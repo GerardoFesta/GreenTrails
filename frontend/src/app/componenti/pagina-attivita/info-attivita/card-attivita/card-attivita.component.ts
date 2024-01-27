@@ -33,7 +33,6 @@ export class CardAttivitaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('Dialog chiuso:', result);
-      // Puoi gestire i dati restituiti dal dialogo qui, se necessario
     });
   }
 
@@ -42,7 +41,6 @@ export class CardAttivitaComponent implements OnInit {
   }
 
   handleFormSubmitted(): void {
-    //logica per gestire l'invio del form
     console.log('Form inviato con successo!');
   }
 }

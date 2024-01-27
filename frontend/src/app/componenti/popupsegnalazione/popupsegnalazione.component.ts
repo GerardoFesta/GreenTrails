@@ -1,8 +1,9 @@
+import { EffettuataComponent } from './effettuata/effettuata.component';
 import { CookieService } from 'ngx-cookie-service';
 import { SegnalazioneService } from './../../servizi/segnalazione.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
@@ -25,7 +26,8 @@ export class PopupsegnalazioneComponent implements OnInit {
     private segnelazioneService :SegnalazioneService, 
     private cookie: CookieService,
     public dialogRef: MatDialogRef<PopupsegnalazioneComponent>, 
-    private sanitizer: DomSanitizer,
+    private dialog: MatDialog,
+
     ) { }
 
     ngOnInit(): void {
@@ -63,6 +65,14 @@ export class PopupsegnalazioneComponent implements OnInit {
       this.files.splice(index, 1);
       this.fileNames.splice(index, 1);
     }
+
+    openPopup(message: string): void{
+      const dialogRef = this.dialog.open(EffettuataComponent, {
+        width: '250px',
+        data: {message},
+        disableClose: true,
+      });
+    }
   
 
   submitForm(): void {
@@ -92,6 +102,10 @@ export class PopupsegnalazioneComponent implements OnInit {
       this.chiudiPopup.emit();
       this.formSottomesso.emit();
       this.dialogRef.close();
+      this.openPopup('Segnalazione inviata con successo!');
+
+    } else {
+      this.openPopup('Errore nell\'\invio della segnalazione');
     }
   }, (error) => {
     console.log('Dettagli richiesta API:', error);
