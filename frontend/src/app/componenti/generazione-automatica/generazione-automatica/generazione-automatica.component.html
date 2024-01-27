@@ -14,15 +14,15 @@
             <mat-card-content>
               <p>{{attivita.descrizione}}</p>
             </mat-card-content>
-            <mat-card-actions>
+            <mat-card-actions style="display: flex; justify-content: space-between;">
                 <button mat-button (click)="aggiungiAttivitaSelezionata(attivita)"
                 style="margin-top: 40px; margin-left: 20px; color: white; background-color: #32CD32;">Aggiungi</button>
                 <button mat-button (click)="rimuoviAttivitaSelezionata(attivita)"
-                style="margin-top: 20px; color: white; background-color: red;">Rimuovi</button>
-                <button mat-button matStepperNext
-                style="margin-top: 40px; margin-left: 20px; color: white; background-color: #8bc34a;">Prossima attività</button>
+                style="margin-top: 40px; color: white; background-color: red;">Rimuovi</button>
                 <button mat-button matStepperPrevious
-                style="margin-top: 40px; margin-left: 20px; color: white; background-color: #8bc34a;">Attività precedente</button>
+                style="margin-top: 40px; margin-left: auto; color: white; background-color: #8bc34a;">Attività precedente</button>
+                <button mat-button matStepperNext
+                style="margin-top: 40px; color: white; background-color: #8bc34a;">Prossima attività</button>
             </mat-card-actions>
           </mat-card>
         </mat-step>

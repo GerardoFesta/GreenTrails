@@ -50,13 +50,13 @@
     background-color: transparent;
     color: black;
     border: none;
-    box-shadow: none;
     margin-top: 40px;
     border: 5px solid lightgreen;
-    border-radius: 10px;
     width: 100%;
     height: auto;
     padding: 20px;
+    border-radius: 20px;
+    box-shadow: 7px 7px 5px #dedede;
   }
 
   .button-container{
