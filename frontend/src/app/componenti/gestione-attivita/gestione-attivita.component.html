@@ -6,7 +6,8 @@
         <button mat-icon-button aria-label="add_circle_outline" (click)="createAttivita()">
           <mat-icon style="color: #00FF00;">add_circle_outline</mat-icon>
         </button>
-        <p style="margin-top: 10px; cursor: pointer; user-select: none; color: #00FF00; font-weight: 450;" (click)="createAttivita()">Crea attività</p>
+        <p style="margin-top: 10px; cursor: pointer; user-select: none; color: #00FF00; font-weight: 450;"
+          (click)="createAttivita()">Crea attività</p>
       </div>
       <div class="righttools">
         <input type="text" class="searchbar" placeholder="Cerca..." [(ngModel)]="filterTerm" />
@@ -18,16 +19,15 @@
         <th mat-sort-header="nome">Nome</th>
         <th mat-sort-header="categoria">Categoria</th>
       </tr>
-
       <tr *ngFor="let attivita of sortedData | filter: filterTerm">
         <td style="width: 30px;">{{attivita.numero}}</td>
         <td>{{attivita.nome}}</td>
         <td>{{attivita.categoria}}</td>
         <td style="border: none;">
-          <button mat-icon-button aria-label="edit" (click)="edit()">
+          <button mat-icon-button aria-label="edit" (click)="edit(attivita.numero)">
             <i class="fa-regular fa-pen-to-square" style="font-size: x-large; color: #00FF00;"></i>
           </button>
-          <button mat-icon-button aria-label="delete_forever" (click)="delete()" color="warn">
+          <button mat-icon-button aria-label="delete_forever" (click)="delete(attivita.numero)" color="warn">
             <mat-icon style="font-size: x-large;">delete_forever</mat-icon>
           </button>
         </td>

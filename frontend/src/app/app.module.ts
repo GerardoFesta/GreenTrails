@@ -80,6 +80,8 @@ import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/
 import { PopUpConfermaComponent } from './componenti/inserimento-attivita/pop-up-conferma/pop-up-conferma.component';
 import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
 import { PopupModificaComponent } from './componenti/gestione-attivita/popup-modifica/popup-modifica.component';
+import { PopupModificaAlloggioComponent } from './componenti/gestione-attivita/popup-modifica-alloggio/popup-modifica-alloggio.component';
+import { PopupConfermaModificaComponent } from './componenti/gestione-attivita/popup-conferma-modifica/popup-conferma-modifica.component';
 
 
 @NgModule({
@@ -113,6 +115,8 @@ import { PopupModificaComponent } from './componenti/gestione-attivita/popup-mod
     PopUpConfermaComponent,
     PopUpAlloggioComponent,
     PopupModificaComponent,
+    PopupModificaAlloggioComponent,
+    PopupConfermaModificaComponent,
   ],
   imports: [
     BrowserModule,
