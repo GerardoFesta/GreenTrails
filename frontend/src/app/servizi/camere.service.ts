@@ -28,4 +28,11 @@ export class CamereService {
     
     return this.http.post<any>(`${this.baseUrl}`, params, {headers});
   }
+
+  getCamereDisponibili(id: number): Observable<any>{
+
+    return this.http.get<any[]>(`${this.baseUrl}/perAlloggio/${id}`);
+
+  }
+
 }
