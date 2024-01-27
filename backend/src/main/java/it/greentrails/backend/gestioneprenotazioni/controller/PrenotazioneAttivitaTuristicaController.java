@@ -40,9 +40,10 @@ public class PrenotazioneAttivitaTuristicaController {
       @RequestParam("idAttivita") final Long idAttivita,
       @RequestParam("numAdulti") final int adulti,
       @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
-      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
-      @RequestParam(value = "dataFine", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd")
-      final Date dataFine
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
+      final Date dataInizio,
+      @RequestParam(value = "dataFine", required = false)
+      @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm") final Date dataFine
   ) {
     try {
       Itinerario itinerario = itinerariService.findById(idItinerario);
