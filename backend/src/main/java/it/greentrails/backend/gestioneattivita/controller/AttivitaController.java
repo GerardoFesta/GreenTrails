@@ -138,6 +138,75 @@ public class AttivitaController {
         attivitaService.getAttivitaTuristicheEconomiche(limite));
   }
 
+  @PostMapping("{id}")
+  private ResponseEntity<Object> modificaAttivita(
+      @AuthenticationPrincipal Utente utente,
+      @PathVariable("id") final long idAttivita,
+      @RequestParam("nome") final String nome,
+      @RequestParam("indirizzo") final String indirizzo,
+      @RequestParam("cap") final String cap,
+      @RequestParam("citta") final String citta,
+      @RequestParam("provincia") final String provincia,
+      @RequestParam("latitudine") final Double latitudine,
+      @RequestParam("longitudine") final Double longitudine,
+      @RequestParam("descrizioneBreve") final String descrizioneBreve,
+      @RequestParam("descrizioneLunga") final String descrizioneLunga,
+      @RequestParam("valori") final long idValori,
+      @RequestParam(value = "prezzo", required = false) final Double prezzo,
+      @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
+      @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
+      @RequestParam(value = "categoriaAttivitaTuristica", required = false)
+      final Integer categoriaAttivitaTuristica
+  ) {
+    try {
+      Utente gestore = gestioneUtenzeService.findById(utente.getId());
+      Attivita attivita = attivitaService.findById(idAttivita);
+      if (!gestore.getId().equals(attivita.getGestore().getId()) || attivita.isEliminata()) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Attività non trovata.");
+      }
+      attivita.setGestore(gestore);
+      attivita.setNome(nome);
+      attivita.setIndirizzo(indirizzo);
+      attivita.setCap(cap);
+      attivita.setCitta(citta);
+      attivita.setProvincia(provincia);
+      attivita.setCoordinate(new Point(latitudine, longitudine));
+      attivita.setDescrizioneBreve(descrizioneBreve);
+      attivita.setDescrizioneLunga(descrizioneLunga);
+      attivita.setValoriEcosostenibilita(valoriEcosostenibilitaService.findById(idValori));
+      if (attivita.isAlloggio()) {
+        if (categoriaAlloggio == null) {
+          return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+              "Categoria per alloggio non presente.");
+        }
+        attivita.setCategoriaAlloggio(CategorieAlloggio.values()[categoriaAlloggio]);
+
+      } else {
+        if (disponibilita == null) {
+          return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+              "Disponibilità per attività turistica non presente.");
+        }
+        attivita.setDisponibilita(disponibilita);
+        if (prezzo == null) {
+          return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+              "Prezzo per attività turistica non presente.");
+        }
+        attivita.setPrezzo(prezzo);
+        if (categoriaAttivitaTuristica == null) {
+          return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+              "Categoria per attività turistica non presente.");
+        }
+        attivita.setCategoriaAttivitaTuristica(
+            CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
+      }
+      attivita = attivitaService.saveAttivita(attivita);
+      return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
+
   @DeleteMapping("{id}")
   private ResponseEntity<Object> cancellaAttivita(
       @AuthenticationPrincipal Utente utente,
