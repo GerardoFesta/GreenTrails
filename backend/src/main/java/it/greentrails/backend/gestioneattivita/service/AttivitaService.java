@@ -14,24 +14,15 @@ public interface AttivitaService {
   List<Attivita> findAllAttivitaByGestore(Long idGestore) throws Exception;
 
   Optional<Attivita> findByValori(ValoriEcosostenibilita valoriEcosostenibilita)
-      throws Exception;
+          throws Exception;
 
   List<Attivita> getAttivitaTuristicheEconomiche(int limite);
 
-  public boolean deleteAttivita(Attivita attivita) throws Exception {
-    if (attivita == null) {
-      throw new Exception("L'attività è vuota.");
-    }
-    repository.delete(attivita);
-    repository.flush();
-    return repository.findById(attivita.getId()).isEmpty();
-  }
-  public List<Attivita> getAlloggi(int limite) {
-    return  repository.getAlloggi(Pageable.ofSize(limite)).toList();
-  }
+  boolean deleteAttivita(Attivita attivita) throws Exception;
 
-  public List<Attivita> getAttivitaTuristiche(int limite) {
-    return  repository.getAttivitaTuristiche(Pageable.ofSize(limite)).toList();
-  }
+  List<Attivita> getAttivitaTuristiche(int limite);
 
+  List<Attivita> getAlloggi(int limite);
+
+  List<Attivita> findAll();
 }
