@@ -3,7 +3,7 @@ package it.greentrails.backend.gestioneitinerari.controller;
 import it.greentrails.backend.entities.Itinerario;
 import it.greentrails.backend.entities.Preferenze;
 import it.greentrails.backend.entities.Utente;
-import it.greentrails.backend.gestioneitinerari.service.GestioneItinerariService;
+import it.greentrails.backend.gestioneitinerari.service.ItinerariService;
 import it.greentrails.backend.gestioneprenotazioni.service.PrenotazioneAlloggioService;
 import it.greentrails.backend.gestioneprenotazioni.service.PrenotazioneAttivitaTuristicaService;
 import it.greentrails.backend.gestioneutenze.service.GestioneUtenzeService;
@@ -23,9 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/itinerari")
 @RequiredArgsConstructor
-public class GestioneItinerariController {
+public class ItinerariController {
 
-  private final GestioneItinerariService gestioneItinerariService;
+  private final ItinerariService itinerariService;
   private final PrenotazioneAttivitaTuristicaService prenotazioneAttivitaTuristicaService;
   private final PrenotazioneAlloggioService prenotazioneAlloggioService;
   private final GestioneUtenzeService gestioneUtenzeService;
@@ -37,7 +37,7 @@ public class GestioneItinerariController {
     try {
       Itinerario itinerario = new Itinerario();
       itinerario.setVisitatore(utente);
-      itinerario = gestioneItinerariService.saveItinerario(itinerario);
+      itinerario = itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK, itinerario);
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
@@ -50,10 +50,8 @@ public class GestioneItinerariController {
   ) {
     try {
       Preferenze preferenze = gestioneUtenzeService.getPreferenzeById(utente.getId());
-      // TODO: integrare modulo AI
-      Itinerario itinerario = gestioneItinerariService.createByPreferenze(preferenze);
-      return ResponseGenerator.generateResponse(HttpStatus.NOT_IMPLEMENTED,
-          "Funzione non implementata.");
+      Itinerario itinerario = itinerariService.createByPreferenze(preferenze);
+      return ResponseGenerator.generateResponse(HttpStatus.OK, itinerario);
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
@@ -65,7 +63,7 @@ public class GestioneItinerariController {
       @PathVariable("id") final Long id
   ) {
     try {
-      Itinerario itinerario = gestioneItinerariService.findById(id);
+      Itinerario itinerario = itinerariService.findById(id);
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Itinerario non trovato");
       }
@@ -87,12 +85,12 @@ public class GestioneItinerariController {
       @PathVariable("id") final Long id
   ) {
     try {
-      Itinerario itinerario = gestioneItinerariService.findById(id);
+      Itinerario itinerario = itinerariService.findById(id);
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Itinerario non trovato");
       }
       return ResponseGenerator.generateResponse(HttpStatus.OK,
-          gestioneItinerariService.deleteItinerario(itinerario));
+          itinerariService.deleteItinerario(itinerario));
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
