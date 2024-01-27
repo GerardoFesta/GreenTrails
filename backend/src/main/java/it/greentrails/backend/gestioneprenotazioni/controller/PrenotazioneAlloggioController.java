@@ -5,6 +5,7 @@ import it.greentrails.backend.entities.Camera;
 import it.greentrails.backend.entities.Itinerario;
 import it.greentrails.backend.entities.PrenotazioneAlloggio;
 import it.greentrails.backend.entities.Utente;
+import it.greentrails.backend.enums.StatoPrenotazione;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.CameraService;
 import it.greentrails.backend.gestioneitinerari.service.ItinerariService;
@@ -65,6 +66,7 @@ public class PrenotazioneAlloggioController {
       prenotazioneAlloggio.setNumBambini(bambini);
       prenotazioneAlloggio.setNumCamere(numCamere);
       prenotazioneAlloggio.setDataInizio(dataInizio);
+      prenotazioneAlloggio.setStato(StatoPrenotazione.CREATA);
       double prezzo = numCamere * camera.getPrezzo();
       prenotazioneAlloggio.setDataFine(dataFine);
       if (prenotazioneAlloggioService.controllaDisponibilitaCamera(camera,
@@ -82,6 +84,59 @@ public class PrenotazioneAlloggioController {
       itinerario.setTotale(prezzo + itinerario.getTotale());
       itinerariService.saveItinerario(itinerario);
       return ResponseGenerator.generateResponse(HttpStatus.OK, prenotazioneAlloggio);
+    } catch (Exception e) {
+      return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
+    }
+  }
+
+  @PostMapping("{id}")
+  private ResponseEntity<Object> confermaPrenotazioneAlloggio(
+      @AuthenticationPrincipal Utente utente,
+      @PathVariable("id") final long id,
+      @RequestParam("numAdulti") final int adulti,
+      @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataInizio,
+      @RequestParam("dataFine") @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataFine,
+      @RequestParam("numCamere") final int numCamere
+  ) {
+    try {
+      PrenotazioneAlloggio prenotazione = prenotazioneAlloggioService.findById(id);
+      Itinerario itinerario = prenotazione.getItinerario();
+      if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
+        return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,
+            "Prenotazione non trovata");
+      }
+      if (prenotazione.getStato() != StatoPrenotazione.NON_CONFERMATA) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Prenotazione non modificabile");
+      }
+      Camera camera = prenotazione.getCamera();
+      if (adulti + bambini > camera.getCapienza() * numCamere) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Numero camere non sufficienti");
+      }
+      prenotazione.setNumAdulti(adulti);
+      prenotazione.setNumBambini(bambini);
+      prenotazione.setNumCamere(numCamere);
+      prenotazione.setDataInizio(dataInizio);
+      prenotazione.setStato(StatoPrenotazione.CREATA);
+      double prezzo = numCamere * camera.getPrezzo();
+      prenotazione.setDataFine(dataFine);
+      if (prenotazioneAlloggioService.controllaDisponibilitaCamera(camera,
+          dataInizio, dataFine) < numCamere) {
+        return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
+            "Camera non disponibile");
+      }
+      long durataOre = Duration.between(dataInizio.toInstant(), dataFine.toInstant()).toHours();
+      if (durataOre > 24) {
+        prezzo = prezzo * Math.ceil((double) durataOre / 24);
+      }
+      prenotazione.setPrezzo(prezzo);
+      prenotazione = prenotazioneAlloggioService.savePrenotazioneAlloggio(camera,
+          prenotazione);
+      itinerario.setTotale(prezzo + itinerario.getTotale());
+      itinerariService.saveItinerario(itinerario);
+      return ResponseGenerator.generateResponse(HttpStatus.OK, prenotazione);
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
@@ -182,5 +237,6 @@ public class PrenotazioneAlloggioController {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
   }
+
 
 }
