@@ -44,6 +44,7 @@ public class SecurityConfig {
 
             .requestMatchers(HttpMethod.GET, "/api/attivita/*").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/attivita/perPrezzo").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/attivita/perGestore").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/attivita/alloggi").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/attivita/attivitaTuristiche").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/attivita/all").permitAll()
