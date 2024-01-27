@@ -4,7 +4,6 @@ import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.CategorieAlloggio;
 import it.greentrails.backend.enums.CategorieAttivitaTuristica;
-import it.greentrails.backend.enums.CategorieAttivitaTuristica;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.ValoriEcosostenibilitaService;
 import it.greentrails.backend.gestioneupload.service.ArchiviazioneService;
@@ -37,24 +36,23 @@ public class AttivitaController {
 
   @PostMapping
   private ResponseEntity<Object> creaAttivita(
-      @AuthenticationPrincipal Utente utente,
-      @RequestParam("alloggio") final boolean isAlloggio,
-      @RequestParam("nome") final String nome,
-      @RequestParam("indirizzo") final String indirizzo,
-      @RequestParam("cap") final String cap,
-      @RequestParam("citta") final String citta,
-      @RequestParam("provincia") final String provincia,
-      @RequestParam("latitudine") final Double latitudine,
-      @RequestParam("longitudine") final Double longitudine,
-      @RequestParam("descrizioneBreve") final String descrizioneBreve,
-      @RequestParam("descrizioneLunga") final String descrizioneLunga,
-      @RequestParam("valori") final long idValori,
-      @RequestParam("immagine") final MultipartFile immagine,
-      @RequestParam(value = "prezzo", required = false) final Double prezzo,
-      @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
-      @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
-      @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica,
-      @RequestParam(value = "prezzo", required = false) final Double prezzo
+          @AuthenticationPrincipal Utente utente,
+          @RequestParam("alloggio") final boolean isAlloggio,
+          @RequestParam("nome") final String nome,
+          @RequestParam("indirizzo") final String indirizzo,
+          @RequestParam("cap") final String cap,
+          @RequestParam("citta") final String citta,
+          @RequestParam("provincia") final String provincia,
+          @RequestParam("latitudine") final Double latitudine,
+          @RequestParam("longitudine") final Double longitudine,
+          @RequestParam("descrizioneBreve") final String descrizioneBreve,
+          @RequestParam("descrizioneLunga") final String descrizioneLunga,
+          @RequestParam("valori") final long idValori,
+          @RequestParam("immagine") final MultipartFile immagine,
+          @RequestParam(value = "prezzo", required = false) final Double prezzo,
+          @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
+          @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
+          @RequestParam(value = "categoriaAttivitaTuristica", required = false) final Integer categoriaAttivitaTuristica
   ) {
     try {
       Utente gestore = gestioneUtenzeService.findById(utente.getId());
@@ -77,27 +75,27 @@ public class AttivitaController {
       if (isAlloggio) {
         if (categoriaAlloggio == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-              "Categoria per alloggio non presente.");
+                  "Categoria per alloggio non presente.");
         }
         attivita.setCategoriaAlloggio(CategorieAlloggio.values()[categoriaAlloggio]);
 
       } else {
         if (disponibilita == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-              "Disponibilità per attività turistica non presente.");
+                  "Disponibilità per attività turistica non presente.");
         }
         attivita.setDisponibilita(disponibilita);
         if (prezzo == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-              "Prezzo per attività turistica non presente.");
+                  "Prezzo per attività turistica non presente.");
         }
         attivita.setPrezzo(prezzo);
         if (categoriaAttivitaTuristica == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-              "Categoria per attività turistica non presente.");
+                  "Categoria per attività turistica non presente.");
         }
         attivita.setCategoriaAttivitaTuristica(
-            CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
+                CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
       }
       attivita = attivitaService.saveAttivita(attivita);
       return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
@@ -108,7 +106,7 @@ public class AttivitaController {
 
   @GetMapping("{id}")
   private ResponseEntity<Object> visualizzaAttivita(
-      @PathVariable("id") final Long id
+          @PathVariable("id") final Long id
   ) {
     try {
       Attivita attivita = attivitaService.findById(id);
@@ -118,13 +116,13 @@ public class AttivitaController {
     }
   }
 
-  @GetMapping
+  @GetMapping("perGestore")
   private ResponseEntity<Object> visualizzaAttivitaPerGestore(
-      @AuthenticationPrincipal Utente utente
+          @AuthenticationPrincipal Utente utente
   ) {
     try {
       return ResponseGenerator.generateResponse(HttpStatus.OK,
-          attivitaService.findAllAttivitaByGestore(utente.getId()));
+              attivitaService.findAllAttivitaByGestore(utente.getId()));
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
@@ -132,41 +130,41 @@ public class AttivitaController {
 
   @GetMapping("perPrezzo")
   private ResponseEntity<Object> visualizzaAttivitaPerPrezzo(
-      @RequestParam(value = "limite", required = false) Integer limite
+          @RequestParam(value = "limite", required = false) Integer limite
   ) {
     if (limite == null) {
       limite = 10;
     }
     return ResponseGenerator.generateResponse(HttpStatus.OK,
-        attivitaService.getAttivitaTuristicheEconomiche(limite));
+            attivitaService.getAttivitaTuristicheEconomiche(limite));
   }
 
   @PostMapping("{id}")
   private ResponseEntity<Object> modificaAttivita(
-      @AuthenticationPrincipal Utente utente,
-      @PathVariable("id") final long idAttivita,
-      @RequestParam("nome") final String nome,
-      @RequestParam("indirizzo") final String indirizzo,
-      @RequestParam("cap") final String cap,
-      @RequestParam("citta") final String citta,
-      @RequestParam("provincia") final String provincia,
-      @RequestParam("latitudine") final Double latitudine,
-      @RequestParam("longitudine") final Double longitudine,
-      @RequestParam("descrizioneBreve") final String descrizioneBreve,
-      @RequestParam("descrizioneLunga") final String descrizioneLunga,
-      @RequestParam("valori") final long idValori,
-      @RequestParam(value = "prezzo", required = false) final Double prezzo,
-      @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
-      @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
-      @RequestParam(value = "categoriaAttivitaTuristica", required = false)
-      final Integer categoriaAttivitaTuristica
+          @AuthenticationPrincipal Utente utente,
+          @PathVariable("id") final long idAttivita,
+          @RequestParam("nome") final String nome,
+          @RequestParam("indirizzo") final String indirizzo,
+          @RequestParam("cap") final String cap,
+          @RequestParam("citta") final String citta,
+          @RequestParam("provincia") final String provincia,
+          @RequestParam("latitudine") final Double latitudine,
+          @RequestParam("longitudine") final Double longitudine,
+          @RequestParam("descrizioneBreve") final String descrizioneBreve,
+          @RequestParam("descrizioneLunga") final String descrizioneLunga,
+          @RequestParam("valori") final long idValori,
+          @RequestParam(value = "prezzo", required = false) final Double prezzo,
+          @RequestParam(value = "disponibilita", required = false) final Integer disponibilita,
+          @RequestParam(value = "categoriaAlloggio", required = false) final Integer categoriaAlloggio,
+          @RequestParam(value = "categoriaAttivitaTuristica", required = false)
+          final Integer categoriaAttivitaTuristica
   ) {
     try {
       Utente gestore = gestioneUtenzeService.findById(utente.getId());
       Attivita attivita = attivitaService.findById(idAttivita);
       if (!gestore.getId().equals(attivita.getGestore().getId()) || attivita.isEliminata()) {
         return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-            "Attività non trovata.");
+                "Attività non trovata.");
       }
       attivita.setGestore(gestore);
       attivita.setNome(nome);
@@ -181,27 +179,27 @@ public class AttivitaController {
       if (attivita.isAlloggio()) {
         if (categoriaAlloggio == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-              "Categoria per alloggio non presente.");
+                  "Categoria per alloggio non presente.");
         }
         attivita.setCategoriaAlloggio(CategorieAlloggio.values()[categoriaAlloggio]);
 
       } else {
         if (disponibilita == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-              "Disponibilità per attività turistica non presente.");
+                  "Disponibilità per attività turistica non presente.");
         }
         attivita.setDisponibilita(disponibilita);
         if (prezzo == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-              "Prezzo per attività turistica non presente.");
+                  "Prezzo per attività turistica non presente.");
         }
         attivita.setPrezzo(prezzo);
         if (categoriaAttivitaTuristica == null) {
           return ResponseGenerator.generateResponse(HttpStatus.BAD_REQUEST,
-              "Categoria per attività turistica non presente.");
+                  "Categoria per attività turistica non presente.");
         }
         attivita.setCategoriaAttivitaTuristica(
-            CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
+                CategorieAttivitaTuristica.values()[categoriaAttivitaTuristica]);
       }
       attivita = attivitaService.saveAttivita(attivita);
       return ResponseGenerator.generateResponse(HttpStatus.OK, attivita);
@@ -212,8 +210,8 @@ public class AttivitaController {
 
   @DeleteMapping("{id}")
   private ResponseEntity<Object> cancellaAttivita(
-      @AuthenticationPrincipal Utente utente,
-      @PathVariable("id") final Long id
+          @AuthenticationPrincipal Utente utente,
+          @PathVariable("id") final Long id
   ) {
     try {
       Attivita attivita = attivitaService.findById(id);
@@ -221,14 +219,14 @@ public class AttivitaController {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND, "Attività non trovata");
       }
       return ResponseGenerator.generateResponse(HttpStatus.OK,
-          attivitaService.deleteAttivita(attivita));
+              attivitaService.deleteAttivita(attivita));
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
   }
   @GetMapping("alloggi")
   private ResponseEntity<Object> getAlloggi(
-  @RequestParam(value = "limite", required = false) Integer limite
+          @RequestParam(value = "limite", required = false) Integer limite
   ) {
     if (limite == null) {
       limite = 5;
@@ -246,5 +244,11 @@ public class AttivitaController {
     }
     return ResponseGenerator.generateResponse(HttpStatus.OK,
             attivitaService.getAttivitaTuristiche(limite));
+  }
+
+  @GetMapping("all")
+  private ResponseEntity<Object> findAll() {
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+            attivitaService.findAll());
   }
 }
