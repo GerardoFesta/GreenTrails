@@ -13,7 +13,7 @@ export class CamereService {
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   inserimentoCamere(idAlloggio: any, tipoCamera: string, disponibilita: any, 
-    descrizione: string, capienza: any): Observable<any> {
+    descrizione: string, capienza: any, prezzo: any): Observable<any> {
 
       const params = new HttpParams()
       .set('idAlloggio', idAlloggio)
@@ -21,6 +21,7 @@ export class CamereService {
       .set('disponibilita', disponibilita)
       .set('descrizione', descrizione)
       .set('capienza', capienza)
+      .set('prezzo', prezzo)
       
       const headers = new HttpHeaders({
         Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
