@@ -63,6 +63,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { QuestionarioComponent } from './componenti/questionario/questionario.component';
+import { PopUpQuestionarioComponent } from './componenti/questionario/pop-up-questionario/pop-up-questionario.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { QuestionarioComponent } from './componenti/questionario/questionario.co
     MapComponent,
     RegistrazioneComponent,
     QuestionarioComponent,
+    PopUpQuestionarioComponent,
   ],
   imports: [
     BrowserModule,

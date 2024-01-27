@@ -1,6 +1,9 @@
 import { UtenteService } from './../../servizi/utente.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PopUpQuestionarioComponent } from './pop-up-questionario/pop-up-questionario.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-questionario',
@@ -11,16 +14,16 @@ export class QuestionarioComponent implements OnInit {
   questionario : FormGroup
   mostraRisultati = false;
 
-  constructor(private formBuilder: FormBuilder, private utenteService: UtenteService) { 
+  constructor(private formBuilder: FormBuilder, private utenteService: UtenteService, private router: Router, private dialog: MatDialog) { 
   this.questionario = this.formBuilder.group({
-    viaggioPreferito: [],
-    alloggioPreferito: [],
-    attivitaPreferita:[],
-    preferenzaAlimentare:[],
-    animaleDomestico:[],
-    budgetPreferito:[],
-    souvenir:[],
-    stagioniPreferite:[],
+    viaggioPreferito: ['', Validators.required],
+    alloggioPreferito: ['', Validators.required],
+    attivitaPreferita:['', Validators.required],
+    preferenzaAlimentare:['', Validators.required],
+    animaleDomestico:['', Validators.required],
+    budgetPreferito:['', Validators.required],
+    souvenir:['', Validators.required],
+    stagioniPreferite:['', Validators.required],
 
   
   
@@ -30,13 +33,23 @@ export class QuestionarioComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  mostraScelte() {
+  openPopupQuestionario(message: string):void{
+    const dialogRef = this.dialog.open(PopUpQuestionarioComponent,
+    {    width: '250px',
+    data: { message },
+    disableClose: true,})
+  }
+
+  esci() {
+
     // Recupera i valori e mostra i risultati
-    console.log(this.questionario.value);
-    this.mostraRisultati = true;
+    this.router.navigate(['/registrazione']);
+
   }
   
 invio(){
+
+
   this.utenteService.invioQuestionario(
     this.questionario.get('viaggioPreferito')?.value,
     this.questionario.get('alloggioPreferito')?.value,
@@ -48,7 +61,7 @@ invio(){
     this.questionario.get('stagioniPreferite')?.value,
   ).subscribe(
     (response) =>{
-      console.log(response)
+      this.openPopupQuestionario('Preferenze inviate')
   }
 )}
 
