@@ -1,6 +1,6 @@
 .corpo{
     display:flex;
-    background-color:rgb(221, 253, 218);;
+    background-color:white;
     width:100%;
     height:100%;
 }
@@ -15,7 +15,7 @@
 .elementi{
     height:100%;
     width:70%;
-    background-color: rgb(236, 250, 234);
+    background-color: white;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -60,7 +60,7 @@
 
 .lista-container {
   background-color: rgb(235, 255, 225);
-  border: 4px solid #00ff00;
+  border: 5px solid lightgreen;
   width: 95%;
   max-width: 100%;
   border-radius: 20px;
@@ -105,7 +105,7 @@ mat-list-item {
 
   .custom-card {
     background-color: white;
-    border: 4px solid #00ff00;  
+    border: 5px solid lightgreen;  
     border-radius: 8px; 
     padding: 16px;
     height: 60%;
@@ -114,6 +114,7 @@ mat-list-item {
     margin-bottom: 20px;
     overflow: hidden;
     cursor: pointer;
+    box-shadow: 7px 7px 5px #dedede;
   }
 
   .custom-card p {
