@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopupEliminazioneComponent } from './popup-eliminazione.component';
+import { PopupEliminazioneComponent } from './popup-eliminazione-attivita.component';
 
 describe('PopupEliminazioneComponent', () => {
   let component: PopupEliminazioneComponent;

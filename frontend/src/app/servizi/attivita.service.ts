@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { InserimentoAttivitaComponent } from '../componenti/inserimento-attivita/inserimento-attivita.component';
 import { MatDialog } from '@angular/material/dialog';
-import { PopupModificaComponent } from '../componenti/gestione-attivita/popup-modifica/popup-modifica.component';
+import { PopupModificaComponent } from '../componenti/gestione-attivita/popup-modifica-attivita-turistica/popup-modifica-attivita-turistica.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -96,7 +96,7 @@ export class AttivitaService {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
-    return this.http.post<any>(`${this.baseUrl}/${id}`, dati, { headers, params });
+    return this.http.post<any>(`${this.baseUrl}/${id}`, dati, { headers });
   }
 
 

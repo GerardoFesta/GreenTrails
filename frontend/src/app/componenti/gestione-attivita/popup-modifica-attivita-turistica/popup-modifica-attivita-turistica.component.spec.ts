@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PopupModificaComponent } from './popup-modifica.component';
+import { PopupModificaComponent } from './popup-modifica-attivita-turistica.component';
 
 describe('PopupModificaComponent', () => {
   let component: PopupModificaComponent;

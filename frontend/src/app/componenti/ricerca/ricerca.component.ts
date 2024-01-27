@@ -48,7 +48,8 @@ export class RicercaComponent implements OnInit, OnDestroy {
     this.attivitaService.findAll().subscribe((risposta) => {
       console.log("LISTA ATTIVITA: ", risposta);
 
-      this.listaAttivita = risposta.data.map((item: any, index: number) => {
+      this.listaAttivita = risposta.data.filter((attivita: any) => !attivita.eliminata).
+      map((item: any, index: number) => {
         return {
           nome: item.nome,
           citta: item.citta,

@@ -75,13 +75,15 @@ import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.com
 import { RicercaComponent } from './componenti/ricerca/ricerca.component';
 import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
 import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
-import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup-eliminazione/popup-eliminazione.component';
+import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup-eliminazione-attivita/popup-eliminazione-attivita.component';
 import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
 import { PopUpConfermaComponent } from './componenti/inserimento-attivita/pop-up-conferma/pop-up-conferma.component';
 import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
-import { PopupModificaComponent } from './componenti/gestione-attivita/popup-modifica/popup-modifica.component';
+import { PopupModificaComponent } from './componenti/gestione-attivita/popup-modifica-attivita-turistica/popup-modifica-attivita-turistica.component';
 import { PopupModificaAlloggioComponent } from './componenti/gestione-attivita/popup-modifica-alloggio/popup-modifica-alloggio.component';
 import { PopupConfermaModificaComponent } from './componenti/gestione-attivita/popup-conferma-modifica/popup-conferma-modifica.component';
+import { PopupModificaDatiAlloggioComponent } from './componenti/gestione-attivita/popup-modifica-dati-alloggio/popup-modifica-dati-alloggio.component';
+import { PopupEliminazioneCameraComponent } from './componenti/gestione-attivita/popup-eliminazione-camera/popup-eliminazione-camera.component';
 
 
 @NgModule({
@@ -117,6 +119,8 @@ import { PopupConfermaModificaComponent } from './componenti/gestione-attivita/p
     PopupModificaComponent,
     PopupModificaAlloggioComponent,
     PopupConfermaModificaComponent,
+    PopupModificaDatiAlloggioComponent,
+    PopupEliminazioneCameraComponent,
   ],
   imports: [
     BrowserModule,

@@ -54,6 +54,7 @@ camereInserite: any[] = []
       disponibilita: this.camere.get('disponibilita')?.value,
       descrizione: this.camere.get('descrizione')?.value,
       capienza: this.camere.get('capienza')?.value,
+      prezzo: this.camere.get('prezzo')?.value
     };
 
     // Aggiungi la camera all'array
@@ -65,6 +66,7 @@ camereInserite: any[] = []
       this.camere.get('disponibilita')?.value,
       this.camere.get('descrizione')?.value,
       this.camere.get('capienza')?.value,
+      this.camere.get('prezzo')?.value
 
     ).subscribe((response) => {
 

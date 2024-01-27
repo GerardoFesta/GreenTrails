@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Aggiungi camere</h1>
-<div [formGroup]="camere">
+<div [formGroup]="camere"  style="overflow-y: auto;">
   <mat-form-field appearance="outline" style="margin: 2%; margin-bottom: 0%">
     <label>Categoria: </label>
     <input formControlName="categoria" matInput />
@@ -52,10 +52,13 @@
   <div *ngIf="camereInserite.length > 0">
     <h4>Camere Inserite:</h4>
     <ul>
-      <li *ngFor="let camera of camereInserite">
+      <li *ngFor="let camera of camereInserite" [class.evidenziato]="eliminazioneConfermata">
         Categoria: {{ camera.categoria }}, Disponibilità:
         {{ camera.disponibilita }}, Descrizione: {{ camera.descrizione }},
         Capienza: {{ camera.capienza }}
+        <button mat-icon-button aria-label="delete_forever" (click)="delete(camera.id)" color="warn">
+          <mat-icon style="font-size: x-large;">delete_forever</mat-icon>
+        </button>
       </li>
     </ul>
   </div>

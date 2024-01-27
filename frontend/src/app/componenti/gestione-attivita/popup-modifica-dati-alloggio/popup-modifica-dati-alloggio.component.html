@@ -1,24 +1,24 @@
-<h1 mat-dialog-title>Inserisci i dati</h1>
-
+<h1 mat-dialog-title>Riconferma i dati originali copiandoli e incollandoli nelle caselle di testo appropriate</h1>
 <mat-dialog-content fxLayout="column" fxLayoutGap="10px">
   <form [formGroup]="inserimento">
     <div class="sezione">
       <div>
         <!--PRIMA PARTE-->
         <!--Inserimento nome-->
+        <label>{{nome}}</label>
         <mat-form-field appearance="outline" style="margin: 2%; margin-bottom: 0%">
-          <mat-label>Inserisci Nome</mat-label>
-          <input matInput placeholder="Nome" formControlName="nome" required value="{{data.nome}}" />
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" required/>
           <mat-error *ngIf="inserimento.get('nome')?.hasError('required')">
             Campo obbligatorio
           </mat-error>
         </mat-form-field>
         <!-- Selezione tipo -->
         <mat-form-field appearance="outline" style="margin: 2%; margin-bottom: 0%">
-          <mat-label>Tipo</mat-label>
+          <mat-label>Seleziona il tipo originale</mat-label>
           <mat-select formControlName="tipo" [errorStateMatcher]="matcher">
             <mat-option value="true">Alloggio</mat-option>
-            <mat-option value="false">Attività</mat-option>
+            <!-- <mat-option value="false">Attività</mat-option> -->
           </mat-select>
           <mat-error *ngIf="inserimento.get('tipo')?.hasError('required')">
             Campo obbligatorio
@@ -34,28 +34,30 @@
               </mat-option>
             </ng-container>
 
-            <ng-container *ngFor="let categorieAtt of categorieAtt">
+            <!-- <ng-container *ngFor="let categorieAtt of categorieAtt">
               <mat-option *ngIf="inserimento.get('tipo')?.value !== 'true'" [value]="categorieAtt.value">
                 {{ categorieAtt.label }}
               </mat-option>
-            </ng-container>
+            </ng-container> -->
           </mat-select>
           <mat-error *ngIf="inserimento.get('categoria')?.hasError('required')">
             Campo obbligatorio
           </mat-error>
         </mat-form-field>
         <!--Seleziona Disponibilità-->
+        <!-- <br>
+        <label for="" *ngIf="disponibilita">{{disponibilita}}</label>
         <mat-form-field *ngIf="inserimento.get('tipo')?.value !== 'true'" appearance="outline"
           style="margin: 2%; margin-bottom: 0%">
           <mat-label>Disponibilità</mat-label>
-          <input class="testo" matInput="number" placeholder="Posti" formControlName="disponibilita" required />
+          <input class="testo" matInput="number" formControlName="disponibilita" required />
           <mat-error *ngIf="inserimento.get('disponibilita')?.hasError('required')">
             Campo obbligatorio
           </mat-error>
           <mat-error *ngIf="inserimento.get('disponibilita')?.hasError('pattern')">
             Consentiti solo numeri
           </mat-error>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
     </div>
     <!-- sezione 2-->
@@ -63,17 +65,20 @@
       <div class="card">
         <div class="sezione1">
           <!--Indirizzo-->
+          <label for="">{{indirizzo}}</label>
           <mat-form-field appearance="outline" style="margin: 2%; width: 60%">
             <mat-label>Indirizzo</mat-label>
-            <input formControlName="indirizzo" matInput placeholder="Via Giovanni Paolo II, 132" />
+            <input formControlName="indirizzo" matInput/>
             <mat-error *ngIf="inserimento.get('indirizzo')?.hasError('required')">
               Campo obbligatorio
             </mat-error>
           </mat-form-field>
           <!--CAP-->
+          <br>
+          <label for="">{{cap}}</label>
           <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
             <mat-label>CAP</mat-label>
-            <input formControlName="cap" matInput placeholder="84084" />
+            <input formControlName="cap" matInput/>
             <mat-error *ngIf="inserimento.get('cap')?.hasError('required')">
               Campo obbligatorio
             </mat-error>
@@ -86,17 +91,21 @@
 
           </mat-form-field>
           <!--Città-->
+          <br>
+          <label for="">{{citta}}</label>
           <mat-form-field appearance="outline" style="margin: 2%; width: 60%">
             <mat-label>Città</mat-label>
-            <input formControlName="citta" matInput placeholder="Fisciano" />
+            <input formControlName="citta" matInput/>
             <mat-error *ngIf="inserimento.get('citta')?.hasError('required')">
               Campo obbligatorio
             </mat-error>
           </mat-form-field>
           <!--Provincia-->
+          <br>
+          <label for="">{{provincia}}</label>
           <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
             <mat-label>Provincia</mat-label>
-            <input formControlName="provincia" matInput placeholder="SA" />
+            <input formControlName="provincia" matInput/>
             <mat-error *ngIf="inserimento.get('provincia')?.hasError('required')">
               Campo obbligatorio
             </mat-error>
@@ -107,9 +116,10 @@
           <!--Coordinate-->
           <div style="margin: 5%">
             <h4>Coordinate Geografiche</h4>
+            <label for="">{{latitudine}}</label>
             <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
-              <mat-label>latitudine</mat-label>
-              <input formControlName="latitudine" matInput placeholder="xx.xx" />
+              <mat-label>Latitudine</mat-label>
+              <input formControlName="latitudine" matInput/>
               <mat-error *ngIf="inserimento.get('latitudine')?.hasError('required')">
                 Campo obbligatorio
               </mat-error>
@@ -118,9 +128,11 @@
               </mat-error>
             </mat-form-field>
 
+            <br>
+            <label for="">{{longitudine}}</label>
             <mat-form-field appearance="outline" style="margin: 2%; width: 300px">
               <mat-label>Longitudine</mat-label>
-              <input formControlName="longitudine" matInput placeholder="xx.xx" />
+              <input formControlName="longitudine" matInput/>
               <mat-error *ngIf="inserimento.get('longitudine')?.hasError('required')">
                 Campo obbligatorio
               </mat-error>
@@ -139,19 +151,23 @@
     <div class="sezione">
       <div class="sezione1">
         <!--Descrizione Breve-->
+        <label for="">{{descrizioneBreve}}</label>
         <mat-form-field style="width: 60%; margin: 2%;">
-          <mat-label>Descrizione Breve</mat-label>
+          <mat-label>Descrizione breve</mat-label>
           <textarea formControlName="descrizioneBreve" matInput></textarea>
           <mat-error *ngIf="inserimento.get('prezzo')?.hasError('required')">
             Campo obbligatorio
           </mat-error>
         </mat-form-field>
         <!--Prezzo-->
+        <br>
+        <!-- <label for="" *ngIf="prezzo">{{prezzo}}</label>
+        <br>
         <mat-icon *ngIf="inserimento.get('tipo')?.value !== 'true'">money</mat-icon>
         <mat-form-field *ngIf="inserimento.get('tipo')?.value !== 'true'" appearance="outline" style="width: 150px;">
 
-          <mat-label>Prezzo</mat-label>
-          <input formControlName="costo" matInput placeholder="xx.xx" />
+          <mat-label *ngIf="prezzo">Prezzo</mat-label>
+          <input formControlName="costo" matInput/>
           <mat-error *ngIf="inserimento.get('costo')?.hasError('required')">
             Campo obbligatorio
           </mat-error>
@@ -159,15 +175,16 @@
             Prezzo errato
           </mat-error>
         </mat-form-field>
-        <mat-icon *ngIf="inserimento.get('tipo')?.value !== 'true'">euro</mat-icon>
+        <mat-icon *ngIf="inserimento.get('tipo')?.value !== 'true'">euro</mat-icon> -->
       </div>
     </div>
     <!-- sezione 5-->
     <div class="sezione">
       <div class="sezione1">
         <!--Descrizione Lunga-->
+        <label for="">{{descrizioneLunga}}</label>
         <mat-form-field class="example-full-width">
-          <mat-label>Descrizione Lunga</mat-label>
+          <mat-label>Descrizione lunga</mat-label>
           <textarea formControlName="descrizioneLunga" matInput></textarea>
           <mat-error *ngIf="inserimento.get('descrizioneLunga')?.hasError('required')">
             Campo obbligatorio
@@ -181,8 +198,7 @@
 <!--PULSANTI DELLA FINESTRA-->
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancella</button>
-  <button mat-button type="submit" [mat-dialog-close]="true" (click)="onSubmit()" 
-  [disabled]="inserimento.invalid">
+  <button mat-button type="submit" [mat-dialog-close]="true" (click)="onSubmit()">
     Inserisci
   </button>
 </mat-dialog-actions>

@@ -15,52 +15,77 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 
 @Component({
   selector: 'app-popup-modifica',
-  templateUrl: './popup-modifica.component.html',
-  styleUrls: ['./popup-modifica.component.css']
+  templateUrl: './popup-modifica-attivita-turistica.component.html',
+  styleUrls: ['./popup-modifica-attivita-turistica.component.css']
 })
 export class PopupModificaComponent implements OnInit {
 
   inserimento: FormGroup;
   matcher = new MyErrorStateMatcher();
-  prezzo: any;
-  latitudine?: number;
-  longitudine?: number;
+
+  nome: any
+  tipo: any
+  categoria: any
+  disponibilita: any
+  indirizzo: any
+  cap: any
+  citta: any
+  provincia: any
+  latitudine: any
+  longitudine: any
+  descrizioneBreve: any
+  prezzo: any
+  descrizioneLunga: any
+
 
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<PopupModificaComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private cdr: ChangeDetectorRef,
     private dialog: MatDialog,
     private attivitaService: AttivitaService
   ) {
-    this.inserimento = this.formBuilder.group({
-      nome: ['', Validators.required],
-      tipo: ['', Validators.required],
-      categoria: [, Validators.required],
-      disponibilita: [0, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-      indirizzo: ['', Validators.required],
-      cap: ['', [Validators.required, Validators.maxLength(5), Validators.pattern(/^[0-9]+$/)]],
-      citta: ['', Validators.required],
-      provincia: ['', [Validators.required, Validators.maxLength(2)]],
-      latitudine: ['', [Validators.required, Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
-      longitudine: ['', [Validators.required, Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
-      descrizioneBreve: ['', Validators.required],
-      costo: [0, [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
-      descrizioneLunga: ['', Validators.required],
-    });
+    this.nome = this.data.nome
+    this.tipo = this.data.tipo
+    this.categoria = this.data.categoria
+    this.disponibilita = this.data.disponibilita
+    this.indirizzo = this.data.indirizzo
+    this.cap = this.data.cap
+    this.citta = this.data.citta
+    this.provincia = this.data.provincia
+    this.latitudine = this.data.latitudine
+    this.longitudine = this.data.longitudine
+    this.descrizioneBreve = this.data.descrizioneBreve
+    this.prezzo = this.data.prezzo
+    this.descrizioneLunga = this.data.descrizioneLunga
 
+    this.inserimento = this.formBuilder.group({
+      nome: [],
+      tipo: [],
+      categoria: [],
+      disponibilita: [, [Validators.pattern(/^[0-9]+$/)]],
+      indirizzo: [],
+      cap: [, [Validators.maxLength(5), Validators.pattern(/^[0-9]+$/)]],
+      citta: [],
+      provincia: [, Validators.maxLength(2)],
+      latitudine: [, [Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
+      longitudine: [, [Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
+      descrizioneBreve: [],
+      costo: [, [Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
+      descrizioneLunga: [],
+    });
+    
   }
 
   ngOnInit(): void {
   }
 
-  categorieAll = [
-    { value: 0, label: 'Hotel' },
-    { value: 1, label: 'Bed & Breakfast' },
-    { value: 2, label: 'Villaggio Turistico' },
-    { value: 3, label: 'Ostello' },
-  ];
+  // categorieAll = [
+  //   { value: 0, label: 'Hotel' },
+  //   { value: 1, label: 'Bed & Breakfast' },
+  //   { value: 2, label: 'Villaggio Turistico' },
+  //   { value: 3, label: 'Ostello' },
+  // ];
 
   categorieAtt = [
     { value: 0, label: 'All\'aperto' },
@@ -94,6 +119,7 @@ export class PopupModificaComponent implements OnInit {
   onSubmit() {
 
     console.log("id:", this.data.id)
+    console.log("isAlloggio", this.data.tipo)
     console.log("nome:", this.data.nome)
     console.log("indirizzo:", this.data.indirizzo)
     console.log("cap:", this.data.cap)
@@ -106,7 +132,7 @@ export class PopupModificaComponent implements OnInit {
     console.log("valori:", this.data.valori)
     console.log("prezzo:", this.data.prezzo)
     console.log("disponibilita:", this.data.disponibilita)
-    console.log("categoriaAlloggio:", this.data.categoriaAlloggio)
+    // console.log("categoriaAlloggio:", this.data.categoriaAlloggio)
     console.log("categoriaAttivitaTuristica:", this.data.categoriaAttivitaTuristica)
 
     const formData = new FormData();
@@ -119,16 +145,20 @@ export class PopupModificaComponent implements OnInit {
     console.log("DISPONIBILITA: ", disponibilitaValue);
     formData.append('disponibilita', disponibilitaValue);
 
-    const tipoValue = this.inserimento.get('tipo')?.value;
-    if (tipoValue === 'true') {
-      const categoriaAlloggioValue = this.inserimento.get('categoria')?.value;
-      console.log("CATEGORIA ALLOGGIO: ", categoriaAlloggioValue);
-      formData.append('categoriaAlloggio', categoriaAlloggioValue);
-    } else {
-      const categoriaAttivitaTuristicaValue = this.inserimento.get('categoria')?.value;
+    // const tipoValue = this.inserimento.get('tipo')?.value;
+    // if (tipoValue === 'true') {
+    //   const categoriaAlloggioValue = this.inserimento.get('categoria')?.value;
+    //   console.log("CATEGORIA ALLOGGIO: ", categoriaAlloggioValue);
+    //   formData.append('categoriaAlloggio', categoriaAlloggioValue);
+    // } else {
+    //   const categoriaAttivitaTuristicaValue = this.inserimento.get('categoria')?.value;
+    //   console.log("CATEGORIA ATTIVITA TURISTICA: ", categoriaAttivitaTuristicaValue);
+    //   formData.append('categoriaAttivitaTuristica', categoriaAttivitaTuristicaValue);
+    // }
+
+    const categoriaAttivitaTuristicaValue = this.inserimento.get('categoria')?.value;
       console.log("CATEGORIA ATTIVITA TURISTICA: ", categoriaAttivitaTuristicaValue);
       formData.append('categoriaAttivitaTuristica', categoriaAttivitaTuristicaValue);
-    }
 
     const indirizzoValue = this.inserimento.get('indirizzo')?.value;
     console.log("INDIRIZZO: ", indirizzoValue);
@@ -178,9 +208,9 @@ export class PopupModificaComponent implements OnInit {
 
         if (this.inserimento.get('tipo')?.value === 'true' && risposta?.status === 'success') {
           const idAttivita = risposta.data.id;
-          this.openPopupAlloggio(idAttivita)
+          // this.openPopupAlloggio(idAttivita)
         } else if (risposta?.status === 'success') {
-          this.openPopupConferma('Attivita inserita con successo')
+          this.openPopupConferma('Attivita modificata con successo')
         }
         else {
           const errorMessage = risposta?.error?.message || 'Errore sconosciuto';

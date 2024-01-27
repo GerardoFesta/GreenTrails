@@ -11,6 +11,7 @@ export class ToolbarHomepageComponent implements OnInit {
 
   isLoggedIn = false;
   isGestore = false;
+  isAdmin = false;
 
   constructor(private router: Router, private cookieService: CookieService) { }
 
@@ -18,12 +19,21 @@ export class ToolbarHomepageComponent implements OnInit {
     this.isLoggedIn = this.cookieService.get('user') !== ''
     console.log("isLoggedIn", this.isLoggedIn);
     this.isGestore = this.cookieService.get('ruolo') === 'ROLE_GESTORE_ATTIVITA'
-    console.log("isGetsore", this.isGestore);
+    console.log("isGestore", this.isGestore);
+    this.encodeAmministratore();
   }
 
   navigate() {
     if (this.isLoggedIn) this.router.navigate(['/areariservata'])
     else this.router.navigate(['/login'])
+  }
+
+  encodeAmministratore() {
+    let email = 'amministratorer@amministratore.com';
+    let password = 'ciaozio123@';
+
+    let encodedCredentials = btoa(email + ":" + password);
+    console.log('Authorization: Basic ' + encodedCredentials);
   }
 
 }

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
-import { PopupEliminazioneComponent } from './popup-eliminazione/popup-eliminazione.component';
-import { PopupModificaComponent } from './popup-modifica/popup-modifica.component';
+import { PopupEliminazioneComponent } from './popup-eliminazione-attivita/popup-eliminazione-attivita.component';
+import { PopupModificaComponent } from './popup-modifica-attivita-turistica/popup-modifica-attivita-turistica.component';
+import { PopupModificaDatiAlloggioComponent } from './popup-modifica-dati-alloggio/popup-modifica-dati-alloggio.component';
 
 export interface Attivita {
   numero: number;
@@ -25,10 +26,6 @@ export class GestioneAttivitaComponent implements OnInit {
   sortedData: Attivita[];
   idAttivita: number = 0;
 
-  createAttivita() {
-    this.attivitaService.apriDialog();
-  }
-  
   filterTerm!: string;
 
   constructor(private attivitaService: AttivitaService, private dialog: MatDialog) {
@@ -74,21 +71,99 @@ export class GestioneAttivitaComponent implements OnInit {
   visualizzaAttivitaPerGestore() {
     this.attivitaService.visualizzaAttivitaPerGestore().subscribe((risposta) => {
       console.log("Attività per gestore: ", risposta);
-      this.listaAttivita = risposta.data.map((attivita: any, index: any) => ({
-        numero: attivita.id,
-        nome: attivita.nome,
-        categoria: attivita.alloggio ? 'Alloggio' : 'Attività Turistica'
-      }));
+      this.listaAttivita = risposta.data
+        .filter((attivita: any) => !attivita.eliminata) // Filtra solo le attività non eliminate
+        .map((attivita: any, index: any) => ({
+          numero: attivita.id,
+          nome: attivita.nome,
+          categoria: attivita.alloggio ? 'Alloggio' : 'Attività Turistica'
+        }));
       this.sortedData = this.listaAttivita.slice();
     });
+  }
+
+  createAttivita() {
+    this.attivitaService.apriDialog();
   }
 
   edit(id: number) {
     this.attivitaService.visualizzaAttivita(id).subscribe((risposta) => {
       console.log("Attivita con id: " + id, risposta);
+  
+      let dialogRef: any;
+  
+      if (!risposta.data.alloggio) {
+        dialogRef = this.dialog.open(PopupModificaComponent, {
+          data: {
+            id: id,
+            cap: risposta.data.cap,
+            categoriaAlloggio: risposta.data.categoriaAlloggio,
+            categoriaAttivitaTuristica: risposta.data.categoriaAttivitaTuristica,
+            categorie: risposta.data.categorie,
+            citta: risposta.data.citta,
+            latitudine: risposta.data.coordinate.x,
+            longitudine: risposta.data.coordinate.y,
+            descrizioneBreve: risposta.data.descrizioneBreve,
+            descrizioneLunga: risposta.data.descrizioneLunga,
+            disponibilita: risposta.data.disponibilita,
+            gestore: risposta.data.gestore,
+            indirizzo: risposta.data.indirizzo,
+            media: risposta.data.media,
+            nome: risposta.data.nome,
+            prezzo: risposta.data.prezzo,
+            provincia: risposta.data.provincia,
+            valori: risposta.data.valoriEcosostenibilita.id,
+            eliminata: risposta.data.eliminata,
+            tipo: risposta.data.alloggio,
+          }
+        });
+  
+        dialogRef.afterClosed().subscribe((result: any) => {
+        }, (error: any) => {
+          console.log(error);
+        });
+      } else {
+        dialogRef = this.dialog.open(PopupModificaDatiAlloggioComponent, {
+          data: {
+            id: id,
+            cap: risposta.data.cap,
+            categoriaAlloggio: risposta.data.categoriaAlloggio,
+            categoriaAttivitaTuristica: risposta.data.categoriaAttivitaTuristica,
+            categorie: risposta.data.categorie,
+            citta: risposta.data.citta,
+            latitudine: risposta.data.coordinate.x,
+            longitudine: risposta.data.coordinate.y,
+            descrizioneBreve: risposta.data.descrizioneBreve,
+            descrizioneLunga: risposta.data.descrizioneLunga,
+            disponibilita: risposta.data.disponibilita,
+            gestore: risposta.data.gestore,
+            indirizzo: risposta.data.indirizzo,
+            media: risposta.data.media,
+            nome: risposta.data.nome,
+            prezzo: risposta.data.prezzo,
+            provincia: risposta.data.provincia,
+            valori: risposta.data.valoriEcosostenibilita.id,
+            eliminata: risposta.data.eliminata,
+            tipo: risposta.data.alloggio,
+          }
+        });
+  
+        dialogRef.afterClosed().subscribe((result: any)  => {
+        }, (error: any) => {
+          console.log(error);
+        });
+      }
+    });
+  }
+  
 
-      const dialogRef = this.dialog.open(PopupModificaComponent, {
+  delete(id: number): void {
+    this.attivitaService.visualizzaAttivita(id).subscribe((risposta) => {
+      console.log("Attivita con id: " + id, risposta);
+
+      const dialogRef = this.dialog.open(PopupEliminazioneComponent, {
         data: {
+          message: 'Sei sicuro di voler eliminare l\'\attività?',
           id: id,
           cap: risposta.data.cap,
           categoriaAlloggio: risposta.data.categoriaAlloggio,
@@ -107,25 +182,19 @@ export class GestioneAttivitaComponent implements OnInit {
           prezzo: risposta.data.prezzo,
           provincia: risposta.data.provincia,
           valori: risposta.data.valoriEcosostenibilita.id,
+          eliminata: risposta.data.eliminata,
         }
-      })
-    })
-  }
+      });
 
-  delete(id: number): void {
-    const dialogRef = this.dialog.open(PopupEliminazioneComponent, {
-      width: '250px',
-      data: { message: 'Sei sicuro di voler eliminare questa attività?' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.attivitaService.cancellaAttivita(15).subscribe((risposta) => {
-          console.log("Eliminazione attività: ", risposta)
-        });
-      }
-    }, (error) => {
-      console.log(error);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.attivitaService.cancellaAttivita(id).subscribe((risposta) => {
+            console.log("Eliminazione attività: ", risposta);
+          });
+        }
+      }, (error) => {
+        console.log(error);
+      });
     });
   }
 }
