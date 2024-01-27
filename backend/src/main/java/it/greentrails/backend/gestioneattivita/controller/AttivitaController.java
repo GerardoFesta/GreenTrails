@@ -235,7 +235,11 @@ public class AttivitaController {
     return ResponseGenerator.generateResponse(HttpStatus.OK,
             attivitaService.getAlloggi(limite));
   }
-
+  @GetMapping("all")
+  private ResponseEntity<Object> findAll() {
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+            attivitaService.findAll());
+  }
   @GetMapping("attivitaTuristiche")
   private ResponseEntity<Object> getAttivitaTuristiche(
           @RequestParam(value = "limite", required = false) Integer limite
