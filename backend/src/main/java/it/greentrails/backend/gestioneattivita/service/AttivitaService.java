@@ -15,7 +15,6 @@ public interface AttivitaService {
 
   Optional<Attivita> findByValori(ValoriEcosostenibilita valoriEcosostenibilita)
           throws Exception;
-          throws Exception;
 
   List<Attivita> getAttivitaTuristicheEconomiche(int limite);
 
