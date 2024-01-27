@@ -35,7 +35,8 @@ public class CameraController {
       @RequestParam("tipoCamera") final String tipoCamera,
       @RequestParam("disponibilita") final Integer disponibilita,
       @RequestParam("descrizione") final String descrizione,
-      @RequestParam("capienza") final int capienza
+      @RequestParam("capienza") final int capienza,
+      @RequestParam("prezzo") final double prezzo
   ) {
     try {
       Attivita alloggio = attivitaService.findById(idAlloggio);
@@ -52,6 +53,7 @@ public class CameraController {
       camera.setDisponibilita(disponibilita);
       camera.setDescrizione(descrizione);
       camera.setCapienza(capienza);
+      camera.setPrezzo(prezzo);
       camera = cameraService.saveCamera(camera);
       return ResponseGenerator.generateResponse(HttpStatus.OK, camera);
     } catch (Exception e) {
