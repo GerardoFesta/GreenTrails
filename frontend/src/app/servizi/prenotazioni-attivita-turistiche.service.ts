@@ -2,7 +2,6 @@ import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Prenotazione } from '../componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +12,11 @@ export class PrenotazioniAttivitaTuristicheService {
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
-  getPrenotazioniAttivitaTuristicaVisitatore(idVisitatore: string): Observable<Prenotazione[]> {
+  getPrenotazioniAttivitaTuristicaVisitatore(): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
     });
-    const url = `${this.baseUrl}?idVisitatore=${idVisitatore}`;
-    return this.http.get<Prenotazione[]>(url, {headers});
+    return this.http.get<any>(`${this.baseUrl}`, {headers});
   }
 
   deletePrenotazioneAttivitaTuristica (idPrenotazione: number) {

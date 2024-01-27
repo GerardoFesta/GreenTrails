@@ -1,5 +1,4 @@
 import { CookieService } from 'ngx-cookie-service';
-import { Prenotazione } from './../componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { Observable, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,12 +12,11 @@ export class PrenotazioniAlloggiService {
 
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
-  getPrenotazioniAlloggioVisitatore(idVisitatore: string): Observable<Prenotazione[]> {
+  getPrenotazioniAlloggioVisitatore(): Observable<any[]> {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
     });
-    const url = `${this.baseUrl}?idVisitatore=${idVisitatore}`;
-    return this.http.get<Prenotazione[]>(url, {headers});
+    return this.http.get<any[]>(`${this.baseUrl}`, {headers});
   }
 
   deletePrenotazioneAlloggio(idPrenotazione: number){
