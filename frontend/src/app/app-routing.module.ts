@@ -7,6 +7,7 @@ import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { GestioneValoriComponent } from './gestione-valori/gestione-valori.component';
 import { ModificaValoriAdminComponent } from './componenti/modifica-valori-admin/modifica-valori-admin.component';
+import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/lista-segnalazioni.component';
 
 const routes: Routes = [
   { path: 'registrazione', component: RegistrazioneComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: '', component: ModificaValoriAdminComponent},
   {path: 'homepage', component: HomePageComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'lista', component: ListaSegnalazioniComponent},
   
 
 

@@ -31,5 +31,14 @@ export class SegnalazioneService {
     });
     return this.http.post<any>(`${this.Url}`, formData, {headers});
   }
+
+  recuperoSegnalazioni(): Observable<any>{
+
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookie.get('credenziali').replace(/"/g, '')
+    });
+    return this.http.post<any>(`${this.Url}`, {headers});
+  }
+
  
 }
