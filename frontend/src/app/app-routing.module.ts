@@ -16,6 +16,7 @@ const routes: Routes = [
   {path: 'homepage', component: HomePageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'lista', component: ListaSegnalazioniComponent},
+  {path: 'modifica', component: ModificaValoriAdminComponent}
   
 
 

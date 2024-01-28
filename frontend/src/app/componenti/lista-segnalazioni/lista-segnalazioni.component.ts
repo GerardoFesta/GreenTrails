@@ -3,11 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { MatSortModule } from '@angular/material/sort';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 export interface Segnalazione {
   numero: number;
   idUtente: string;
   idAttivita: string;
+  nomeAttivita: string;
   descrizione: string;
 }
 
@@ -19,13 +22,14 @@ export interface Segnalazione {
 export class ListaSegnalazioniComponent implements OnInit {
 
   listaSegnalazione: Segnalazione[] = [
-    { numero: 0, idUtente: '', idAttivita: '', descrizione: '' },
+    { numero: 0, idUtente: '',idAttivita: '', nomeAttivita: '', descrizione: '' },
   ];
 
   sortedData: Segnalazione[] = [];
-  idAttivita: number = 0;
+  nomeAttivita: string;
 
-  constructor(private segnalazioneService: SegnalazioneService, private dialog: MatDialog) { }
+  constructor(private segnalazioneService: SegnalazioneService,
+     private dialog: MatDialog,  private router: Router,  private cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.visualizzaSegnalazioni();
@@ -45,8 +49,8 @@ export class ListaSegnalazioniComponent implements OnInit {
           return this.compare(a.numero, b.numero, isAsc);
         case 'idUtente':
           return this.compare(a.idUtente, b.idUtente, isAsc);
-        case 'idAttivita':
-          return this.compare(a.idAttivita, b.idAttivita, isAsc);
+        case 'nomeAttivita':
+          return this.compare(a.nomeAttivita, b.nomeAttivita, isAsc);
         case 'descrizione':
           return this.compare(a.descrizione, b.descrizione, isAsc);
         default:
@@ -71,7 +75,8 @@ export class ListaSegnalazioniComponent implements OnInit {
         this.listaSegnalazione = risposta.data.map((segnalazione: any, index: any) => ({
           numero: index + 1,
           idUtente: segnalazione.utente.email,
-          idAttivita: segnalazione.attivita.nome,
+          idAttivita : segnalazione.attivita.id,
+          nomeAttivita: segnalazione.attivita.nome,
           descrizione: segnalazione.descrizione,
         }));
         console.log("listaSegnalazione:", this.listaSegnalazione);
@@ -79,8 +84,11 @@ export class ListaSegnalazioniComponent implements OnInit {
     });
   }
 
-  modifica(){
-    
+  modifica(idAttivita: any){
+
+    this.cookieService.set('idAttivita', idAttivita);
+        this.router.navigate(['/modifica']); 
+        console.log(idAttivita)
   }
  
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { PopupComponent } from 'src/app/gestione-valori/popup/popup.component';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
@@ -35,6 +35,7 @@ originalValoriEcosostenibilitaSelected: { [key: string]: string } = {};
     private valorieco: ValoriEcosostenibilitaService,
     private uploadService: UploadService,
     protected dialog: MatDialog
+    ,  private router: Router
   ) {}
 
   valori = [
@@ -183,7 +184,7 @@ updateSubmit() {
       (error) => {
         if (!this.isTextareaFilled && this.changesMade) {
       
-          this.openPopup('Modifica effettuata. È stata inviata una mail al gestore.');
+          this.openPopup('Modifica effettuata.');
           return; 
         }
       
@@ -201,6 +202,7 @@ updateSubmit() {
     this.valoriEcosostenibilitaSelected = { ...this.originalValoriEcosostenibilitaSelected };
     this.changesMade = false;
   }
+  this.router.navigate(['/lista']); 
 }
   onTextareaChange(): void {
     const textareaValue = (document.getElementById('descrizione') as HTMLTextAreaElement).value;

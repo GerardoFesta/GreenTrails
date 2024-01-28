@@ -12,10 +12,10 @@
         <tr *ngFor="let segnalazione of sortedData">
             <td style="width: 30px;">{{segnalazione.numero}}</td>
           <td>{{segnalazione.idUtente}}</td>
-          <td>{{segnalazione.idAttivita}}</td>
+          <td>{{segnalazione.nomeAttivita}}</td>
           <td>{{segnalazione.descrizione}}</td>
           <td style="border: none;">
-            <button mat-icon-button aria-label="edit" (click)="modifica()">
+            <button mat-icon-button aria-label="edit" (click)="modifica(segnalazione.idAttivita)">
                     <mat-icon>edit</mat-icon>
             </button>
           </td>
