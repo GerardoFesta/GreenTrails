@@ -1,0 +1,118 @@
+/* Container card valori-ecosostenibilita */
+.example-card {
+    background-color: transparent;
+    color: black;
+    border: none;
+    box-shadow: none;
+    display:flex;
+    flex-direction:row;
+    align-content:center;
+    justify-content:center;
+
+}
+
+/* Classe che viene assegnata all'header */
+.card-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+}
+.eh{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content:center;
+  margin-top:10%;
+
+
+}
+
+.lista-eco-container {
+  background-color: rgba(221, 221, 221, 0.504);
+  width: 100%;
+  border: 5px solid lightgreen;
+  max-width: 100%;
+  border-radius: 20px;
+  box-shadow: 7px 7px 5px #dedede;
+  max-height: 70%;
+
+}
+
+/* Container lista valori-ecosostenibilita */
+.lista-eco {
+        max-height: fit-content;
+        
+}
+/* Elemento della lista */
+mat-list-item {
+    display: flex;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;;
+    
+}
+
+/* Larghezza */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Traccia scrollbar */
+  ::-webkit-scrollbar-track {
+    background: #f1f8e9; /* HEX: #f1f8e9, RGB: (241, 248, 233) */
+  }
+   
+  /* Maniglia scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background: #dcedc8; /* HEX: #dcedc8, RGB: (220, 237, 200) */
+  }
+  
+  /* Maniglia della scrollbar al passaggio del mouse */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #c5e1a5; /* HEX: #c5e1a5, RGB: (197, 225, 165) */
+  }
+  .mat-card-image {
+    border: 5px solid lightgreen;
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 7px 7px 5px #dedede;
+    
+    /* background-color: aqua; */
+}
+.a{
+  justify-content: center;
+  align-content: center;
+
+}
+.activity-image{
+  width:20%;
+  margin-top:50%;
+}
+
+input[type='radio'] {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  outline: none;
+  border: 3px solid gray;
+}
+
+input[type='radio']:before {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 60%;
+  margin: 20% auto;
+  border-radius: 50%;
+}
+
+input[type="radio"]:checked:before {
+  background: green;
+  
+}
+
+input[type="radio"]:checked {
+border-color:green;
+}

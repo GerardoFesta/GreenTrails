@@ -7,6 +7,7 @@ import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-preno
 import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
+import { GestioneValoriComponent } from './componenti/gestione-attivita/gestione-valori/gestione-valori.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'ricerca/posizione', component: RisultatiComponent },
   { path: 'mieAttivita', component: GestioneAttivitaComponent },
   { path: 'login', component: LoginComponent },
+  {path: 'modificaValori/:id', component: GestioneValoriComponent}
 
 ];
 
