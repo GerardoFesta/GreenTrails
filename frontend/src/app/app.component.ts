@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -8,4 +9,6 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AppComponent {
   title = 'frontend';
+
+  constructor(public router: Router) {}
 }

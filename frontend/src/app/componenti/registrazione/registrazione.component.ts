@@ -3,7 +3,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {  AbstractControl, FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PopUpRegistrazioneComponent } from './pop-up-registrazione/pop-up-registrazione.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -60,12 +62,19 @@ export class RegistrazioneComponent implements OnInit {
       return `${year}-${month}-${day}`;
     }
 
-    constructor(private UtenteService : UtenteService, private snackBar: MatSnackBar ) {}
+    constructor(private UtenteService : UtenteService,  private dialog: MatDialog ) {}
 
     ngOnInit(): void { } 
 
-    onSubmit(){ 
+    openPopupRegistrazione(message: string):void{
+      const dialogRef = this.dialog.open(PopUpRegistrazioneComponent,
+      {    width: '250px',
+      data: { message },
+      disableClose: true,})
+    }
+    
 
+    onSubmit(){ 
       const isGestore: boolean = this.selected.value!
       const emailValue: string = this.email.value !== null ? this.email.value : '';
       const passwordValue: string = this.password.value !== null ? this.password.value : '';
@@ -96,11 +105,11 @@ export class RegistrazioneComponent implements OnInit {
               .subscribe(
                 (loginResponse) => {
                   console.log('Login successful after registration:', loginResponse);
-                  this.mostraMessaggio('Utente registrato con successo');
+                  this.openPopupRegistrazione('Utente registrato con successo');
                 },
                 (loginError) => {
                   console.error('Error during login after registration:', loginError);
-                  this.mostraMessaggio('Errore durante il login dopo la registrazione', true);
+                  this.openPopupRegistrazione('Errore durante il login dopo la registrazione');
                 }
               );
           }
@@ -108,17 +117,11 @@ export class RegistrazioneComponent implements OnInit {
         (errore: any) => {
           console.error('Errore durante la richiesta PUT:', errore);
           if (errore.status === 400) {
-            this.mostraMessaggio('Utente già registrato');
+            this.openPopupRegistrazione('Utente già registrato');
           }
         }
       );
   }
-
-    mostraMessaggio(messaggio: string, errore: boolean = false) {
-      this.snackBar.open(messaggio, 'Chiudi', {
-        duration: 5000, });
-
-    }
 
     resetForm() {    //RESET CAMPI DEL FORM
       this.dataNascita.reset();

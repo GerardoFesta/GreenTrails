@@ -1,0 +1,50 @@
+.mapContainer {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.map-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: fit-content;
+}
+
+#map {
+    position: absolute;
+    width: 100%;
+    height: 85%;
+    bottom: 0;
+}
+
+.searchbar {
+    border-radius: 20px;
+    outline: none;
+    border: 2px solid gray;
+    width: 300px;
+    padding: 5px 10px;
+    font-size: 16px;
+    transition: border 0.3s ease;
+    margin-top: 30px;
+}
+
+.searchbar:focus {
+    border: 2px solid #00FF00;
+}
+
+.searchbar:hover {
+    border: 2px solid #00FF00;
+}
+
+.ricerca {
+    display: flex;
+    align-content: center;
+    justify-content: space-around;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+}

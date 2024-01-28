@@ -37,7 +37,7 @@ export class SlideshowComponent implements OnInit {
           caption: 'File non trovato'
         }));
 
-        this.imageUrls.forEach((imageUrl, index) => {
+        this.imageUrls.forEach((imageUrl) => {
           this.uploadService.serviFile(this.directoryAttivita, imageUrl.name).subscribe((risposta) => {
             console.log("BLOB OTTENUTO: ", risposta);
 
