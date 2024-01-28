@@ -14,9 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class GestionePrenotazioniAttiveComponent {
-openPopup(_t107: any) {
-throw new Error('Method not implemented.');
-}
+
   idalloggio: any;
   idAttivita: any;
   mostraSoloInCorso: boolean = false; 
