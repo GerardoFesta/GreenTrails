@@ -73,7 +73,8 @@ import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-preno
 import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
 import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popup-errorPass.component';
 
-import { GenerazioneAutomaticaComponent } from './generazione-automatica/generazione-automatica.component';
+import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
+import { CalendariopopupComponent } from './componenti/generazione-automatica/calendariopopup/calendariopopup.component';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { GenerazioneAutomaticaComponent } from './generazione-automatica/generaz
     GestionePrenotazioniAttiveComponent,
     AreaRiservataComponent,
     GenerazioneAutomaticaComponent,
+    CalendariopopupComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,10 @@
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { ItinerarioService } from 'src/app/servizi/itinerario.service';
 import { UploadService } from 'src/app/servizi/upload.service';
+import { CalendariopopupComponent } from './calendariopopup/calendariopopup.component';
 
 @Component({
   selector: 'app-generazione-automatica',
@@ -31,7 +33,9 @@ export class GenerazioneAutomaticaComponent {
   constructor(private itinerarioService: ItinerarioService,
     private attivitaService: AttivitaService,
     private uploadService: UploadService,
-    private route: Router) {}
+    private route: Router,
+    private dialog: MatDialog,
+    ) {}
 
 
     ngOnInit(): void {
@@ -64,10 +68,9 @@ export class GenerazioneAutomaticaComponent {
     this.route.navigate(['/homepage']);
   }
 
-  isCalendarioOpen: boolean = false;
 
   openCalendario(){
-    this.isCalendarioOpen = !this.isCalendarioOpen;
+    this.dialog.open(CalendariopopupComponent);
   }
 
   salvaItinerarioNelDB(itinerarioId: number) {
