@@ -6,7 +6,7 @@
   </div>
 
   <!-- Suggeriti per te -->
-  <label for="suggeritiPerTe" style="font-size: 20px;">Suggeriti per te</label>
+  <label for="suggeritiPerTe" style="font-size: 20px;"> <strong>Suggeriti per te</strong></label>
   <div class="suggeriti" *ngIf="attivitaTuristicheList && attivitaTuristicheList.length > 0 || alloggiList && alloggiList.length > 0">
     <div *ngFor="let attivitaItem of shuffleArray((attivitaTuristicheList || []).concat(alloggiList || [])); let i = index">
     
@@ -28,7 +28,7 @@
   </div>
 
     <!-- Attività turistiche -->
-    <label for="ATuristica" style="font-size: 20px;">Attività turistiche</label>
+    <label for="ATuristica" style="font-size: 20px;"> <strong>Attività turistiche </strong></label>
     <div class="attivita" *ngIf="attivitaTuristicheList && attivitaTuristicheList.length > 0">
       <div *ngFor="let attivitaItem of attivitaTuristicheList; let i = index">
         <!-- Use mat-card for name and image -->
@@ -47,7 +47,7 @@
     </div>
   
     <!-- Alloggi --> 
-    <label for="Alloggi" style="font-size: 20px;">Alloggi</label>
+    <label for="Alloggi" style="font-size: 20px;"> <strong>Alloggi </strong></label>
     <div class="alloggi" *ngIf="alloggiList && alloggiList.length > 0">
       <div *ngFor="let alloggio of alloggiList; let i = index">
         <!-- Use mat-card for name and image -->
@@ -66,7 +66,7 @@
     </div>
   
     <!-- I più economici -->
-    <label for="Allogi" style="font-size: 20px;">I più economici</label>
+    <label for="Allogi" style="font-size: 20px;"> <strong>I più economici</strong></label>
     <div class="per-prezzo" *ngIf="filteredAttivitaPerPrezzoList && filteredAttivitaPerPrezzoList.length > 0">
       <div *ngFor="let attivitaItem of filteredAttivitaPerPrezzoList; let i = index">
         <!-- Use mat-card for name and image -->
