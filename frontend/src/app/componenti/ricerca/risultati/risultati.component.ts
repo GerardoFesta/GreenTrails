@@ -10,28 +10,49 @@ declare let L: any;
 })
 export class RisultatiComponent implements OnInit {
 
+  greenIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
 
-  latitudine: number = 0;
-  longitudine: number = 0;
-  raggio: number = 0;
+  latitudine?: number;
+  longitudine?: number;
+  raggio?: number;
 
-  data: any;
   showmap: boolean = false;
   markers: any[] = [
-    { lat: 41.9028, lng: 12.4964, name: 'Roma' },
-    { lat: 45.4642, lng: 9.1900, name: 'Milano' },
-    { lat: 40.8522, lng: 14.2681, name: 'Napoli' },
+    { lat: 0, lng: 0, name: '' },
   ];
   map: any;
 
-  constructor(private ricercaService: RicercaService) { }
+  constructor(private ricercaService: RicercaService) {
+  }
 
   ngOnInit(): void {
     this.visualizzaMappa();
   }
 
+  isValidLatitude(): boolean {
+    const LATITUDE_REGEX = /^(-?[1-8]?\d(?:\.\d{1,18})?|90(?:\.0{1,18})?)$/;
+    return LATITUDE_REGEX.test(this.latitudine!.toString());
+  }
+
+  isValidLongitude(): boolean {
+    const LONGITUDE_REGEX = /^(-?(?:1[0-7]|[1-9])?\d(?:\.\d{1,18})?|180(?:\.0{1,18})?)$/;
+    return LONGITUDE_REGEX.test(this.longitudine!.toString());
+  }
+
+  isValidRadius(): boolean {
+    const RADIUS_REGEX = /^\d+(\.\d{1,18})?$/;
+    return RADIUS_REGEX.test(this.raggio!.toString());
+  }
+
   visualizzaMappa() {
-    this.map = L.map('map').setView([40.6824408, 14.7680961], 6);
+    this.map = L.map('map').setView([42.833333 , 12.833333], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 20,
       attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -39,17 +60,45 @@ export class RisultatiComponent implements OnInit {
   }
 
   addMarkersToMap() {
+    this.map.eachLayer((layer: any) => {
+      if (layer instanceof L.Marker) {
+        this.map.removeLayer(layer);
+      }
+    });
+
     for (let marker of this.markers) {
-      let m = L.marker([marker.lat, marker.lng]).addTo(this.map);
-      m.bindPopup(marker.name);
+      let m = L.marker([marker.lat, marker.lng], { icon: this.greenIcon }).addTo(this.map);
+      m.bindPopup(`<a href="/attivita/${marker.id}" style="text-decoration: none; color: #32CD32; font-weight: bold">${marker.name}</a>`);
     }
   }
 
-  onSubmit() {
 
-    this.ricercaService.cerca(this.latitudine, this.longitudine, this.raggio).subscribe((results) => {
-      console.log('Search Results:', results);
+  onSubmit() {
+    console.log("LATITUDINE", this.latitudine)
+    console.log("LONGITUDINE", this.longitudine)
+    console.log("RAGGIO", this.raggio)
+
+    this.ricercaService.cercaPerPosizione(this.latitudine, this.longitudine, this.raggio! * 1000).subscribe((risposta) => {
+      console.log("RISPOSTA", risposta.data)
+
+      this.markers = risposta.data.map((item: any) => {
+        console.log("lat", item.coordinate.x);
+        console.log("lon", item.coordinate.y);
+        console.log("nome", item.nome);
+
+        return {
+          id: item.id,
+          lat: item.coordinate.x,
+          lng: item.coordinate.y,
+          name: item.nome
+        };
+      });
+
+      this.addMarkersToMap();
+      this.map.setView([this.latitudine, this.longitudine], 6.5, { animate: true });
+    }, (error) => {
+      console.error(error)
     });
-    this.addMarkersToMap();
   }
+
 }

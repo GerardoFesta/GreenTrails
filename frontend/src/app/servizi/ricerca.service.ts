@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -11,12 +11,13 @@ export class RicercaService {
 
   constructor(private http: HttpClient) { }
 
-  cerca(latitudine: number, longitudine: number, raggio: number): Observable<any> {
-    const params: any = { 
-      coordinate: { x: latitudine, y: longitudine },
-      raggio: raggio
-    };
+  cercaPerPosizione(latitudine: any, longitudine: any, raggio: any): Observable<any> {
+    const params = new HttpParams()
+      .set('latitudine', latitudine)
+      .set('longitudine', longitudine)
+      .set('raggio', raggio)
 
-    return this.http.post(this.baseUrl, params);
+
+    return this.http.post(`${this.baseUrl}/perPosizione`, params);
   }
 }

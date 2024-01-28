@@ -41,24 +41,4 @@ mat-list-item {
     flex-wrap: wrap;;
 }
 
-/* Larghezza */
-::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  /* Traccia scrollbar */
-  ::-webkit-scrollbar-track {
-    background: #f1f8e9; 
-  }
-   
-  /* Maniglia scrollbar */
-  ::-webkit-scrollbar-thumb {
-    background: #dcedc8; 
-  }
-  
-  /* Maniglia della scrollbar al passaggio del mouse */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #c5e1a5;   
-  }
-
   

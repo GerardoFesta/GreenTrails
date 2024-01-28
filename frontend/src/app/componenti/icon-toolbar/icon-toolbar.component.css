@@ -27,3 +27,12 @@
 .iconContainer a:active {
     filter: brightness(90%);
 }
+
+.title {
+    transition: all 0.3s ease;
+}
+
+.title:hover,
+.title:active {
+    filter: brightness(90%);
+}

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
@@ -9,7 +9,7 @@ import { UploadService } from 'src/app/servizi/upload.service';
   templateUrl: './ricerca.component.html',
   styleUrls: ['./ricerca.component.css']
 })
-export class RicercaComponent implements OnInit, OnDestroy {
+export class RicercaComponent implements OnInit {
 
   listaAttivita: { nome: string, citta: string, categorie: string[] }[] = [];
   filterTerm!: string;
@@ -29,19 +29,10 @@ export class RicercaComponent implements OnInit, OnDestroy {
         console.log('NavigationEnd:', event.url);
       }
     });
-   }
+  }
 
   ngOnInit(): void {
     this.getAll();
-    this.paramsSubscription = this.route.params.subscribe(
-      (params: Params) => {
-        console.log(params)
-      }
-    );
-  }
-
-  ngOnDestroy(): void {
-    this.paramsSubscription.unsubscribe();
   }
 
   getAll(): void {
