@@ -19,10 +19,6 @@ export class AttivitaService {
       this.dialog.open(InserimentoAttivitaComponent, { width: '100%' })
   }
 
-  apriDialogModifica(id: number) {
-    const dialogRef = this.dialog.open(PopupModificaComponent, { width: '100%' })
-  }
-
   visualizzaAttivita(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }

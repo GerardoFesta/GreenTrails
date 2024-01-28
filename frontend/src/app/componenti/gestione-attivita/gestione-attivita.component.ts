@@ -115,7 +115,8 @@ export class GestioneAttivitaComponent implements OnInit {
             valori: risposta.data.valoriEcosostenibilita.id,
             eliminata: risposta.data.eliminata,
             tipo: risposta.data.alloggio,
-          }
+          },
+          disableClose: true
         });
   
         dialogRef.afterClosed().subscribe((result: any) => {
@@ -145,7 +146,8 @@ export class GestioneAttivitaComponent implements OnInit {
             valori: risposta.data.valoriEcosostenibilita.id,
             eliminata: risposta.data.eliminata,
             tipo: risposta.data.alloggio,
-          }
+          },
+          disableClose: true
         });
   
         dialogRef.afterClosed().subscribe((result: any)  => {

@@ -131,7 +131,8 @@ export class PopupModificaDatiAlloggioComponent implements OnInit {
   openPopupAlloggio(idAttivita: number): void {
     const dialogRef = this.dialog.open(PopupModificaAlloggioComponent, {
       width: '60%',
-      data: { idAttivita: idAttivita }
+      data: { idAttivita: idAttivita },
+      disableClose: true
     });
   }
 

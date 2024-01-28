@@ -12,17 +12,13 @@ export interface DialogData {
   styleUrls: ['./popup-eliminazione-camera.component.css']
 })
 export class PopupEliminazioneCameraComponent implements OnInit {
-
+  
   constructor(
     public dialogRef: MatDialogRef<PopupEliminazioneCameraComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private camereService: CamereService) {}
 
   ngOnInit(): void {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 
   delete() {

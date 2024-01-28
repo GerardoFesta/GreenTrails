@@ -2,7 +2,6 @@ import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit,
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { CamereService } from 'src/app/servizi/camere.service';
-import { PopUpAlloggioComponent } from '../../inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
 import { PopupConfermaModificaComponent } from '../popup-conferma-modifica/popup-conferma-modifica.component';
 import { PopupEliminazioneCameraComponent } from '../popup-eliminazione-camera/popup-eliminazione-camera.component';
 
@@ -11,8 +10,7 @@ import { PopupEliminazioneCameraComponent } from '../popup-eliminazione-camera/p
   templateUrl: './popup-modifica-alloggio.component.html',
   styleUrls: ['./popup-modifica-alloggio.component.css']
 })
-export class PopupModificaAlloggioComponent implements OnInit, OnChanges, DoCheck, AfterContentInit,
-  AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
+export class PopupModificaAlloggioComponent implements OnInit {
 
   camere: FormGroup
   id: any
@@ -25,13 +23,15 @@ export class PopupModificaAlloggioComponent implements OnInit, OnChanges, DoChec
   isDescrizione!: boolean;
   isDisponibilita!: boolean;
 
-  constructor(public dialogRef: MatDialogRef<PopUpAlloggioComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
+  deletedCameraIds: number[] = [];
+
+  constructor(public dialogRef: MatDialogRef<PopupModificaAlloggioComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private camereService: CamereService, private dialog: MatDialog) {
     this.camere = this.formBuilder.group({
       capienza: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
       prezzo: ['', [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
-      categoria: ['', Validators.required],
+      tipoCamera: ['', Validators.required],
       descrizione: ['', Validators.required],
       disponibilita: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
 
@@ -46,7 +46,7 @@ export class PopupModificaAlloggioComponent implements OnInit, OnChanges, DoChec
 
     this.isCapienza = this.camere.get('capienza')!.value.trim().length > 0 && capienzaPattern.test(this.camere.get('capienza')!.value);
     this.isPrezzo = this.camere.get('prezzo')!.value.trim().length > 0 && prezzoPattern.test(this.camere.get('prezzo')!.value);
-    this.isCategoria = this.camere.get('categoria')!.value.trim().length > 0;
+    this.isCategoria = this.camere.get('tipoCamera')!.value.trim().length > 0;
     this.isDescrizione = this.camere.get('descrizione')!.value.trim().length > 0;
     this.isDisponibilita = this.camere.get('disponibilita')!.value.trim().length > 0 && disponibilitaPattern.test(this.camere.get('disponibilita')!.value);
 
@@ -76,9 +76,8 @@ export class PopupModificaAlloggioComponent implements OnInit, OnChanges, DoChec
   }
 
   aggiungiCamera() {
-    console.log(this.id)
     const camera = {
-      categoria: this.camere.get('categoria')?.value,
+      categoria: this.camere.get('tipoCamera')!.value,
       disponibilita: this.camere.get('disponibilita')?.value,
       descrizione: this.camere.get('descrizione')?.value,
       capienza: this.camere.get('capienza')?.value,
@@ -89,7 +88,7 @@ export class PopupModificaAlloggioComponent implements OnInit, OnChanges, DoChec
 
     this.camereService.inserimentoCamere(
       this.id,
-      this.camere.get('categoria')?.value,
+      this.camere.get('tipoCamera')?.value,
       this.camere.get('disponibilita')?.value,
       this.camere.get('descrizione')?.value,
       this.camere.get('capienza')?.value,
@@ -97,8 +96,6 @@ export class PopupModificaAlloggioComponent implements OnInit, OnChanges, DoChec
 
 
     ).subscribe((response) => {
-
-
     })
   }
 
@@ -116,66 +113,36 @@ export class PopupModificaAlloggioComponent implements OnInit, OnChanges, DoChec
 
       risposta.data.forEach((item: any) => {
         this.camereInserite.push(item);
+        console.log(item)
       });
     })
   }
 
   delete(id: number): void {
+
     this.camereService.visualizzaCamera(id).subscribe((risposta) => {
       console.log("Camera con id: " + id, risposta);
 
       const dialogRef = this.dialog.open(PopupEliminazioneCameraComponent, {
         data: {
-          message: 'Sei sicuro di voler eliminare la camera?',
+          message: 'Camera eliminata con successo!',
           id: id,
-          capienza: this.data.capienza,
-          prezzo: this.data.prezzo,
-          categoria: this.data.categoria,
-          descirzione: this.data.descrizione,
-          disponibilita: this.data.disponibilita
-        }
+          capienza: risposta.data.capienza,
+          prezzo: risposta.data.prezzo,
+          categoria: risposta.data.tipoCamera,
+          descirzione: risposta.data.descrizione,
+          disponibilita: risposta.data.disponibilita
+        },
+        disableClose: true
       });
-
+      this.deletedCameraIds.push(id);
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          window.location.reload();
         }
       }, (error) => {
         console.log(error);
       });
     });
-  }
-
-  reset() {
-    this.camere.reset();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('ngOnChanges', changes);
-  }
-
-  ngDoCheck(): void {
-    console.log('ngDoCheck');
-  }
-
-  ngAfterContentInit(): void {
-    console.log('ngAfterContentInit');
-  }
-
-  ngAfterContentChecked(): void {
-    console.log('ngAfterContentChecked');
-  }
-
-  ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
-  }
-
-  ngAfterViewChecked(): void {
-    console.log('ngAfterViewChecked');
-  }
-
-  ngOnDestroy(): void {
-    console.log('ngOnDestroy');
   }
 
 }

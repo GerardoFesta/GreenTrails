@@ -1,9 +1,9 @@
 <h1 mat-dialog-title>Aggiungi camere</h1>
-<div [formGroup]="camere"  style="max-height: 600px; overflow-y: auto;">
+<div [formGroup]="camere" style="max-height: 600px; overflow-y: auto;">
   <mat-form-field appearance="outline" style="margin: 2%; margin-bottom: 0%">
     <label>Categoria: </label>
-    <input formControlName="categoria" matInput />
-    <mat-error *ngIf="camere.get('categoria')?.hasError('required')">
+    <input formControlName="tipoCamera" matInput />
+    <mat-error *ngIf="camere.get('tipoCamera')?.hasError('required')">
       Campo obbligatorio
     </mat-error>
   </mat-form-field>
@@ -52,24 +52,30 @@
   <div *ngIf="camereInserite.length > 0">
     <h4>Camere Inserite:</h4>
     <ul>
-      <li *ngFor="let camera of camereInserite" [class.evidenziato]="eliminazioneConfermata">
-        Categoria: {{ camera.categoria }}, Disponibilità:
-        {{ camera.disponibilita }}, Descrizione: {{ camera.descrizione }},
-        Capienza: {{ camera.capienza }}
-        <button mat-icon-button aria-label="delete_forever" *ngIf="camera.id" (click)="delete(camera.id)" color="warn">
-          <mat-icon style="font-size: x-large;">delete_forever</mat-icon>
-        </button>
-      </li>
+      <ng-container *ngFor="let camera of camereInserite; index as i"> 
+        <ng-container *ngIf="camera.tipoCamera">
+          <li [style.color]="deletedCameraIds.includes(camera.id) ? 'red' : 'black'">
+            Categoria: {{ camera.tipoCamera }}, Disponibilità:
+            {{ camera.disponibilita }}, Descrizione: {{ camera.descrizione }},
+            Capienza: {{ camera.capienza }}
+            <button mat-icon-button aria-label="delete_forever" *ngIf="camera.id" (click)="delete(camera.id)"
+              color="warn">
+              <mat-icon style="font-size: x-large;">delete_forever</mat-icon>
+            </button>
+          </li>
+        </ng-container>
+        <ng-container *ngIf="!camera.tipoCamera">
+          <li>
+            Camera n.{{i}} aggiunta con successo!
+          </li>
+        </ng-container>
+      </ng-container>
     </ul>
   </div>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions align="center">
   <button mat-button (click)="aggiungiCamera()" [disabled]="!checkValidity()">Aggiungi Camera</button>
 
-  <button mat-button (click)="inviaCamere()">Invia Camere</button>
-
-  <button mat-button (click)="reset()">Reset</button>
-
-  <button mat-button (click)="onNoClick()">Chiudi</button>
+  <button mat-button (click)="inviaCamere()">Completa Modifica</button>
 
 </div>
