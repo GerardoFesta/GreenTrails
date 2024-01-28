@@ -84,10 +84,8 @@ import { PrenotazioniComponent } from './componenti/pagina-attivita/prenotazioni
 import { PopUpPrenotazioneComponent } from './componenti/pagina-attivita/pop-up-prenotazione/pop-up-prenotazione.component';
 import { PrenotazioniAttivitaComponent } from './componenti/pagina-attivita/prenotazioni-attivita/prenotazioni-attivita.component';
 import { PopUpRegistrazioneComponent } from './componenti/registrazione/pop-up-registrazione/pop-up-registrazione.component';
-
 import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
 import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popup-errorPass.component';
-
 import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
 import { CalendariopopupComponent } from './componenti/generazione-automatica/calendariopopup/calendariopopup.component';
 
@@ -132,6 +130,13 @@ import { CalendariopopupComponent } from './componenti/generazione-automatica/ca
     AreaRiservataComponent,
     GenerazioneAutomaticaComponent,
     CalendariopopupComponent,
+    RicercaComponent,
+    QuestionarioComponent,
+    RisultatiComponent,
+    GestionePrenotazioniAttiveComponent,
+    GalleryDialogComponent,
+    VideoDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -182,6 +187,7 @@ import { CalendariopopupComponent } from './componenti/generazione-automatica/ca
     HttpClientModule,
     MatNativeDateModule,
     MatIconModule,
+    Ng2SearchPipeModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -227,6 +233,7 @@ import { CalendariopopupComponent } from './componenti/generazione-automatica/ca
     HttpClientModule,
     MatNativeDateModule,
     MatIconModule,
+    Ng2SearchPipeModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
