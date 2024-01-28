@@ -11,13 +11,19 @@ import { PopupEliminazioneCameraComponent } from '../popup-eliminazione-camera/p
   templateUrl: './popup-modifica-alloggio.component.html',
   styleUrls: ['./popup-modifica-alloggio.component.css']
 })
-export class PopupModificaAlloggioComponent implements OnInit, OnChanges, DoCheck, AfterContentInit, 
-AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
+export class PopupModificaAlloggioComponent implements OnInit, OnChanges, DoCheck, AfterContentInit,
+  AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
 
   camere: FormGroup
   id: any
   camereInserite: any[] = []
   eliminazioneConfermata: boolean = false;
+
+  isCapienza!: boolean
+  isPrezzo!: boolean;
+  isCategoria!: boolean;
+  isDescrizione!: boolean;
+  isDisponibilita!: boolean;
 
   constructor(public dialogRef: MatDialogRef<PopUpAlloggioComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
@@ -30,7 +36,23 @@ AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
       disponibilita: ['', [Validators.required, Validators.pattern(/^[0-9]+$/)]],
 
     });
+
   }
+
+  checkValidity(): boolean {
+    const capienzaPattern = /^[0-9]+$/;
+    const prezzoPattern = /^[0-9]+(\.[0-9]{1,2})?$/;
+    const disponibilitaPattern = /^[0-9]+$/;
+
+    this.isCapienza = this.camere.get('capienza')!.value.trim().length > 0 && capienzaPattern.test(this.camere.get('capienza')!.value);
+    this.isPrezzo = this.camere.get('prezzo')!.value.trim().length > 0 && prezzoPattern.test(this.camere.get('prezzo')!.value);
+    this.isCategoria = this.camere.get('categoria')!.value.trim().length > 0;
+    this.isDescrizione = this.camere.get('descrizione')!.value.trim().length > 0;
+    this.isDisponibilita = this.camere.get('disponibilita')!.value.trim().length > 0 && disponibilitaPattern.test(this.camere.get('disponibilita')!.value);
+
+    return this.isCapienza && this.isPrezzo && this.isCategoria && this.isDescrizione && this.isDisponibilita;
+  }
+
 
   ngOnInit(): void {
     console.log('Attivita creata:', this.data.idAttivita);
@@ -78,12 +100,11 @@ AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
 
 
     })
-    this.camere.reset();
   }
 
   inviaCamere() {
     if (this.camereInserite.length > 0) {
-      this.openPopupConferma('Attivita inserita con successo');
+      this.openPopupConferma('Alloggio modificato con successo');
     } else {
 
     }
@@ -107,16 +128,26 @@ AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
         data: {
           message: 'Sei sicuro di voler eliminare la camera?',
           id: id,
+          capienza: this.data.capienza,
+          prezzo: this.data.prezzo,
+          categoria: this.data.categoria,
+          descirzione: this.data.descrizione,
+          disponibilita: this.data.disponibilita
         }
       });
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          window.location.reload();
         }
       }, (error) => {
         console.log(error);
       });
     });
+  }
+
+  reset() {
+    this.camere.reset();
   }
 
   ngOnChanges(changes: SimpleChanges): void {

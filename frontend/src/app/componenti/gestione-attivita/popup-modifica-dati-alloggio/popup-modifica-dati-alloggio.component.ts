@@ -29,6 +29,17 @@ export class PopupModificaDatiAlloggioComponent implements OnInit {
   prezzo: any
   descrizioneLunga: any
 
+  isNome: boolean;
+  isTipoSelected!: boolean;
+  isCategoriaSelected!: boolean;
+  isIndirizzo: boolean;
+  isCap: boolean;
+  isCitta: boolean;
+  isProvincia: boolean;
+  isLatitudine: boolean;
+  isLongitudine: boolean;
+  isDescrizioneBreve: boolean;
+  isDescrizioneLunga: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,22 +62,46 @@ export class PopupModificaDatiAlloggioComponent implements OnInit {
     this.descrizioneLunga = this.data.descrizioneLunga;
 
     this.inserimento = this.formBuilder.group({
-      nome: [],
-      tipo: [],
-      categoria: [],
-      disponibilita: [, [Validators.pattern(/^[0-9]+$/)]],
-      indirizzo: [],
-      cap: [, [Validators.maxLength(5), Validators.pattern(/^[0-9]+$/)]],
-      citta: [],
-      provincia: [, Validators.maxLength(2)],
-      latitudine: [, [Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
-      longitudine: [, [Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
-      descrizioneBreve: [],
-      costo: [0, [Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
-      descrizioneLunga: [],
+      nome: [this.nome],
+      tipo: [Validators.required],
+      categoria: [Validators.required],
+      indirizzo: [this.indirizzo],
+      cap: [this.cap, [Validators.maxLength(5), Validators.pattern(/^[0-9]+$/)]],
+      citta: [this.citta],
+      provincia: [this.provincia, Validators.maxLength(2)],
+      latitudine: [this.latitudine, [Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
+      longitudine: [this.longitudine, [Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
+      descrizioneBreve: [this.descrizioneBreve],
+      descrizioneLunga: [this.descrizioneLunga],
     });
 
+    this.isNome = this.nome.trim().length > 0;
+    this.isIndirizzo = this.indirizzo.trim().length > 0;
+    this.isCap = this.cap.trim().length > 0 && this.cap.trim().length <= 5 && /^[0-9]+$/.test(this.cap);
+    this.isCitta = this.citta.trim().length > 0;
+    this.isProvincia = this.provincia.trim().length > 0 && this.provincia.trim().length <= 2;
+    this.isLatitudine = this.latitudine.toString().trim().length > 0 && /^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?)$/.test(this.latitudine.toString());
+    this.isLongitudine = this.longitudine.toString().trim().length > 0 && /^[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/.test(this.longitudine.toString());
+    this.isDescrizioneBreve = this.descrizioneBreve.trim().length > 0;
+    this.isDescrizioneLunga = this.descrizioneLunga.trim().length > 0;
+
     console.log(this.data.prezzo);
+  }
+
+  checkValidity(): boolean {
+    console.log('isTipoSelected:', this.isTipoSelected);
+    console.log('isCategoriaSelected:', this.isCategoriaSelected);
+    console.log('isNome:', this.isNome);
+    console.log('isIndirizzo:', this.isIndirizzo);
+    console.log('isCap:', this.isCap);
+    console.log('isCitta:', this.isCitta);
+    console.log('isProvincia:', this.isProvincia);
+    console.log('isLatitudine:', this.isLatitudine);
+    console.log('isLongitudine:', this.isLongitudine);
+    console.log('isDescrizioneBreve:', this.isDescrizioneBreve);
+    console.log('isDescrizioneLunga:', this.isDescrizioneLunga);
+
+    return this.isTipoSelected && this.isCategoriaSelected && this.isNome && this.isIndirizzo && this.isCap && this.isCitta && this.isProvincia && this.isLatitudine && this.isLongitudine && this.isDescrizioneBreve && this.isDescrizioneLunga;
   }
 
   ngOnInit(): void {
@@ -168,7 +203,6 @@ export class PopupModificaDatiAlloggioComponent implements OnInit {
     console.log("DESCRIZIONE BREVE: ", descrizioneBreveValue);
     formData.append('descrizioneBreve', descrizioneBreveValue);
 
-    // Controlla se il valore di prezzo è null o undefined prima di aggiungerlo al FormData
     formData.append('prezzo', '0');
 
     const descrizioneLungaValue = this.inserimento.get('descrizioneLunga')?.value;

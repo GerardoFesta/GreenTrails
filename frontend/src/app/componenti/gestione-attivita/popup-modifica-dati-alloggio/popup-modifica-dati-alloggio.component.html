@@ -1,13 +1,12 @@
-<h1 mat-dialog-title>Riconferma i dati originali copiandoli e incollandoli nelle caselle di testo appropriate</h1>
+<h1 mat-dialog-title align="center">Modifica Alloggio</h1>
 <mat-dialog-content fxLayout="column" fxLayoutGap="10px">
   <form [formGroup]="inserimento">
     <div class="sezione">
       <div>
         <!--PRIMA PARTE-->
         <!--Inserimento nome-->
-        <label>{{nome}}</label>
         <mat-form-field appearance="outline" style="margin: 2%; margin-bottom: 0%">
-          <mat-label>Nome</mat-label>
+          <mat-label>Inserisci Nome</mat-label>
           <input matInput formControlName="nome" required/>
           <mat-error *ngIf="inserimento.get('nome')?.hasError('required')">
             Campo obbligatorio
@@ -15,8 +14,8 @@
         </mat-form-field>
         <!-- Selezione tipo -->
         <mat-form-field appearance="outline" style="margin: 2%; margin-bottom: 0%">
-          <mat-label>Seleziona il tipo originale</mat-label>
-          <mat-select formControlName="tipo" [errorStateMatcher]="matcher">
+          <mat-label>Tipo</mat-label>
+          <mat-select formControlName="tipo" [errorStateMatcher]="matcher" (selectionChange)="isTipoSelected = true">
             <mat-option value="true">Alloggio</mat-option>
             <!-- <mat-option value="false">Attività</mat-option> -->
           </mat-select>
@@ -27,7 +26,7 @@
         <!-- Selezione categoria -->
         <mat-form-field appearance="outline" style="margin: 2%; margin-bottom: 0%">
           <mat-label>Categoria</mat-label>
-          <mat-select formControlName="categoria" [errorStateMatcher]="matcher">
+          <mat-select formControlName="categoria" [errorStateMatcher]="matcher" (selectionChange)="isCategoriaSelected = true">
             <ng-container *ngFor="let categorieAll of categorieAll">
               <mat-option *ngIf="inserimento.get('tipo')?.value !== 'false'" [value]="categorieAll.value">
                 {{ categorieAll.label }}
@@ -65,7 +64,6 @@
       <div class="card">
         <div class="sezione1">
           <!--Indirizzo-->
-          <label for="">{{indirizzo}}</label>
           <mat-form-field appearance="outline" style="margin: 2%; width: 60%">
             <mat-label>Indirizzo</mat-label>
             <input formControlName="indirizzo" matInput/>
@@ -74,8 +72,6 @@
             </mat-error>
           </mat-form-field>
           <!--CAP-->
-          <br>
-          <label for="">{{cap}}</label>
           <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
             <mat-label>CAP</mat-label>
             <input formControlName="cap" matInput/>
@@ -91,8 +87,6 @@
 
           </mat-form-field>
           <!--Città-->
-          <br>
-          <label for="">{{citta}}</label>
           <mat-form-field appearance="outline" style="margin: 2%; width: 60%">
             <mat-label>Città</mat-label>
             <input formControlName="citta" matInput/>
@@ -101,8 +95,6 @@
             </mat-error>
           </mat-form-field>
           <!--Provincia-->
-          <br>
-          <label for="">{{provincia}}</label>
           <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
             <mat-label>Provincia</mat-label>
             <input formControlName="provincia" matInput/>
@@ -116,7 +108,6 @@
           <!--Coordinate-->
           <div style="margin: 5%">
             <h4>Coordinate Geografiche</h4>
-            <label for="">{{latitudine}}</label>
             <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
               <mat-label>Latitudine</mat-label>
               <input formControlName="latitudine" matInput/>
@@ -128,8 +119,6 @@
               </mat-error>
             </mat-form-field>
 
-            <br>
-            <label for="">{{longitudine}}</label>
             <mat-form-field appearance="outline" style="margin: 2%; width: 300px">
               <mat-label>Longitudine</mat-label>
               <input formControlName="longitudine" matInput/>
@@ -151,9 +140,8 @@
     <div class="sezione">
       <div class="sezione1">
         <!--Descrizione Breve-->
-        <label for="">{{descrizioneBreve}}</label>
         <mat-form-field style="width: 60%; margin: 2%;">
-          <mat-label>Descrizione breve</mat-label>
+          <mat-label>Descrizione Breve</mat-label>
           <textarea formControlName="descrizioneBreve" matInput></textarea>
           <mat-error *ngIf="inserimento.get('prezzo')?.hasError('required')">
             Campo obbligatorio
@@ -182,9 +170,8 @@
     <div class="sezione">
       <div class="sezione1">
         <!--Descrizione Lunga-->
-        <label for="">{{descrizioneLunga}}</label>
         <mat-form-field class="example-full-width">
-          <mat-label>Descrizione lunga</mat-label>
+          <mat-label>Descrizione Lunga</mat-label>
           <textarea formControlName="descrizioneLunga" matInput></textarea>
           <mat-error *ngIf="inserimento.get('descrizioneLunga')?.hasError('required')">
             Campo obbligatorio
@@ -198,7 +185,7 @@
 <!--PULSANTI DELLA FINESTRA-->
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancella</button>
-  <button mat-button type="submit" [mat-dialog-close]="true" (click)="onSubmit()">
+  <button mat-button type="submit" [mat-dialog-close]="true" (click)="onSubmit()" [disabled]="!checkValidity()">
     Inserisci
   </button>
 </mat-dialog-actions>
