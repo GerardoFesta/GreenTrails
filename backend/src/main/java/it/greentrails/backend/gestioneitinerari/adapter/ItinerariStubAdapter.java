@@ -35,18 +35,19 @@ public class ItinerariStubAdapter implements ItinerariAdapter {
     Itinerario itinerarioFinal = itinerariRepository.save(itinerario);
     List<Attivita> attivitaTuristiche = attivitaRepository.findAll();
     Collections.shuffle(attivitaTuristiche);
-    attivitaTuristiche.stream().filter(a -> !a.isAlloggio()).limit(2).forEach(a -> {
+    attivitaTuristiche.stream().filter(a -> !a.isAlloggio()).limit(3).forEach(a -> {
       PrenotazioneAttivitaTuristica p = new PrenotazioneAttivitaTuristica();
       p.setAttivitaTuristica(a);
       p.setItinerario(itinerarioFinal);
       p.setDataInizio(new Date());
       p.setNumAdulti(1);
+      p.setNumBambini(0);
       p.setPrezzo(a.getPrezzo());
       prenotazioneAttivitaTuristicaRepository.save(p);
     });
     List<Camera> camere = cameraRepository.findAll();
     Collections.shuffle(camere);
-    camere.stream().limit(3).forEach(c -> {
+    camere.stream().limit(1).forEach(c -> {
       PrenotazioneAlloggio p = new PrenotazioneAlloggio();
       p.setCamera(c);
       p.setItinerario(itinerarioFinal);
