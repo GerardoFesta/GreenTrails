@@ -1,0 +1,100 @@
+<mat-card class="questionario-card">
+  <mat-card-header>
+    <mat-card-title class="questionario-titolo" >Compilazione Questionario</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="questionario">
+      <div class="sezione">
+        <div>
+          <!--PRIMA PARTE-->
+          <!--Prima Domanda-->
+
+          <div class="domanda">
+            <h2>Dove preferisci viaggiare?</h2>
+            <mat-radio-group formControlName="viaggioPreferito">
+              <mat-radio-button value="MONTAGNA" class="pulsante">Montagna</mat-radio-button>
+              <mat-radio-button value="MARE" class="pulsante">Mare</mat-radio-button>
+              <mat-radio-button value="CITTA" class="pulsante">Città</mat-radio-button>
+              <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
+            </mat-radio-group>
+          </div>
+           <!--Seconda Domanda-->
+        <div class="domanda">
+          <h2>Dove preferisci alloggiare?</h2>
+          <mat-radio-group formControlName="alloggioPreferito">
+            <mat-radio-button value="HOTEL" class="pulsante">Hotel</mat-radio-button>
+            <mat-radio-button value="BED_AND_BREAKFAST" class="pulsante">Bed & Breakfast</mat-radio-button>
+            <mat-radio-button value="VILLAGGIO_TURISTICO" class="pulsante">Villaggio turistico</mat-radio-button>
+            <mat-radio-button value="OSTELLO" class="pulsante">Ostello</mat-radio-button>
+            <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
+          </mat-radio-group>
+        </div>
+          <!--Terza Domanda-->
+          <div class="domanda">
+          <h2>Hai qualche preferenza alimentare?</h2>
+          <mat-radio-group formControlName="preferenzaAlimentare" >
+            <mat-radio-button value="VEGAN" class="pulsante">Vegan</mat-radio-button>
+            <mat-radio-button value="VEGETARIAN" class="pulsante">Vegetarian</mat-radio-button>
+            <mat-radio-button value="GLUTEN_FREE" class="pulsante">Gluten free</mat-radio-button>
+            <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+          <!--Quarta Domanda-->
+          <div class="domanda">
+          <h2>Che attività vorresti svolgere durante il tuo viaggio?</h2>
+          <mat-radio-group formControlName="attivitaPreferita">
+            <mat-radio-button value="ALL_APERTO" class="pulsante">Attività all'aperto</mat-radio-button>
+            <mat-radio-button value="VISITE_CULTURALI_STORICHE" class="pulsante">Visite culturali e storiche</mat-radio-button>
+            <mat-radio-button value="RELAX" class="pulsante">Relax</mat-radio-button>
+            <mat-radio-button value="GASTRONOMIA" class="pulsante">Gastronomia</mat-radio-button>
+            <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
+          </mat-radio-group>
+        </div>
+          <!--Quinta Domanda-->
+          <div class="domanda">
+          <h2>Hai intenzione di viaggiare in compagnia del tuo animale domestico?</h2>
+          <mat-radio-group formControlName="animaleDomestico">
+            <mat-radio-button value="true" class="pulsante">Si</mat-radio-button>
+            <mat-radio-button value="false" class="pulsante">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+          <!--Sesta Domanda-->
+          <div class="domanda">
+          <h2>Hai preferenze riguardo il budget?</h2>
+          <mat-radio-group formControlName="budgetPreferito">
+            <mat-radio-button value='BASSO' class="pulsante">Basso</mat-radio-button>
+            <mat-radio-button value="MEDIO" class="pulsante">Medio</mat-radio-button>
+            <mat-radio-button value="ALTO" class="pulsante">Alto</mat-radio-button>
+            <mat-radio-button value="FLESSIBILE" class="pulsante">Flessibile</mat-radio-button>
+          </mat-radio-group>
+        </div>
+          <!--Settima Domanda-->
+          <div class="domanda">
+          <h2>Sei interessato a souvenir locali/artigianali?</h2>
+          <mat-radio-group formControlName="souvenir">
+            <mat-radio-button value="true" class="pulsante">Si</mat-radio-button>
+            <mat-radio-button value="false" class="pulsante">No</mat-radio-button>
+          </mat-radio-group>
+        </div>
+          <!--Ottava Domanda-->
+          <div class="domanda">
+          <h2>Hai preferenze riguardo le stagioni?</h2>
+          <mat-radio-group formControlName="stagioniPreferite">
+            <mat-radio-button value="AUTUNNO_INVERNO" class="pulsante">Autunno/Inverno</mat-radio-button>
+            <mat-radio-button value="PRIMAVERA_ESTATE" class="pulsante">Primavera/Estate</mat-radio-button>
+            <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions class="button">
+    <button mat-button (click)="esci()">Esci</button>
+    <button mat-button (click)="invio()" [disabled]="!questionario.valid">Invia</button>
+  </mat-card-actions>
+
+
+</mat-card>
+
