@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { ItinerarioService } from 'src/app/servizi/itinerario.service';
@@ -29,7 +30,8 @@ export class GenerazioneAutomaticaComponent {
 
   constructor(private itinerarioService: ItinerarioService,
     private attivitaService: AttivitaService,
-    private uploadService: UploadService) {}
+    private uploadService: UploadService,
+    private route: Router) {}
 
 
     ngOnInit(): void {
@@ -58,6 +60,15 @@ export class GenerazioneAutomaticaComponent {
     );
   }
 
+  clickedHome(){
+    this.route.navigate(['/homepage']);
+  }
+
+  isCalendarioOpen: boolean = false;
+
+  openCalendario(){
+    this.isCalendarioOpen = !this.isCalendarioOpen;
+  }
 
   salvaItinerarioNelDB(itinerarioId: number) {
     this.itinerarioService.getItinerario(itinerarioId).subscribe(

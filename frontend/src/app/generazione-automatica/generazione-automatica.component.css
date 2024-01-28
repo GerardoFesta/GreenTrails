@@ -10,20 +10,9 @@
     justify-content: center;
   }
 
-  .stessa-riga{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
 
   .mat-card-title{
     font-size: medium;
-  }
-
-  .selected-activities-container{
-    flex: 1;
-    width: 90%;
   }
 
   .stepper-container {
@@ -31,32 +20,11 @@
     width: 80%;
   }
 
-  mat-list-item {
-    display: flex;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-
   .mat-card {
     width: 100%;
     margin: auto;
     margin-bottom: 20px;
     height: auto;
-  }
-
-  .selected-activities-container{
-    background-color: transparent;
-    color: black;
-    border: none;
-    margin-top: 40px;
-    border: 5px solid lightgreen;
-    width: 100%;
-    height: auto;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 7px 7px 5px #dedede;
   }
 
   .button-container{
