@@ -17,4 +17,6 @@ export class PopUpConfermaComponent implements OnInit {
     this.dialogRef.close();
     window.location.reload();
   }
+
+  
 }

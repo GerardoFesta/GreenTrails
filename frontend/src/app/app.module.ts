@@ -83,6 +83,7 @@ import { PrenotazioniComponent } from './componenti/pagina-attivita/prenotazioni
 import { PopUpPrenotazioneComponent } from './componenti/pagina-attivita/pop-up-prenotazione/pop-up-prenotazione.component';
 import { PrenotazioniAttivitaComponent } from './componenti/pagina-attivita/prenotazioni-attivita/prenotazioni-attivita.component';
 import { PopUpRegistrazioneComponent } from './componenti/registrazione/pop-up-registrazione/pop-up-registrazione.component';
+import { PopUpCategorieComponent } from './componenti/inserimento-attivita/pop-up-categorie/pop-up-categorie.component';
 
 
 
@@ -120,6 +121,7 @@ import { PopUpRegistrazioneComponent } from './componenti/registrazione/pop-up-r
     PopUpPrenotazioneComponent,
     PrenotazioniAttivitaComponent,
     PopUpRegistrazioneComponent,
+    PopUpCategorieComponent,
   ],
   imports: [
     BrowserModule,

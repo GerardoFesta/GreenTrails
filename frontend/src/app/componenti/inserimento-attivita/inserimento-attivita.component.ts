@@ -8,6 +8,7 @@ import { ErrorStateMatcher } from '@angular/material/core';
 import { PopUpAlloggioComponent } from './pop-up-alloggio/pop-up-alloggio.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PopUpConfermaComponent } from './pop-up-conferma/pop-up-conferma.component';
+import { PopUpCategorieComponent } from './pop-up-categorie/pop-up-categorie.component';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -121,6 +122,12 @@ export class InserimentoAttivitaComponent implements OnInit {
 
     });
   }
+  openPopupCategoria(idAttivita: number):void{
+    const dialogRef = this.dialog.open(PopUpCategorieComponent, {
+      width: '60%',
+      data: { idAttivita: idAttivita}
+    });
+  }
 
     onSubmit() {
 
@@ -173,7 +180,8 @@ export class InserimentoAttivitaComponent implements OnInit {
         const idAttivita = response.data.id;
         this.openPopupAlloggio(idAttivita)
             }else if (response?.status === 'success'){
-        this.openPopupConferma('Attivita inserita con successo')         
+              const idAttivita = response.data.id;
+        this.openPopupCategoria(idAttivita)         
            }
            else{
             const errorMessage = response?.error?.message || 'Errore sconosciuto';
