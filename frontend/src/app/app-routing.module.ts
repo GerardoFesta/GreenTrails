@@ -10,7 +10,7 @@ import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
-import { GenerazioneAutomaticaComponent } from './generazione-automatica/generazione-automatica.component';
+import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
