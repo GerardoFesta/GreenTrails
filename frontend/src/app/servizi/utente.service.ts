@@ -63,5 +63,6 @@ logout(): Observable<any> {
 isLoggedInUser(): boolean {
   return this.isLogged;
 }
+
 }
 

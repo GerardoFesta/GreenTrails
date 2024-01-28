@@ -1,53 +1,23 @@
-import { Component } from '@angular/core';
-import { AttivitaService } from 'src/app/servizi/attivita.service';
-import { ItinerarioService } from 'src/app/servizi/itinerario.service';
-import { UploadService } from 'src/app/servizi/upload.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-@Component({
-  selector: 'app-generazione-automatica',
-  templateUrl: './generazione-automatica.component.html',
-  styleUrls: ['./generazione-automatica.component.css']
-})
-export class GenerazioneAutomaticaComponent {
+import { GenerazioneAutomaticaComponent } from './generazione-automatica.component';
 
-  attivitaList: any[] = [];
-  fileNames: string[] = [];
-  imageUrls: string[][] = [];
-  attivitaTuristicheList: any[] = [];
-  alloggiList: any[] = [];
-  preferenzeUtente:any;
+describe('GenerazioneAutomaticaComponent', () => {
+  let component: GenerazioneAutomaticaComponent;
+  let fixture: ComponentFixture<GenerazioneAutomaticaComponent>;
 
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ GenerazioneAutomaticaComponent ]
+    })
+    .compileComponents();
 
-  attivitaSelezionate: any [] = [];
-  prenotazioni: any;
+    fixture = TestBed.createComponent(GenerazioneAutomaticaComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  constructor(private itinerarioService: ItinerarioService,
-    private attivitaService: AttivitaService,
-    private uploadService: UploadService) {}
-
-
-    ngOnInit(): void {
-      Promise.all([
-        this.loadDataForAlloggi(5),
-        this.loadDataForAttivitaTuristiche(5)
-      ]);
-    }
-
-  generaItinerario() {
-    const preferenzeUtente = {
-      tipoCibo: 'Italiano',
-      attivita: 'Escursione',
-      durata: 'Pomeriggio'
-    };
-
-    this.itinerarioService.generaItinerario().subscribe(
-      (itinerarioGenerato) => {
-        console.log('Itinerario generato:', itinerarioGenerato);
-
-        this.salvaItinerarioNelDB(itinerarioGenerato.id);
-      },
-      (errore) => {
-        console.error('Errore durante la generazione dell\'itinerario:', errore);
-      }
-    );
-  }
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -6,6 +6,7 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
 import { HomePageComponent } from './componenti/home-page/home-page.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
+import { GenerazioneAutomaticaComponent } from './generazione-automatica/generazione-automatica.component';
 
 const routes: Routes = [
   { path: 'registrazione', component: RegistrazioneComponent },
@@ -15,6 +16,9 @@ const routes: Routes = [
   {path: 'tabellaP', component: GestionePrenotazioniAttiveComponent},
   {path: 'login', component: LoginComponent},
   {path: 'area-riservata', component: AreaRiservataComponent},
+  {path: '', component: GenerazioneAutomaticaComponent},
+
+
 
 
 
