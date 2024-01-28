@@ -4,6 +4,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { PopUpConfermaComponent } from '../pop-up-conferma/pop-up-conferma.component';
+import { PopUpCategorieComponent } from '../pop-up-categorie/pop-up-categorie.component';
 
 @Component({
   selector: 'app-pop-up-alloggio',
@@ -75,9 +76,16 @@ camereInserite: any[] = []
     this.camere.reset();
   }
 
+  openPopupCategoria(idAttivita: number):void{
+    const dialogRef = this.dialog.open(PopUpCategorieComponent, {
+      width: '60%',
+      data: { idAttivita: idAttivita}
+    });
+  }
+
   inviaCamere(){
-    if (this.camereInserite.length > 0) {
-      this.openPopupConferma('Attivita inserita con successo');
+    if (this.camereInserite.length > 0) {  
+      this.openPopupCategoria(this.id);
     } else {
       
     }

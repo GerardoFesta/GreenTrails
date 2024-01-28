@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>
+Vuoi aggiungere una categoria all'attivita?
+  </h1>
+  <div mat-dialog-content>
+
+    <ng-template matStepLabel>Categoria</ng-template>
+    <form [formGroup]="formGroup">
+      <label>Seleziona una categoria:</label>
+      <select formControlName="categoria">
+        <option value="1">Centro città</option>
+        <option value="2">Campagna</option>
+        <option value="3">Lago</option>
+        <option value="4">Montagna</option>
+      </select>
+    </form>
+  </div>
+      <button mat-button (click)="aggiungiCategoria()">Aggiungi Categoria</button>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Chiudi</button>
+  </div>

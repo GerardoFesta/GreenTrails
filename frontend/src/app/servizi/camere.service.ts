@@ -46,4 +46,11 @@ export class CamereService {
   visualizzaCamera(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
+
+  getCamereDisponibili(id: number): Observable<any>{
+
+    return this.http.get<any[]>(`${this.baseUrl}/perAlloggio/${id}`);
+
+  }
+
 }
