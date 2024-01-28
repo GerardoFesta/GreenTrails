@@ -4,16 +4,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 ::-webkit-scrollbar {
     width: 10px;
-  }
+}
 
-  ::-webkit-scrollbar-track {
-    background: #f1f8e9; 
-  }
+::-webkit-scrollbar-track {
+    background: #e8f5e9; 
+    border-radius: 10px;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: #dcedc8; 
-  }
+::-webkit-scrollbar-thumb {
+    background: #a5d6a7; 
+    border-radius: 10px;
+}
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #c5e1a5;
-  }
+::-webkit-scrollbar-thumb:hover {
+    background: #81c784; 
+}
