@@ -83,7 +83,10 @@ export class HomePageComponent implements OnInit {
             const newAttivita = result.data;
             console.log("New Attivita from API:", newAttivita);
   
-            const filteredAttivita = newAttivita.filter((item: { id: any; prezzo: number; }) => item.prezzo < 300);
+            // Filter out deleted items
+            const filteredAttivita = newAttivita.filter((item: { id: any; prezzo: number; eliminata: boolean }) => 
+              item.prezzo < 300 && !item.eliminata
+            );
   
             this.attivitaPerPrezzoList.push(...filteredAttivita);
   
@@ -103,21 +106,30 @@ export class HomePageComponent implements OnInit {
       );
     });
   }
+  
   private visualizzaListaAlloggi(limite: number): Promise<void> {
     return new Promise<void>((resolve) => {
       this.attivitaService.getAlloggi(limite).subscribe((result) => {
         const newAlloggi = result.data;
-        this.alloggiList.push(...newAlloggi);
+  
+        // Filter out deleted items
+        const filteredAlloggi = newAlloggi.filter((item: { eliminata: boolean }) => !item.eliminata);
+  
+        this.alloggiList.push(...filteredAlloggi);
         resolve();
       });
     });
   }
-
+  
   private visualizzaListaAttivitaTuristiche(limite: number): Promise<void> {
     return new Promise<void>((resolve) => {
       this.attivitaService.getAttivitaTuristiche(limite).subscribe((result) => {
         const newAttivitaTuristiche = result.data;
-        this.attivitaTuristicheList.push(...newAttivitaTuristiche);
+  
+        // Filter out deleted items
+        const filteredAttivitaTuristiche = newAttivitaTuristiche.filter((item: { eliminata: boolean }) => !item.eliminata);
+  
+        this.attivitaTuristicheList.push(...filteredAttivitaTuristiche);
         resolve();
       });
     });

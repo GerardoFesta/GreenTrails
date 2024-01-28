@@ -24,7 +24,7 @@ label {
 /* Stile per le sezioni di attività, alloggi e più economici */
 .suggeriti,
 .attivita,
-.allogi,
+.alloggi,
 .per-prezzo {
   display: flex;
   overflow-x: auto; 
