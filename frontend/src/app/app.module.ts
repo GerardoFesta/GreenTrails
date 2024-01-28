@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { RecensioneFormComponent } from './componenti/pagina-attivita/recensioni/recensione-form/recensione-form.component';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,7 +20,6 @@ import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -49,7 +48,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -62,7 +61,19 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
-import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
+import { QuestionarioComponent } from './componenti/questionario/questionario.component';
+import { PopUpQuestionarioComponent } from './componenti/questionario/pop-up-questionario/pop-up-questionario.component';
+import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CookieService } from 'ngx-cookie-service';
+import { HomePageComponent } from './componenti/home-page/home-page.component';
+import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
+import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
+import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popup-errorPass.component';
+
+import { GenerazioneAutomaticaComponent } from './generazione-automatica/generazione-automatica.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +89,16 @@ import { GenerazioneAutomaticaComponent } from './componenti/generazione-automat
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
+    QuestionarioComponent,
+    PopUpQuestionarioComponent,
+    RecensioneFormComponent,
+    PaginaAttivitaComponent,
+    PopupErrorPassComponent,
+    PopupRecensioneComponent,
+    RegistrazioneComponent,
+    HomePageComponent,
+    GestionePrenotazioniAttiveComponent,
+    AreaRiservataComponent,
     GenerazioneAutomaticaComponent,
   ],
   imports: [
@@ -127,6 +148,8 @@ import { GenerazioneAutomaticaComponent } from './componenti/generazione-automat
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
+    MatIconModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -170,8 +193,10 @@ import { GenerazioneAutomaticaComponent } from './componenti/generazione-automat
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
+    MatIconModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
