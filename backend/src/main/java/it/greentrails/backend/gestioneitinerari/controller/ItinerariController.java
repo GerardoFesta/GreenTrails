@@ -50,10 +50,8 @@ public class ItinerariController {
   ) {
     try {
       Preferenze preferenze = gestioneUtenzeService.getPreferenzeById(utente.getId());
-      // TODO: integrare modulo AI
       Itinerario itinerario = itinerariService.createByPreferenze(preferenze);
-      return ResponseGenerator.generateResponse(HttpStatus.NOT_IMPLEMENTED,
-          "Funzione non implementata.");
+      return ResponseGenerator.generateResponse(HttpStatus.OK, itinerario);
     } catch (Exception e) {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
