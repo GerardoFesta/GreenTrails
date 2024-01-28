@@ -86,7 +86,6 @@ import { PopupModificaDatiAlloggioComponent } from './componenti/gestione-attivi
 import { PopupEliminazioneCameraComponent } from './componenti/gestione-attivita/popup-eliminazione-camera/popup-eliminazione-camera.component';
 import { GestioneValoriComponent } from './componenti/gestione-attivita/gestione-valori/gestione-valori.component';
 import { PopupComponent } from './componenti/gestione-attivita/gestione-valori/popup/popup.component';
-import { IndietroPopupComponent } from './componenti/gestione-attivita/gestione-valori/indietro-popup/indietro-popup.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +124,6 @@ import { IndietroPopupComponent } from './componenti/gestione-attivita/gestione-
     PopupEliminazioneCameraComponent,
     GestioneValoriComponent,
     PopupComponent,
-    IndietroPopupComponent,
   ],
   imports: [
     BrowserModule,
