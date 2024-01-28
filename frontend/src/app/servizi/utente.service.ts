@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable, catchError, of, tap } from 'rxjs';
@@ -74,10 +74,12 @@ invioQuestionario(
   souvenir:any,
   stagioniPreferite:any
    ): Observable<any> {
-    const email = 'e@g.b';
-    const password = 'qwerty123!';
-    const base64credential = btoa(email + ":" + password);
-    const headers = ({Authorization: 'Basic ' + base64credential} );
+    
+    
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+  
 
     const params = new HttpParams()
     .set('viaggioPreferito', viaggioPreferito)
@@ -92,7 +94,14 @@ invioQuestionario(
     return this.http.post<any>(`${this.url}/questionario`,params, {headers});
    }
 
+getPreferenze():Observable<any> {
+ 
+  const headers = new HttpHeaders({
+    Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+  });
+  return this.http.get<any>(`${this.url}/preferenze`, {headers});
 
+}
 
 }
 
