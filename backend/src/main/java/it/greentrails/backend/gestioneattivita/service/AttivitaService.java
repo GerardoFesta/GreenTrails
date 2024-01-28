@@ -14,9 +14,15 @@ public interface AttivitaService {
   List<Attivita> findAllAttivitaByGestore(Long idGestore) throws Exception;
 
   Optional<Attivita> findByValori(ValoriEcosostenibilita valoriEcosostenibilita)
-      throws Exception;
+          throws Exception;
 
   List<Attivita> getAttivitaTuristicheEconomiche(int limite);
 
   boolean deleteAttivita(Attivita attivita) throws Exception;
+
+  List<Attivita> getAttivitaTuristiche(int limite);
+
+  List<Attivita> getAlloggi(int limite);
+
+  List<Attivita> findAll();
 }

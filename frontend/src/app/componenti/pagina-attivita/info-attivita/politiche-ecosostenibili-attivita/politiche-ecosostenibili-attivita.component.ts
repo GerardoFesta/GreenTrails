@@ -1,5 +1,6 @@
-import { StudentService } from './../../../../services/student.service';
-import { Component, OnInit } from '@angular/core';
+import { AttivitaService } from 'src/app/servizi/attivita.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-politiche-ecosostenibili-attivita',
@@ -8,30 +9,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
 
-  politicheEcosostenibili: string[] = [];
+  id: number = 0;
+  valoriEcosostenibilita: string[] = [];
 
-  constructor(private studentService: StudentService) { 
-    // this.loadNamesAndEmails();
+  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.loadNames();
+    this.route.params.subscribe(params => {
+      this.id = +params['id'];
+    })
+    this.visualizzaDettagliAttivita();
   }
 
-  // loadNamesAndEmails() {
-  //   this.studentService.getNamesAndEmails().subscribe((data) => {
-  //     this.politicheEcosostenibili = data;
-  //   }, (error) => {
-  //     console.error(error);
-  //   });
-  // }
+  visualizzaDettagliAttivita(): void {
+    this.attivitaService.visualizzaAttivita(this.id).subscribe((attivita) => {
+      let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita)
+        .filter(([nomePolitica, valore]) => valore === true)
+        .map(([nomePolitica, valore]) => this.convertCamelCaseToReadable(nomePolitica));
 
-  loadNames() {
-    this.studentService.getName().subscribe((nome) => {
-      this.politicheEcosostenibili = nome;
+      this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
+      
+      this.valoriEcosostenibilita = valoriEcosostenibilitaTrue;
     }, (error) => {
-       console.error(error);
+      console.error(error);
     })
   }
+
+  convertCamelCaseToReadable(camelCase: string): string {
+    let result = camelCase.replace(/([A-Z])/g, ' $1');
+    result = result.replace('C O2', 'CO2');
+    return result.charAt(0).toUpperCase() + result.slice(1);
+}
 
 }

@@ -1,13 +1,14 @@
+
 package it.greentrails.backend.gestioneattivita.service;
 
-import it.greentrails.backend.entities.Attivita;
-import it.greentrails.backend.entities.ValoriEcosostenibilita;
-import it.greentrails.backend.gestioneattivita.repository.AttivitaRepository;
-import java.util.List;
-import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
+        import it.greentrails.backend.entities.Attivita;
+        import it.greentrails.backend.entities.ValoriEcosostenibilita;
+        import it.greentrails.backend.gestioneattivita.repository.AttivitaRepository;
+        import java.util.List;
+        import java.util.Optional;
+        import lombok.RequiredArgsConstructor;
+        import org.springframework.data.domain.Pageable;
+        import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +46,7 @@ public class AttivitaServiceImpl implements AttivitaService {
 
   @Override
   public Optional<Attivita> findByValori(ValoriEcosostenibilita valoriEcosostenibilita)
-      throws Exception {
+          throws Exception {
     if (valoriEcosostenibilita == null) {
       throw new Exception("I valori sono vuoti.");
     }
@@ -62,13 +63,24 @@ public class AttivitaServiceImpl implements AttivitaService {
     if (attivita == null) {
       throw new Exception("L'attività è vuota.");
     }
-    attivita.setEliminata(true);
-    try {
-      saveAttivita(attivita);
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
+    repository.delete(attivita);
+    repository.flush();
+    return repository.findById(attivita.getId()).isEmpty();
+  }
+
+  @Override
+  public List<Attivita> getAttivitaTuristiche(int limite) {
+    return  repository.getAttivitaTuristiche(Pageable.ofSize(limite)).toList();
+  }
+
+  @Override
+  public List<Attivita> getAlloggi(int limite) {
+    return  repository.getAlloggi(Pageable.ofSize(limite)).toList();
+  }
+
+  @Override
+  public List<Attivita> findAll() {
+    return repository.findAll();
   }
 
 

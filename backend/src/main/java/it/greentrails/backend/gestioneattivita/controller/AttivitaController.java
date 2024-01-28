@@ -69,6 +69,7 @@ public class AttivitaController {
       attivita.setDescrizioneBreve(descrizioneBreve);
       attivita.setDescrizioneLunga(descrizioneLunga);
       attivita.setValoriEcosostenibilita(valoriEcosostenibilitaService.findById(idValori));
+      attivita.setPrezzo(prezzo);
       String media = UUID.randomUUID().toString();
       attivita.setMedia(media);
       archiviazioneService.store(media, immagine);
@@ -224,5 +225,29 @@ public class AttivitaController {
       return ResponseGenerator.generateResponse(HttpStatus.INTERNAL_SERVER_ERROR, e);
     }
   }
-
+  @GetMapping("alloggi")
+  private ResponseEntity<Object> getAlloggi(
+  @RequestParam(value = "limite", required = false) Integer limite
+  ) {
+    if (limite == null) {
+      limite = 5;
+    }
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+            attivitaService.getAlloggi(limite));
+  }
+  @GetMapping("all")
+  private ResponseEntity<Object> findAll() {
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+            attivitaService.findAll());
+  }
+  @GetMapping("attivitaTuristiche")
+  private ResponseEntity<Object> getAttivitaTuristiche(
+          @RequestParam(value = "limite", required = false) Integer limite
+  ) {
+    if (limite == null) {
+      limite = 5;
+    }
+    return ResponseGenerator.generateResponse(HttpStatus.OK,
+            attivitaService.getAttivitaTuristiche(limite));
+  }
 }
