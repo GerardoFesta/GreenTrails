@@ -63,5 +63,14 @@ export class ItinerariService {
     return this.http.get<any[]>(`${this.baseUrl}`,  {headers});
   }
 
+  generaItinerario():Observable<any>{
+    
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+  
+    return this.http.post<any>(`${this.baseUrl}/genera`, {headers});
+  }
+
   
 }

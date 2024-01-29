@@ -251,9 +251,5 @@ public class AttivitaController {
             attivitaService.getAttivitaTuristiche(limite));
   }
 
-  @GetMapping("all")
-  private ResponseEntity<Object> findAll() {
-    return ResponseGenerator.generateResponse(HttpStatus.OK,
-            attivitaService.findAll());
-  }
+
 }

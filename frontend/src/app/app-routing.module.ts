@@ -12,7 +12,7 @@ import { AreaRiservataComponent } from './componenti/area-riservata/area-riserva
 import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent },
+  { path: 'home', component: HomePageComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
   { path: 'questionario', component: QuestionarioComponent },
   { path: 'login', component: LoginComponent },

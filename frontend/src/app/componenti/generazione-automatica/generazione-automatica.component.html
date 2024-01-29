@@ -3,32 +3,35 @@
 </div>
 <div class="container">
   <div class="stepper-container">
-  <mat-stepper orientation="vertical" #stepper class="stepper-container">
-      <mat-step *ngFor="let attivita of attivitaList" [label]="attivita">
-        <ng-template matStepLabel>NomeAttivita</ng-template>
+    <mat-stepper orientation="vertical" #stepper class="stepper-container">
+      <mat-step *ngFor="let attivita of attivitaList; let i = index" [label]="attivita.nome">
+        <ng-template matStepLabel>{{ attivita.nome }}</ng-template>
         <mat-card>
           <mat-card-header>
-              <p><strong>{{attivita.nome}}</strong></p>
+            <p><strong>{{ attivita.nome }}</strong></p>
           </mat-card-header>
           <mat-card-content>
-            <p>{{attivita.descrizione}}</p>
+            <p>{{ attivita.descrizione }}</p>
           </mat-card-content>
           <mat-card-actions style="display: flex; justify-content: space-between;">
-              <button mat-button matStepperPrevious
-              style="margin-top: 40px; margin-left: auto; color: white; background-color: #8bc34a;">Attività precedente</button>
-              <button mat-button matStepperNext
-              style="margin-top: 40px; color: white; background-color: #8bc34a;">Prossima attività</button>
+            <button mat-button matStepperPrevious
+              style="margin-top: 40px; margin-left: auto; color: white; background-color: #8bc34a;"
+              [disabled]="i === 0">Attività precedente</button>
+            <button mat-button matStepperNext
+              style="margin-top: 40px; color: white; background-color: #8bc34a;"
+              [disabled]="i === attivitaList.length - 1">Prossima attività</button>
           </mat-card-actions>
         </mat-card>
       </mat-step>
     </mat-stepper>
+  </div>
 
   <div class="button-container">
     <button mat-raised-button color="primary"
-    style="margin-top: 20px; color: white; background-color: red;" (click)="clickedHome()"> Torna alla homepage</button>
+      style="margin-top: 20px; color: white; background-color: red;" (click)="clickedHome()"> Torna alla homepage</button>
     <button mat-raised-button color="primary"
-    style="margin-top: 40px; margin-left: 20px; color: white; background-color: orange;"> Rigenera itinerario</button>
-      <button mat-raised-button color="primary"
-      style="margin-top: 40px; margin-left: 20px; color: white; background-color: #00FF00;" (click)="openCalendario()" >Conferma itinerario proposto</button>
-    </div>
+      style="margin-top: 40px; margin-left: 20px; color: white; background-color: orange;" (click)="rigeneraItinerario()"> Rigenera itinerario</button>
+    <button mat-raised-button color="primary"
+      style="margin-top: 40px; margin-left: 20px; color: white; background-color: #00FF00;" (click)="openCalendario()">Conferma itinerario proposto</button>
+  </div>
 </div>

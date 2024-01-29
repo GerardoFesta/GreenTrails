@@ -1,14 +1,13 @@
-
 package it.greentrails.backend.gestioneattivita.service;
 
-        import it.greentrails.backend.entities.Attivita;
-        import it.greentrails.backend.entities.ValoriEcosostenibilita;
-        import it.greentrails.backend.gestioneattivita.repository.AttivitaRepository;
-        import java.util.List;
-        import java.util.Optional;
-        import lombok.RequiredArgsConstructor;
-        import org.springframework.data.domain.Pageable;
-        import org.springframework.stereotype.Service;
+import it.greentrails.backend.entities.Attivita;
+import it.greentrails.backend.entities.ValoriEcosostenibilita;
+import it.greentrails.backend.gestioneattivita.repository.AttivitaRepository;
+import java.util.List;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -66,21 +65,6 @@ public class AttivitaServiceImpl implements AttivitaService {
     repository.delete(attivita);
     repository.flush();
     return repository.findById(attivita.getId()).isEmpty();
-  }
-
-  @Override
-  public List<Attivita> getAttivitaTuristiche(int limite) {
-    return  repository.getAttivitaTuristiche(Pageable.ofSize(limite)).toList();
-  }
-
-  @Override
-  public List<Attivita> getAlloggi(int limite) {
-    return  repository.getAlloggi(Pageable.ofSize(limite)).toList();
-  }
-
-  @Override
-  public List<Attivita> findAll() {
-    return repository.findAll();
   }
 
   @Override
