@@ -47,7 +47,7 @@ export class RisultatiComponent implements OnInit {
 
   onSubmit() {
 
-    this.ricercaService.cerca(this.latitudine, this.longitudine, this.raggio).subscribe((results) => {
+    this.ricercaService.cercaPerPosizione(this.latitudine, this.longitudine, this.raggio).subscribe((results) => {
       console.log('Search Results:', results);
     });
     this.addMarkersToMap();
