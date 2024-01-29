@@ -2,7 +2,6 @@ import { Observable, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { InserimentoAttivitaComponent } from '../componenti/inserimento-attivita/inserimento-attivita.component';
 import { MatDialog } from '@angular/material/dialog';
 @Injectable({
   providedIn: 'root'
@@ -12,11 +11,6 @@ export class AttivitaService {
   private baseUrl= 'http://localhost:8080/api/attivita';
 
   constructor(private http: HttpClient, private cookieService: CookieService, private dialog: MatDialog ) { }
-
-  apriDialog() {
-    const dialogRef =
-      this.dialog.open(InserimentoAttivitaComponent, { width: '100%' })
-  }
 
   visualizzaAttivita(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
