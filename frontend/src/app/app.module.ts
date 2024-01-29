@@ -93,7 +93,6 @@ import { PopUpRegistrazioneComponent } from './componenti/registrazione/pop-up-r
 import { PopUpCategorieComponent } from './componenti/inserimento-attivita/pop-up-categorie/pop-up-categorie.component';
 import { PopupModificaCategorieComponent } from './componenti/gestione-attivita/popup-modifica-categorie/popup-modifica-categorie.component';
 import { PopupEliminazioneCategorieComponent } from './componenti/gestione-attivita/popup-eliminazione-categorie/popup-eliminazione-categorie.component';
-import { LoginComponent } from './componenti/login/login.component';
 
 
 @NgModule({
@@ -142,7 +141,6 @@ import { LoginComponent } from './componenti/login/login.component';
     PopupEliminazioneCategorieComponent,
     PopupModificaCategorieComponent,
     PopupEliminazioneCategorieComponent,
-    LoginComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,7 +18,6 @@ const routes: Routes = [
   { path: 'mieAttivita', component: GestioneAttivitaComponent },
   { path: 'login', component: LoginComponent },
   { path: 'modificaValori/:id', component: GestioneValoriComponent },
-  { path: 'login', component: LoginComponent }
 
 ];
 
