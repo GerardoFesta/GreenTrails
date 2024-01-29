@@ -9,8 +9,10 @@
     font-size: xx-large;
   }
 
+
   .pulsante{
-    margin-left: 5%;
+    margin: 2%;
+    width: 100%;
   }
 
   .domanda {
@@ -18,14 +20,29 @@
     border-radius: 20px;
     padding: 15px;
     margin-top: 2%;
+    border-color: #00FF00;
   }
 
   .button {
-    justify-content: flex-end;
+    display: flex;
   }
 
+  .pulsa{
+    display: flex;
+    border: none;
+
+  }
+
+  .mat-button-toggle-checked {
+    background-color:#b1f7b1; /* Change this to your desired primary color */
+    color: #ffffff;
+    font-weight: bold; /* Change this to your desired text color */
+  }
+  
+
   @media (max-width: 1000px) {
-    .pulsante{
-      width: 100%; /* Imposta la larghezza delle card al 100% quando la larghezza dello schermo è inferiore a 768px */
+    .pulsa{
+      flex-direction: column; /* Stack the buttons in a column */
+      align-items: center; /* Center the buttons in the column */ /* Imposta la larghezza delle card al 100% quando la larghezza dello schermo è inferiore a 768px */
     }
   }

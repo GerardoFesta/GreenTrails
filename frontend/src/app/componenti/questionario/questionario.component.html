@@ -11,80 +11,81 @@
 
           <div class="domanda">
             <h2>Dove preferisci viaggiare?</h2>
-            <mat-radio-group formControlName="viaggioPreferito">
-              <mat-radio-button value="MONTAGNA" class="pulsante">Montagna</mat-radio-button>
-              <mat-radio-button value="MARE" class="pulsante">Mare</mat-radio-button>
-              <mat-radio-button value="CITTA" class="pulsante">Città</mat-radio-button>
-              <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
-            </mat-radio-group>
+            
+            <mat-button-toggle-group formControlName="viaggioPreferito" class="pulsa">
+              <mat-button-toggle value="MONTAGNA" class="pulsante">Montagna</mat-button-toggle>
+              <mat-button-toggle value="MARE" class="pulsante">Mare</mat-button-toggle>
+              <mat-button-toggle value="CITTA" class="pulsante">Città</mat-button-toggle>
+              <mat-button-toggle value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-button-toggle>
+            </mat-button-toggle-group>
           </div>
            <!--Seconda Domanda-->
         <div class="domanda">
           <h2>Dove preferisci alloggiare?</h2>
-          <mat-radio-group formControlName="alloggioPreferito">
-            <mat-radio-button value="HOTEL" class="pulsante">Hotel</mat-radio-button>
-            <mat-radio-button value="BED_AND_BREAKFAST" class="pulsante">Bed & Breakfast</mat-radio-button>
-            <mat-radio-button value="VILLAGGIO_TURISTICO" class="pulsante">Villaggio turistico</mat-radio-button>
-            <mat-radio-button value="OSTELLO" class="pulsante">Ostello</mat-radio-button>
-            <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
-          </mat-radio-group>
+          <mat-button-toggle-group formControlName="alloggioPreferito" class="pulsa">
+            <mat-button-toggle value="HOTEL" class="pulsante">Hotel</mat-button-toggle>
+            <mat-button-toggle value="BED_AND_BREAKFAST" class="pulsante">Bed & Breakfast</mat-button-toggle>
+            <mat-button-toggle value="VILLAGGIO_TURISTICO" class="pulsante">Villaggio turistico</mat-button-toggle>
+            <mat-button-toggle value="OSTELLO" class="pulsante">Ostello</mat-button-toggle>
+            <mat-button-toggle value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
           <!--Terza Domanda-->
           <div class="domanda">
           <h2>Hai qualche preferenza alimentare?</h2>
-          <mat-radio-group formControlName="preferenzaAlimentare" >
-            <mat-radio-button value="VEGAN" class="pulsante">Vegan</mat-radio-button>
-            <mat-radio-button value="VEGETARIAN" class="pulsante">Vegetarian</mat-radio-button>
-            <mat-radio-button value="GLUTEN_FREE" class="pulsante">Gluten free</mat-radio-button>
-            <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
-          </mat-radio-group>
+          <mat-button-toggle-group formControlName="preferenzaAlimentare" class="pulsa">
+            <mat-button-toggle value="VEGAN" class="pulsante">Vegan</mat-button-toggle>
+            <mat-button-toggle value="VEGETARIAN" class="pulsante">Vegetarian</mat-button-toggle>
+            <mat-button-toggle value="GLUTEN_FREE" class="pulsante">Gluten free</mat-button-toggle>
+            <mat-button-toggle value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
 
           <!--Quarta Domanda-->
           <div class="domanda">
           <h2>Che attività vorresti svolgere durante il tuo viaggio?</h2>
-          <mat-radio-group formControlName="attivitaPreferita">
-            <mat-radio-button value="ALL_APERTO" class="pulsante">Attività all'aperto</mat-radio-button>
-            <mat-radio-button value="VISITE_CULTURALI_STORICHE" class="pulsante">Visite culturali e storiche</mat-radio-button>
-            <mat-radio-button value="RELAX" class="pulsante">Relax</mat-radio-button>
-            <mat-radio-button value="GASTRONOMIA" class="pulsante">Gastronomia</mat-radio-button>
-            <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
-          </mat-radio-group>
+          <mat-button-toggle-group formControlName="attivitaPreferita" class="pulsa">
+            <mat-button-toggle value="ALL_APERTO" class="pulsante">Attività all'aperto</mat-button-toggle>
+            <mat-button-toggle value="VISITE_CULTURALI_STORICHE" class="pulsante">Visite culturali e storiche</mat-button-toggle>
+            <mat-button-toggle value="RELAX" class="pulsante">Relax</mat-button-toggle>
+            <mat-button-toggle value="GASTRONOMIA" class="pulsante">Gastronomia</mat-button-toggle>
+            <mat-button-toggle value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
           <!--Quinta Domanda-->
           <div class="domanda">
           <h2>Hai intenzione di viaggiare in compagnia del tuo animale domestico?</h2>
-          <mat-radio-group formControlName="animaleDomestico">
-            <mat-radio-button value="true" class="pulsante">Si</mat-radio-button>
-            <mat-radio-button value="false" class="pulsante">No</mat-radio-button>
-          </mat-radio-group>
+          <mat-button-toggle-group formControlName="animaleDomestico" class="pulsa">
+            <mat-button-toggle value="true" class="pulsante">Si</mat-button-toggle>
+            <mat-button-toggle value="false" class="pulsante">No</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
           <!--Sesta Domanda-->
           <div class="domanda">
           <h2>Hai preferenze riguardo il budget?</h2>
-          <mat-radio-group formControlName="budgetPreferito">
-            <mat-radio-button value='BASSO' class="pulsante">Basso</mat-radio-button>
-            <mat-radio-button value="MEDIO" class="pulsante">Medio</mat-radio-button>
-            <mat-radio-button value="ALTO" class="pulsante">Alto</mat-radio-button>
-            <mat-radio-button value="FLESSIBILE" class="pulsante">Flessibile</mat-radio-button>
-          </mat-radio-group>
+          <mat-button-toggle-group formControlName="budgetPreferito" class="pulsa">
+            <mat-button-toggle value='BASSO' class="pulsante">Basso</mat-button-toggle>
+            <mat-button-toggle value="MEDIO" class="pulsante">Medio</mat-button-toggle>
+            <mat-button-toggle value="ALTO" class="pulsante">Alto</mat-button-toggle>
+            <mat-button-toggle value="FLESSIBILE" class="pulsante">Flessibile</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
           <!--Settima Domanda-->
           <div class="domanda">
           <h2>Sei interessato a souvenir locali/artigianali?</h2>
-          <mat-radio-group formControlName="souvenir">
-            <mat-radio-button value="true" class="pulsante">Si</mat-radio-button>
-            <mat-radio-button value="false" class="pulsante">No</mat-radio-button>
-          </mat-radio-group>
+          <mat-button-toggle-group formControlName="souvenir" class="pulsa" >
+            <mat-button-toggle value="true" class="pulsante">Si</mat-button-toggle>
+            <mat-button-toggle value="false" class="pulsante">No</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
           <!--Ottava Domanda-->
           <div class="domanda">
           <h2>Hai preferenze riguardo le stagioni?</h2>
-          <mat-radio-group formControlName="stagioniPreferite">
-            <mat-radio-button value="AUTUNNO_INVERNO" class="pulsante">Autunno/Inverno</mat-radio-button>
-            <mat-radio-button value="PRIMAVERA_ESTATE" class="pulsante">Primavera/Estate</mat-radio-button>
-            <mat-radio-button value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-radio-button>
-          </mat-radio-group>
+          <mat-button-toggle-group formControlName="stagioniPreferite" class="pulsa">
+            <mat-button-toggle value="AUTUNNO_INVERNO" class="pulsante">Autunno/Inverno</mat-button-toggle>
+            <mat-button-toggle value="PRIMAVERA_ESTATE" class="pulsante">Primavera/Estate</mat-button-toggle>
+            <mat-button-toggle value="NESSUNA_PREFERENZA" class="pulsante">Nessuna preferenza</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
         </div>
       </div>
