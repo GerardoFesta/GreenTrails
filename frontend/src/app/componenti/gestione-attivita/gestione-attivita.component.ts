@@ -5,6 +5,7 @@ import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { PopupEliminazioneComponent } from './popup-eliminazione-attivita/popup-eliminazione-attivita.component';
 import { PopupModificaComponent } from './popup-modifica-attivita-turistica/popup-modifica-attivita-turistica.component';
 import { PopupModificaDatiAlloggioComponent } from './popup-modifica-dati-alloggio/popup-modifica-dati-alloggio.component';
+import { CookieService } from 'ngx-cookie-service';
 
 export interface Attivita {
   numero: number;
@@ -25,11 +26,14 @@ export class GestioneAttivitaComponent implements OnInit {
 
   sortedData: Attivita[];
   idAttivita: number = 0;
+  isGestore: boolean = false;
 
   filterTerm!: string;
 
-  constructor(private attivitaService: AttivitaService, private dialog: MatDialog) {
+  constructor(private attivitaService: AttivitaService, private dialog: MatDialog, private cookieService: CookieService) {
     this.sortedData = this.listaAttivita.slice();
+
+    this.isGestore = cookieService.get('ruolo') === "ROLE_GESTORE_ATTIVITA";
   }
 
   ngOnInit(): void {

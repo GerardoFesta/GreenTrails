@@ -21,8 +21,10 @@ p {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    width: 40%;
+    width: 51.7%;
+    min-width: 300px;
 }
+
 
 .tools {
     display: flex;
