@@ -12,7 +12,6 @@ import { PrenotazioniAlloggioService } from 'src/app/servizi/prenotazioni-allogg
   styleUrls: ['./politiche-ecosostenibili-attivita.component.css']
 })
 export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
-  @Input() attivita: any
   id: number = 0;
   isAlloggio: boolean = false;
   valoriEcosostenibilita: string[] = [];

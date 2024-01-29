@@ -7,8 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class InfoAttivitaComponent implements OnInit {
 
-  @Input() attivita?: any;
-
   constructor() { }
 
   ngOnInit(): void {

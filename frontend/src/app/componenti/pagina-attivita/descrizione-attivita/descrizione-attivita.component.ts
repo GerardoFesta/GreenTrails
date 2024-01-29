@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AttivitaService } from 'src/app/servizi/attivita.service';
 
 @Component({
   selector: 'app-descrizione-attivita',
@@ -7,11 +9,25 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DescrizioneAttivitaComponent implements OnInit {
 
-  @Input() attivita?: any;
+  idAttivita: any;
+  attivita: any;
 
-  constructor() { }
+  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.idAttivita = +params['id'];
+    })
+
+    this.visualizzaDettagliAttivita();
+  }
+
+  
+  visualizzaDettagliAttivita() {
+    this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe((risposta) => {
+      this.attivita = risposta.data;
+      console.log("MAMMT", this.attivita)
+    })
   }
 
 }
