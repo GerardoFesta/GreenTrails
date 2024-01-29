@@ -57,6 +57,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.POST, "/api/camere").hasRole(ROLE_GESTORE)
             .requestMatchers(HttpMethod.DELETE, "/api/camere/*").hasRole(ROLE_GESTORE)
 
+            .requestMatchers(HttpMethod.GET, "/api/categorie/**").permitAll()
             .requestMatchers("/api/categorie/**").hasRole(ROLE_GESTORE)
 
             .requestMatchers(HttpMethod.GET, "/api/recensioni/**").permitAll()
