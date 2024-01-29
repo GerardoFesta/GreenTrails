@@ -1,7 +1,9 @@
 <app-toolbar *ngIf="router.url !== '/'
 && router.url !== '/registrazione'
  && router.url !== '/login'
- && router.url !== '/ricerca/posizione'"></app-toolbar>
+ && router.url !== '/ricerca/posizione'
+ && router.url !== 'areaRiservata'
+ && router.url !== '/mieAttivita'"></app-toolbar>
 <app-toolbar-homepage *ngIf="router.url === '/'"></app-toolbar-homepage>
 <app-icon-toolbar *ngIf="router.url === '/mieAttivita'"></app-icon-toolbar>
 <router-outlet></router-outlet>
