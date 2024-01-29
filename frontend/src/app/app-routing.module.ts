@@ -13,11 +13,12 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
   { path: 'attivita/:id', component: PaginaAttivitaComponent },
+  { path: '', component: HomePageComponent },
   { path: 'prenotazioni', component: GestionePrenotazioniAttiveComponent },
   { path: 'ricerca/posizione', component: RisultatiComponent },
   { path: 'mieAttivita', component: GestioneAttivitaComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'modificaValori/:id', component: GestioneValoriComponent },
+  {path: 'modificaValori/:id', component: GestioneValoriComponent}
 
 ];
 
