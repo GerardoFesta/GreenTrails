@@ -31,6 +31,9 @@
           <button mat-icon-button aria-label="delete_forever" (click)="delete(attivita.numero)" color="warn">
             <mat-icon style="font-size: x-large;">delete_forever</mat-icon>
           </button>
+          <button mat-icon-button aria-label="visibility" [routerLink]="['/attivita', attivita.numero]" style="color: #00FF00;">
+            <mat-icon style="font-size: x-large;">visibility</mat-icon>
+          </button>
         </td>
       </tr>
     </table>
