@@ -1,24 +1,29 @@
+<img src="assets\logo.png" alt="" style="width: 90px; position: absolute; right: 5px; cursor: pointer; z-index: 2;" routerLink="" class="title">
 <div class="mapContainer">
-    <form>
-        <div class="ricerca">
-            <div class="barraricerca">
-                <input type="text" class="searchbar" placeholder="Inserisci latitudine" id="latitudine"
-                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 46" />
-            </div>
-            <div class="barraricerca">
-                <input type="text" class="searchbar" placeholder="Inserisci longitudine" id="longitudine"
-                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 46" />
-            </div>
-            <div class="barraricerca">
-                <input type="text" class="searchbar" placeholder="Inserisci raggio" id="raggio"
-                    onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 46" />
-            </div>
-            <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
-            style="margin-top: 20px; color: white; background-color: #32CD32; width: 100px; border-radius: 20px;">Cerca</button>
+    <div class="ricerca">
+        <div class="barraricerca">
+            <input type="text" class="searchbar" placeholder="Latitudine" id="latitudine"
+                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 46"
+                [(ngModel)]="latitudine" />
         </div>
-        <div class="map-container">
-            <div id="map">
-            </div>
+        <div class="barraricerca">
+            <input type="text" class="searchbar" placeholder="Longitudine" id="longitudine"
+                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 46"
+                [(ngModel)]="longitudine" />
         </div>
-    </form>
+        <div class="barraricerca">
+            <input type="text" class="searchbar" placeholder="Raggio" id="raggio"
+                onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 46"
+                [(ngModel)]="raggio" />
+        </div>
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+            style="margin-top: 20px; color: white; background-color: #32CD32; width: 100px; border-radius: 20px;"
+            [style.backgroundColor]="(!latitudine || !longitudine || !raggio || !isValidLatitude() || !isValidLongitude() || !isValidRadius()) ? 'lightgrey' : '#32CD32'"
+            style="margin-top: 20px; color: white; width: 100px; border-radius: 20px;"
+            [disabled]="!latitudine || !longitudine || !raggio || !isValidLatitude() || !isValidLongitude() || !isValidRadius()">Cerca</button>
+    </div>
+    <div class="map-container">
+        <div id="map">
+        </div>
+    </div>
 </div>
