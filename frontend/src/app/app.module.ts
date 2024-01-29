@@ -67,6 +67,7 @@ import { PopupComponent } from './componenti/gestione-attivita/gestione-valori/p
 import { PopUpCategorieComponent } from './componenti/inserimento-attivita/pop-up-categorie/pop-up-categorie.component';
 import { PopupModificaCategorieComponent } from './componenti/gestione-attivita/popup-modifica-categorie/popup-modifica-categorie.component';
 import { PopupEliminazioneCategorieComponent } from './componenti/gestione-attivita/popup-eliminazione-categorie/popup-eliminazione-categorie.component';
+import { LoginComponent } from './componenti/login/login.component';
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import { PopupEliminazioneCategorieComponent } from './componenti/gestione-attiv
     PopupEliminazioneCategorieComponent,
     PopupModificaCategorieComponent,
     PopupEliminazioneCategorieComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
