@@ -7,7 +7,7 @@
         <!--Inserimento nome-->
         <mat-form-field appearance="outline" style="margin: 2%; margin-bottom: 0%">
           <mat-label>Inserisci Nome</mat-label>
-          <input matInput formControlName="nome" required/>
+          <input matInput formControlName="nome" required />
           <mat-error *ngIf="inserimento.get('nome')?.hasError('required')">
             Campo obbligatorio
           </mat-error>
@@ -26,7 +26,8 @@
         <!-- Selezione categoria -->
         <mat-form-field appearance="outline" style="margin: 2%; margin-bottom: 0%">
           <mat-label>Categoria</mat-label>
-          <mat-select formControlName="categoria" [errorStateMatcher]="matcher" (selectionChange)="isCategoriaSelected = true">
+          <mat-select formControlName="categoria" [errorStateMatcher]="matcher"
+            (selectionChange)="isCategoriaSelected = true">
             <ng-container *ngFor="let categorieAll of categorieAll">
               <mat-option *ngIf="inserimento.get('tipo')?.value !== 'false'" [value]="categorieAll.value">
                 {{ categorieAll.label }}
@@ -66,7 +67,7 @@
           <!--Indirizzo-->
           <mat-form-field appearance="outline" style="margin: 2%; width: 60%">
             <mat-label>Indirizzo</mat-label>
-            <input formControlName="indirizzo" matInput/>
+            <input formControlName="indirizzo" matInput />
             <mat-error *ngIf="inserimento.get('indirizzo')?.hasError('required')">
               Campo obbligatorio
             </mat-error>
@@ -74,7 +75,7 @@
           <!--CAP-->
           <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
             <mat-label>CAP</mat-label>
-            <input formControlName="cap" matInput/>
+            <input formControlName="cap" matInput />
             <mat-error *ngIf="inserimento.get('cap')?.hasError('required')">
               Campo obbligatorio
             </mat-error>
@@ -89,7 +90,7 @@
           <!--Città-->
           <mat-form-field appearance="outline" style="margin: 2%; width: 60%">
             <mat-label>Città</mat-label>
-            <input formControlName="citta" matInput/>
+            <input formControlName="citta" matInput />
             <mat-error *ngIf="inserimento.get('citta')?.hasError('required')">
               Campo obbligatorio
             </mat-error>
@@ -97,7 +98,7 @@
           <!--Provincia-->
           <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
             <mat-label>Provincia</mat-label>
-            <input formControlName="provincia" matInput/>
+            <input formControlName="provincia" matInput />
             <mat-error *ngIf="inserimento.get('provincia')?.hasError('required')">
               Campo obbligatorio
             </mat-error>
@@ -110,7 +111,7 @@
             <h4>Coordinate Geografiche</h4>
             <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
               <mat-label>Latitudine</mat-label>
-              <input formControlName="latitudine" matInput/>
+              <input formControlName="latitudine" matInput />
               <mat-error *ngIf="inserimento.get('latitudine')?.hasError('required')">
                 Campo obbligatorio
               </mat-error>
@@ -121,7 +122,7 @@
 
             <mat-form-field appearance="outline" style="margin: 2%; width: 300px">
               <mat-label>Longitudine</mat-label>
-              <input formControlName="longitudine" matInput/>
+              <input formControlName="longitudine" matInput />
               <mat-error *ngIf="inserimento.get('longitudine')?.hasError('required')">
                 Campo obbligatorio
               </mat-error>
@@ -190,5 +191,8 @@
   </button>
   <button mat-button [mat-dialog-close]="true" [routerLink]="['/modificaValori', this.data.id]">
     Modifica Valori Ecosostenibilità
+  </button>
+  <button mat-button [mat-dialog-close]="true" (click)="openPopupCategoria(this.data.id)">
+    Modifica Categorie
   </button>
 </mat-dialog-actions>

@@ -91,6 +91,8 @@ import { PopUpPrenotazioneComponent } from './componenti/pagina-attivita/pop-up-
 import { PrenotazioniAttivitaComponent } from './componenti/pagina-attivita/prenotazioni-attivita/prenotazioni-attivita.component';
 import { PopUpRegistrazioneComponent } from './componenti/registrazione/pop-up-registrazione/pop-up-registrazione.component';
 import { PopUpCategorieComponent } from './componenti/inserimento-attivita/pop-up-categorie/pop-up-categorie.component';
+import { PopupModificaCategorieComponent } from './componenti/gestione-attivita/popup-modifica-categorie/popup-modifica-categorie.component';
+import { PopupEliminazioneCategorieComponent } from './componenti/gestione-attivita/popup-eliminazione-categorie/popup-eliminazione-categorie.component';
 
 
 @NgModule({
@@ -135,6 +137,8 @@ import { PopUpCategorieComponent } from './componenti/inserimento-attivita/pop-u
     PrenotazioniAttivitaComponent,
     PopUpRegistrazioneComponent,
     PopUpCategorieComponent,
+    PopupModificaCategorieComponent,
+    PopupEliminazioneCategorieComponent,
   ],
   imports: [
     BrowserModule,

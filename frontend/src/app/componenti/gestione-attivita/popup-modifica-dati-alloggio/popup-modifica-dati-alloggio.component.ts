@@ -5,6 +5,7 @@ import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { PopupConfermaModificaComponent } from '../popup-conferma-modifica/popup-conferma-modifica.component';
 import { MyErrorStateMatcher, PopupModificaComponent } from '../popup-modifica-attivita-turistica/popup-modifica-attivita-turistica.component';
 import { PopupModificaAlloggioComponent } from '../popup-modifica-alloggio/popup-modifica-alloggio.component';
+import { PopupModificaCategorieComponent } from '../popup-modifica-categorie/popup-modifica-categorie.component';
 
 @Component({
   selector: 'app-popup-modifica-dati-alloggio',
@@ -141,6 +142,13 @@ export class PopupModificaDatiAlloggioComponent implements OnInit {
       width: '60%',
       data: { message },
       disableClose: true,
+    });
+  }
+
+  openPopupCategoria(idAttivita: number): void {
+    const dialogRef = this.dialog.open(PopupModificaCategorieComponent, {
+      width: '60%',
+      data: { idAttivita: idAttivita }
     });
   }
 

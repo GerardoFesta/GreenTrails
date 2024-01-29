@@ -58,7 +58,7 @@
             Categoria: {{ camera.tipoCamera }}, Disponibilità:
             {{ camera.disponibilita }}, Descrizione: {{ camera.descrizione }},
             Capienza: {{ camera.capienza }}
-            <button mat-icon-button aria-label="delete_forever" *ngIf="camera.id" (click)="delete(camera.id)"
+            <button mat-icon-button aria-label="delete_forever" *ngIf="camera.id && !deletedCameraIds.includes(camera.id)" (click)="delete(camera.id)"
               color="warn">
               <mat-icon style="font-size: x-large;">delete_forever</mat-icon>
             </button>
@@ -66,7 +66,7 @@
         </ng-container>
         <ng-container *ngIf="!camera.tipoCamera">
           <li>
-            Camera n.{{i}} aggiunta con successo!
+            Camera n.{{i}} aggiunta con successo
           </li>
         </ng-container>
       </ng-container>

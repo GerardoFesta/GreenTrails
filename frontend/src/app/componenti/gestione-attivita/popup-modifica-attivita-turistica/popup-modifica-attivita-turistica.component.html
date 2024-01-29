@@ -186,4 +186,7 @@
   <button mat-button [mat-dialog-close]="true" [routerLink]="['/modificaValori', this.data.id]">
     Modifica Valori Ecosostenibilità
   </button>
+  <button mat-button [mat-dialog-close]="true" (click)="openPopupCategoria(this.data.id)">
+    Modifica Categorie
+  </button>
 </mat-dialog-actions>

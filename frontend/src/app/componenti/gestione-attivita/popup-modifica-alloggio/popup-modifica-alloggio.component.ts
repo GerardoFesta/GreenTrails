@@ -125,7 +125,7 @@ export class PopupModificaAlloggioComponent implements OnInit {
 
       const dialogRef = this.dialog.open(PopupEliminazioneCameraComponent, {
         data: {
-          message: 'Camera eliminata con successo!',
+          message: 'Camera eliminata con successo',
           id: id,
           capienza: risposta.data.capienza,
           prezzo: risposta.data.prezzo,

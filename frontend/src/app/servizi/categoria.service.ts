@@ -26,4 +26,22 @@ export class CategoriaService {
     
     return this.http.post<any>(`${this.baseUrl}/${id}`, params, {headers});
   }
+
+  rimuoviCategoria(id: number, idAttivita: number): Observable<any> {
+    const params = new HttpParams()
+    .set('idAttivita', idAttivita)
+    .set('id', id)
+
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+
+    const options = { params, headers };
+
+    return this.http.delete<any>(`${this.baseUrl}/${id}`, options);
+  }
+
+  visualizzaCategoria(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
+  }
 }

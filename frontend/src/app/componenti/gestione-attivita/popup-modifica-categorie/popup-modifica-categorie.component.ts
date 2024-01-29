@@ -1,20 +1,24 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CategoriaService } from 'src/app/servizi/categoria.service';
-import { PopUpConfermaComponent } from '../pop-up-conferma/pop-up-conferma.component';
+import { PopUpConfermaComponent } from '../../inserimento-attivita/pop-up-conferma/pop-up-conferma.component';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
+import { PopupEliminazioneCategorieComponent } from '../popup-eliminazione-categorie/popup-eliminazione-categorie.component';
 
 @Component({
-  selector: 'app-pop-up-categorie',
-  templateUrl: './pop-up-categorie.component.html',
-  styleUrls: ['./pop-up-categorie.component.css']
+  selector: 'app-popup-modifica-categorie',
+  templateUrl: './popup-modifica-categorie.component.html',
+  styleUrls: ['./popup-modifica-categorie.component.css']
 })
-export class PopUpCategorieComponent implements OnInit {
+export class PopupModificaCategorieComponent implements OnInit {
+
 
   idAttivita: any
   categorieSelezionate: string[] = [];
   formGroup: FormGroup
+  listaCategoriePossedute: any;
+  categoriePresenti!: boolean;
 
   categorie: { id: number, descrizione: string, nome: string }[] = [
     { id: 1, descrizione: 'Attività e alloggi legati al patrimonio culturale e storico. Include musei, siti archeologici, monumenti storici, o alloggi in edifici storici.', nome: 'Cultura e Storia' },
@@ -28,10 +32,8 @@ export class PopUpCategorieComponent implements OnInit {
     { id: 9, descrizione: 'Attività all\'\esterno per godere dell\'\ambiente naturale. Include sport, picnic, birdwatching o rilassarsi in un bel parco.', nome: 'All\'\aperto' },
     { id: 10, descrizione: 'Alloggi e attività vicino alla costa. Include opportunità per nuotare, prendere il sole, fare snorkeling o godersi la vista dell\'\oceano.', nome: 'Vicino al mare' }
   ];
+  deletedCategoriaIds: number[] = [];
 
-
-  listaCategoriePossedute: any;
-  categoriePresenti!: boolean;
 
   constructor(public dialogRef: MatDialogRef<PopUpConfermaComponent>,
     private categoriaService: CategoriaService, private dialog: MatDialog,
@@ -42,14 +44,11 @@ export class PopUpCategorieComponent implements OnInit {
     })
   }
 
-  isCategoriaPresente(categoriaId: number): boolean {
-    return this.listaCategoriePossedute.map((c: any) => c.id).includes(categoriaId);
-  }
-
   ngOnInit(): void {
-    console.log('Attivita creata:', this.data.idAttivita);
-    console.log(this.data.idAttivita)
+    console.log('Attivita creata:', this.data.id);
+    console.log(this.data.id)
     this.idAttivita = this.data.idAttivita
+    this.visualizzaCategoriePossedute();
   }
 
 
@@ -60,7 +59,6 @@ export class PopUpCategorieComponent implements OnInit {
     console.log('categoria', categoriaSelezionata)
     this.categoriaService.aggiungiCategoria(this.idAttivita, categoriaSelezionata)
       .subscribe((response) => {
-        // Aggiorna l'array delle categorie selezionate
         this.categorieSelezionate.push(categoriaSelezionata);
 
         const categoriaAggiunta = this.categorie.find(categoria => categoria.id === categoriaSelezionata);
@@ -82,8 +80,42 @@ export class PopUpCategorieComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
-    window.location.reload();
-    this.openPopupConferma('Attivita inserita con successo')
+    this.openPopupConferma('Attivita modificata con successo')
+  }
+
+  visualizzaCategoriePossedute() {
+    this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe((risposta) => {
+      this.listaCategoriePossedute = risposta.data.categorie
+      console.log("CATEGORIE POSSEDUTE: ", this.listaCategoriePossedute);
+      this.categoriePresenti = this.listaCategoriePossedute.length > 0;
+      console.log(this.categoriePresenti);
+    })
+  }
+
+  delete(id: number, idAttivita: number) {
+    this.categoriaService.visualizzaCategoria(id).subscribe((risposta) => {
+      console.log("Categoria con id: " + id, risposta);
+
+      const dialogRef = this.dialog.open(PopupEliminazioneCategorieComponent, {
+        data: {
+          message: 'Categoria eliminata con successo',
+          id: id,
+          idAttivita: idAttivita
+        },
+        disableClose: true
+      });
+      this.deletedCategoriaIds.push(id);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+        }
+      }, (error) => {
+        console.log(error);
+      });
+    });
+  }
+
+  isCategoriaPresente(categoriaId: number): boolean {
+    return this.listaCategoriePossedute.map((c: any) => c.id).includes(categoriaId);
   }
 
 }
