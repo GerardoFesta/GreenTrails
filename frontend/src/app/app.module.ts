@@ -65,6 +65,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { CookieService } from 'ngx-cookie-service';
 import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
 import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { LoginComponent } from './componenti/login/login.component';
 
 
 @NgModule({
@@ -83,6 +84,7 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
     PopupRecensioneComponent,
     GalleryDialogComponent,
     VideoDialogComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
