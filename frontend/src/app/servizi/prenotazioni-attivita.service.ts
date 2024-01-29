@@ -38,6 +38,13 @@ export class PrenotazioniAttivitaService {
     return this.http.get(`${this.baseUrl}/api/prenotazioni-attivita-turistica/perAttivita/${idAttivita}/disponibilita`,  { params, headers });
 
   }
+  getPrenotazioneAttivita(id:number):Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+    return this.http.get(`${this.baseUrl}/api/prenotazioni-attivita-turistica/${id}`,  {headers });
+
+  }
 
   prenotazioneAttivita(idItinerario: number, idAttivita: number,numAdulti: number, numBambini: number, dataInizio: any, dataFine: any  ): Observable<any>{
   

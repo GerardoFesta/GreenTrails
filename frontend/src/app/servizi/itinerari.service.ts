@@ -60,17 +60,24 @@ export class ItinerariService {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
-    return this.http.get<any[]>(`${this.baseUrl}`,  {headers});
+    return this.http.get<any[]>(`${this.baseUrl}`,{headers});
   }
 
   generaItinerario():Observable<any>{
-    
+    const param = this.cookieService.get('userId')
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
   
-    return this.http.post<any>(`${this.baseUrl}/genera`, {headers});
+    return this.http.post<any>(`${this.baseUrl}/api/itinerari/genera`,{param}, {headers});
   }
 
+  visualizzaItinerario(id:number):Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+    return this.http.get<any>(`${this.baseUrl}/api/itinerari/${id}`, {headers});
+
+  }
   
 }

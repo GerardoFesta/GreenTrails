@@ -1,17 +1,25 @@
 <div>
   <h2 style="font-weight: bold; text-align: center; color: #00FF00; margin-top: 40px;">Itinerario proposto in base alle tue preferenze</h2>
 </div>
+
 <div class="container">
   <div class="stepper-container">
     <mat-stepper orientation="vertical" #stepper class="stepper-container">
-      <mat-step *ngFor="let attivita of attivitaList; let i = index" [label]="attivita.nome">
-        <ng-template matStepLabel>{{ attivita.nome }}</ng-template>
+      <mat-step *ngFor="let itinerarioData of itinerarioCompleto; let i = index" [label]="itinerarioData.data.nome">
+        <ng-template matStepLabel>{{ itinerarioData.data.nome }}</ng-template>
         <mat-card>
           <mat-card-header>
-            <p><strong>{{ attivita.nome }}</strong></p>
+            <p><strong>{{ itinerarioData.data.nome }}</strong></p>
           </mat-card-header>
+          <mat-card class="pic">  <div *ngIf="imageUrls.length > 0">
+            <h4>Images</h4>
+            <div *ngFor="let imageUrl of imageUrls; let i = index">
+              <img [src]="imageUrl" alt="Photo" [style.display]="i === currentImageIndex ? 'block' : 'none'">
+            </div>
+          </div></mat-card>
           <mat-card-content>
-            <p>{{ attivita.descrizione }}</p>
+            <p>DescrizioneBreve: {{ itinerarioData.data.descrizioneBreve }}</p>
+          
           </mat-card-content>
           <mat-card-actions style="display: flex; justify-content: space-between;">
             <button mat-button matStepperPrevious
@@ -19,7 +27,7 @@
               [disabled]="i === 0">Attività precedente</button>
             <button mat-button matStepperNext
               style="margin-top: 40px; color: white; background-color: #8bc34a;"
-              [disabled]="i === attivitaList.length - 1">Prossima attività</button>
+              [disabled]="i === itinerarioCompleto.length - 1">Prossima attività</button>
           </mat-card-actions>
         </mat-card>
       </mat-step>

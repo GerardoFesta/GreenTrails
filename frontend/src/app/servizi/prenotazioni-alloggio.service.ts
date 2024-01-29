@@ -42,6 +42,13 @@ export class PrenotazioniAlloggioService {
     return this.http.post(`${this.baseUrl}/api/prenotazioni-alloggio`,params, {headers});
   }
 
+  getPrenotazioneAlloggio(id:number):Observable<any>{
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+    return this.http.get(`${this.baseUrl}/api/prenotazioni-alloggio/${id}`,  {headers });
+
+  }
   
   verificaDisponibilitaAlloggio(idCamera: number,dataInizio: any, dataFine: any):Observable<any> {
     const headers = new HttpHeaders({

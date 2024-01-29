@@ -19,6 +19,13 @@
     margin-right: 20px;
     width: 80%;
   }
+  .pic img {
+    max-width: 50%;
+    max-height: 50%;
+  }
+  .pic{
+    width:fit-content;
+  }
 
   .mat-card {
     width: 100%;

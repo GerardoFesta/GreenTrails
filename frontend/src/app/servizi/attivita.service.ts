@@ -78,6 +78,5 @@ export class AttivitaService {
     return this.http.post<any>(`${this.baseUrl}`, dati, {headers, params});
 
   }
-
  
 }
