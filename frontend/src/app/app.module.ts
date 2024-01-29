@@ -139,6 +139,8 @@ import { PopupEliminazioneCategorieComponent } from './componenti/gestione-attiv
     PopUpCategorieComponent,
     PopupModificaCategorieComponent,
     PopupEliminazioneCategorieComponent,
+    PopupModificaCategorieComponent,
+    PopupEliminazioneCategorieComponent,
   ],
   imports: [
     BrowserModule,
