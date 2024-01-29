@@ -1,4 +1,3 @@
-import { RecensioneFormComponent } from './componenti/pagina-attivita/recensioni/recensione-form/recensione-form.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -7,15 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
-import { InfoAttivitaComponent } from './componenti/pagina-attivita/info-attivita/info-attivita.component';
-import { CardAttivitaComponent } from './componenti/pagina-attivita/info-attivita/card-attivita/card-attivita.component';
-import { RecensioniComponent } from './componenti/pagina-attivita/recensioni/recensioni.component';
-import { DescrizioneAttivitaComponent } from './componenti/pagina-attivita/descrizione-attivita/descrizione-attivita.component';
-import { ValutazioneAttivitaComponent } from './componenti/pagina-attivita/info-attivita/valutazione-attivita/valutazione-attivita.component';
-import { PoliticheEcosostenibiliAttivitaComponent } from './componenti/pagina-attivita/info-attivita/politiche-ecosostenibili-attivita/politiche-ecosostenibili-attivita.component';
-import { SlideshowComponent } from './componenti/pagina-attivita/descrizione-attivita/slideshow/slideshow.component';
-import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map.component';
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -60,17 +50,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
-import { LoginComponent } from './componenti/login/login.component';
-import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
-import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { CookieService } from 'ngx-cookie-service';
-import { HomePageComponent } from './componenti/home-page/home-page.component';
-import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
-import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
 import { ToolbarComponent } from './componenti/toolbar/toolbar.component';
 import { ToolbarHomepageComponent } from './componenti/toolbar-homepage/toolbar-homepage.component';
-import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
 import { RicercaComponent } from './componenti/ricerca/ricerca.component';
 import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
@@ -79,25 +62,8 @@ import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.com
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    PaginaAttivitaComponent,
-    InfoAttivitaComponent,
-    CardAttivitaComponent,
-    RecensioniComponent,
-    DescrizioneAttivitaComponent,
-    ValutazioneAttivitaComponent,
-    PoliticheEcosostenibiliAttivitaComponent,
-    SlideshowComponent,
-    MapComponent,
-    RegistrazioneComponent,
-    RecensioneFormComponent,
-    PopupRecensioneComponent,
-    GalleryDialogComponent,
-    VideoDialogComponent,
-    HomePageComponent,
     ToolbarComponent,
     ToolbarHomepageComponent,
-    GestionePrenotazioniAttiveComponent,
     IconToolbarComponent,
     RicercaComponent,
     RisultatiComponent,
