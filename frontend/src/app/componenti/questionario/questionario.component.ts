@@ -62,6 +62,9 @@ invio(){
   ).subscribe(
     (response) =>{
       this.openPopupQuestionario('Preferenze inviate')
+  },
+  (erorr)=>{
+    this.openPopupQuestionario('Preferenze non inviate')
   }
 )}
 

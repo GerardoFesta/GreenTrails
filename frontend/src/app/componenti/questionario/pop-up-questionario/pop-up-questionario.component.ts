@@ -16,7 +16,7 @@ export class PopUpQuestionarioComponent implements OnInit {
   }
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/registrazione']); // Aggiorna la pagina
+    this.router.navigate(['/homepage']); // Aggiorna la pagina
   }
 
 }
