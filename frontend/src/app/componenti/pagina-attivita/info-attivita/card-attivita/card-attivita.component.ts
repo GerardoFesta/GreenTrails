@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { UploadService } from 'src/app/servizi/upload.service';
 
@@ -17,7 +18,9 @@ export class CardAttivitaComponent implements OnInit {
   imageUrls: string[] = [];
   fileNames: string[] = [];
 
-  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, private uploadService: UploadService) { }
+  isVisitatore!: boolean;
+
+  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, private uploadService: UploadService, private cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -25,6 +28,8 @@ export class CardAttivitaComponent implements OnInit {
     })
 
     this.visualizzaDettagliAttivita();
+
+    this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
   }
 
   visualizzaDettagliAttivita(): void {
