@@ -36,6 +36,7 @@ p {
     display: flex;
     flex-direction: row;
     width: 30%;
+    align-items: flex-start;
 }
 
 .righttools {
@@ -52,7 +53,7 @@ p {
     border-radius: 20px;
     outline: none;
     border: 2px solid gray;
-    width: 100%;
+    width: 85%;
     padding: 5px 10px;
     font-size: 16px;
     transition: border 0.3s ease;
