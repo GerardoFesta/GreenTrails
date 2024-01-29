@@ -25,7 +25,7 @@ export class RecensioniComponent implements OnInit {
   recensioni: any;
   idAttivita: number = 0;
   hasRecensione: boolean = false;
-  isGestore: boolean = false;
+  isVisitatore: boolean = false;
   imageUrls: string[] = [];
   fileNames: string[] = [];
 
@@ -34,6 +34,8 @@ export class RecensioniComponent implements OnInit {
       this.idAttivita = +params['id'];
     })
     this.visualizzaListaRecensioni();
+
+    this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
   }
 
   visualizzaListaRecensioni(): void {
@@ -65,7 +67,6 @@ export class RecensioniComponent implements OnInit {
 
       console.log(this.cookieService.get('ruolo'));
       this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === this.cookieService.get('email').replace(/"/g, ''));
-      this.isGestore = this.cookieService.get('ruolo') === 'ROLE_GESTORE_ATTIVITA'
     });
   }
 
