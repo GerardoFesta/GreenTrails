@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AttivitaService } from 'src/app/servizi/attivita.service';
+import { UploadService } from 'src/app/servizi/upload.service';
 
 @Component({
   selector: 'app-slideshow',
@@ -7,16 +10,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SlideshowComponent implements OnInit {
 
-  images = [
-    {name: 'hotel.jpg', caption: 'hotel'},
-    {name: 'palestra.jpg', caption: 'Palestra'},
-    {name: 'piscina.jpg', caption: 'Piscina'},
-    {name: 'ristorante.jpg', caption: 'Ristorante'},
-  ];
+  idAttivita: number = 0;
+  imageUrls: { name: string, caption: string }[] = [];
+  directoryAttivita: string = '';
 
-  constructor() { }
+  constructor(private uploadService: UploadService, private attivitaService: AttivitaService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.idAttivita = +params['id'];
+    })
+
+    this.visualizzaDettagliAttivita();
   }
 
+  visualizzaDettagliAttivita(): void {
+    this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe((attivita) => {
+      this.directoryAttivita = attivita.data.media;
+      console.log("PERCORSO MEDIA ATTIVITA", this.directoryAttivita);
+
+      this.uploadService.elencaFileCaricati(this.directoryAttivita).subscribe((risposta) => {
+        console.log("IMMAGINI ATTIVITA", risposta);
+        
+        this.imageUrls = risposta.data.map((fileName: string) => ({
+          name: `${fileName}`,
+          caption: 'File non trovato'
+        }));
+
+        this.imageUrls.forEach((imageUrl) => {
+          this.uploadService.serviFile(this.directoryAttivita, imageUrl.name).subscribe((risposta) => {
+            console.log("BLOB OTTENUTO: ", risposta);
+
+            let reader = new FileReader();
+            reader.onloadend = () => {
+              imageUrl.name = reader.result as string;
+            };
+            reader.readAsDataURL(risposta);
+          });
+        });
+      });
+    }, (error) => {
+      console.error(error);
+    });
+  }
 }

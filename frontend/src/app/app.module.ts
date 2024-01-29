@@ -1,9 +1,10 @@
+import { RecensioneFormComponent } from './componenti/pagina-attivita/recensioni/recensione-form/recensione-form.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
@@ -20,7 +21,6 @@ import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -49,7 +49,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -64,6 +64,30 @@ import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
 import { QuestionarioComponent } from './componenti/questionario/questionario.component';
 import { PopUpQuestionarioComponent } from './componenti/questionario/pop-up-questionario/pop-up-questionario.component';
+import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CookieService } from 'ngx-cookie-service';
+import { HomePageComponent } from './componenti/home-page/home-page.component';
+import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
+import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { ToolbarComponent } from './componenti/toolbar/toolbar.component';
+import { ToolbarHomepageComponent } from './componenti/toolbar-homepage/toolbar-homepage.component';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
+import { RicercaComponent } from './componenti/ricerca/ricerca.component';
+import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
+import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
+import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup-eliminazione/popup-eliminazione.component';
+import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
+import { PopUpConfermaComponent } from './componenti/inserimento-attivita/pop-up-conferma/pop-up-conferma.component';
+import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
+import { PrenotazioniComponent } from './componenti/pagina-attivita/prenotazioni/prenotazioni.component';
+import { PopUpPrenotazioneComponent } from './componenti/pagina-attivita/pop-up-prenotazione/pop-up-prenotazione.component';
+import { PrenotazioniAttivitaComponent } from './componenti/pagina-attivita/prenotazioni-attivita/prenotazioni-attivita.component';
+import { PopUpRegistrazioneComponent } from './componenti/registrazione/pop-up-registrazione/pop-up-registrazione.component';
+import { PopUpCategorieComponent } from './componenti/inserimento-attivita/pop-up-categorie/pop-up-categorie.component';
+
+
 
 @NgModule({
   declarations: [
@@ -81,6 +105,27 @@ import { PopUpQuestionarioComponent } from './componenti/questionario/pop-up-que
     RegistrazioneComponent,
     QuestionarioComponent,
     PopUpQuestionarioComponent,
+    RecensioneFormComponent,
+    PopupRecensioneComponent,
+    GalleryDialogComponent,
+    VideoDialogComponent,
+    HomePageComponent,
+    ToolbarComponent,
+    ToolbarHomepageComponent,
+    GestionePrenotazioniAttiveComponent,
+    IconToolbarComponent,
+    RicercaComponent,
+    RisultatiComponent,
+    GestioneAttivitaComponent,
+    PopupEliminazioneComponent,
+    InserimentoAttivitaComponent,
+    PopUpConfermaComponent,
+    PopUpAlloggioComponent,
+    PrenotazioniComponent,
+    PopUpPrenotazioneComponent,
+    PrenotazioniAttivitaComponent,
+    PopUpRegistrazioneComponent,
+    PopUpCategorieComponent,
   ],
   imports: [
     BrowserModule,
@@ -129,6 +174,8 @@ import { PopUpQuestionarioComponent } from './componenti/questionario/pop-up-que
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
+    Ng2SearchPipeModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -172,8 +219,10 @@ import { PopUpQuestionarioComponent } from './componenti/questionario/pop-up-que
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
+    Ng2SearchPipeModule,
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
