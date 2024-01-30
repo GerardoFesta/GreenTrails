@@ -24,12 +24,12 @@ export class PopupModificaCategorieComponent implements OnInit {
     { id: 1, descrizione: 'Attività e alloggi legati al patrimonio culturale e storico. Include musei, siti archeologici, monumenti storici, o alloggi in edifici storici.', nome: 'Cultura e Storia' },
     { id: 2, descrizione: 'Esperienze culinarie locali o internazionali. Include ristoranti, degustazioni di vini, corsi di cucina, o alloggi con esperienze culinarie uniche.', nome: 'Enogastronomia' },
     { id: 3, descrizione: 'Attività e alloggi per godere della bellezza naturale. Include escursioni, parchi nazionali, oasi naturalistiche, o alloggi immersi nella natura.', nome: 'Natura e Riserve naturali' },
-    { id: 4, descrizione: 'Attività sportive all\'\aperto. Include escursioni, ciclismo, arrampicata, o alloggi vicini a queste attività.', nome: 'Sport all\'\aperto' },
+    { id: 4, descrizione: 'Attività sportive all\'\aperto. Include escursioni, ciclismo, arrampicata, o alloggi vicini a queste attività.', nome: 'Sport in spazio aperto' },
     { id: 5, descrizione: 'Attività e alloggi per il relax e il benessere. Include spa, centri benessere, o alloggi con servizi di spa e benessere.', nome: 'Relax e Benessere' },
     { id: 6, descrizione: 'Eventi in un determinato luogo. Include festival, concerti, fiere, o alloggi vicini a questi eventi.', nome: 'Eventi locali' },
     { id: 7, descrizione: 'Attività per esplorare la natura o i siti storici. Include escursioni per scoprire paesaggi mozzafiato, fauna selvatica o monumenti storici.', nome: 'Escursione' },
     { id: 8, descrizione: 'Luoghi per acquistare prodotti locali, artigianali o unici. Include negozi con una vasta gamma di articoli che riflettono la cultura locale.', nome: 'Negozio locale' },
-    { id: 9, descrizione: 'Attività all\'\esterno per godere dell\'\ambiente naturale. Include sport, picnic, birdwatching o rilassarsi in un bel parco.', nome: 'All\'\aperto' },
+    { id: 9, descrizione: 'Attività all\'\esterno per godere dell\'\ambiente naturale. Include sport, picnic, birdwatching o rilassarsi in un bel parco.', nome: 'Spazio aperto' },
     { id: 10, descrizione: 'Alloggi e attività vicino alla costa. Include opportunità per nuotare, prendere il sole, fare snorkeling o godersi la vista dell\'\oceano.', nome: 'Vicino al mare' }
   ];
   deletedCategoriaIds: number[] = [];
