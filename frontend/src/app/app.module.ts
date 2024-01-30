@@ -62,6 +62,8 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
+import { QuestionarioComponent } from './componenti/questionario/questionario.component';
+import { PopUpQuestionarioComponent } from './componenti/questionario/pop-up-questionario/pop-up-questionario.component';
 import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { CookieService } from 'ngx-cookie-service';
@@ -109,6 +111,8 @@ import { PopupEliminazioneCategorieComponent } from './componenti/gestione-attiv
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
+    QuestionarioComponent,
+    PopUpQuestionarioComponent,
     RecensioneFormComponent,
     PopupRecensioneComponent,
     GalleryDialogComponent,

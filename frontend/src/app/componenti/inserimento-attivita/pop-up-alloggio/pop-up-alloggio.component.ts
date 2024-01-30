@@ -34,10 +34,7 @@ camereInserite: any[] = []
     console.log('Attivita creata:', this.data.idAttivita);
     console.log(this.data.idAttivita)
     this.id = this.data.idAttivita  }
-  onNoClick(): void {
-    this.dialogRef.close();
-    window.location.reload();
-  }
+
 
   openPopupConferma(message: string):void{
     const dialogRef = this.dialog.open(PopUpConfermaComponent, {

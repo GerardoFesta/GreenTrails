@@ -61,9 +61,9 @@
   </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="aggiungiCamera()">Aggiungi Camera</button>
+  <button mat-button (click)="aggiungiCamera()" [disabled]="camere.invalid">Aggiungi Camera </button>
 
-  <button mat-button (click)="inviaCamere()">Invia Camere</button>
+  <button mat-button (click)="inviaCamere()" [disabled]="camereInserite.length === 0">Invia Camere</button>
 
-  <button mat-button (click)="onNoClick()">Chiudi</button>
+
 </div>

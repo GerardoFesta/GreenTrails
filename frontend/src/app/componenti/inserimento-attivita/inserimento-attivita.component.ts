@@ -112,6 +112,7 @@ export class InserimentoAttivitaComponent implements OnInit {
       width: '60%',
       data: { idAttivita: idAttivita}
     });
+    dialogRef.disableClose = true;
   }
 
   openPopupConferma(message: string):void{
@@ -119,14 +120,17 @@ export class InserimentoAttivitaComponent implements OnInit {
       width: '60%',
       data: { message },
       disableClose: true,
+      
 
     });
+    dialogRef.disableClose = true;
   }
   openPopupCategoria(idAttivita: number):void{
     const dialogRef = this.dialog.open(PopUpCategorieComponent, {
       width: '60%',
       data: { idAttivita: idAttivita}
     });
+    dialogRef.disableClose = true;
   }
 
     onSubmit() {
