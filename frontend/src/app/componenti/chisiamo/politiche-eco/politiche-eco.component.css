@@ -23,7 +23,8 @@
 .contenitore {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* Puoi scegliere il tipo di allineamento che preferisci */
+  justify-content: space-between; 
+  margin: 5%;
 }
 
 .card {
