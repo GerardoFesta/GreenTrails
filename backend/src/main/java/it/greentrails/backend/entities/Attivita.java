@@ -14,10 +14,11 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -40,7 +41,7 @@ public class Attivita {
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "id_gestore", nullable = false)
-  @NotNull
+  @NotNull(message = "Il gestore non può essere vuoto.")
   private Utente gestore;
 
   @Column(name = "nome", nullable = false, length = 50)
@@ -77,36 +78,36 @@ public class Attivita {
 
   @Column(name = "coordinate", nullable = false)
   @JdbcTypeCode(SqlTypes.POINT)
-  @NotNull
+  @NotNull(message = "Le coordinate non possono essere vuote.")
   private Point coordinate;
 
   @Column(name = "prezzo")
-  @Min(value = 0, message = "Il prezzo non può essere negativo.")
+  @PositiveOrZero(message = "Il prezzo non può essere negativo.")
   private Double prezzo;
 
   @Column(name = "descrizione_breve", nullable = false, length = 140)
   @NotBlank(message = "La descrizione breve non può essere vuota.")
-  @Size(max = 140, message = "La descrizione breve non ha lunghezza valida.")
+  @Size(max = 140, message = "La descrizione breve è troppo lunga.")
   @Pattern(regexp = "^[A-Z](?s:.)*", message = "La descrizione breve non ha formato valido.")
   private String descrizioneBreve;
 
-  @Column(name = "descrizione_lunga", nullable = false, length = 1000)
+  @Column(name = "descrizione_lunga", nullable = false, length = 2000)
   @NotBlank(message = "La descrizione lunga non può essere vuota.")
-  @Size(max = 2000, message = "La descrizione lunga non ha lunghezza valida.")
+  @Size(max = 2000, message = "La descrizione lunga è troppo lunga.")
   @Pattern(regexp = "^[A-Z](?s:.)*", message = "La descrizione lunga non ha formato valido.")
   private String descrizioneLunga;
 
   @Column(name = "media", nullable = false)
-  @NotNull
+  @NotNull(message = "I media non possono essere vuoti.")
   private String media;
 
   @Column(name = "disponibilita")
-  @Min(value = 1, message = "La disponibilità non può essere inferiore a 1.")
+  @Positive(message = "La disponibilità non può essere inferiore a 1.")
   private Integer disponibilita;
 
   @OneToOne(optional = false, orphanRemoval = true)
   @JoinColumn(name = "id_valori", nullable = false, unique = true)
-  @NotNull
+  @NotNull(message = "I valori di ecosostenibilità non possono essere vuoti.")
   private ValoriEcosostenibilita valoriEcosostenibilita;
 
   @Enumerated

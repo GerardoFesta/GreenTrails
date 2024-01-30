@@ -13,8 +13,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,26 +44,28 @@ public class PrenotazioneAlloggio {
 
   @Column(name = "num_adulti", nullable = false)
   @NotNull(message = "Il numero degli adulti non può essere vuoto.")
-  @Min(value = 1, message = "Il numero degli adulti non può essere inferiore ad 1.")
+  @Positive(message = "Il numero degli adulti non può essere inferiore ad 1.")
   private int numAdulti;
 
   @Column(name = "num_bambini", nullable = false)
   @NotNull(message = "Il numero degli adulti non può essere vuoto.")
-  @Min(value = 0, message = "Il numero dei bambini non può essere inferiore a 0.")
+  @PositiveOrZero(message = "Il numero dei bambini non può essere negativo.")
   private int numBambini;
 
   @Temporal(TemporalType.TIME)
   @Column(name = "data_inizio", nullable = false)
   @NotNull(message = "La data di inizio non può essere vuota.")
+  @FutureOrPresent(message = "La data di inizio non può essere antecedente alla data odierna.")
   private Date dataInizio;
 
   @Temporal(TemporalType.TIME)
   @Column(name = "data_fine", nullable = false)
   @NotNull(message = "La data di fine non può essere vuota.")
+  @FutureOrPresent(message = "La data di fine non può essere antecedente alla data odierna.")
   private Date dataFine;
 
   @Column(name = "num_camere", nullable = false)
-  @Min(value = 1, message = "Il numero delle camere non può essere inferiore ad 1.")
+  @Positive(message = "Il numero delle camere non può essere inferiore ad 1.")
   private int numCamere;
 
   @Enumerated
@@ -76,7 +80,7 @@ public class PrenotazioneAlloggio {
 
   @Column(name = "prezzo", nullable = false)
   @NotNull(message = "Il prezzo non può essere vuoto.")
-  @Min(value = 0, message = "Il prezzo non può essere negativo.")
+  @PositiveOrZero(message = "Il prezzo non può essere negativo.")
   private double prezzo;
 
 }
