@@ -2,7 +2,7 @@ import { RecensioneService } from 'src/app/servizi/recensione.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupRecensioneComponent } from '../popup-recensione/popup-recensione.component';
@@ -50,7 +50,7 @@ export class RecensioneFormComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.files = event.target.files;
-    
+
     console.log("Files selected: ", this.files);
     Array.from(this.files).forEach((file, index) => {
       // formData.append('immagine', immagine[index], immagine[index].name);
@@ -59,13 +59,15 @@ export class RecensioneFormComponent implements OnInit {
       // console.log('type: ', file.type);
       this.fileNames.push(file.name);
     })
-}
+  }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.idAttivita = +params['id'];
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      let id = parseInt(params.get('id')!);
+      this.idAttivita = id;
+
+      this.visualizzaDettagliAttivita();
     })
-    this.visualizzaDettagliAttivita();
   }
 
   convertCamelCaseToReadable(camelCase: string): string {

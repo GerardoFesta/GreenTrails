@@ -2,7 +2,7 @@ import { ItinerariService } from './../../../../servizi/itinerari.service';
 import { PrenotazioniAttivitaService } from './../../../../servizi/prenotazioni-attivita.service';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PrenotazioniAlloggioService } from 'src/app/servizi/prenotazioni-alloggio.service';
 
@@ -25,12 +25,12 @@ export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.id = +params['id'];
-      this.itinerariService.changeId(this.id); 
-      console.log(this.id)// Invia l'ID al servizio
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      let idAttivita = parseInt(params.get('id')!);
+      this.id = idAttivita;
+
+      this.visualizzaDettagliAttivita();
     })
-    this.visualizzaDettagliAttivita();
   }
 
   visualizzaDettagliAttivita(): void {

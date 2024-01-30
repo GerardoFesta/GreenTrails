@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RicercaService } from 'src/app/servizi/ricerca.service';
 
 declare let L: any;
@@ -8,7 +8,7 @@ declare let L: any;
   templateUrl: './risultati.component.html',
   styleUrls: ['./risultati.component.css']
 })
-export class RisultatiComponent implements OnInit {
+export class RisultatiComponent implements OnInit, AfterViewInit {
 
   greenIcon = new L.Icon({
     iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
@@ -31,9 +31,11 @@ export class RisultatiComponent implements OnInit {
 
   constructor(private ricercaService: RicercaService) {
   }
+  ngAfterViewInit(): void {
+    this.visualizzaMappa();
+  }
 
   ngOnInit(): void {
-    this.visualizzaMappa();
   }
 
   isValidLatitude(): boolean {
@@ -52,11 +54,13 @@ export class RisultatiComponent implements OnInit {
   }
 
   visualizzaMappa() {
-    this.map = L.map('map').setView([42.833333 , 12.833333], 6);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 20,
-      attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(this.map);
+    if (!this.map) {
+      this.map = L.map('mappa').setView([42.833333 , 12.833333], 6);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 20,
+        attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(this.map);
+    }
   }
 
   addMarkersToMap() {

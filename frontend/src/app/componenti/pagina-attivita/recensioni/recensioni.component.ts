@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
 import { RecensioneService } from 'src/app/servizi/recensione.service';
 import { UploadService } from 'src/app/servizi/upload.service';
@@ -30,12 +30,14 @@ export class RecensioniComponent implements OnInit {
   fileNames: string[] = [];
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.idAttivita = +params['id'];
-    })
-    this.visualizzaListaRecensioni();
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      let id = parseInt(params.get('id')!);
+      this.idAttivita = id;
 
-    this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
+      this.visualizzaListaRecensioni();
+      this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
+    })
+
   }
 
   visualizzaListaRecensioni(): void {
@@ -50,7 +52,7 @@ export class RecensioniComponent implements OnInit {
               const fileName = listaFiles.data[0];
               this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
                 this.fileNames.push(fileName);
-      
+
                 let reader = new FileReader();
                 reader.onloadend = () => {
                   this.imageUrls[index] = reader.result as string;
