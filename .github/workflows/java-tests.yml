@@ -26,9 +26,6 @@ jobs:
           distribution: 'temurin'
       - name: Esegui test
         run: mvn test --batch-mode --fail-at-end
-      - name: Pubblica test report
-        if: success() || failure()
-        uses: scacap/action-surefire-report@v1
 
 defaults:
   run:

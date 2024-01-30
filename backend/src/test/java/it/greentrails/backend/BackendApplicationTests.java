@@ -10,7 +10,6 @@ class BackendApplicationTests {
 
 	@Test
 	void contextLoads() {
-		// commento per eseguire il workflow CI
 	}
 
 }
