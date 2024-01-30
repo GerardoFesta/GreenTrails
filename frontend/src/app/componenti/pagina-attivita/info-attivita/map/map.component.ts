@@ -56,14 +56,14 @@ export class MapComponent implements OnInit, AfterViewInit {
       const y = attivita.data.coordinate.y;
 
       if (!this.mapInitialized) {
-        this.map = L.map('map').setView([x, y], 7);
+        this.map = L.map('map').setView([x, y], 7, { animate: true });
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(this.map);
         this.mapInitialized = true;
       } else {
-        this.map.setView([x, y], 7);
+        this.map.setView([x, y], 7, { animate: true });
       }
 
       console.log("MAPPA INIZIALIZZATA?", this.mapInitialized)

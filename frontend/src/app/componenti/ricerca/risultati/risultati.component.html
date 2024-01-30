@@ -4,17 +4,17 @@
         <div class="barraricerca">
             <input type="text" class="searchbar" placeholder="Latitudine" id="latitudine"
                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 46"
-                [(ngModel)]="latitudine" />
+                [(ngModel)]="latitudine" autocomplete="off"/>
         </div>
         <div class="barraricerca">
             <input type="text" class="searchbar" placeholder="Longitudine" id="longitudine"
                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 46"
-                [(ngModel)]="longitudine" />
+                [(ngModel)]="longitudine" autocomplete="off"/>
         </div>
         <div class="barraricerca">
             <input type="text" class="searchbar" placeholder="Raggio" id="raggio"
                 onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 46"
-                [(ngModel)]="raggio" />
+                [(ngModel)]="raggio" autocomplete="off"/>
         </div>
         <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
             style="margin-top: 20px; color: white; background-color: #32CD32; width: 100px; border-radius: 20px;"
