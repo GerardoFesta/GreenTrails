@@ -3,8 +3,8 @@ on:
   push:
     paths:
       - 'backend/**'
-#    branches:
-#      - dev
+    branches:
+      - dev
   pull_request:
     paths:
       - 'backend/**'
