@@ -22,12 +22,14 @@ export class RecensioniComponent implements OnInit {
     config.readonly = true;
   }
 
-  recensioni: any;
   idAttivita: number = 0;
   hasRecensione: boolean = false;
   isVisitatore: boolean = false;
   imageUrls: string[] = [];
   fileNames: string[] = [];
+  recensioniConMedia: any[] = [];
+  recensioniSenzaMedia: any[] = [];
+  recensioni: any;
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -37,43 +39,50 @@ export class RecensioniComponent implements OnInit {
       this.visualizzaListaRecensioni();
       this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
     })
-
   }
 
   visualizzaListaRecensioni(): void {
 
-    this.recensioneService.visualizzaRecensioniPerAttivita(this.idAttivita).subscribe((recensione) => {
-      this.recensioni = recensione.data;
+    this.recensioniConMedia = [];
+    this.recensioniSenzaMedia = [];
 
-      const promises = this.recensioni.map((item: any, index: number) => {
-        return new Promise<void>((resolve) => {
-          this.uploadService.elencaFileCaricati(item.media).subscribe((listaFiles) => {
+    this.recensioneService.visualizzaRecensioniPerAttivita(this.idAttivita).subscribe((listaRecensioni) => {
+      this.recensioni = listaRecensioni.data;
+
+      this.recensioni.forEach((recensione: any, index: number) => {
+        if (recensione.media !== null) {
+          this.uploadService.elencaFileCaricati(recensione.media).subscribe((listaFiles) => {
             if (listaFiles.data.length > 0) {
               const fileName = listaFiles.data[0];
-              this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
-                this.fileNames.push(fileName);
-
+              this.uploadService.serviFile(recensione.media, fileName).subscribe((file) => {
                 let reader = new FileReader();
                 reader.onloadend = () => {
                   this.imageUrls[index] = reader.result as string;
-                  resolve();
+                  this.recensioniConMedia.push({
+                    ...recensione,
+                    image: this.imageUrls[index],
+                    fileName: fileName
+                  });
                 };
                 reader.readAsDataURL(file);
               });
-            } else {
-              resolve();
             }
           });
-        });
+        } else {
+          this.recensioniSenzaMedia.push(recensione);
+        }
       });
 
-      console.log(this.cookieService.get('ruolo'));
+      console.log("RECENSIONI CON MEDIA: ", this.recensioniConMedia);
+      console.log("RECENSIONI SENZA MEDIA: ", this.recensioniSenzaMedia)
+
       this.hasRecensione = this.recensioni.some((item: any) => item.visitatore.email === this.cookieService.get('email').replace(/"/g, ''));
     });
   }
 
+
   isImage(file: string): boolean {
-    return file.toLowerCase().endsWith('.jpg') || file.toLowerCase().endsWith('.jpeg') || file.toLowerCase().endsWith('.png');
+    return file.toLowerCase().endsWith('.jpg') || file.endsWith('.jpeg') || file.toLowerCase().endsWith('.png');
   }
 
   isVideo(file: string): boolean {
@@ -81,21 +90,22 @@ export class RecensioniComponent implements OnInit {
   }
 
   openDialogue(index: number) {
-    const fileName = this.fileNames[index];
+    const recensione = this.recensioniConMedia[index];
+    const fileName = recensione.fileName;
     if (this.isImage(fileName)) {
       const dialogRef = this.dialog.open(GalleryDialogComponent, {
         data: {
-          image: this.imageUrls[index]
+          image: recensione.image
         }
       });
     } else if (this.isVideo(fileName)) {
       const dialogRef = this.dialog.open(VideoDialogComponent, {
         data: {
-          video: this.imageUrls[index]
+          video: recensione.image
         }
       });
     } else {
-      // console.error(`Unsupported file type: ${fileName}`);
+      console.error(`Unsupported file type: ${fileName}`);
     }
   }
 }

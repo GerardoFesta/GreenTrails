@@ -32,7 +32,7 @@ export class RecensioneFormComponent implements OnInit {
     { label: '', selectedOption: '' }
   ];
 
-  files!: FileList;
+  file!: File;
 
   constructor(
     config: NgbRatingConfig,
@@ -46,19 +46,13 @@ export class RecensioneFormComponent implements OnInit {
     config.readonly = false;
   }
 
-  fileNames: string[] = [];
-
   onFileSelected(event: any) {
-    this.files = event.target.files;
+    this.file = event.target.files[0];
 
-    console.log("Files selected: ", this.files);
-    Array.from(this.files).forEach((file, index) => {
-      // formData.append('immagine', immagine[index], immagine[index].name);
-      // console.log('name: ', file.name);
-      // console.log('size: ', file.size);
-      // console.log('type: ', file.type);
-      this.fileNames.push(file.name);
-    })
+    console.log("File selected: ", this.file);
+    console.log('name: ', this.file.name);
+    console.log('size: ', this.file.size);
+    console.log('type: ', this.file.type);
   }
 
   ngOnInit() {
@@ -79,7 +73,6 @@ export class RecensioneFormComponent implements OnInit {
   visualizzaDettagliAttivita(): void {
     this.attivitaService.visualizzaAttivita(this.idAttivita).subscribe((attivita) => {
       this.valoriEcosostenibilita = attivita.data.valoriEcosostenibilita;
-      // console.log("Valori eco originali: ", this.valoriEcosostenibilita);
       this.idValori = attivita.data.valoriEcosostenibilita.id;
       let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita)
         .filter(([nomePolitica, valore]) => valore === true)
@@ -92,6 +85,22 @@ export class RecensioneFormComponent implements OnInit {
     }, (error) => {
       console.error(error);
     })
+  }
+
+  convertLabelToCamelCase(label: string): string {
+    const words = label.split(' ');
+    const camelCaseWords = words.map((word, index) => {
+      if (index === 0) {
+        return word.toLowerCase();
+      } else {
+        if (word === 'CO2') {
+          return word;
+        } else {
+          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+        }
+      }
+    });
+    return camelCaseWords.join('');
   }
 
   updateSubmitButton() {
@@ -115,22 +124,6 @@ export class RecensioneFormComponent implements OnInit {
     }
 
     this.updateSubmitButton();
-  }
-
-  convertLabelToCamelCase(label: string): string {
-    const words = label.split(' ');
-    const camelCaseWords = words.map((word, index) => {
-      if (index === 0) {
-        return word.toLowerCase();
-      } else {
-        if (word === 'CO2') {
-          return word;
-        } else {
-          return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-        }
-      }
-    });
-    return camelCaseWords.join('');
   }
 
   validateTextArea() {
@@ -171,7 +164,7 @@ export class RecensioneFormComponent implements OnInit {
 
       this.idValori = valoreNew.data.id;
 
-      this.recensioneService.creaRecensione(this.idAttivita, this.rating, this.valutazioneDiscorsiva, this.idValori, this.files)
+      this.recensioneService.creaRecensione(this.idAttivita, this.rating, this.valutazioneDiscorsiva, this.idValori, this.file)
         .subscribe((risposta: any) => {
           console.log("Valori eco recensione: ", risposta);
           if (risposta?.status === 'success') {

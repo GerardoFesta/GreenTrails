@@ -39,8 +39,8 @@
           <mat-icon style="color: #32CD32;">add_photo_alternate</mat-icon>
         </button>
       </div>
-      <div class="file-names" *ngFor="let fileName of fileNames">
-        {{ fileName }}
+      <div class="file-name" *ngIf="file">
+        {{ file.name }}
       </div>
       <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitDisabled"
         class="submit-button">Invia</button>
