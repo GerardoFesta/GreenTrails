@@ -1,45 +1,49 @@
-<div>
-  <h2 style="font-weight: bold; text-align: center; color: #00FF00; margin-top: 40px;">Itinerario proposto in base alle tue preferenze</h2>
-</div>
-
-<div class="container">
-  <div class="stepper-container">
-    <mat-stepper orientation="vertical" #stepper class="stepper-container">
-      <mat-step *ngFor="let itinerarioData of itinerarioCompleto; let i = index" [label]="itinerarioData.data.nome">
-        <ng-template matStepLabel>{{ itinerarioData.data.nome }}</ng-template>
-        <mat-card>
-          <mat-card-header>
-            <p><strong>{{ itinerarioData.data.nome }}</strong></p>
-          </mat-card-header>
-          <mat-card class="pic">  <div *ngIf="imageUrls.length > 0">
-            <h4>Images</h4>
-            <div *ngFor="let imageUrl of imageUrls; let i = index">
-              <img [src]="imageUrl" alt="Photo" [style.display]="i === currentImageIndex ? 'block' : 'none'">
-            </div>
-          </div></mat-card>
-          <mat-card-content>
-            <p>DescrizioneBreve: {{ itinerarioData.data.descrizioneBreve }}</p>
-          
-          </mat-card-content>
-          <mat-card-actions style="display: flex; justify-content: space-between;">
-            <button mat-button matStepperPrevious
-              style="margin-top: 40px; margin-left: auto; color: white; background-color: #8bc34a;"
-              [disabled]="i === 0">Attività precedente</button>
-            <button mat-button matStepperNext
-              style="margin-top: 40px; color: white; background-color: #8bc34a;"
-              [disabled]="i === itinerarioCompleto.length - 1">Prossima attività</button>
-          </mat-card-actions>
-        </mat-card>
-      </mat-step>
-    </mat-stepper>
+  <div class="tutto"><div>
+    <h2 style="font-weight: bold; text-align: center; color: #00FF00; margin-top: 40px;">Itinerario proposto in base alle tue preferenze</h2>
   </div>
 
-  <div class="button-container">
-    <button mat-raised-button color="primary"
-      style="margin-top: 20px; color: white; background-color: red;" (click)="clickedHome()"> Torna alla homepage</button>
-    <button mat-raised-button color="primary"
-      style="margin-top: 40px; margin-left: 20px; color: white; background-color: orange;" (click)="rigeneraItinerario()"> Rigenera itinerario</button>
-    <button mat-raised-button color="primary"
-      style="margin-top: 40px; margin-left: 20px; color: white; background-color: #00FF00;" (click)="openCalendario()">Conferma itinerario proposto</button>
+  <div class="container">
+    <div class="stepper-container">
+      <mat-stepper orientation="vertical" #stepper class="stepper-container">
+        <mat-step *ngFor="let itinerarioData of itinerarioCompleto; let i = index" [label]="itinerarioData.data.nome">
+          <ng-template matStepLabel>{{ itinerarioData.data.nome }}</ng-template>
+          <mat-card>
+            <mat-card-header>
+              <p><strong>{{ itinerarioData.data.nome }}</strong></p>
+            </mat-card-header>
+            <mat-card class="pic">
+              <div *ngIf="imageUrls.length > 0">
+                <ng-container *ngIf="itinerarioData.tipo === 'attivitaTuristica'">
+                  <img [src]="imageUrls[i]" alt="Immagine Attività">
+                </ng-container>
+                <ng-container *ngIf="itinerarioData.tipo === 'alloggio'">
+                  <img [src]="imageUrls[i]" alt="Immagine Alloggio">
+                </ng-container>
+              </div>
+            </mat-card>
+            <mat-card-content>
+              <p>DescrizioneBreve: {{ itinerarioData.data.descrizioneBreve }}</p>
+            </mat-card-content>
+            <mat-card-actions style="display: flex; justify-content: space-between;">
+              <button mat-button matStepperPrevious
+                style="margin-top: 40px; margin-left: auto; color: white; background-color: #8bc34a;"
+                [disabled]="i === 0">Attività precedente</button>
+              <button mat-button matStepperNext
+                style="margin-top: 40px; color: white; background-color: #8bc34a;"
+                [disabled]="i === itinerarioCompleto.length - 1">Prossima attività</button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-step>
+      </mat-stepper>    
+    </div>
+
+    <div class="button-container">
+      <button mat-raised-button color="primary"
+        style="margin-top: 20px; color: white; background-color: red;" (click)="clickedHome()"> Torna alla homepage</button>
+      <button mat-raised-button color="primary"
+        style="margin-top: 40px; margin-left: 20px; color: white; background-color: orange;" (click)="rigeneraItinerario()"> Rigenera itinerario</button>
+      <button mat-raised-button color="primary"
+        style="margin-top: 40px; margin-left: 20px; color: white; background-color: #00FF00;" (click)="openCalendario()">Conferma itinerario proposto</button>
+    </div>
   </div>
-</div>
+  </div>

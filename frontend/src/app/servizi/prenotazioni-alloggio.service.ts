@@ -64,5 +64,12 @@ export class PrenotazioniAlloggioService {
     return this.http.get(`${this.baseUrl}/api/prenotazioni-alloggio/perCamera/${idCamera}/disponibilita`,  { params, headers });
 
   }
+  deletePrenotazioneAlloggio(idPrenotazione: number){
+    const headers = new HttpHeaders ({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    })
+    const url = `${this.baseUrl}/${idPrenotazione}`;
+    return this.http.delete<void>(url, {headers});
+  }
 
 }

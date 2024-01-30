@@ -62,5 +62,11 @@ export class PrenotazioniAttivitaService {
 
     return this.http.post(`${this.baseUrl}/api/prenotazioni-attivita-turistica`,params, {headers});
   }
-
+  deletePrenotazioneAttivitaTuristica (idPrenotazione: number) {
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+    const url = `${this.baseUrl}/${idPrenotazione}`;
+    return this.http.delete<void>(url, {headers});
+  }
 }

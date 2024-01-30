@@ -7,9 +7,11 @@ import { CalendariopopupComponent } from './calendariopopup/calendariopopup.comp
 import { ItinerariService } from 'src/app/servizi/itinerari.service';
 import { CookieService } from 'ngx-cookie-service';
 import { UtenteService } from 'src/app/servizi/utente.service';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+
 import { PrenotazioniAlloggioService } from 'src/app/servizi/prenotazioni-alloggio.service';
 import { PrenotazioniAttivitaService } from 'src/app/servizi/prenotazioni-attivita.service';
+import { ConnectionPositionPair } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-generazione-automatica',
@@ -82,7 +84,8 @@ export class GenerazioneAutomaticaComponent {
  itinerarioCompleto: any[] = [];
 
 /*Visualizza dati itinerario*/
- visualizzaItinerario(id: number): void {
+
+visualizzaItinerario(id: number): void {
   this.itinerarioService.visualizzaItinerario(id).subscribe(
     (dettagliItinerario) => {
       const prenotazioniAlloggio = dettagliItinerario.data.prenotazioniAlloggio;
@@ -101,68 +104,78 @@ export class GenerazioneAutomaticaComponent {
         console.log('Nessuna prenotazione di attività turistiche disponibile.');
       }
 
-      this.imageUrls = this.alloggioImageUrls.concat(this.attivitaTuristicaImageUrls);
-
       this.itinerarioCompleto = this.alloggioDataList.concat(this.attivitaTuristicaDataList);
     }
   );
 }
+getSafeImageUrl(base64Image: string): SafeResourceUrl {
+  const imageUrl = `data:image/jpeg;base64,${base64Image}`;
+  return this.sanitizer.bypassSecurityTrustResourceUrl(imageUrl);
+}
   
   /*mi aiuta alla visualizzazione dei dati dell'alloggio*/
 
-  loadDataAlloggio(alloggioData: any): void {
-    console.log('Alloggio - Nome:', alloggioData.nome);
-    console.log('Alloggio - DescrizioneBreve:', alloggioData.descrizioneBreve);
+loadDataAlloggio(alloggioData: any): void {
+  console.log('Alloggio - Nome:', alloggioData.nome);
+  console.log('Alloggio - DescrizioneBreve:', alloggioData.descrizioneBreve);
 
-    this.alloggioDataList.push({
-      tipo: 'alloggio',
-      data: {
-        nome: alloggioData.nome,
-        descrizioneBreve: alloggioData.descrizioneBreve
-      }
-    });
-
-    if (alloggioData.media && alloggioData.media.length > 0) {
-      this.processMedia(alloggioData.media);
-  }
-  }
-/*mi aiuta alla visualizzazione dei dati delle attivita */
-  loadDataAttivitaTuristica(attivitaTuristicaData: any): void {
-    console.log('AttivitaTuristica - Nome:', attivitaTuristicaData.nome);
-    console.log('AttivitaTuristica - DescrizioneBreve:', attivitaTuristicaData.descrizioneBreve);
-
-    this.attivitaTuristicaDataList.push({
-      tipo: 'attivitaTuristica',
-      data: {
-        nome: attivitaTuristicaData.nome,
-        descrizioneBreve: attivitaTuristicaData.descrizioneBreve
-      }
-    });
-
-    if (attivitaTuristicaData.media && attivitaTuristicaData.media.length > 0) {
-      this.processMedia(attivitaTuristicaData.media,);
-  }
-  }
-
-  processMedia(mediaItem: any): void {
-    if (mediaItem) {
-        this.uploadService.elencaFileCaricati(mediaItem).subscribe((listaFiles) => {
-            if (listaFiles.data.length > 0) {
-                const fileName = listaFiles.data[0];
-                this.uploadService.serviFile(mediaItem, fileName).subscribe((file) => {
-                    let reader = new FileReader();
-                    reader.onloadend = () => {
-                        this.imageUrls.push(reader.result as string);
-                        this.currentImageIndex = this.imageUrls.length + 1; 
-                    };
-                    reader.readAsDataURL(file);
-                });
-            }
-        });
-    } else {
-        console.error('mediaItem non è definito:', mediaItem);
+  const alloggioElement = {
+    tipo: 'alloggio',
+    data: {
+      nome: alloggioData.nome,
+      descrizioneBreve: alloggioData.descrizioneBreve,
+      imageUrl: '' // Aggiungi questa proprietà per contenere l'URL dell'immagine
     }
+  };
+
+  this.alloggioDataList.push(alloggioElement);
+
+  if (alloggioData.media && alloggioData.media.length > 0) {
+    this.processMedia(alloggioData.media);
+  }
 }
+
+/*mi aiuta alla visualizzazione dei dati delle attivita */
+loadDataAttivitaTuristica(attivitaTuristicaData: any): void {
+  console.log('AttivitaTuristica - Nome:', attivitaTuristicaData.nome);
+  console.log('AttivitaTuristica - DescrizioneBreve:', attivitaTuristicaData.descrizioneBreve);
+  console.log('immagine', attivitaTuristicaData.media);
+
+  const attivitaTuristicaElement = {
+    tipo: 'attivitaTuristica',
+    data: {
+      nome: attivitaTuristicaData.nome,
+      descrizioneBreve: attivitaTuristicaData.descrizioneBreve,
+      imageUrl: '' // Aggiungi questa proprietà per contenere l'URL dell'immagine
+    }
+  };
+
+  this.attivitaTuristicaDataList.push(attivitaTuristicaElement);
+
+  if (attivitaTuristicaData.media && attivitaTuristicaData.media.length > 0) {
+    this.processMedia(attivitaTuristicaData.media);
+  }
+}
+processMedia(mediaItem: any): void {
+  if (mediaItem) {
+    this.uploadService.elencaFileCaricati(mediaItem).subscribe((listaFiles) => {
+      if (listaFiles.data.length > 0) {
+        const fileName = listaFiles.data[0];
+        this.uploadService.serviFile(mediaItem, fileName).subscribe((file) => {
+          let reader = new FileReader();
+          reader.onloadend = () => {
+            this.imageUrls.push(reader.result as string);
+            this.currentImageIndex = this.imageUrls.length + 1;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    });
+  } else {
+    console.error('mediaItem non è definito:', mediaItem);
+  }
+}
+
  /*metodo che mi prende le preferenze dell'utente*/
 
   getPreferenze(): Promise<any> {
