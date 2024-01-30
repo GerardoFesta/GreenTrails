@@ -1,7 +1,8 @@
 .questionario-card {
-    width: 80%; /* Adjust the width as needed */
+    width: 60%; /* Adjust the width as needed */
     margin: auto;
     border: none;
+    box-shadow: none;
   }
 
   .questionario-titolo {
@@ -11,33 +12,72 @@
 
 
   .pulsante{
-    margin: 2%;
+    margin: 10px;
     width: 100%;
+    border: none;
+    box-shadow: none;
   }
 
   .domanda {
     border:2px solid;
     border-radius: 20px;
     padding: 15px;
-    margin-top: 2%;
+    margin-top: 10px;
     border-color: #00FF00;
+
   }
 
   .button {
+    border-radius: 20px;
+    border: none;
+    box-shadow: none;
     display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 20px;
+
   }
 
   .pulsa{
     display: flex;
     border: none;
+    box-shadow: none;
+    border-radius: 20px;
+
 
   }
 
   .mat-button-toggle-checked {
-    background-color:#b1f7b1; /* Change this to your desired primary color */
+    background-color:#32CD32; /* Change this to your desired primary color */
     color: #ffffff;
     font-weight: bold; /* Change this to your desired text color */
+    border-radius: 20px;
   }
+
+  .tasto1{
+    text-align: center;
+    margin: 20px; 
+    color: white; 
+    background-color: #c71717; 
+    width: 100px;
+    border-radius: 20px;
+    font-size: 18px; /* Adjust as needed */
+    width: 150px;
+  }
+
+  .tasto2{
+    text-align: center;
+    margin: 20px; 
+    color: white; 
+    background-color: #32CD32; 
+    width: 100px;
+    border-radius: 20px;
+    font-size: 25px; /* Adjust as needed */
+    width: 150px;
+    height: 50px;
+  }
+
+
   
 
   @media (max-width: 1000px) {
