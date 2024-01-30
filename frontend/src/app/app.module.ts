@@ -88,6 +88,10 @@ import { PopUpRegistrazioneComponent } from './componenti/registrazione/pop-up-r
 import { PopUpCategorieComponent } from './componenti/inserimento-attivita/pop-up-categorie/pop-up-categorie.component';
 
 
+import { ChisiamoComponent } from './componenti/chisiamo/chisiamo.component';
+import { IntroduzioneComponent } from './componenti/chisiamo/introduzione/introduzione.component';
+import { PoliticheEcoComponent } from './componenti/chisiamo/politiche-eco/politiche-eco.component';
+import { FineComponent } from './componenti/chisiamo/fine/fine.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +130,10 @@ import { PopUpCategorieComponent } from './componenti/inserimento-attivita/pop-u
     PrenotazioniAttivitaComponent,
     PopUpRegistrazioneComponent,
     PopUpCategorieComponent,
+    ChisiamoComponent,
+    IntroduzioneComponent,
+    PoliticheEcoComponent,
+    FineComponent,
   ],
   imports: [
     BrowserModule,
