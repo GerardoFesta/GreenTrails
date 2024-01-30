@@ -14,6 +14,11 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import lombok.Getter;
@@ -35,46 +40,73 @@ public class Attivita {
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "id_gestore", nullable = false)
+  @NotNull
   private Utente gestore;
 
   @Column(name = "nome", nullable = false, length = 50)
+  @NotBlank(message = "Il nome non può essere vuoto.")
+  @Size(max = 50, message = "Il nome è troppo lungo.")
+  @Pattern(regexp = "^[0-9A-zÀ-ú '-]*", message = "Il nome non ha formato valido.")
   private String nome;
 
   @Column(name = "indirizzo", nullable = false)
+  @NotBlank(message = "L'indirizzo non può essere vuoto.")
+  @Size(max = 255, message = "L'indirizzo è troppo lungo.")
+  @Pattern(regexp = "^[0-9A-zÀ-ú '-,.]*", message = "L'indirizzo non ha formato valido.")
   private String indirizzo;
 
   @Column(name = "cap", nullable = false, length = 5)
   @JdbcTypeCode(SqlTypes.CHAR)
+  @NotBlank(message = "Il CAP non può essere vuoto.")
+  @Size(min = 5, max = 5, message = "Il CAP non ha lunghezza valida.")
+  @Pattern(regexp = "^[0-9]*", message = "Il CAP non ha formato valido.")
   private String cap;
 
   @Column(name = "citta", nullable = false)
+  @NotBlank(message = "La città non può essere vuota.")
+  @Size(max = 50, message = "La città è troppo lunga.")
+  @Pattern(regexp = "^[0-9A-zÀ-ú '-]*", message = "La città non ha formato valido.")
   private String citta;
 
   @Column(name = "provincia", nullable = false, length = 2)
   @JdbcTypeCode(SqlTypes.CHAR)
+  @NotBlank(message = "La provincia non può essere vuota.")
+  @Size(min = 2, max = 2, message = "La provincia non ha lunghezza valida.")
+  @Pattern(regexp = "^[A-Z]*", message = "La provincia non ha formato valido.")
   private String provincia;
 
   @Column(name = "coordinate", nullable = false)
   @JdbcTypeCode(SqlTypes.POINT)
+  @NotNull
   private Point coordinate;
 
   @Column(name = "prezzo")
+  @Min(value = 0, message = "Il prezzo non può essere negativo.")
   private Double prezzo;
 
   @Column(name = "descrizione_breve", nullable = false, length = 140)
+  @NotBlank(message = "La descrizione breve non può essere vuota.")
+  @Size(max = 140, message = "La descrizione breve non ha lunghezza valida.")
+  @Pattern(regexp = "^[A-Z](?s:.)*", message = "La descrizione breve non ha formato valido.")
   private String descrizioneBreve;
 
   @Column(name = "descrizione_lunga", nullable = false, length = 1000)
+  @NotBlank(message = "La descrizione lunga non può essere vuota.")
+  @Size(max = 2000, message = "La descrizione lunga non ha lunghezza valida.")
+  @Pattern(regexp = "^[A-Z](?s:.)*", message = "La descrizione lunga non ha formato valido.")
   private String descrizioneLunga;
 
   @Column(name = "media", nullable = false)
+  @NotNull
   private String media;
 
   @Column(name = "disponibilita")
+  @Min(value = 1, message = "La disponibilità non può essere inferiore a 1.")
   private Integer disponibilita;
 
   @OneToOne(optional = false, orphanRemoval = true)
   @JoinColumn(name = "id_valori", nullable = false, unique = true)
+  @NotNull
   private ValoriEcosostenibilita valoriEcosostenibilita;
 
   @Enumerated
