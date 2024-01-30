@@ -5,6 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { PrenotazioniAlloggioService } from 'src/app/servizi/prenotazioni-alloggio.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-politiche-ecosostenibili-attivita',
@@ -16,12 +17,16 @@ export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
   isAlloggio: boolean = false;
   valoriEcosostenibilita: string[] = [];
 
+  isVisitatore: boolean;
+
   constructor(private attivitaService: AttivitaService,
      private route: ActivatedRoute, 
      private prenotazioniAlloggioService : PrenotazioniAlloggioService,
      private prenotazioniAttivitaService : PrenotazioniAttivitaService,
      private itinerariService: ItinerariService,
+     private cookieService: CookieService,
     public dialog: MatDialog ) {
+      this.isVisitatore = cookieService.get('ruolo') === 'ROLE_VISITATORE'
   }
 
   ngOnInit(): void {
