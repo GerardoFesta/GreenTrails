@@ -80,7 +80,7 @@ export class MapComponent implements OnInit, AfterViewInit {
       this.ricercaService.cercaPerPosizione(x, y, 50 * 1000).subscribe((risposta) => {
         this.markers = risposta.data.map((item: any) => {
           return {
-            idAttivita: item.idAttivita,
+            idAttivita: item.id,
             lat: item.coordinate.x,
             lng: item.coordinate.y,
             name: item.nome

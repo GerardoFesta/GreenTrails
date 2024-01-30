@@ -28,9 +28,8 @@ export class CardAttivitaComponent implements OnInit {
       this.idAttivita = id;
 
       this.visualizzaDettagliAttivita();
+      this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
     })
-
-    this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
   }
 
   visualizzaDettagliAttivita(): void {

@@ -19,9 +19,9 @@ export class RisultatiComponent implements OnInit, AfterViewInit {
     shadowSize: [41, 41]
   });
 
-  latitudine?: number;
-  longitudine?: number;
-  raggio?: number;
+  latitudine: number = 40.6824408;
+  longitudine: number = 14.7680961;
+  raggio: number = 50;
 
   showmap: boolean = false;
   markers: any[] = [
