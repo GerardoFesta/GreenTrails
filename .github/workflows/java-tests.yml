@@ -28,3 +28,7 @@ jobs:
       - name: Pubblica test report
         if: success() || failure()
         uses: scacap/action-surefire-report@v1
+
+defaults:
+  run:
+    working-directory: ./backend
