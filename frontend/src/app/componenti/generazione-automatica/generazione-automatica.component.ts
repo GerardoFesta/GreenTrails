@@ -12,6 +12,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 import { PrenotazioniAlloggioService } from 'src/app/servizi/prenotazioni-alloggio.service';
 import { PrenotazioniAttivitaService } from 'src/app/servizi/prenotazioni-attivita.service';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
+import { forkJoin, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-generazione-automatica',
@@ -19,192 +20,119 @@ import { ConnectionPositionPair } from '@angular/cdk/overlay';
   styleUrls: ['./generazione-automatica.component.css']
 })
 export class GenerazioneAutomaticaComponent {
-  
+
   alloggioDataList: any[] = [];
   attivitaTuristicaDataList: any[] = [];
+
   imageUrls: string[] = [];
-  attivitaList: any[] = [];
-  attivitaDataList: any[] = [];
-  preferenzeUtente: any;
-  attivitaSelezionate: any[] = [];
   currentImageIndex: number = 0;
   alloggioImageUrls: string[] = [];
   attivitaTuristicaImageUrls: string[] = [];
+
+  attivitaSelezionate: any[] = [];
+
+  preferenzeUtente: any;
+  itinerarioAutoId: any;
+
+  itinerarioCompleto: any[] = [];
+
+  prenotazioniAlloggio: any;
+  prenotazioniAttivitaTuristica: any;
+
+  alloggi: any;
+  attivitaTuristiche: any;
+
   constructor(private itinerarioService: ItinerariService,
     private uploadService: UploadService,
     private route: Router,
     private dialog: MatDialog,
     private cookieService: CookieService,
     private utenteService: UtenteService,
-    private sanitizer: DomSanitizer,
     private prenotazioneService: PrenotazioniAlloggioService,
-    private prenotazioneService1: PrenotazioniAttivitaService) {}
+    private prenotazioneService1: PrenotazioniAttivitaService) { 
+
+      this.alloggi = [];
+      this.attivitaTuristiche = [];
+
+    }
 
   ngOnInit(): void {
-    this.getPreferenze()
-      .then((preferenze) => {
-        this.preferenzeUtente = preferenze;
-      })
-      .then(() => {
-        this.generaItinerario();
-      })
-      .catch((errore) => {
-        console.error('Errore durante il recupero delle preferenze o il caricamento dei dati:', errore);
-      });
+    this.generaItinerario();
   }
-/*Prendo le preferenze e genero l'itinerario */
-  generaItinerario(): void {
-    this.getPreferenze()
-      .then((preferenze) => {
-        return this.itinerarioService.generaItinerario();
-      })
-      .then((itinerarioObservable) => {
-        itinerarioObservable.subscribe(
-          (itinerarioGenerato) => {
-            const idItinerarioGenerato = itinerarioGenerato.data.id;
-            console.log('Itinerario generato:', itinerarioGenerato);
-            console.log('dati', idItinerarioGenerato);
 
-            this.salvaIdItinerarioNelloStorageLocale(idItinerarioGenerato);
-            this.visualizzaItinerario(idItinerarioGenerato);
-          },
-          (errore) => {
-            console.error('Errore durante la generazione dell\'itinerario:', errore);
+  generaItinerario(): void {
+    this.itinerarioService.generaItinerario().subscribe((itinerarioRif) => {
+      this.itinerarioAutoId = itinerarioRif.data.id;
+
+      this.itinerarioService.visualizzaItinerario(this.itinerarioAutoId).subscribe((itinerario) => {
+        this.prenotazioniAlloggio = itinerario.data.prenotazioniAlloggio;
+        this.prenotazioniAttivitaTuristica = itinerario.data.prenotazioniAttivitaTuristica;
+
+        this.prenotazioniAlloggio.forEach((item: any, index: number) => {
+          if (item.camera.alloggio.media !== null) {
+            this.uploadService.elencaFileCaricati(item.camera.alloggio.media).subscribe((listaFiles) => {
+              if (listaFiles.data.length > 0) {
+                const fileName = listaFiles.data[0];
+                this.uploadService.serviFile(item.camera.alloggio.media, fileName).subscribe((file) => {
+                  let reader = new FileReader();
+                  reader.onloadend = () => {
+                    this.alloggioImageUrls[index] = reader.result as string;
+                    this.alloggi.push({
+                      ...item.camera.alloggio,
+                      img: {
+                        image: this.alloggioImageUrls[index],
+                        fileName: fileName
+                      }
+                    });
+                  };
+                  reader.readAsDataURL(file);
+                });
+              }
+            });
           }
-        );
-      })
-      .catch((errore) => {
-        console.error('Errore durante il recupero delle preferenze:', errore);
+        });
+        
+        this.prenotazioniAttivitaTuristica.forEach((item: any, index: number) => {
+          if (item.attivitaTuristica.media !== null) {
+            this.uploadService.elencaFileCaricati(item.attivitaTuristica.media).subscribe((listaFiles) => {
+              if (listaFiles.data.length > 0) {
+                const fileName = listaFiles.data[0];
+                this.uploadService.serviFile(item.attivitaTuristica.media, fileName).subscribe((file) => {
+                  let reader = new FileReader();
+                  reader.onloadend = () => {
+                    this.attivitaTuristicaImageUrls[index] = reader.result as string;
+                    this.attivitaTuristiche.push({
+                      ...item.attivitaTuristica,
+                      img: {
+                        image: this.attivitaTuristicaImageUrls[index],
+                        fileName: fileName
+                      }
+                    });
+                  };
+                  reader.readAsDataURL(file);
+                });
+              }
+            });
+          }
+        });
+
+        console.log("ALLOGGI: ", this.alloggi);
+        console.log("ATTIVITà: ", this.attivitaTuristiche);
+       
       });
+    })
   }
 
   salvaIdItinerarioNelloStorageLocale(idItinerario: number): void {
     localStorage.setItem('idItinerarioGenerato', idItinerario.toString());
   }
- itinerarioCompleto: any[] = [];
 
-/*Visualizza dati itinerario*/
 
-visualizzaItinerario(id: number): void {
-  this.itinerarioService.visualizzaItinerario(id).subscribe(
-    (dettagliItinerario) => {
-      const prenotazioniAlloggio = dettagliItinerario.data.prenotazioniAlloggio;
-      const prenotazioniAttivita = dettagliItinerario.data.prenotazioniAttivitaTuristica;
-
-      if (prenotazioniAlloggio && prenotazioniAlloggio.length > 0) {
-        this.loadDataAlloggio(prenotazioniAlloggio[0].camera.alloggio);
-      }
-
-      if (prenotazioniAttivita && prenotazioniAttivita.length > 0) {
-        for (let i = 0; i < prenotazioniAttivita.length; i++) {
-          const datiAttivita = prenotazioniAttivita[i].attivitaTuristica;
-          this.loadDataAttivitaTuristica(datiAttivita);
-        }
-      } else {
-        console.log('Nessuna prenotazione di attività turistiche disponibile.');
-      }
-
-      this.itinerarioCompleto = this.alloggioDataList.concat(this.attivitaTuristicaDataList);
-    }
-  );
-}
-getSafeImageUrl(base64Image: string): SafeResourceUrl {
-  const imageUrl = `data:image/jpeg;base64,${base64Image}`;
-  return this.sanitizer.bypassSecurityTrustResourceUrl(imageUrl);
-}
-  
-  /*mi aiuta alla visualizzazione dei dati dell'alloggio*/
-
-loadDataAlloggio(alloggioData: any): void {
-  console.log('Alloggio - Nome:', alloggioData.nome);
-  console.log('Alloggio - DescrizioneBreve:', alloggioData.descrizioneBreve);
-
-  const alloggioElement = {
-    tipo: 'alloggio',
-    data: {
-      nome: alloggioData.nome,
-      descrizioneBreve: alloggioData.descrizioneBreve,
-      imageUrl: '' // Aggiungi questa proprietà per contenere l'URL dell'immagine
-    }
-  };
-
-  this.alloggioDataList.push(alloggioElement);
-
-  if (alloggioData.media && alloggioData.media.length > 0) {
-    this.processMedia(alloggioData.media);
-  }
-}
-
-/*mi aiuta alla visualizzazione dei dati delle attivita */
-loadDataAttivitaTuristica(attivitaTuristicaData: any): void {
-  console.log('AttivitaTuristica - Nome:', attivitaTuristicaData.nome);
-  console.log('AttivitaTuristica - DescrizioneBreve:', attivitaTuristicaData.descrizioneBreve);
-  console.log('immagine', attivitaTuristicaData.media);
-
-  const attivitaTuristicaElement = {
-    tipo: 'attivitaTuristica',
-    data: {
-      nome: attivitaTuristicaData.nome,
-      descrizioneBreve: attivitaTuristicaData.descrizioneBreve,
-      imageUrl: '' // Aggiungi questa proprietà per contenere l'URL dell'immagine
-    }
-  };
-
-  this.attivitaTuristicaDataList.push(attivitaTuristicaElement);
-
-  if (attivitaTuristicaData.media && attivitaTuristicaData.media.length > 0) {
-    this.processMedia(attivitaTuristicaData.media);
-  }
-}
-processMedia(mediaItem: any): void {
-  if (mediaItem) {
-    this.uploadService.elencaFileCaricati(mediaItem).subscribe((listaFiles) => {
-      if (listaFiles.data.length > 0) {
-        const fileName = listaFiles.data[0];
-        this.uploadService.serviFile(mediaItem, fileName).subscribe((file) => {
-          let reader = new FileReader();
-          reader.onloadend = () => {
-            this.imageUrls.push(reader.result as string);
-            this.currentImageIndex = this.imageUrls.length + 1;
-          };
-          reader.readAsDataURL(file);
-        });
-      }
-    });
-  } else {
-    console.error('mediaItem non è definito:', mediaItem);
-  }
-}
-
- /*metodo che mi prende le preferenze dell'utente*/
-
-  getPreferenze(): Promise<any> {
-    const userIdString = this.cookieService.get('userId');
-    const userId = parseInt(userIdString, 10);
-
-    return new Promise<any>((resolve, reject) => {
-      if (!isNaN(userId)) {
-        this.utenteService.getPreferenze().subscribe(
-          (preferenze) => {
-            console.log('Preferenze utente:', preferenze);
-            resolve(preferenze);
-          },
-          (errore) => {
-            console.error('Errore durante il recupero delle preferenze dell\'utente:', errore);
-            reject(errore);
-          }
-        );
-      } else {
-        console.error('ID dell\'utente non trovato');
-        reject('ID dell\'utente non trovato');
-      }
-    });
-  }
 
   rigeneraItinerario() {
-    location.reload(); // o window.location.reload();
+    this.generaItinerario();
   }
-  
+
 
   clickedHome() {
     this.route.navigate(['/homepage']);
@@ -214,16 +142,173 @@ processMedia(mediaItem: any): void {
     this.dialog.open(CalendariopopupComponent);
   }
 
-  aggiungiAttivitaSelezionata(attivita: any) {
-    if (!this.attivitaSelezionate.includes(attivita)) {
-      this.attivitaSelezionate.push(attivita);
-    }
-  }
+  /*Visualizza dati itinerario*/
 
-  rimuoviAttivitaSelezionata(attivita: any) {
-    const index = this.attivitaSelezionate.indexOf(attivita);
-    if (index !== -1) {
-      this.attivitaSelezionate.splice(index, 1);
-    }
-  }
+  // visualizzaItinerario(id: number): void {
+  //   this.itinerarioService.visualizzaItinerario(id).subscribe(
+  //     (dettagliItinerario) => {
+
+  //       const prenotazioniAlloggio = dettagliItinerario.data.prenotazioniAlloggio;
+  //       const prenotazioniAttivita = dettagliItinerario.data.prenotazioniAttivitaTuristica;
+
+
+  //       // this.alloggioDataList = this.itinerarioAuto.filter((item: any) => item.)
+
+
+
+  //       if (prenotazioniAlloggio && prenotazioniAlloggio.length > 0) {
+  //         this.loadDataAlloggio(prenotazioniAlloggio[0].camera.alloggio);
+  //       }
+
+  //       if (prenotazioniAttivita && prenotazioniAttivita.length > 0) {
+  //         for (let i = 0; i < prenotazioniAttivita.length; i++) {
+  //           const datiAttivita = prenotazioniAttivita[i].attivitaTuristica;
+  //           this.loadDataAttivitaTuristica(datiAttivita);
+  //         }
+  //       } else {
+  //         console.log('Nessuna prenotazione di attività turistiche disponibile.');
+  //       }
+
+  //       this.itinerarioCompleto = this.alloggioDataList.concat(this.attivitaTuristicaDataList);
+  //       console.log("ITINERARIO COMPLETO", this.itinerarioCompleto)
+  //     }
+  //   );
+  // }
+
+  /*mi aiuta alla visualizzazione dei dati dell'alloggio*/
+
+  // loadDataAlloggio(alloggioData: any): void {
+  //   console.log('Alloggio - Nome:', alloggioData.nome);
+  //   console.log('Alloggio - DescrizioneBreve:', alloggioData.descrizioneBreve);
+  //   console.log('immagine ALLOGGIO', alloggioData.media);
+
+
+  //   const alloggioElement = {
+  //     data: {
+  //       nome: alloggioData.nome,
+  //       descrizioneBreve: alloggioData.descrizioneBreve,
+  //     }
+  //   };
+
+  //   this.alloggioDataList.push(alloggioElement);
+
+  //   if (alloggioData.media && alloggioData.media.length > 0) {
+  //     this.processMedia(alloggioData.media);
+  //   }
+  // }
+
+  /*mi aiuta alla visualizzazione dei dati delle attivita */
+  // loadDataAttivitaTuristica(attivitaTuristicaData: any): void {
+  //   console.log('AttivitaTuristica - Nome:', attivitaTuristicaData.nome);
+  //   console.log('AttivitaTuristica - DescrizioneBreve:', attivitaTuristicaData.descrizioneBreve);
+  //   console.log('immagine ATTIVITà TURISTICA', attivitaTuristicaData.media);
+
+  //   const attivitaTuristicaElement = {
+  //     data: {
+  //       nome: attivitaTuristicaData.nome,
+  //       descrizioneBreve: attivitaTuristicaData.descrizioneBreve,
+  //     }
+  //   };
+
+  //   this.attivitaTuristicaDataList.push(attivitaTuristicaElement);
+
+  //   if (attivitaTuristicaData.media && attivitaTuristicaData.media.length > 0) {
+  //     this.processMedia(attivitaTuristicaData.media);
+  //   }
+  // }
+
+  // processMedia(mediaItem: any): void {
+  //   if (mediaItem) {
+  //     this.uploadService.elencaFileCaricati(mediaItem).subscribe((listaFiles) => {
+  //       if (listaFiles.data.length > 0) {
+  //         const fileName = listaFiles.data[0];
+  //         this.uploadService.serviFile(mediaItem, fileName).subscribe((file) => {
+  //           let reader = new FileReader();
+  //           reader.onloadend = () => {
+  //             this.imageUrls.push(reader.result as string);
+  //           };
+  //           reader.readAsDataURL(file);
+  //         });
+  //       }
+  //     });
+  //   } else {
+  //     console.error('mediaItem non è definito:', mediaItem);
+  //   }
+  // }
+
+
+  /*Prendo le preferenze e genero l'itinerario */
+  // generaItinerario(): void {
+  //   this.getPreferenze()
+  //     .then((preferenze) => {
+  //       return this.itinerarioService.generaItinerario();
+  //     })
+  //     .then((itinerarioObservable) => {
+  //       itinerarioObservable.subscribe(
+  //         (itinerarioGenerato) => {
+  //           const idItinerarioGenerato = itinerarioGenerato.data.id;
+  //           console.log('Itinerario generato:', itinerarioGenerato);
+  //           console.log('dati', idItinerarioGenerato);
+
+  //           this.salvaIdItinerarioNelloStorageLocale(idItinerarioGenerato);
+  //           this.visualizzaItinerario(idItinerarioGenerato);
+  //         },
+  //         (errore) => {
+  //           console.error('Errore durante la generazione dell\'itinerario:', errore);
+  //         }
+  //       );
+  //     })
+  //     .catch((errore) => {
+  //       console.error('Errore durante il recupero delle preferenze:', errore);
+  //     });
+  // }
+
+  /*metodo che mi prende le preferenze dell'utente*/
+
+  // getPreferenze(): Promise<any> {
+  //   const userIdString = this.cookieService.get('userId');
+  //   const userId = parseInt(userIdString, 10);
+
+  //   return new Promise<any>((resolve, reject) => {
+  //     if (!isNaN(userId)) {
+  //       this.utenteService.getPreferenze().subscribe(
+  //         (preferenze) => {
+  //           console.log('Preferenze utente:', preferenze);
+  //           resolve(preferenze);
+  //         },
+  //         (errore) => {
+  //           console.error('Errore durante il recupero delle preferenze dell\'utente:', errore);
+  //           reject(errore);
+  //         }
+  //       );
+  //     } else {
+  //       console.error('ID dell\'utente non trovato');
+  //       reject('ID dell\'utente non trovato');
+  //     }
+  //   });
+  // }
+
+  // getPreferenze(): Promise<any> {
+  //   const userIdString = this.cookieService.get('userId');
+  //   const userId = parseInt(userIdString, 10);
+
+  //   return new Promise<any>((resolve, reject) => {
+  //     if (!isNaN(userId)) {
+  //       this.utenteService.getPreferenze().subscribe(
+  //         (preferenze) => {
+  //           console.log('Preferenze utente:', preferenze);
+  //           resolve(preferenze);
+  //         },
+  //         (errore) => {
+  //           console.error('Errore durante il recupero delle preferenze dell\'utente:', errore);
+  //           reject(errore);
+  //         }
+  //       );
+  //     } else {
+  //       console.error('ID dell\'utente non trovato');
+  //       reject('ID dell\'utente non trovato');
+  //     }
+  //   });
+  // }
+
 }
