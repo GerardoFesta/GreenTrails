@@ -63,7 +63,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         }).addTo(this.map);
         this.mapInitialized = true;
       } else {
-        this.map.setView([x, y], 7, { animate: true });
+        this.map.flyTo([x, y], 7, { duration: 1 });
       }
 
       console.log("MAPPA INIZIALIZZATA?", this.mapInitialized)

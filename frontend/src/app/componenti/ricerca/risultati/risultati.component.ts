@@ -60,6 +60,8 @@ export class RisultatiComponent implements OnInit, AfterViewInit {
         maxZoom: 20,
         attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(this.map);
+    } else {
+      this.map.flyTo([this.latitudine, this.longitudine], 7, { duration: 0.5 });
     }
   }
 
@@ -99,7 +101,7 @@ export class RisultatiComponent implements OnInit, AfterViewInit {
       });
 
       this.addMarkersToMap();
-      this.map.setView([this.latitudine, this.longitudine], 6.5, { animate: true });
+      this.map.flyTo([this.latitudine, this.longitudine], 8, { duration: 0.5 });
     }, (error) => {
       console.error(error)
     });
