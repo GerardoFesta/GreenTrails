@@ -17,7 +17,9 @@ hide = true;
 email= new FormControl('')
 password= new FormControl('')
 
-
+onEnterKeyPressed(): void {
+  this.onClick();
+}
   constructor(private utenteService: UtenteService, private fb: FormBuilder, private snackBar: MatSnackBar, private router: Router, private cookieService: CookieService) {
     this.loginForm = this.fb.group({
       email: [''],

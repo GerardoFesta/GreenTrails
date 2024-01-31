@@ -1,6 +1,6 @@
 <div class="orientamento">
     <h1>Accedi</h1>
-    <form [formGroup]="loginForm">
+    <form [formGroup]="loginForm" (keyup.enter)="onEnterKeyPressed()">
   <div class="campo">
       <div class="container">
         <mat-label>E-mail: </mat-label>

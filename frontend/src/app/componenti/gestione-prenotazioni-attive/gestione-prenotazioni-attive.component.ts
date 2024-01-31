@@ -113,7 +113,6 @@ throw new Error('Method not implemented.');
   
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // Handle the result if needed
     });
   }
   
@@ -124,25 +123,19 @@ throw new Error('Method not implemented.');
         const prenotazioniAlloggio = response.data;
         console.log("Prenotazioni Alloggio:");
   
-        prenotazioniAlloggio.forEach((prenotazione: any, index: number) => {
-          console.log(`Prenotazione ${index + 1}:`);
-          console.log("ID:", prenotazione.id);
-          console.log("Stato:", prenotazione.stato);
-          console.log("Check-In:", prenotazione.dataInizio);
-          console.log("Check-Out:", prenotazione.dataFine);
-          console.log("Bambini:", prenotazione.numBambini);
-          console.log("Adulti:", prenotazione.numAdulti);
-          console.log("Prezzo:", prenotazione.prezzo);
+        const selectedAlloggio = prenotazioniAlloggio.find(
+          (prenotazione: any) => prenotazione.id === selectedPrenotazione.id
+        );
   
-          if (prenotazione.camera.alloggio) {
-            console.log("Dati dell'Alloggio:");
-            console.log("- Nome Alloggio:", prenotazione.camera.alloggio.nome);
-            console.log("- Indirizzo Alloggio:", prenotazione.camera.alloggio.indirizzo);
-          }
-            this.openPopup(prenotazione);
+        if (selectedAlloggio) {
+          console.log("Selected Alloggio:");
+          console.log("- Nome Alloggio:", selectedAlloggio.camera.alloggio.nome);
+          console.log("- Indirizzo Alloggio:", selectedAlloggio.camera.alloggio.indirizzo);
   
-          console.log("-----------------------");
-        });
+          this.openPopup(selectedAlloggio);
+        } else {
+          console.error('Selected alloggio not found in the response.');
+        }
       },
       error => {
         console.error('Errore nel recupero delle prenotazioni alloggio:', error);
@@ -231,7 +224,6 @@ updateTable() {
     const prenotazioniInCorso = this.dataSource.data.filter(prenotazione => prenotazione.stato === 'IN_CORSO');
     this.dataSource.data = prenotazioniInCorso;
   } else {
-    // Se non è selezionata, ripristina i dati originali
     this.populateTable();
   }
 }
@@ -252,17 +244,13 @@ formatStato(stato: string): string {
   return stato.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 }
 formatDateTime(dateTimeString: string): string {
-  // Separare l'orario e i millisecondi
   const [time, milliseconds] = dateTimeString.split('.');
   
-  // Creare un oggetto Data con una data di riferimento (ad esempio, oggi)
   const today = new Date();
   
-  // Aggiornare l'orario
   const [hours, minutes, seconds] = time.split(':');
   today.setHours(+hours, +minutes, +seconds);
   
-  // Formattare la data e l'orario
   const formattedDate = this.formatDate(today);
   const formattedTime = this.formatTime(today);
 
