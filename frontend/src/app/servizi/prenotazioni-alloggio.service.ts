@@ -10,13 +10,13 @@ import { PrenotazioniComponent } from '../componenti/pagina-attivita/prenotazion
 })
 export class PrenotazioniAlloggioService {
 
-  constructor(private dialog: MatDialog,private http: HttpClient, private cookieService: CookieService) {}
+  constructor(private dialog: MatDialog, private http: HttpClient, private cookieService: CookieService) { }
 
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'http://localhost:8080/api/prenotazioni-alloggio';
 
   apriDialogAlloggio() {
     const dialogRef =
-      
+
       this.dialog.open(PrenotazioniComponent, { width: '60%' })
 
 
@@ -25,51 +25,66 @@ export class PrenotazioniAlloggioService {
     });
   }
 
-  prenotazioneAlloggio(idItinerario: number,idCamera: number,numAdulti: number, numBambini: number, numCamere: number, dataInizio: any, dataFine: any  ): Observable<any>{
-  
+  prenotazioneAlloggio(idItinerario: number, idCamera: number, numAdulti: number, numBambini: number, numCamere: number, dataInizio: any, dataFine: any): Observable<any> {
+
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
     const params = new HttpParams()
-    .set('idItinerario', idItinerario) 
-    .set('idCamera', idCamera)
-    .set('numAdulti', numAdulti)
-    .set('numBambini', numBambini)
-    .set('numCamere',numCamere  )
-    .set('dataInizio', dataInizio)
-    .set('dataFine', dataFine);
+      .set('idItinerario', idItinerario)
+      .set('idCamera', idCamera)
+      .set('numAdulti', numAdulti)
+      .set('numBambini', numBambini)
+      .set('numCamere', numCamere)
+      .set('dataInizio', dataInizio)
+      .set('dataFine', dataFine);
 
-    return this.http.post(`${this.baseUrl}/api/prenotazioni-alloggio`,params, {headers});
+    return this.http.post<any>(`${this.baseUrl}`, params, { headers });
   }
 
-  getPrenotazioneAlloggio(id:number):Observable<any>{
+  getPrenotazioneAlloggio(id: number): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
-    return this.http.get(`${this.baseUrl}/api/prenotazioni-alloggio/${id}`,  {headers });
+    return this.http.get<any>(`${this.baseUrl}/api/prenotazioni-alloggio/${id}`, { headers });
 
   }
-  
-  verificaDisponibilitaAlloggio(idCamera: number,dataInizio: any, dataFine: any):Observable<any> {
+
+  verificaDisponibilitaAlloggio(idCamera: number, dataInizio: any, dataFine: any): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
 
     const params = new HttpParams()
-    .set('idCamera', idCamera)
-    .set('dataInizio', dataInizio)
-    .set('dataFine', dataFine);
+      .set('idCamera', idCamera)
+      .set('dataInizio', dataInizio)
+      .set('dataFine', dataFine);
 
 
-    return this.http.get(`${this.baseUrl}/api/prenotazioni-alloggio/perCamera/${idCamera}/disponibilita`,  { params, headers });
+    return this.http.get<any>(`${this.baseUrl}/perCamera/${idCamera}/disponibilita`, { params, headers });
 
   }
-  deletePrenotazioneAlloggio(idPrenotazione: number){
-    const headers = new HttpHeaders ({
+
+  deletePrenotazioneAlloggio(idPrenotazione: number) {
+    const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     })
     const url = `${this.baseUrl}/${idPrenotazione}`;
-    return this.http.delete<void>(url, {headers});
+    return this.http.delete<any>(url, { headers });
   }
 
+  confermaPrenotazioneAlloggio(id: number, numAdulti: number, numBambini: number, dataInizio: string, dataFine: string, numCamere: number): Observable<any> {
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    })
+
+    let params = new HttpParams()
+      .set('numAdulti', numAdulti)
+      .set('numBambini', numBambini)
+      .set('dataInizio', dataInizio)
+      .set('dataFine', dataFine)
+      .set('numCamere', numCamere)
+
+    return this.http.post<any>(`${this.baseUrl}/${id}`, params, {headers})
+  }
 }

@@ -88,6 +88,7 @@ import { AreaRiservataComponent } from './componenti/area-riservata/area-riserva
 import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popup-errorPass.component';
 import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
 import { CalendariopopupComponent } from './componenti/generazione-automatica/calendariopopup/calendariopopup.component';
+import { PopupConfermaItinerarioComponent } from './componenti/generazione-automatica/popup-conferma-itinerario/popup-conferma-itinerario.component';
 
 @NgModule({
   declarations: [
@@ -136,7 +137,7 @@ import { CalendariopopupComponent } from './componenti/generazione-automatica/ca
     GestionePrenotazioniAttiveComponent,
     GalleryDialogComponent,
     VideoDialogComponent,
-
+    PopupConfermaItinerarioComponent,
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ import { AreaRiservataComponent } from './componenti/area-riservata/area-riserva
 import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomePageComponent },
+  { path: 'itinerarioAutomatico', component: GenerazioneAutomaticaComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
   { path: 'questionario', component: QuestionarioComponent },
   { path: 'login', component: LoginComponent },
@@ -25,13 +25,7 @@ const routes: Routes = [
   {path: 'tabellaP', component: GestionePrenotazioniAttiveComponent},
   {path: 'login', component: LoginComponent},
   {path: 'area-riservata', component: AreaRiservataComponent},
-  {path: '', component: GenerazioneAutomaticaComponent},
-
-
-
-
-
-
+  {path: '', component: HomePageComponent},
 ];
 
 @NgModule({

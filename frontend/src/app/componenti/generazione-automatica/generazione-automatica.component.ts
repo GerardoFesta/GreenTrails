@@ -21,20 +21,10 @@ import { forkJoin, map, switchMap } from 'rxjs';
 })
 export class GenerazioneAutomaticaComponent {
 
-  alloggioDataList: any[] = [];
-  attivitaTuristicaDataList: any[] = [];
-
-  imageUrls: string[] = [];
-  currentImageIndex: number = 0;
   alloggioImageUrls: string[] = [];
   attivitaTuristicaImageUrls: string[] = [];
 
-  attivitaSelezionate: any[] = [];
-
-  preferenzeUtente: any;
   itinerarioAutoId: any;
-
-  itinerarioCompleto: any[] = [];
 
   prenotazioniAlloggio: any;
   prenotazioniAttivitaTuristica: any;
@@ -42,25 +32,32 @@ export class GenerazioneAutomaticaComponent {
   alloggi: any;
   attivitaTuristiche: any;
 
+  idPrenotazioniAlloggio!: number[];
+  idPrenotazioniAttivitaTuristiche!: number[];
+
+  prenotazioniUnite: any = [];
+
   constructor(private itinerarioService: ItinerariService,
     private uploadService: UploadService,
     private route: Router,
     private dialog: MatDialog,
     private cookieService: CookieService,
     private utenteService: UtenteService,
-    private prenotazioneService: PrenotazioniAlloggioService,
-    private prenotazioneService1: PrenotazioniAttivitaService) { 
-
-      this.alloggi = [];
-      this.attivitaTuristiche = [];
-
-    }
+    private prenotazioniAlloggioService: PrenotazioniAlloggioService,
+    private prenotazioniAttivitaService: PrenotazioniAttivitaService) {
+  }
 
   ngOnInit(): void {
     this.generaItinerario();
   }
 
   generaItinerario(): void {
+    this.alloggi = [];
+    this.attivitaTuristiche = [];
+
+    this.idPrenotazioniAlloggio = [];
+    this.idPrenotazioniAttivitaTuristiche = [];
+
     this.itinerarioService.generaItinerario().subscribe((itinerarioRif) => {
       this.itinerarioAutoId = itinerarioRif.data.id;
 
@@ -91,7 +88,7 @@ export class GenerazioneAutomaticaComponent {
             });
           }
         });
-        
+
         this.prenotazioniAttivitaTuristica.forEach((item: any, index: number) => {
           if (item.attivitaTuristica.media !== null) {
             this.uploadService.elencaFileCaricati(item.attivitaTuristica.media).subscribe((listaFiles) => {
@@ -118,9 +115,12 @@ export class GenerazioneAutomaticaComponent {
 
         console.log("ALLOGGI: ", this.alloggi);
         console.log("ATTIVITà: ", this.attivitaTuristiche);
-       
+
+        this.prenotazioniUnite = this.prenotazioniAlloggio.concat(this.prenotazioniAttivitaTuristica);
+        console.log(this.prenotazioniUnite);
       });
     })
+
   }
 
   salvaIdItinerarioNelloStorageLocale(idItinerario: number): void {
@@ -130,16 +130,68 @@ export class GenerazioneAutomaticaComponent {
 
 
   rigeneraItinerario() {
+    this.cancellaItinerario();
     this.generaItinerario();
   }
 
 
   clickedHome() {
+    this.cancellaItinerario();
     this.route.navigate(['/homepage']);
   }
 
   openCalendario() {
-    this.dialog.open(CalendariopopupComponent);
+    const dialogRef = this.dialog.open(CalendariopopupComponent, {
+      data: {
+        idItinerario: this.itinerarioAutoId,
+        prenotazioniAlloggio: this.prenotazioniAlloggio,
+        prenotazioniAttivitaTuristica: this.prenotazioniAttivitaTuristica
+      },
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  cancellaItinerario() {
+
+    this.idPrenotazioniAttivitaTuristiche = this.prenotazioniAttivitaTuristica.map((item: any, index: number) => {
+      console.log("ID PRENOTAZIONE ATTIVITà N" + index, item.id, "PRENOTAZIONE ALLOGGIO: ", item);
+      return {
+        id: item.id
+      }
+    })
+
+    this.idPrenotazioniAttivitaTuristiche.forEach((item: any) => {
+      console.log(item);
+      this.prenotazioniAttivitaService.deletePrenotazioneAttivitaTuristica(item.id).subscribe((risposta) => {
+        console.log("CANCELLAZIONE PRENOTAZIONE ATTIVITà TURISTICA", risposta);
+      })
+    }, (error: any) => {
+      console.error(error)
+    })
+
+    this.idPrenotazioniAlloggio = this.prenotazioniAlloggio.map((item: any, index: number) => {
+      console.log("ID PRENOTAZIONE ALLOGGIO N" + index, item.id, "PRENOTAZIONE: ", item);
+      return {
+        id: item.id
+      }
+    })
+
+    this.idPrenotazioniAlloggio.forEach((item: any) => {
+      console.log(item);
+      this.prenotazioniAlloggioService.deletePrenotazioneAlloggio(item.id).subscribe((risposta: any) => {
+        console.log("CANCELLAZIONE PRENOTAZIONE ALLOGGIO", risposta)
+      })
+    }, (error: any) => {
+      console.error(error);
+    })
+
+    this.itinerarioService.cancellaItinerario(this.itinerarioAutoId).subscribe((risposta) => {
+      console.log("CANCELLAZIONE ITINERARIO", risposta);
+    })
   }
 
   /*Visualizza dati itinerario*/

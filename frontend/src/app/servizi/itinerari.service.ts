@@ -16,7 +16,7 @@ export class ItinerariService {
 
   constructor(private dialog: MatDialog,private http: HttpClient, private cookieService: CookieService) {}
 
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'http://localhost:8080/api/itinerari';
 
   private idSource = new BehaviorSubject<number>(0);
   currentId = this.idSource.asObservable();
@@ -25,14 +25,12 @@ export class ItinerariService {
     this.idSource.next(id);
   }
 
-
-  
   cancellaItinerario(idItinerario: number): Observable<any> {
       
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
-    return this.http.delete(`${this.baseUrl}/api/itinerari/${idItinerario}`,{headers});
+    return this.http.delete(`${this.baseUrl}/${idItinerario}`, {headers});
   }
 
 
@@ -40,7 +38,7 @@ export class ItinerariService {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
-    return this.http.post(`${this.baseUrl}/api/itinerari`,{},  {headers});
+    return this.http.post(`${this.baseUrl}`,{},  {headers});
   }
   
 
@@ -69,15 +67,14 @@ export class ItinerariService {
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
   
-    return this.http.post<any>(`${this.baseUrl}/api/itinerari/genera`,{param}, {headers});
+    return this.http.post<any>(`${this.baseUrl}/genera`,{param}, {headers});
   }
 
   visualizzaItinerario(id:number):Observable<any>{
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
-    return this.http.get<any>(`${this.baseUrl}/api/itinerari/${id}`, {headers});
-
+    return this.http.get<any>(`${this.baseUrl}/${id}`, {headers});
   }
   
 }
