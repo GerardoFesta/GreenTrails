@@ -85,6 +85,8 @@ import { PopupConfermaModificaComponent } from './componenti/gestione-attivita/p
 import { PopupModificaDatiAlloggioComponent } from './componenti/gestione-attivita/popup-modifica-dati-alloggio/popup-modifica-dati-alloggio.component';
 import { PopupEliminazioneCameraComponent } from './componenti/gestione-attivita/popup-eliminazione-camera/popup-eliminazione-camera.component';
 import { PopupDeleteConfermaComponent } from './componenti/gestione-prenotazioni-attive/popupDeleteConferma/popupDeleteConferma.component';
+import { PopupDettagliComponent } from './componenti/gestione-prenotazioni-attive/popupDettagli/popupDettagli.component';
+import { PopupDettagliAttivitaComponent } from './componenti/gestione-prenotazioni-attive/popupDettagliAttivita/popupDettagliAttivita.component';
 
 
 @NgModule({
@@ -122,7 +124,9 @@ import { PopupDeleteConfermaComponent } from './componenti/gestione-prenotazioni
     PopupConfermaModificaComponent,
     PopupModificaDatiAlloggioComponent,
     PopupEliminazioneCameraComponent,
-    PopupDeleteConfermaComponent
+    PopupDeleteConfermaComponent,
+    PopupDettagliComponent,
+    PopupDettagliAttivitaComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Component, ElementRef, HostListener, ViewChild} from '@angular/core';
 import { PopupDeleteConfermaComponent } from './popupDeleteConferma/popupDeleteConferma.component';
 import { MatDialog } from '@angular/material/dialog';
+import { PopupDettagliComponent } from './popupDettagli/popupDettagli.component';
+import { PopupDettagliAttivitaComponent } from './popupDettagliAttivita/popupDettagliAttivita.component';
 
 
 @Component({
@@ -14,11 +16,15 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class GestionePrenotazioniAttiveComponent {
+  
+  
 
   idalloggio: any;
   idAttivita: any;
   mostraSoloInCorso: boolean = false; 
 
+  alloggi: any[]=[]
+  attivita: any[]=[]
 
 updatePaginatedData() {
 throw new Error('Method not implemented.');
@@ -41,76 +47,6 @@ throw new Error('Method not implemented.');
     this.populateTable();
   }
 
-  getPrenotazioniAlloggio() {
-    this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore().subscribe(
-      (response: any) => {
-        this.prenotazioniAlloggio = response;
-  
-        if (response.data && Array.isArray(response.data)) {
-          response.data.forEach((prenotazione: any) => {
-            const dataInizio = prenotazione.dataInizio;
-            const dataFine = prenotazione.dataFine;
-            const id = prenotazione.id;
-            const stato = prenotazione.stato;
-            const numAdulti = prenotazione.numAdulti;
-            const numBambini = prenotazione.numBambini;
-            const prezzo = prenotazione.prezzo;
-  
-            console.log('Data Inizio:', dataInizio);
-            console.log('Data Fine:', dataFine);
-            console.log('ID:', id);
-            console.log('Num Adulti:', numAdulti);
-            console.log('Stato:', stato);
-            console.log('Num Bambini:', numBambini);
-            console.log('Prezzo:', prezzo);
-            console.log('---'); 
-          });
-        }
-  
-        console.log('Prenotazioni Alloggio:', this.prenotazioniAlloggio);
-      },
-      error => {
-        console.error('Errore nel recupero delle prenotazioni alloggio:', error);
-      }
-    );
-  }
-  getPrenotazioniAttivita() {
-    this.prenotazioniAttivitaTurService.getPrenotazioniAttivitaTuristicaVisitatore().subscribe(
-      (response: any) => {
-        this.prenotazioniAttivita = response;
-  
-        if (response.data && Array.isArray(response.data)) {
-          response.data.forEach((attivita: any) => {
-            const visitatore = attivita.nome
-            const idAttivita = attivita.id;
-            const prezzo = attivita.prezzo;
-            const stato = attivita.stato;
-            const numBambini = attivita.numBambini;
-            const numAdulti = attivita.numAdulti;
-            const dataInizio = attivita.dataInizio;
-            const dataFine = attivita.dataFine;
-  
-            console.log('ID Attività:', idAttivita);
-            console.log('Prezzo:', prezzo);
-            console.log('Stato:', stato);
-            console.log('Num Bambini:', numBambini);
-            console.log('Num Adulti:', numAdulti);
-            console.log('Data Inizio:', dataInizio);
-            console.log('Data Fine:', dataFine);
-
-            // Log other properties if needed
-          });
-  
-          console.log('Prenotazioni Attività:', this.prenotazioniAttivita);
-        } else {
-          console.error('Invalid data structure:', response.data);
-        }
-      },
-      error => {
-        console.error('Errore nel recupero delle prenotazioni attività:', error);
-      }
-    );
-  }
   populateTable() {
     forkJoin({
       prenotazioniAlloggio: this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore(),
@@ -143,81 +79,90 @@ throw new Error('Method not implemented.');
       }
     );
   }
+  VisualizzaAttivita(selectedPrenotazione: any): void {
+    this.prenotazioniAttivitaTurService.getPrenotazioniAttivitaTuristicaVisitatore().subscribe(
+      (response: any) => {
+        const prenotazioniAttivita = response.data;
+        console.log("Prenotazioni Attivita:");
   
-  getPrenotazioni() {
-    // Combine both service calls using forkJoin
-    forkJoin({
-      prenotazioniAlloggio: this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore(),
-      prenotazioniAttivita: this.prenotazioniAttivitaTurService.getPrenotazioniAttivitaTuristicaVisitatore(),
-    }).subscribe(
-      (responses: any) => {
-        this.prenotazioniAlloggio = responses.prenotazioniAlloggio;
-        this.prenotazioniAttivita = responses.prenotazioniAttivita;
+        const selectedAttivita = prenotazioniAttivita.find(
+          (prenotazione: any) => prenotazione.id === selectedPrenotazione.id
+        );
   
-        // Process prenotazioniAlloggio
-        if (Array.isArray(this.prenotazioniAlloggio) && this.prenotazioniAlloggio.length > 0) {
-          console.log('Prenotazioni Alloggio:');
-          this.prenotazioniAlloggio.forEach((prenotazione: any) => {
-            if (prenotazione.data && Array.isArray(prenotazione.data)) {
-              prenotazione.data.forEach((item: any) => {
-                const dataInizio = item.dataInizio;
-                const dataFine = item.dataFine;
-                const id = item.id;
-                const stato = item.stato;
-                const numAdulti = item.numAdulti;
-                const numBambini = item.numBambini;
-                const prezzo = item.prezzo;
+        if (selectedAttivita) {
+          console.log("Selected Attività:");
+          console.log("- Nome:", selectedAttivita.attivitaTuristica.nome);
+          console.log("- Indirizzo:", selectedAttivita.attivitaTuristica.indirizzo);
   
-                console.log('Data Inizio:', dataInizio);
-                console.log('Data Fine:', dataFine);
-                console.log('ID:', id);
-                console.log('Num Adulti:', numAdulti);
-                console.log('Stato:', stato);
-                console.log('Num Bambini:', numBambini);
-                console.log('Prezzo:', prezzo);
-                console.log('---');
-              });
-            }
-          });
+          this.openPopup1(selectedAttivita);
+        } else {
+          console.error('Selected attività not found in the response.');
         }
-  
-        // Process prenotazioniAttivita
-        if (Array.isArray(this.prenotazioniAttivita) && this.prenotazioniAttivita.length > 0) {
-          console.log('Prenotazioni Attività:');
-          this.prenotazioniAttivita.forEach((attivita: any) => {
-            if (attivita.data && Array.isArray(attivita.data)) {
-              attivita.data.forEach((item: any) => {
-                const idAttivita = item.id;
-                const prezzo = item.prezzo;
-                const stato = item.stato;
-                const numBambini = item.numBambini;
-                const numAdulti = item.numAdulti;
-                const dataInizio = item.dataInizio;
-                const dataFine = item.dataFine;
-  
-                console.log('ID Attività:', idAttivita);
-                console.log('Prezzo:', prezzo);
-                console.log('Stato:', stato);
-                console.log('Num Bambini:', numBambini);
-                console.log('Num Adulti:', numAdulti);
-                console.log('Data Inizio:', dataInizio);
-                console.log('Data Fine:', dataFine);
-                console.log('---');
-              });
-            }
-          });
-        }
-  
       },
       error => {
-        console.error('Errore nel recupero delle prenotazioni:', error);
+        console.error('Errore nel recupero delle prenotazioni attività:', error);
       }
     );
   }
   
+  openPopup1(prenotazione: any): void {
+    const dialogRef = this.dialog.open(PopupDettagliAttivitaComponent, {
+      data: { prenotazione },
+      width: '400px',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      // Handle the result if needed
+    });
+  }
   
 
+  visualizzaAlloggio(selectedPrenotazione: any): void {
+    this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore().subscribe(
+      (response: any) => {
+        const prenotazioniAlloggio = response.data;
+        console.log("Prenotazioni Alloggio:");
+  
+        prenotazioniAlloggio.forEach((prenotazione: any, index: number) => {
+          console.log(`Prenotazione ${index + 1}:`);
+          console.log("ID:", prenotazione.id);
+          console.log("Stato:", prenotazione.stato);
+          console.log("Check-In:", prenotazione.dataInizio);
+          console.log("Check-Out:", prenotazione.dataFine);
+          console.log("Bambini:", prenotazione.numBambini);
+          console.log("Adulti:", prenotazione.numAdulti);
+          console.log("Prezzo:", prenotazione.prezzo);
+  
+          if (prenotazione.camera.alloggio) {
+            console.log("Dati dell'Alloggio:");
+            console.log("- Nome Alloggio:", prenotazione.camera.alloggio.nome);
+            console.log("- Indirizzo Alloggio:", prenotazione.camera.alloggio.indirizzo);
+          }
+            this.openPopup(prenotazione);
+  
+          console.log("-----------------------");
+        });
+      },
+      error => {
+        console.error('Errore nel recupero delle prenotazioni alloggio:', error);
+      }
+    );
+  }
+  
+  openPopup(prenotazione: any): void {
+    const dialogRef = this.dialog.open(PopupDettagliComponent, {
+      data: { prenotazione },
+      width: '400px',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
+ 
+  
   onDeletePrenotazioneAlloggio(idPrenotazione: number, statoAlloggio: string) {
     if (statoAlloggio === 'IN_CORSO') {
       const dialogRef = this.dialog.open(PopupDeleteConfermaComponent, {
@@ -251,7 +196,7 @@ throw new Error('Method not implemented.');
   if (statoAttivita === 'IN_CORSO') {
     const dialogRef = this.dialog.open(PopupDeleteConfermaComponent, {
       data: {
-        message: 'Conferma eliminazione',
+        message: 'Conferma eliminazione', 
         action: 'Sei sicuro di voler eliminare questa prenotazione di attività?',
       },
     });
@@ -306,5 +251,35 @@ onScroll(event: Event) {
 formatStato(stato: string): string {
   return stato.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 }
+formatDateTime(dateTimeString: string): string {
+  // Separare l'orario e i millisecondi
+  const [time, milliseconds] = dateTimeString.split('.');
+  
+  // Creare un oggetto Data con una data di riferimento (ad esempio, oggi)
+  const today = new Date();
+  
+  // Aggiornare l'orario
+  const [hours, minutes, seconds] = time.split(':');
+  today.setHours(+hours, +minutes, +seconds);
+  
+  // Formattare la data e l'orario
+  const formattedDate = this.formatDate(today);
+  const formattedTime = this.formatTime(today);
 
+  return `${formattedDate} ${formattedTime}`;
+}
+
+formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+formatTime(date: Date): string {
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+  return `${hours}:${minutes}:${seconds}`;
+}
 }

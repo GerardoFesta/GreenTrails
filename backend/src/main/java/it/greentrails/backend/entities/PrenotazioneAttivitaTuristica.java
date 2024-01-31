@@ -42,11 +42,11 @@ public class PrenotazioneAttivitaTuristica {
   @Column(name = "num_bambini", nullable = false)
   private int numBambini;
 
-  @Temporal(TemporalType.DATE)
+  @Temporal(TemporalType.TIME)
   @Column(name = "data_inizio", nullable = false)
   private Date dataInizio;
 
-  @Temporal(TemporalType.DATE)
+  @Temporal(TemporalType.TIME)
   @Column(name = "data_fine")
   private Date dataFine;
 
