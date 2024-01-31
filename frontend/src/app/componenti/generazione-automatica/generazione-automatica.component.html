@@ -9,32 +9,24 @@
       <mat-stepper orientation="vertical" #stepper class="stepper-container">
         <mat-step *ngFor="let alloggio of alloggi; let i = index" [label]="alloggio.nome">
           <ng-template matStepLabel>{{ alloggio.nome }}</ng-template>
-          <mat-card>
-            <mat-card-header>
-              <p><strong>{{ alloggio.nome }}</strong></p>
-            </mat-card-header>
-            <mat-card class="pic">
+          <div class="card" style="width: 20rem;">
+            <div class="pic">
               <img [src]="alloggio.img.image" alt="Immagine Alloggio">
-            </mat-card>
-            <mat-card-content>
-              <p>{{ alloggio.descrizioneBreve }}</p>
-            </mat-card-content>
-          </mat-card>
+            </div>
+            <h2 class="card-title"><p><strong>{{ alloggio.nome }}</strong></p></h2>
+              <p class="card-description">{{ alloggio.descrizioneBreve }}</p>
+          </div>
         </mat-step>
 
         <mat-step *ngFor="let attivita of attivitaTuristiche; let i = index" [label]="attivita.nome">
           <ng-template matStepLabel>{{ attivita.nome }}</ng-template>
-          <mat-card>
-            <mat-card-header>
-              <p><strong>{{ attivita.nome }}</strong></p>
-            </mat-card-header>
-            <mat-card class="pic">
+          <div class="card" style="width: 20rem;">
+            <div class="pic">
               <img [src]="attivita.img.image" alt="Immagine Attività">
-            </mat-card>
-            <mat-card-content>
-              <p>{{ attivita.descrizioneBreve }}</p>
-            </mat-card-content>
-          </mat-card>
+            </div>
+            <h2 class="card-title"><p><strong>{{ attivita.nome }}</strong></p></h2>
+            <p class="card-description">{{ attivita.descrizioneBreve }}</p>
+          </div>
         </mat-step>
       </mat-stepper>
     </div>

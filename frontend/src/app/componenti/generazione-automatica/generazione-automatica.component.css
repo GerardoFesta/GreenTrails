@@ -6,37 +6,39 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90%;
+    width: 70%;
     height: fit-content;
     justify-content: center;
   }
 
-  .mat-card-title{
-    font-size: medium;
+  .card {
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    margin-right: 10px;
+    box-shadow: 7px 7px 5px #dedede;
+    overflow: hidden;
   }
 
   .stepper-container {
-    height:50%;
+    height:auto;
     margin-right: 20px;
-    width: 80%;
+    width: auto;
   }
   .pic img {
-    max-width: 50%;
-    max-height: 50%;
+    width: 100%;
+    height: auto; 
   }
   .pic{
-    width:fit-content;
-  }
-
-  .mat-card {
-    width: 100%;
-    margin: auto;
-    margin-bottom: 20px;
-    height: auto;
+    width:100%;
   }
 
   .button-container{
     margin: 10px;
     position: relative;
     margin-top: 20px;
+  }
+
+  .card-title, .card-description{
+    padding: 20px;
   }
