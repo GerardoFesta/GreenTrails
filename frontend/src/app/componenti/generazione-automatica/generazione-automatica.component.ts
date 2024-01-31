@@ -123,12 +123,6 @@ export class GenerazioneAutomaticaComponent {
 
   }
 
-  salvaIdItinerarioNelloStorageLocale(idItinerario: number): void {
-    localStorage.setItem('idItinerarioGenerato', idItinerario.toString());
-  }
-
-
-
   rigeneraItinerario() {
     this.cancellaItinerario();
     this.generaItinerario();
@@ -145,7 +139,7 @@ export class GenerazioneAutomaticaComponent {
       data: {
         idItinerario: this.itinerarioAutoId,
         prenotazioniAlloggio: this.prenotazioniAlloggio,
-        prenotazioniAttivitaTuristica: this.prenotazioniAttivitaTuristica
+        prenotazioniAttivitaTuristica: this.prenotazioniAttivitaTuristica,
       },
       width: '500px',
     });

@@ -29,6 +29,8 @@ export class CalendariopopupComponent implements OnInit {
   prenotazioniAlloggio: any = [];
   prenotazioniAttivitaTuristica: any = [];
 
+  idItinerarioAuto: number;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
 
@@ -43,6 +45,9 @@ export class CalendariopopupComponent implements OnInit {
 
     console.log("Prenotazioni alloggio: ", this.prenotazioniAlloggio);
     console.log("Prenotazioni attività turistica: ", this.prenotazioniAlloggio);
+
+    this.idItinerarioAuto = this.data.idItinerario;
+    console.log("ID ITINERARIO DATA: ", this.idItinerarioAuto);
   }
 
   ngOnInit(): void {
@@ -58,63 +63,71 @@ export class CalendariopopupComponent implements OnInit {
   submitForm() {
     if (this.form.valid) {
       console.log("FORM COMPLETO", this.form.value);
-
+  
       this.dataInizio = this.form.value.dataInizio;
       this.dataFine = this.form.value.dataFine;
       this.numAdulti = this.form.value.numAdulti;
       this.numBambini = this.form.value.numBambini;
-
+  
       this.numPersone = parseInt(this.numBambini) + parseInt(this.numAdulti);
       console.log("NUMERO DI PERSONE", this.numPersone)
-
+  
       let dataInizio = new Date(this.dataInizio);
       const dataFine = new Date(this.dataFine);
-
+  
       let dataInizioFormattata = this.formatDate(this.dataInizio);
       let dataFineFormattata = this.formatDate(this.dataFine);
-
+  
       console.log("DATA INIZIO", dataInizioFormattata)
       console.log("DATA FINE", dataFineFormattata)
       console.log("NUM ADULTI", this.numAdulti)
       console.log("NUM BAMBINI", this.numBambini);
-
+  
+      let prenotazioniPromises: Promise<any>[] = [];
+  
       this.prenotazioniAlloggio.forEach((item: any, index: number) => {
-        console.log("PRENOTAZIONE ALLOGGIO N.", index, item);
-
-        this.prenotazioniAlloggioService.confermaPrenotazioneAlloggio(
-          item.id,
-          this.numAdulti,
-          this.numBambini,
-          dataInizio.toISOString(),
-          dataFine.toISOString(),
-          1).subscribe((risposta) => {
-            console.log("CONFERMA PRENOTAZIONE ALLOGGIO: ", risposta)
-            this.capienza = risposta.data.camera.capienza;
-            console.log("Capienza camera", this.capienza);
-          }, (error) => {
-            console.error(error)
-          })
+        prenotazioniPromises.push(
+          this.prenotazioniAlloggioService.confermaPrenotazioneAlloggio(
+            item.id,
+            this.numAdulti,
+            this.numBambini,
+            dataInizioFormattata,
+            dataFineFormattata,
+            1
+          ).toPromise()
+        );
       });
 
       this.prenotazioniAttivitaTuristica.forEach((item: any, index: number) => {
-        this.prenotazioniAttivitaService.confermaPrenotazioneAttivitaTuristica(
-          item.id,
-          this.numAdulti,
-          this.numBambini,
-          dataInizioFormattata,
-          dataFineFormattata
-        ).subscribe((risposta) => {
-          console.log("CONFERMA PRENOTAZIONE ATTIVITà TURISTICA: ", risposta);
+        prenotazioniPromises.push(
+          this.prenotazioniAttivitaService.confermaPrenotazioneAttivitaTuristica(
+            item.id,
+            this.numAdulti,
+            this.numBambini,
+            dataInizioFormattata,
+            dataFineFormattata
+          ).toPromise()
+        );
+      });
+  
+      Promise.all(prenotazioniPromises)
+        .then((risposte) => {
+          const tutteConfermate = risposte.every((risposta: any) => risposta.status === 'success');
+          if (tutteConfermate) {
+            this.openPopupConferma('Itinerario confermato!');
+            this.salvaIdItinerarioNelloStorageLocale(this.idItinerarioAuto);
+          } else {
+          }
         })
-
-        this.openPopupConferma('Itinerario confermato!')
-      })
+        .catch((error) => {
+          console.error(error);
+          this.openPopupConferma('Impossibile prenotare per ' + this.numPersone + " persone!");
+        });
     } else {
       console.error('Errore durante l\'invio del form');
-
     }
-
   }
+  
 
   openPopupConferma(message: string): void {
     const dialogRef = this.dialog.open(PopUpConfermaComponent, {
@@ -138,7 +151,6 @@ export class CalendariopopupComponent implements OnInit {
       idCamera: this.idCamera,
     };
 
-    // Verifica disponibilità per prenotazione alloggio
     this.prenotazioniAlloggioService.verificaDisponibilitaAlloggio(
       this.idCamera,
       formData.arrivo,
@@ -149,6 +161,11 @@ export class CalendariopopupComponent implements OnInit {
         this.isDisponibile = response.data;
       }
     );
+  }
+
+  salvaIdItinerarioNelloStorageLocale(idItinerario: number): void {
+    localStorage.setItem('idItinerarioGenerato', idItinerario.toString());
+    console.log("ITINEARIO SALVATO NELLO STORAGE: ", idItinerario);
   }
 
 }
