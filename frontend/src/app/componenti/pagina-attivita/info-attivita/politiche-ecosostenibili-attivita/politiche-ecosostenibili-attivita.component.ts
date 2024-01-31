@@ -33,7 +33,8 @@ export class PoliticheEcosostenibiliAttivitaComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       let idAttivita = parseInt(params.get('id')!);
       this.id = idAttivita;
-
+      this.itinerariService.changeId(this.id); 
+      console.log(this.id)// Invia l'ID al servizio
       this.visualizzaDettagliAttivita();
     })
   }
