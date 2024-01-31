@@ -74,6 +74,7 @@ td.mat-footer-cell {
     border: 2px solid gray;
     font-size: 18px;
     vertical-align: middle;
+    text-align: center;
 }
 
 /* Larghezza */
