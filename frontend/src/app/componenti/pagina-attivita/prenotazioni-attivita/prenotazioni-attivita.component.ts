@@ -29,6 +29,9 @@ export class PrenotazioniAttivitaComponent implements OnInit {
   creaClicked = false;
   azioneEseguita = false;
 
+  dataInizio: any
+  dataFine: any
+
   
   secondFormGroup = this._formBuilder.group({
     secondCtrl: '',});
@@ -98,12 +101,14 @@ verificaDisponibilita() {
     arrivo1: this.formatDate(this.firstFormGroup.get('arrivo1')?.value),
     partenza1: this.formatDate(this.firstFormGroup.get('partenza1')?.value), 
     idAttivita: this.idAttivita,
+
   };
+
+  console.log(this.firstFormGroup.get('arrivo1')?.value)
 
   this.prenotazioniAttivitaService.verificaDisponibilitaAttivita(
         this.idAttivita,
-    formData.arrivo1,
-    formData.partenza1).subscribe(
+    formData.arrivo1,).subscribe(
       (response) =>{
         this.disponibilita = this.firstFormGroup.get('numAdulti1')?.value + this.firstFormGroup.get('numBambini1')?.value < response.data? 'Disponibile' : 'Non disponibile';
         this.isDisponibile = this.firstFormGroup.get('numAdulti1')?.value + this.firstFormGroup.get('numBambini1')?.value < response.data? true : false;
@@ -113,22 +118,21 @@ verificaDisponibilita() {
  // INVIO DEI DATI
   onSubmit(){   
 
-    const formData = {
-      arrivo1: this.formatDate(this.firstFormGroup.get('arrivo1')?.value),
-      partenza1: this.formatDate(this.firstFormGroup.get('partenza1')?.value),
-      numAdulti1: this.firstFormGroup.get('numAdulti1')?.value,
-      numBambini1: this.firstFormGroup.get('numBambini1')?.value,
-      id: this.idAttivita,
-      idItinerario: this.idItinerario
-    }
+    this.dataInizio = this.firstFormGroup.value.arrivo1;
+    this.dataFine = this.firstFormGroup.value.partenza1;
+
+    let dataInizioFormattata = this.formatDate(this.dataInizio);
+    let dataFineFormattata = this.formatDate(this.dataFine);
+
+    console.log(this.firstFormGroup.get('arrivo1')?.value)
 
     this.prenotazioniAttivitaService.prenotazioneAttivita(
       this.idItinerario, 
       this.idAttivita,
       this.firstFormGroup.get('numAdulti1')?.value,
       this.firstFormGroup.get('numBambini1')?.value,
-     formData.arrivo1,
-    formData.partenza1
+      dataInizioFormattata,
+      dataFineFormattata
       ).subscribe(
       (response) =>{
         if (response?.status === 'success') {
@@ -139,6 +143,7 @@ verificaDisponibilita() {
         }
       },
       (error) => {
+        console.error(error)
         this.openPopupPrenotazione(error.error.data);
       }
     );

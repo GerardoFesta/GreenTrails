@@ -25,21 +25,20 @@ export class PrenotazioniAttivitaService {
     });
   }
 
-  verificaDisponibilitaAttivita(idAttivita: number,dataInizio: any, dataFine: any):Observable<any> {
+  verificaDisponibilitaAttivita(idAttivita: number,dataInizio: any):Observable<any> {
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
     });
     const params = new HttpParams()
     .set('idAttivita', idAttivita)
-    .set('dataInizio', dataInizio)
-    .set('dataFine', dataFine);
+    .set('dataInizio', dataInizio);
 
 
     return this.http.get(`${this.baseUrl}/api/prenotazioni-attivita-turistica/perAttivita/${idAttivita}/disponibilita`,  { params, headers });
 
   }
 
-  prenotazioneAttivita(idItinerario: number, idAttivita: number,numAdulti: number, numBambini: number, dataInizio: any, dataFine: any  ): Observable<any>{
+  prenotazioneAttivita(idItinerario: number, idAttivita: number,numAdulti: number, numBambini: number, dataInizio: string, dataFine: string ): Observable<any>{
   
     const headers = new HttpHeaders({
       Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')

@@ -1,4 +1,3 @@
-
 <h1 mat-dialog-title>Prenotazione Attività</h1>
 
 <mat-dialog-content>
@@ -25,10 +24,8 @@
             ></mat-datepicker-toggle>
 
             <mat-datepicker #picker1></mat-datepicker>
-                        </mat-grid-tile>
-                      
-                        
-  
+          </mat-grid-tile>
+
           <mat-grid-tile>
             <mat-label class="mat-label">Partenza:</mat-label>
           </mat-grid-tile>
@@ -37,7 +34,6 @@
               class="input"
               matInput
               [matDatepicker]="picker2"
-              required
               formControlName="partenza1"
             />
             <mat-datepicker-toggle
@@ -50,7 +46,7 @@
             <mat-icon>person</mat-icon>
             <label class="mat-label">Adulti:</label>
           </mat-grid-tile>
-  
+
           <mat-grid-tile>
             <input
               formControlName="numAdulti1"
@@ -67,7 +63,7 @@
             <mat-icon>child_care</mat-icon>
             <label class="mat-label">Bambini:</label>
           </mat-grid-tile>
-  
+
           <mat-grid-tile>
             <input
               formControlName="numBambini1"
@@ -79,10 +75,11 @@
               min="0"
             />
           </mat-grid-tile>
-
-          </mat-grid-list>
-        <div class="button-container"> 
-          <button mat-button matStepperNext (click)="verificaDisponibilita()">Continua</button>
+        </mat-grid-list>
+        <div class="button-container">
+          <button mat-button matStepperNext (click)="verificaDisponibilita()">
+            Continua
+          </button>
         </div>
       </form>
     </mat-step>
@@ -93,14 +90,17 @@
         <ng-template matStepLabel>Disponibilità</ng-template>
         <div *ngIf="isDisponibile">
           Disponibile nelle date selezionate
-          <button mat-button matStepperPrevious >Torna in dietro</button>
-          <button mat-button matStepperNext [disabled]="!isDisponibile" >Continua</button>
+          <button mat-button matStepperPrevious>Torna in dietro</button>
+          <button mat-button matStepperNext [disabled]="!isDisponibile">
+            Continua
+          </button>
         </div>
         <div *ngIf="!isDisponibile">
-           Non disponibile, cambia date
-           <button mat-button matStepperPrevious >Torna in dietro</button>
-           <button mat-button matStepperNext [disabled]="!isDisponibile" >Continua</button>
-         
+          Non disponibile, cambia date
+          <button mat-button matStepperPrevious>Torna in dietro</button>
+          <button mat-button matStepperNext [disabled]="!isDisponibile">
+            Continua
+          </button>
         </div>
       </form>
     </mat-step>
@@ -108,16 +108,37 @@
     <!--TERZA PARTE-->
     <mat-step>
       <div *ngIf="idItinerario; else noItinerarioFound">
-        <p>Vuoi aggiungere all'itinerario: {{ idItinerario }} oppure crearne uno nuovo?</p>
+        <p>
+          Vuoi aggiungere all'itinerario: {{ idItinerario }} oppure crearne uno
+          nuovo?
+        </p>
         <div>
-          <button mat-button (click)="aggiungiAllItinerario()" [disabled]="azioneEseguita || siClicked">Aggiungi all'itinerario</button>
-          <button mat-button (click)="creaItinerario()" [disabled]="azioneEseguita || creaClicked">Crea un nuovo itinerario</button>
+          <button
+            mat-button
+            (click)="aggiungiAllItinerario()"
+            [disabled]="azioneEseguita || siClicked"
+          >
+            Aggiungi all'itinerario
+          </button>
+          <button
+            mat-button
+            (click)="creaItinerario()"
+            [disabled]="azioneEseguita || creaClicked"
+          >
+            Crea un nuovo itinerario
+          </button>
         </div>
       </div>
-      
+
       <ng-template #noItinerarioFound>
         <p>Nessun Itinerario trovato</p>
-        <button mat-button (click)="creaItinerario()" [disabled]="azioneEseguita || creaClicked">Crea un nuovo itinerario</button>
+        <button
+          mat-button
+          (click)="creaItinerario()"
+          [disabled]="azioneEseguita || creaClicked"
+        >
+          Crea un nuovo itinerario
+        </button>
       </ng-template>
     </mat-step>
   </mat-stepper>
@@ -130,9 +151,7 @@
     [mat-dialog-close]="true"
     cdkFocusInitial
     (click)="onSubmit()"
-    [disabled]="
-      !azioneEseguita
-    "
+    [disabled]="!azioneEseguita"
   >
     Verifica Disponibilità
   </button>
