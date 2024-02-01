@@ -10,189 +10,199 @@ import { UtenteService } from 'src/app/servizi/utente.service';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
 })
-export class HomePageComponent {
-//   attivitaList: any[] = [];  // Modify the type based on your API response structure
+export class HomePageComponent implements OnInit {
 
-//   fileNames: string[] = [];
-//   imageUrls: string[] = [];
+  attivitaList: any[] = [];
+  fileNames: string[] = [];
+  imageUrls: string[][] = [];
 
-//   attivita?: any;
-//   id: number = 0;
-//   limite:number = 5;
+  limite: number = 5;
+  nomeAttivita: string = 'nome';
+  attivitaTuristicheList: any[] = [];
+  alloggiList: any[] = [];
+  attivitaPerPrezzoList: any[] = [];
+  filteredAttivitaPerPrezzoList: any[] = [];
 
-//   nomeAttivita: string = 'nome';
 
-//   constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, private uploadService: UploadService ) { }
-//   ngOnInit(): void {
-
-//   }
-//   private visualizzaListaAttivita(idAttivita: number): void {
-//     this.attivitaService.visualizzaAttivita(idAttivita).subscribe((result) => {
-//       this.attivitaList = result.data;  // Modify this based on your API response structure
-
-//       this.processMediaFiles();
-//   constructor(
-//     private attivitaService: AttivitaService,
-//     private route: ActivatedRoute,
-//     private uploadService: UploadService,
-//     private router: Router, 
-//     private userService: UtenteService,
-//     private cookieService: CookieService ){}
+  constructor(
+    private attivitaService: AttivitaService,
+    private route: ActivatedRoute,
+    private uploadService: UploadService,
+    private router: Router, 
+    private userService: UtenteService,
+    private cookieService: CookieService ){}
       
   
 
-//     ngOnInit(): void {
-//       Promise.all([
-//         this.loadDataForAttivitaPerPrezzo(5),
-//         this.loadDataForAlloggi(5),
-//         this.loadDataForAttivitaTuristiche(5)
-//       ]).then(() => {
-//         this.filterByPrezzo(); // Call the filter method after loading data
-//       });
+    ngOnInit(): void {
+      Promise.all([
+        this.loadDataForAttivitaPerPrezzo(5),
+        this.loadDataForAlloggi(5),
+        this.loadDataForAttivitaTuristiche(5)
+      ]).then(() => {
+        this.filterByPrezzo(); // Call the filter method after loading data
+      });
     
-//     }
+    }
 
 
-//     loadDataForAttivitaPerPrezzo(limite: number): Promise<void> {
-//       return new Promise<void>((resolve) => {
-//         this.visualizzaListaAttivitaPerPrezzo(limite).then(() => {
-//           this.processMediaFiles().then(() => {
-//             console.log('Data loaded for AttivitaPerPrezzo:', this.attivitaPerPrezzoList);
-//             resolve();
-//           });
-//         });
-//       });
-//     }
+    loadDataForAttivitaPerPrezzo(limite: number): Promise<void> {
+      return new Promise<void>((resolve) => {
+        this.visualizzaListaAttivitaPerPrezzo(limite).then(() => {
+          this.processMediaFiles().then(() => {
+            console.log('Data loaded for AttivitaPerPrezzo:', this.attivitaPerPrezzoList);
+            resolve();
+          });
+        });
+      });
+    }
   
-//   loadDataForAlloggi(limite: number): void {
-//     this.visualizzaListaAlloggi(limite).then(() => {
-//       this.processMediaFiles().then(() => {
-//         console.log('Data loaded for Alloggi:', this.alloggiList);
-//       });
-//     });
-//   }
+  loadDataForAlloggi(limite: number): void {
+    this.visualizzaListaAlloggi(limite).then(() => {
+      this.processMediaFiles().then(() => {
+        console.log('Data loaded for Alloggi:', this.alloggiList);
+      });
+    });
+  }
 
-//   private visualizzaListaAttivitaPerPrezzo(limite: number): void {
-//     this.attivitaService.visualizzaAttivitaPerPrezzo(limite).subscribe((result) => {
-//       this.attivitaList = result.data;  // Modify this based on your API response structure
+  loadDataForAttivitaTuristiche(limite: number): void {
+    this.visualizzaListaAttivitaTuristiche(limite).then(() => {
+      this.processMediaFiles().then(() => {
+        console.log('Data loaded for AttivitaTuristiche:', this.attivitaTuristicheList);
+      });
+    });
+  }
 
-//       this.processMediaFiles();
-//     });
-//   }
-
-//   private visualizzaListaAlloggi(limite:number): void {
-//     this.attivitaService.getAlloggi(limite).subscribe((result) => {
-//       this.attivitaList = result.data;  // Modify this based on your API response structure
-
-//       this.processMediaFiles();
-//     });
-//   }
-
-//   private visualizzaListaAttivitaTuristiche(limite:number): void {
-//     this.attivitaService.getAttivitaTuristiche(limite).subscribe((result) => {
-//       this.attivitaList = result.data;  // Modify this based on your API response structure
-
-//       this.processMediaFiles();
-//   private visualizzaListaAttivitaPerPrezzo(limite: number): Promise<void> {
-//     return new Promise<void>((resolve) => {
-//       this.attivitaService.visualizzaAttivitaPerPrezzo(limite).subscribe(
-//         (result) => {
-//           console.log("API Response:", result);
+  private visualizzaListaAttivitaPerPrezzo(limite: number): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.attivitaService.visualizzaAttivitaPerPrezzo(limite).subscribe(
+        (result) => {
+          console.log("API Response:", result);
   
-//           if (result.data) {
-//             const newAttivita = result.data;
-//             console.log("New Attivita from API:", newAttivita);
+          if (result.data) {
+            const newAttivita = result.data;
+            console.log("New Attivita from API:", newAttivita);
   
-//             const filteredAttivita = newAttivita.filter((item: { id: any; prezzo: number; }) => item.prezzo < 300);
+            // Filter out deleted items
+            const filteredAttivita = newAttivita.filter((item: { id: any; prezzo: number; eliminata: boolean }) => 
+              item.prezzo < 300 && !item.eliminata
+            );
   
-//             this.attivitaPerPrezzoList.push(...filteredAttivita);
+            this.attivitaPerPrezzoList.push(...filteredAttivita);
   
-//             this.processMediaFiles().then(() => {
-//               console.log("Data loaded for AttivitaPerPrezzo:", this.attivitaPerPrezzoList);
-//               resolve();
-//             });
-//           } else {
-//             console.error("Unexpected API response structure:", result);
-//             resolve();
-//           }
-//         },
-//         (error) => {
-//           console.error("Error fetching AttivitaPerPrezzo:", error);
-//           resolve();
-//         }
-//       );
-//     });
-//   }
-//   private visualizzaListaAlloggi(limite: number): Promise<void> {
-//     return new Promise<void>((resolve) => {
-//       this.attivitaService.getAlloggi(limite).subscribe((result) => {
-//         const newAlloggi = result.data;
-//         this.alloggiList.push(...newAlloggi);
-//         resolve();
-//       });
-//     });
-//   }
+            this.processMediaFiles().then(() => {
+              console.log("Data loaded for AttivitaPerPrezzo:", this.attivitaPerPrezzoList);
+              resolve();
+            });
+          } else {
+            console.error("Unexpected API response structure:", result);
+            resolve();
+          }
+        },
+        (error) => {
+          console.error("Error fetching AttivitaPerPrezzo:", error);
+          resolve();
+        }
+      );
+    });
+  }
+  
+  private visualizzaListaAlloggi(limite: number): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.attivitaService.getAlloggi(limite).subscribe((result) => {
+        const newAlloggi = result.data;
+  
+        // Filter out deleted items
+        const filteredAlloggi = newAlloggi.filter((item: { eliminata: boolean }) => !item.eliminata);
+  
+        this.alloggiList.push(...filteredAlloggi);
+        resolve();
+      });
+    });
+  }
+  
+  private visualizzaListaAttivitaTuristiche(limite: number): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.attivitaService.getAttivitaTuristiche(limite).subscribe((result) => {
+        const newAttivitaTuristiche = result.data;
+  
+        // Filter out deleted items
+        const filteredAttivitaTuristiche = newAttivitaTuristiche.filter((item: { eliminata: boolean }) => !item.eliminata);
+  
+        this.attivitaTuristicheList.push(...filteredAttivitaTuristiche);
+        resolve();
+      });
+    });
+  }
+  private processMediaFiles(): Promise<void[]> {
+    const allItems = [
+      ...this.attivitaList,
+      ...this.alloggiList,
+      ...this.attivitaTuristicheList,
+      ...this.attivitaPerPrezzoList
+    ];
 
-//   private processMediaFiles(): void {
-//     const promises = this.attivitaList.map((item: any, index: number) => {
-//       return new Promise<void>((resolve) => {
-//         this.uploadService.elencaFileCaricati(item.media).subscribe((listaFiles) => {
-//           if (listaFiles.data.length > 0) {
-//             const fileName = listaFiles.data[0];
-//             this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
-//               this.fileNames.push(fileName);
+    const promises = allItems.map((item: any) => {
+      return new Promise<void>((resolve) => {
+        this.uploadService.elencaFileCaricati(item.media).subscribe((listaFiles) => {
+          if (listaFiles.data.length > 0) {
+            const fileNames = listaFiles.data;
+            const imageUrlsForItem: string[] = [];  
 
-//               let reader = new FileReader();
-//               reader.onloadend = () => {
-//                 this.imageUrls[index] = reader.result as string;
-//                 resolve();
-//               };
-//               reader.readAsDataURL(file);
-//             });
-//           } else {
-//             resolve();
-//           }
-//         });
-//       });
-//     });
+            const filePromises = fileNames.map((fileName: string) => {
+              return new Promise<void>((fileResolve) => {
+                this.uploadService.serviFile(item.media, fileName).subscribe((file) => {
+                  let reader = new FileReader();
+                  reader.onloadend = () => {
+                    imageUrlsForItem.push(reader.result as string);
+                    fileResolve();
+                  };
+                  reader.readAsDataURL(file);
+                });
+              });
+            });
 
-//     Promise.all(promises);
-//   }
+            Promise.all(filePromises).then(() => {
+              this.imageUrls[item.id] = [...imageUrlsForItem];
+              resolve();
+            });
+          } else {
+            resolve();
+          }
+        });
+      });
+    });
 
+    return Promise.all(promises);
+  }
+  private filterByPrezzo(): void {
+    this.filteredAttivitaPerPrezzoList = this.attivitaPerPrezzoList.filter((item: { prezzo: number }) => {
+      return item.prezzo < 300;
+    });
+    console.log("Filtered List:", this.filteredAttivitaPerPrezzoList);
+  }
+  shuffleArray(array: any[]): any[] {
+    const shuffledArray = [...array];
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+  }
 
-
-// }
-//     return Promise.all(promises);
-//   }
-//   private filterByPrezzo(): void {
-//     this.filteredAttivitaPerPrezzoList = this.attivitaPerPrezzoList.filter((item: { prezzo: number }) => {
-//       return item.prezzo < 300;
-//     });
-//     console.log("Filtered List:", this.filteredAttivitaPerPrezzoList);
-//   }
-//   shuffleArray(array: any[]): any[] {
-//     const shuffledArray = [...array];
-//     for (let i = shuffledArray.length - 1; i > 0; i--) {
-//       const j = Math.floor(Math.random() * (i + 1));
-//       [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-//     }
-//     return shuffledArray;
-//   }
-
-//   navigateToAttivita(id: number): void {
-//     this.router.navigate(['/attivita', id]);
-//     this.cookieService.set('idAttivita', JSON.stringify(id));
-//   }
-//   logout() {
-//     this.userService.logout().subscribe(
-//       (response) => {
-//         console.log('Logout eseguito con successo:', response);
-//         // Aggiungi qui la logica aggiuntiva, se necessario
-//       },
-//       (error) => {
-//         console.error('Errore durante il logout:', error);
-//         // Gestisci l'errore se necessario
-//       }
-//     );
-//   }
+  navigateToAttivita(id: number): void {
+    this.router.navigate(['/attivita', id]);
+  }
+  logout() {
+    this.userService.logout().subscribe(
+      (response) => {
+        console.log('Logout eseguito con successo:', response);
+        // Aggiungi qui la logica aggiuntiva, se necessario
+      },
+      (error) => {
+        console.error('Errore durante il logout:', error);
+        // Gestisci l'errore se necessario
+      }
+    );
+  }
 }
