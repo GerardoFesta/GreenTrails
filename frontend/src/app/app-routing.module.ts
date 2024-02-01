@@ -1,3 +1,4 @@
+import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica/generazione-automatica.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
@@ -10,23 +11,27 @@ import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestio
 import { ChisiamoComponent } from './componenti/chisiamo/chisiamo.component';
 import { GestioneValoriComponent } from './componenti/gestione-attivita/gestione-valori/gestione-valori.component';
 import { LoginComponent } from './componenti/login/login.component';
+import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
 
 const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'registrazione', component: RegistrazioneComponent },  
   { path: 'chisiamo', component: ChisiamoComponent },
-
   { path: 'questionario', component: QuestionarioComponent },
   { path: 'login', component: LoginComponent },
-
-
   { path: 'attivita/:id', component: PaginaAttivitaComponent },
-  { path: '', component: HomePageComponent },
+  { path: 'tabellaP', component: HomePageComponent },
   { path: 'prenotazioni', component: GestionePrenotazioniAttiveComponent },
   { path: 'ricerca/posizione', component: RisultatiComponent },
   { path: 'mieAttivita', component: GestioneAttivitaComponent },
+  {path: 'tabellaP', component: GestionePrenotazioniAttiveComponent},
   { path: 'login', component: LoginComponent },
-  {path: 'modificaValori/:id', component: GestioneValoriComponent}
+  {path: 'modificaValori/:id', component: GestioneValoriComponent},
+  {path: 'area-riservata', component: AreaRiservataComponent},
+  {path: 'generazione-automatica', component: GenerazioneAutomaticaComponent},
+
+
+
 
 ];
 

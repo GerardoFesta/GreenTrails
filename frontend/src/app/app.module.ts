@@ -1,10 +1,9 @@
 import { RecensioneFormComponent } from './componenti/pagina-attivita/recensioni/recensione-form/recensione-form.component';
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PaginaAttivitaComponent } from './componenti/pagina-attivita/pagina-attivita.component';
@@ -73,6 +72,9 @@ import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/vi
 import { ToolbarComponent } from './componenti/toolbar/toolbar.component';
 import { ToolbarHomepageComponent } from './componenti/toolbar-homepage/toolbar-homepage.component';
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
+import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popup-errorPass.component';
+import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica/generazione-automatica.component';
 import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
 import { RicercaComponent } from './componenti/ricerca/ricerca.component';
 import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
@@ -101,6 +103,7 @@ import { ChisiamoComponent } from './componenti/chisiamo/chisiamo.component';
 import { IntroduzioneComponent } from './componenti/chisiamo/introduzione/introduzione.component';
 import { PoliticheEcoComponent } from './componenti/chisiamo/politiche-eco/politiche-eco.component';
 import { FineComponent } from './componenti/chisiamo/fine/fine.component';
+import { EffettuataComponent } from './componenti/popupsegnalazione/effettuata/effettuata.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +129,8 @@ import { FineComponent } from './componenti/chisiamo/fine/fine.component';
     ToolbarComponent,
     ToolbarHomepageComponent,
     GestionePrenotazioniAttiveComponent,
+    AreaRiservataComponent,
+    PopupErrorPassComponent,
     IconToolbarComponent,
     RicercaComponent,
     RisultatiComponent,
@@ -156,6 +161,8 @@ import { FineComponent } from './componenti/chisiamo/fine/fine.component';
     IntroduzioneComponent,
     PoliticheEcoComponent,
     FineComponent,
+    GenerazioneAutomaticaComponent,
+    EffettuataComponent,
   ],
   imports: [
     BrowserModule,
@@ -205,6 +212,7 @@ import { FineComponent } from './componenti/chisiamo/fine/fine.component';
     MatTooltipModule,
     HttpClientModule,
     MatNativeDateModule,
+    MatIconModule,
     Ng2SearchPipeModule,
   ],
   exports: [
@@ -251,6 +259,7 @@ import { FineComponent } from './componenti/chisiamo/fine/fine.component';
     HttpClientModule,
     MatNativeDateModule,
     Ng2SearchPipeModule,
+    MatIconModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

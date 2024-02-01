@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { PopupsegnalazioneComponent } from 'src/app/componenti/popupsegnalazione/popupsegnalazione.component';
 import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { UploadService } from 'src/app/servizi/upload.service';
 
@@ -17,10 +19,10 @@ export class CardAttivitaComponent implements OnInit {
   attivita: any;
   imageUrls: string[] = [];
   fileNames: string[] = [];
-
+  mostraPopup: boolean = false;
   isVisitatore!: boolean;
 
-  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, private uploadService: UploadService, private cookieService: CookieService) { }
+  constructor(private attivitaService: AttivitaService, private route: ActivatedRoute, private uploadService: UploadService, private cookieService: CookieService, private dialog:MatDialog) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -28,8 +30,8 @@ export class CardAttivitaComponent implements OnInit {
       this.idAttivita = id;
 
       this.visualizzaDettagliAttivita();
-      this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
-    })
+      this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE';
+    });
   }
 
   visualizzaDettagliAttivita(): void {
@@ -55,12 +57,28 @@ export class CardAttivitaComponent implements OnInit {
             this.imageUrls[0] = reader.result as string;
           };
           reader.readAsDataURL(risposta);
-        })
-      })
-
+        });
+      });
     }, (error) => {
       console.error(error);
-    })
+    });
   }
 
+  apriSegnalazione(): void {
+    const dialogRef = this.dialog.open(PopupsegnalazioneComponent, {
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog chiuso:', result);
+    });
+  }
+
+  chiudiFormPopup(): void {
+    this.mostraPopup = false;
+  }
+
+  handleFormSubmitted(): void {
+    console.log('Form inviato con successo!');
+  }
 }

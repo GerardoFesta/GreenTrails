@@ -1,0 +1,100 @@
+<div>
+    <h2 style="font-weight: bold; text-align: center;">Itinerario proposto in base alle tue preferenze</h2>
+</div>
+<div class="container">
+    <div class="stessa-riga">
+    <div class="stepper-container">
+    <mat-stepper orientation="vertical" #stepper class="stepper-container">
+        <mat-step *ngFor="let attivita of attivitaList" [label]="attivita">
+          <ng-template matStepLabel>NomeAttivita</ng-template>
+          <mat-card>
+            <mat-card-header>
+                <p><strong>{{attivita.nome}}</strong></p>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{attivita.descrizione}}</p>
+            </mat-card-content>
+            <mat-card-actions style="display: flex; justify-content: space-between;">
+                <button mat-button (click)="aggiungiAttivitaSelezionata(attivita)"
+                style="margin-top: 40px; margin-left: 20px; color: white; background-color: #32CD32;">Aggiungi</button>
+                <button mat-button (click)="rimuoviAttivitaSelezionata(attivita)"
+                style="margin-top: 40px; color: white; background-color: red;">Rimuovi</button>
+                <button mat-button matStepperPrevious
+                style="margin-top: 40px; margin-left: auto; color: white; background-color: #8bc34a;">Attività precedente</button>
+                <button mat-button matStepperNext
+                style="margin-top: 40px; color: white; background-color: #8bc34a;">Prossima attività</button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-step>
+      </mat-stepper>
+    </div>
+    <mat-card class="selected-activities-container">
+        <mat-card-title style="width: 100%;">
+            Attività scelte dall'itinerario proposto:
+        </mat-card-title>
+        <div class="lista-attivita-selezionate">
+            <mat-list role="list">
+                <mat-list-item *ngFor="let attivita of attivitaSelezionate">{{ attivita.nome }}</mat-list-item>
+            </mat-list>
+        </div>
+    </mat-card>
+</div>
+    <div class="button-container">
+        <button mat-raised-button color="primary"
+        style="margin-top: 20px; color: white; background-color: red;">Rifiuta itinerario proposto</button>
+        <button mat-raised-button color="primary"
+        style="margin-top: 40px; margin-left: 20px; color: white; background-color: #32CD32;">Conferma itinerario proposto</button>
+      </div>
+</div>
+      
+
+  <!--</mat-step>
+        <mat-step *ngIf="statoCards['attivita2']">
+          <ng-template matStepLabel>NomeAttivita</ng-template>
+          <mat-card>
+            <mat-card-header>
+                <p><strong>Nome attivita</strong></p>
+            </mat-card-header>
+            <mat-card-content>
+              <p>Descrizione</p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button (click)="eliminaAttivita()">Elimina</button>
+              <button mat-button matStepperNext>Conferma</button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-step>
+        <mat-step *ngIf="statoCards['attivita3']">
+            <ng-template matStepLabel>NomeAttivita</ng-template>
+            <mat-card>
+              <mat-card-header>
+                  <p><strong>Nome attivita</strong></p>
+              </mat-card-header>
+              <mat-card-content>
+                <p>Descrizione</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button matStepperPrevious>Elimina</button>
+                <button mat-button matStepperNext>Conferma</button>
+              </mat-card-actions>
+            </mat-card>
+          </mat-step>
+        <mat-step *ngIf="statoCards['attivita4']">
+          <ng-template matStepLabel>NomeAttivita</ng-template>
+        <mat-card-header>
+            <p><strong>Nome attivita</strong></p>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Descrizione</p>
+        </mat-card-content>
+            <mat-card-actions>
+              <button mat-button matStepperPrevious>Elimina</button>
+              <button mat-button (click)="stepper.reset()">Conferma</button>
+            </mat-card-actions>
+
+
+            <mat-checkbox >Mostra Card 1</mat-checkbox>
+        <mat-checkbox >Mostra Card 2</mat-checkbox>
+        <mat-checkbox >Mostra Card 3</mat-checkbox>
+        <mat-checkbox >Mostra Card 3</mat-checkbox>
+        -->
