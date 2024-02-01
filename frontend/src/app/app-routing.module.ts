@@ -23,9 +23,9 @@ const routes: Routes = [
   { path: 'ricerca/posizione', component: RisultatiComponent },
   { path: 'mieAttivita', component: GestioneAttivitaComponent },
   { path: 'modificaValori/:id', component: GestioneValoriComponent },
-  { path: 'tabellaP', component: GestionePrenotazioniAttiveComponent },
+  { path: 'tabellaPrenotazioni', component: GestionePrenotazioniAttiveComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'area-riservata', component: AreaRiservataComponent },
+  { path: 'areaRiservata', component: AreaRiservataComponent },
   { path: '', component: HomePageComponent },
 ];
 

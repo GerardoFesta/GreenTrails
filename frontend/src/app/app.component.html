@@ -1,10 +1,8 @@
-<app-toolbar *ngIf="router.url !== '/'
-&& router.url !== '/registrazione'
- && router.url !== '/login'
- && router.url !== '/ricerca/posizione'
- && router.url !== 'areaRiservata'
- && router.url !== '/mieAttivita' 
- && router.url !== '/itinerarioAutomatico'"></app-toolbar>
-<app-toolbar-homepage *ngIf="router.url !== '/'"></app-toolbar-homepage>
-<app-icon-toolbar *ngIf="router.url === '/mieAttivita'"></app-icon-toolbar>
+<app-toolbar-homepage *ngIf="router.url == '/'"></app-toolbar-homepage>
+<app-toolbar *ngIf="router.url.match('/attivita/')"></app-toolbar>
+<app-icon-toolbar *ngIf="router.url === '/mieAttivita'
+|| router.url === '/login'
+|| router.url === '/registrazione'
+|| router.url === '/itinerarioAutomatico'
+|| router.url === '/tabellaPrenotazioni'"></app-icon-toolbar>
 <router-outlet></router-outlet>

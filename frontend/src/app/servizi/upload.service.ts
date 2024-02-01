@@ -12,10 +12,7 @@ export class UploadService {
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   elencaFileCaricati(media: string): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
-    });
-    return this.http.get<any>(`${this.baseUrl}/${media}`, {headers});
+    return this.http.get<any>(`${this.baseUrl}/${media}`);
   }
 
   serviFile(media: string, filename: string): Observable<any> {

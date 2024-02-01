@@ -40,13 +40,8 @@ onEnterKeyPressed(): void {
       this.utenteService.login(email, password).subscribe(
         (response: any) => {
           console.log('Login avvenuto con successo:', response);
-          this.openPopup("Bentornato!"); 
+          this.router.navigate(['/']);
           if (response && response.status === 'success') {
-            if (response.data.ruolo) {
-              this.router.navigate(['/home']);
-            } else {
-              this.router.navigate(['/home']);
-            }
           } else {
             console.error('La risposta dal servizio non è valida:', response);
             this.openPopup('Email o Password errate');
@@ -62,10 +57,6 @@ onEnterKeyPressed(): void {
     } else {
       this.openPopup('Email o password errate');
     }
-  }
-
-  click() {
-    this.openPopup("Ti abbiamo inviato una mail. Controlla la posta elettronica e segui le istruzioni per cambiare la password");
   }
 
 
@@ -86,10 +77,6 @@ onEnterKeyPressed(): void {
       data: { message },
       disableClose: true,
     });
-    setTimeout(() => {
-      dialogRef.close(); // Close the dialog
-    }, 2000);
-
     dialogRef.afterClosed().subscribe(result => {
       console.log('Il popup è stato chiuso');
     });

@@ -34,7 +34,7 @@ export class PrenotazioniAttivitaService {
     .set('dataInizio', dataInizio)
 
 
-    return this.http.get(`${this.baseUrl}/api/prenotazioni-attivita-turistica/perAttivita/${idAttivita}/disponibilita`,  { params, headers });
+    return this.http.get(`${this.baseUrl}/perAttivita/${idAttivita}/disponibilita`,  { params, headers });
 
   }
 

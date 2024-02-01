@@ -116,15 +116,15 @@ this.camereService.getCamereDisponibili(this.idAttivita).subscribe((data) => {
     formData.arrivo,
     formData.partenza).subscribe(
       (response) =>{
-        this.disponibilita = this.firstFormGroup.get('numCamere')?.value < response.data? 'Disponibile' : 'Non disponibile';
-        this.isDisponibile = this.firstFormGroup.get('numCamere')?.value < response.data? true : false;
+        this.disponibilita = this.firstFormGroup.get('numCamere')?.value <= response.data? 'Disponibile' : 'Non disponibile';
+        this.isDisponibile = this.firstFormGroup.get('numCamere')?.value <= response.data? true : false;
         if (cameraSelezionata) {
           this.capienzaSelezione = cameraSelezionata.capienza;
           console.log(this.capienzaSelezione);
           this.capienza = this.firstFormGroup.get('numAdulti')?.value +
-            this.firstFormGroup.get('numBambini')?.value  < this.capienzaSelezione * this.firstFormGroup.get('numCamere')?.value? 'Capienza' : 'Non capienza';
+            this.firstFormGroup.get('numBambini')?.value  <= this.capienzaSelezione * this.firstFormGroup.get('numCamere')?.value? 'Capienza' : 'Non capienza';
           this.isCapienza = this.firstFormGroup.get('numAdulti')?.value + 
-            this.firstFormGroup.get('numBambini')?.value < this.capienzaSelezione * this.firstFormGroup.get('numCamere')?.value? true : false;
+            this.firstFormGroup.get('numBambini')?.value <= this.capienzaSelezione * this.firstFormGroup.get('numCamere')?.value? true : false;
          
         }
       })

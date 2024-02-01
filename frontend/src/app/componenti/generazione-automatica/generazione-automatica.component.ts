@@ -1,7 +1,6 @@
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { UploadService } from 'src/app/servizi/upload.service';
 import { CalendariopopupComponent } from './calendariopopup/calendariopopup.component';
 import { ItinerariService } from 'src/app/servizi/itinerari.service';

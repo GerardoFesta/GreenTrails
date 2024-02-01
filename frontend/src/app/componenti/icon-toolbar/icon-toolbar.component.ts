@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-icon-toolbar',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IconToolbarComponent implements OnInit {
 //a
-  constructor() { }
+  constructor(public router: Router, private cookieService: CookieService) { }
+
+  isLoggedIn = false;
 
   ngOnInit(): void {
+    this.isLoggedIn = this.cookieService.get('user') !== ''
   }
 
 }

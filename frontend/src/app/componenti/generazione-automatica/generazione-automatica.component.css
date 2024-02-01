@@ -1,12 +1,8 @@
 .container {
     position: center;
-    margin-top:20%;
-    margin-left: 50%;
-    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 70%;
     height: fit-content;
     justify-content: center;
   }
@@ -42,3 +38,12 @@
   .card-title, .card-description{
     padding: 20px;
   }
+
+  ::ng-deep .mat-step-header .mat-step-icon-selected {
+    color: white
+  }
+
+  ::ng-deep .mat-step-header .mat-step-icon {
+    color: white
+  }
+  
