@@ -18,19 +18,14 @@ const routes: Routes = [
   { path: 'registrazione', component: RegistrazioneComponent },  
   { path: 'chisiamo', component: ChisiamoComponent },
   { path: 'questionario', component: QuestionarioComponent },
-  { path: 'login', component: LoginComponent },
   { path: 'attivita/:id', component: PaginaAttivitaComponent },
-  { path: 'tabellaP', component: HomePageComponent },
-  { path: 'prenotazioni', component: GestionePrenotazioniAttiveComponent },
+  { path: 'tabellaP', component: GestionePrenotazioniAttiveComponent },
   { path: 'ricerca/posizione', component: RisultatiComponent },
   { path: 'mieAttivita', component: GestioneAttivitaComponent },
-  {path: 'tabellaP', component: GestionePrenotazioniAttiveComponent},
   { path: 'login', component: LoginComponent },
   {path: 'modificaValori/:id', component: GestioneValoriComponent},
   {path: 'area-riservata', component: AreaRiservataComponent},
   {path: 'generazione-automatica', component: GenerazioneAutomaticaComponent},
-  { path: 'tabellaP', component: GestionePrenotazioniAttiveComponent}
-
 ];
 
 @NgModule({
