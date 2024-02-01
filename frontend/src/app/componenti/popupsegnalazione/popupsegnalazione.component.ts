@@ -1,4 +1,4 @@
-import { EffettuataComponent } from './effettuata/effettuata.component';
+import { EffettuataComponent } from '../popupsegnalazione/effettuata/effettuata.component';
 import { CookieService } from 'ngx-cookie-service';
 import { SegnalazioneService } from './../../servizi/segnalazione.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -17,7 +17,7 @@ export class PopupsegnalazioneComponent implements OnInit {
   @Output() formSottomesso = new EventEmitter<void>();
   @Output() chiudiPopup = new EventEmitter<void>();
 
-  idAttivita: number;
+  idAttivita!: number;
   immagine: File | null = null;
   descrizione: string = '';
 
@@ -43,7 +43,7 @@ export class PopupsegnalazioneComponent implements OnInit {
     }
 
 
-    @ViewChild('fileInput') fileInput: ElementRef<HTMLInputElement>;
+    @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
     fileNames: string[] = [];
     files: File[] = [];
     filesWithPreview: { name: string; url: SafeUrl }[] = [];

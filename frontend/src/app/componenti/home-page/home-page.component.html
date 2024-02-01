@@ -1,16 +1,14 @@
-<div class="container">
+<!-- <div class="container">
   <div class="header">
     <div class="dettagli">
       <a href="/home" class="chisiamo" (click)="logout()">logout test?</a>
     </div>
   </div>
 
-  <!-- Suggeriti per te -->
   <label for="suggeritiPerTe" style="font-size: 20px;">Suggeriti per te</label>
   <div class="suggeriti" *ngIf="attivitaTuristicheList && attivitaTuristicheList.length > 0 || alloggiList && alloggiList.length > 0">
     <div *ngFor="let attivitaItem of shuffleArray((attivitaTuristicheList || []).concat(alloggiList || [])); let i = index">
     
-      <!-- Use mat-card for name and image -->
       <mat-card (click)="navigateToAttivita(attivitaItem.id)">
         <mat-card-header>
           <div mat-card-avatar></div>
@@ -23,17 +21,14 @@
         </mat-card-content>
       </mat-card>
     
-      <!-- Add other details based on your data structure -->
     </div>
     <div class="attivita">
         <label for="ATuristica" style="font-size:20px;" > Attività turistica</label>
     </div>
   
-    <!-- Alloggi --> 
     <label for="Alloggi" style="font-size: 20px;">Alloggi</label>
     <div class="alloggi" *ngIf="alloggiList && alloggiList.length > 0">
       <div *ngFor="let alloggio of alloggiList; let i = index">
-        <!-- Use mat-card for name and image -->
         <mat-card (click)="navigateToAttivita(alloggio.id)">
           <mat-card-header>
             <div mat-card-avatar></div>
@@ -51,7 +46,6 @@
     <label for="Allogi" style="font-size: 20px;">I più economici</label>
     <div class="per-prezzo" *ngIf="filteredAttivitaPerPrezzoList && filteredAttivitaPerPrezzoList.length > 0">
       <div *ngFor="let attivitaItem of filteredAttivitaPerPrezzoList; let i = index">
-        <!-- Use mat-card for name and image -->
         <mat-card (click)="navigateToAttivita(attivitaItem.id)">
           <mat-card-header>
             <div mat-card-avatar></div>
@@ -65,4 +59,4 @@
         </mat-card>
       </div>
     </div>
-</div>
+</div>-->

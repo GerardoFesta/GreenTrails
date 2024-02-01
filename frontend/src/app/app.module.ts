@@ -104,6 +104,7 @@ import { IntroduzioneComponent } from './componenti/chisiamo/introduzione/introd
 import { PoliticheEcoComponent } from './componenti/chisiamo/politiche-eco/politiche-eco.component';
 import { FineComponent } from './componenti/chisiamo/fine/fine.component';
 import { EffettuataComponent } from './componenti/popupsegnalazione/effettuata/effettuata.component';
+import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
 
 @NgModule({
   declarations: [
@@ -156,13 +157,13 @@ import { EffettuataComponent } from './componenti/popupsegnalazione/effettuata/e
     PopupModificaCategorieComponent,
     PopupEliminazioneCategorieComponent,
     LoginComponent,
-    
     ChisiamoComponent,
     IntroduzioneComponent,
     PoliticheEcoComponent,
     FineComponent,
     GenerazioneAutomaticaComponent,
     EffettuataComponent,
+    PopupsegnalazioneComponent,
   ],
   imports: [
     BrowserModule,
