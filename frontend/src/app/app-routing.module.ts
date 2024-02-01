@@ -23,7 +23,6 @@ const routes: Routes = [
   { path: 'ricerca/posizione', component: RisultatiComponent },
   { path: 'mieAttivita', component: GestioneAttivitaComponent },
   { path: 'modificaValori/:id', component: GestioneValoriComponent },
-  { path: 'generazione-automatica', component: GenerazioneAutomaticaComponent },
   { path: 'tabellaP', component: GestionePrenotazioniAttiveComponent },
   { path: 'login', component: LoginComponent },
   { path: 'area-riservata', component: AreaRiservataComponent },

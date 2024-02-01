@@ -32,7 +32,6 @@ export class PrenotazioniAttivitaService {
     const params = new HttpParams()
     .set('idAttivita', idAttivita)
     .set('dataInizio', dataInizio)
-    .set('dataFine', dataFine);
 
 
     return this.http.get(`${this.baseUrl}/api/prenotazioni-attivita-turistica/perAttivita/${idAttivita}/disponibilita`,  { params, headers });

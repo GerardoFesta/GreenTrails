@@ -74,7 +74,6 @@ import { ToolbarHomepageComponent } from './componenti/toolbar-homepage/toolbar-
 import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
 import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
 import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popup-errorPass.component';
-import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica/generazione-automatica.component';
 import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
 import { RicercaComponent } from './componenti/ricerca/ricerca.component';
 import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
@@ -108,7 +107,7 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
 import { PopupDettagliComponent } from './componenti/gestione-prenotazioni-attive/popupDettagli/popupDettagli.component';
 import { PopupDettagliAttivitaComponent } from './componenti/gestione-prenotazioni-attive/popupDettagliAttivita/popupDettagliAttivita.component';
 import { CalendariopopupComponent } from './componenti/generazione-automatica/calendariopopup/calendariopopup.component';
-import { PopupConfermaItinerarioComponent } from './componenti/generazione-automatica/popup-conferma-itinerario/popup-conferma-itinerario.component';
+import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
 
 @NgModule({
   declarations: [
@@ -158,7 +157,6 @@ import { PopupConfermaItinerarioComponent } from './componenti/generazione-autom
     PopUpRegistrazioneComponent,
     GestionePrenotazioniAttiveComponent,
     AreaRiservataComponent,
-    GenerazioneAutomaticaComponent,
     CalendariopopupComponent,
     RicercaComponent,
     QuestionarioComponent,
@@ -166,7 +164,6 @@ import { PopupConfermaItinerarioComponent } from './componenti/generazione-autom
     GestionePrenotazioniAttiveComponent,
     GalleryDialogComponent,
     VideoDialogComponent,
-    PopupConfermaItinerarioComponent,
     PopUpCategorieComponent,
     PopupModificaCategorieComponent,
     PopupEliminazioneCategorieComponent,
@@ -177,12 +174,12 @@ import { PopupConfermaItinerarioComponent } from './componenti/generazione-autom
     IntroduzioneComponent,
     PoliticheEcoComponent,
     FineComponent,
-    GenerazioneAutomaticaComponent,
     EffettuataComponent,
     PopupsegnalazioneComponent,
     PopupDeleteConfermaComponent,
     PopupDettagliComponent,
-    PopupDettagliAttivitaComponent
+    PopupDettagliAttivitaComponent,
+    GenerazioneAutomaticaComponent
   ],
   imports: [
     BrowserModule,
