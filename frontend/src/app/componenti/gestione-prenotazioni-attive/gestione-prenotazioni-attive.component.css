@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-content: center;
+    font-size: 18px;
 }
 
 .titolo {
@@ -52,6 +53,7 @@
     height: fit-content;
     align-content: center;
     justify-content: center;
+    border: none;
 }
 
 #site-search {
@@ -60,16 +62,19 @@
 }
 
 .table {
-
-    height: fit-content;
+    border-collapse: separate;
+    border-spacing: 2px 0; 
+    font-size: medium;
+    width: 100%;
 }
 
 .mat th.mat-header-cell,
 td.mat-cell,
 td.mat-footer-cell {
-    padding: 10px;
-    border-right: 1px;
-    border-right-style: solid;
+    border: 2px solid gray;
+    font-size: 18px;
+    vertical-align: middle;
+    text-align: center;
 }
 
 /* Larghezza */

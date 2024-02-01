@@ -29,9 +29,7 @@ const routes: Routes = [
   {path: 'modificaValori/:id', component: GestioneValoriComponent},
   {path: 'area-riservata', component: AreaRiservataComponent},
   {path: 'generazione-automatica', component: GenerazioneAutomaticaComponent},
-
-
-
+  { path: 'tabellaP', component: GestionePrenotazioniAttiveComponent}
 
 ];
 

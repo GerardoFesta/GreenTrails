@@ -18,7 +18,9 @@ hide = true;
 email= new FormControl('')
 password= new FormControl('')
 
-
+onEnterKeyPressed(): void {
+  this.onClick();
+}
   constructor(private utenteService: UtenteService,
      private fb: FormBuilder, 
      private dialog: MatDialog, private router: Router, private cookieService: CookieService) {
@@ -38,7 +40,7 @@ password= new FormControl('')
       this.utenteService.login(email, password).subscribe(
         (response: any) => {
           console.log('Login avvenuto con successo:', response);
-          this.openPopup("Bentornato!");
+          this.openPopup("Bentornato!"); 
           if (response && response.status === 'success') {
             if (response.data.ruolo) {
               this.router.navigate(['/home']);

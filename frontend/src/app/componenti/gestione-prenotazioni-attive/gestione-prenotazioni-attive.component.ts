@@ -1,55 +1,13 @@
-
-import { MatDateFormats } from '@angular/material/core';
-import { DateSelectionModelChange } from '@angular/material/datepicker';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PrenotazioniAttivitaTuristicheService } from './../../servizi/prenotazioni-attivita-turistiche.service';
+import { PrenotazioniAlloggiService } from './../../servizi/prenotazioni-alloggi.service';
+import { forkJoin } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject } from 'rxjs';
-import { $localize } from '@angular/localize/init';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild} from '@angular/core';
+import { PopupDeleteConfermaComponent } from './popupDeleteConferma/popupDeleteConferma.component';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupDettagliComponent } from './popupDettagli/popupDettagli.component';
+import { PopupDettagliAttivitaComponent } from './popupDettagliAttivita/popupDettagliAttivita.component';
 
-
-export interface Prenotazione {
-  stato: String;
-  nome: String;
-  check_in: Date;
-  check_out: Date;
-  bambini: number;
-  adulti: number;
-  prezzo: number;
-}
-
-const Prenotazione: Prenotazione[] = [
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 1', check_in: new Date('2024-01-01'), check_out: new Date('2024-01-10'), bambini: 2, adulti: 1, prezzo: 120.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 2', check_in: new Date('2024-02-01'), check_out: new Date('2024-02-10'), bambini: 1, adulti: 2, prezzo: 150.0 },
-  { stato: 'attivo', nome: 'Prenotazione Attiva 3', check_in: new Date('2024-03-01'), check_out: new Date('2024-03-05'), bambini: 3, adulti: 2, prezzo: 180.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 1', check_in: new Date('2024-04-01'), check_out: new Date('2024-04-03'), bambini: 1, adulti: 1, prezzo: 80.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 2', check_in: new Date('2024-05-01'), check_out: new Date('2024-05-07'), bambini: 2, adulti: 3, prezzo: 120.0 },
-  { stato: 'completo', nome: 'Prenotazione Completa 3', check_in: new Date('2024-06-01'), check_out: new Date('2024-06-10'), bambini: 1, adulti: 2, prezzo: 100.0 },
-];
 
 @Component({
   selector: 'app-gestione-prenotazioni-attive',
@@ -58,80 +16,258 @@ const Prenotazione: Prenotazione[] = [
 })
 
 export class GestionePrenotazioniAttiveComponent {
-
-  changes = new Subject<void>();
-
-  // For internationalization, the `$localize` function from
-  // the `@angular/localize` package can be used.
-  firstPageLabel = $localize`First page`;
-  itemsPerPageLabel = $localize`Items per page:`;
-  lastPageLabel = $localize`Last page`;
-
-  // You can set labels to an arbitrary string too, or dynamically compute
-  // it through other third-party internationalization libraries.
-  nextPageLabel = 'Next page';
-  previousPageLabel = 'Previous page';
-
-  getRangeLabel(page: number, pageSize: number, length: number): string {
-    if (length === 0) {
-      return $localize`Page 1 of 1`;
-    }
-    const amountPages = Math.ceil(length / pageSize);
-    return $localize`Page ${page + 1} of ${amountPages}`;
-  }
-
+  
   
 
-  displayedColumns: string[] = ['stato', 'nome', 'check-in', 'check-out', 'bambini', 'adulti', 'prezzo', "actions"];
-  Prenotazione: any;
-  dataSource = new MatTableDataSource<Prenotazione>(Prenotazione.slice(0, 10));
+  idalloggio: any;
+  idAttivita: any;
+  mostraSoloInCorso: boolean = false; 
 
-  showActiveOnly: boolean = false;
+  alloggi: any[]=[]
+  attivita: any[]=[]
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+updatePaginatedData() {
+throw new Error('Method not implemented.');
+}
 
-
-
-  onDelete(prenotazione: Prenotazione) {
-    console.log(`Deleting: ${prenotazione.nome}`);
-  }
-  ngOnInit() {
-    this.updatePaginatedData();
-  }
+  prenotazioniAttivita: any[]=[];
+  prenotazioniAlloggio: any[]=[];
+  displayedColumns: string[] = ['stato', 'id', 'check-in', 'check-out', 'bambini', 'adulti', 'prezzo', 'actions'];
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  pageSize:number = 5;
   
 
+  constructor(
+    private prenotazioniAlloggiService: PrenotazioniAlloggiService,
+    private prenotazioniAttivitaTurService: PrenotazioniAttivitaTuristicheService,
+    private dialog: MatDialog
+  ) {}
 
-  get slicedData() {
-    const startIndex = this.pageIndex * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    return this.dataSource.data.slice(startIndex, endIndex);
+  ngOnInit(): void {
+    this.populateTable();
   }
 
-  length = Prenotazione.length;
-  pageSize = 10;
-  pageIndex = 0;
+  populateTable() {
+    forkJoin({
+      prenotazioniAlloggio: this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore(),
+      prenotazioniAttivita: this.prenotazioniAttivitaTurService.getPrenotazioniAttivitaTuristicaVisitatore(),
+    }).subscribe(
+      (responses: any) => {
+        const prenotazioniAlloggio = responses.prenotazioniAlloggio.data;
+        const prenotazioniAttivita = responses.prenotazioniAttivita.data;
+        console.log("alloggio",prenotazioniAlloggio)
+        console.log("attivita",prenotazioniAttivita)
+  
+        const mergedData = [...prenotazioniAlloggio, ...prenotazioniAttivita];
+  
+        const mappedData = mergedData.map(item => ({
+          id: item.id,
+          stato: item.stato,  
+          checkIn: item.dataInizio,
+          checkOut: item.dataFine,
+          bambini: item.numBambini,
+          adulti: item.numAdulti,
+          prezzo: item.prezzo,
+          tipo: item.attivitaTuristica ? 'attivita' : 'alloggio',
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  ngAfterViewInit() {
-    this.paginator.page.subscribe((event: PageEvent) => {
-      this.pageIndex = event.pageIndex;
-      this.pageSize = event.pageSize;
-      this.updatePaginatedData();
+        }));
+  
+        this.dataSource.data = mappedData;
+      },
+      error => {
+        console.error('Errore nel recupero delle prenotazioni:', error);
+      }
+    );
+  }
+  VisualizzaAttivita(selectedPrenotazione: any): void {
+    this.prenotazioniAttivitaTurService.getPrenotazioniAttivitaTuristicaVisitatore().subscribe(
+      (response: any) => {
+        const prenotazioniAttivita = response.data;
+        console.log("Prenotazioni Attivita:");
+  
+        const selectedAttivita = prenotazioniAttivita.find(
+          (prenotazione: any) => prenotazione.id === selectedPrenotazione.id
+        );
+  
+        if (selectedAttivita) {
+          console.log("Selected Attività:");
+          console.log("- Nome:", selectedAttivita.attivitaTuristica.nome);
+          console.log("- Indirizzo:", selectedAttivita.attivitaTuristica.indirizzo);
+  
+          this.openPopup1(selectedAttivita);
+        } else {
+          console.error('Selected attività not found in the response.');
+        }
+      },
+      error => {
+        console.error('Errore nel recupero delle prenotazioni attività:', error);
+      }
+    );
+  }
+  
+  openPopup1(prenotazione: any): void {
+    const dialogRef = this.dialog.open(PopupDettagliAttivitaComponent, {
+      data: { prenotazione },
+      width: '400px',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
-  updatePaginatedData() {
-    const startIndex: number = this.pageIndex * this.pageSize;
-    const endIndex: number = startIndex + this.pageSize;
-    this.dataSource.data = Prenotazione.slice(startIndex, endIndex);
+  
+
+  visualizzaAlloggio(selectedPrenotazione: any): void {
+    this.prenotazioniAlloggiService.getPrenotazioniAlloggioVisitatore().subscribe(
+      (response: any) => {
+        const prenotazioniAlloggio = response.data;
+        console.log("Prenotazioni Alloggio:");
+  
+        const selectedAlloggio = prenotazioniAlloggio.find(
+          (prenotazione: any) => prenotazione.id === selectedPrenotazione.id
+        );
+  
+        if (selectedAlloggio) {
+          console.log("Selected Alloggio:");
+          console.log("- Nome Alloggio:", selectedAlloggio.camera.alloggio.nome);
+          console.log("- Indirizzo Alloggio:", selectedAlloggio.camera.alloggio.indirizzo);
+  
+          this.openPopup(selectedAlloggio);
+        } else {
+          console.error('Selected alloggio not found in the response.');
+        }
+      },
+      error => {
+        console.error('Errore nel recupero delle prenotazioni alloggio:', error);
+      }
+    );
   }
-  get filteredData() {
-    const filteredData = this.showActiveOnly
-      ? this.dataSource.data.filter(prenotazione => prenotazione.stato.toLowerCase() === 'attivo')
-      : this.dataSource.data;
-    return filteredData;
+  
+  openPopup(prenotazione: any): void {
+    const dialogRef = this.dialog.open(PopupDettagliComponent, {
+      data: { prenotazione },
+      width: '400px',
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
+
+ 
+  
+  onDeletePrenotazioneAlloggio(idPrenotazione: number, statoAlloggio: string) {
+    if (statoAlloggio === 'IN_CORSO') {
+      const dialogRef = this.dialog.open(PopupDeleteConfermaComponent, {
+        data: {
+          message: 'Conferma eliminazione',
+          action: 'Sei sicuro di voler eliminare questa prenotazione?',
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe((result: boolean) => {
+        if (result) {
+          this.prenotazioniAlloggiService.deletePrenotazioneAlloggio(idPrenotazione).subscribe(
+            () => {
+              console.log(`Prenotazione Alloggio con ID ${idPrenotazione} eliminata con successo`);
+              this.populateTable();
+            },
+            error => {
+              console.error('Errore nell\'eliminazione della prenotazione alloggio:', error);
+            }
+          );
+        } else {
+          console.log(`L'utente ha annullato l'eliminazione della prenotazione con ID ${idPrenotazione}.`);
+        }
+      });
+    } else {
+      console.log(`La prenotazione con ID ${idPrenotazione} non è nello stato "IN_CORSO" e non può essere eliminata.`);
+    }
+  }
+  
+  onDeletePrenotazioneAttivita(idPrenotazione: number, statoAttivita: string) {
+  if (statoAttivita === 'IN_CORSO') {
+    const dialogRef = this.dialog.open(PopupDeleteConfermaComponent, {
+      data: {
+        message: 'Conferma eliminazione', 
+        action: 'Sei sicuro di voler eliminare questa prenotazione di attività?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.prenotazioniAttivitaTurService.deletePrenotazioneAttivitaTuristica(idPrenotazione).subscribe(
+          () => {
+            console.log(`Prenotazione Attività con ID ${idPrenotazione} eliminata con successo`);
+            this.populateTable(); 
+          },
+          error => {
+            console.error('Errore nell\'eliminazione della prenotazione attività:', error);
+          }
+        );
+      } else {
+        console.log(`L'utente ha annullato l'eliminazione della prenotazione con ID ${idPrenotazione}.`);
+      }
+    });
+  } else {
+    console.log(`La prenotazione con ID ${idPrenotazione} non è nello stato "IN_CORSO" e non può essere eliminata.`);
+  }
+}
+toggleMostraSoloInCorso() {
+  this.mostraSoloInCorso = !this.mostraSoloInCorso;
+  console.log('Stato mostraSoloInCorso:', this.mostraSoloInCorso);
+  this.updateTable();
+}
+
+updateTable() {
+  if (this.mostraSoloInCorso) {
+    const prenotazioniInCorso = this.dataSource.data.filter(prenotazione => prenotazione.stato === 'IN_CORSO');
+    this.dataSource.data = prenotazioniInCorso;
+  } else {
+    this.populateTable();
+  }
+}
+
+
+  @ViewChild('tableContainer')
+  tableContainer!: ElementRef;
+
+@HostListener('window:scroll', ['$event'])
+onScroll(event: Event) {
+  const tableContainer = this.tableContainer.nativeElement;
+  const scrollPosition = window.pageYOffset + window.innerHeight;
+  const tableBottom = tableContainer.offsetTop + tableContainer.offsetHeight;
+
+}
+
+formatStato(stato: string): string {
+  return stato.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+}
+formatDateTime(dateTimeString: string): string {
+  const [time, milliseconds] = dateTimeString.split('.');
+  
+  const today = new Date();
+  
+  const [hours, minutes, seconds] = time.split(':');
+  today.setHours(+hours, +minutes, +seconds);
+  
+  const formattedDate = this.formatDate(today);
+  const formattedTime = this.formatTime(today);
+
+  return `${formattedDate} ${formattedTime}`;
+}
+
+formatDate(date: Date): string {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+formatTime(date: Date): string {
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+  return `${hours}:${minutes}:${seconds}`;
+}
 }

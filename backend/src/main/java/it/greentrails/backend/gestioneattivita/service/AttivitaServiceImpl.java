@@ -1,3 +1,4 @@
+
 package it.greentrails.backend.gestioneattivita.service;
 
 import it.greentrails.backend.entities.Attivita;

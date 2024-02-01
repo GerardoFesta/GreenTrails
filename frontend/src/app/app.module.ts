@@ -104,7 +104,10 @@ import { IntroduzioneComponent } from './componenti/chisiamo/introduzione/introd
 import { PoliticheEcoComponent } from './componenti/chisiamo/politiche-eco/politiche-eco.component';
 import { FineComponent } from './componenti/chisiamo/fine/fine.component';
 import { EffettuataComponent } from './componenti/popupsegnalazione/effettuata/effettuata.component';
-import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';
+import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';import { PopupDeleteConfermaComponent } from './componenti/gestione-prenotazioni-attive/popupDeleteConferma/popupDeleteConferma.component';
+import { PopupDettagliComponent } from './componenti/gestione-prenotazioni-attive/popupDettagli/popupDettagli.component';
+import { PopupDettagliAttivitaComponent } from './componenti/gestione-prenotazioni-attive/popupDettagliAttivita/popupDettagliAttivita.component';
+
 
 @NgModule({
   declarations: [
@@ -164,6 +167,9 @@ import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popup
     GenerazioneAutomaticaComponent,
     EffettuataComponent,
     PopupsegnalazioneComponent,
+    PopupDeleteConfermaComponent,
+    PopupDettagliComponent,
+    PopupDettagliAttivitaComponent
   ],
   imports: [
     BrowserModule,
