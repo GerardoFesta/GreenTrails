@@ -108,6 +108,8 @@ import { PopupDettagliComponent } from './componenti/gestione-prenotazioni-attiv
 import { PopupDettagliAttivitaComponent } from './componenti/gestione-prenotazioni-attive/popupDettagliAttivita/popupDettagliAttivita.component';
 import { CalendariopopupComponent } from './componenti/generazione-automatica/calendariopopup/calendariopopup.component';
 import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
+import { ModificaValoriAdminComponent } from './componenti/modifica-valori-admin/modifica-valori-admin.component';
+import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/lista-segnalazioni.component';
 
 @NgModule({
   declarations: [
@@ -176,6 +178,9 @@ import { GenerazioneAutomaticaComponent } from './componenti/generazione-automat
     FineComponent,
     EffettuataComponent,
     PopupsegnalazioneComponent,
+    PopupComponent,
+    ModificaValoriAdminComponent,
+    ListaSegnalazioniComponent,
     PopupDeleteConfermaComponent,
     PopupDettagliComponent,
     PopupDettagliAttivitaComponent,

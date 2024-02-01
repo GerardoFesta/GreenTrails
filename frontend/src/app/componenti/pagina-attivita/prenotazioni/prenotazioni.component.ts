@@ -173,7 +173,7 @@ this.camereService.getCamereDisponibili(this.idAttivita).subscribe((data) => {
          if(response?.status ==='success'){
            this.openPopupPrenotazione('Prenotazione inviata'); 
          } else{
-           this.openPopupPrenotazione('Prenotazione effettuata')
+           this.openPopupPrenotazione('Impossibile effettuare la prenotazione')
          }
       }
   )

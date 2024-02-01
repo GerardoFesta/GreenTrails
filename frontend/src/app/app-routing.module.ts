@@ -12,21 +12,24 @@ import { GestioneValoriComponent } from './componenti/gestione-attivita/gestione
 import { LoginComponent } from './componenti/login/login.component';
 import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
 import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
+import { ModificaValoriAdminComponent } from './componenti/modifica-valori-admin/modifica-valori-admin.component';
+import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/lista-segnalazioni.component';
 
 const routes: Routes = [
+  { path: '', component: HomePageComponent },
   { path: 'chisiamo', component: ChisiamoComponent },
   { path: 'itinerarioAutomatico', component: GenerazioneAutomaticaComponent },
   { path: 'registrazione', component: RegistrazioneComponent },
-  { path: 'questionario', component: QuestionarioComponent },
   { path: 'attivita/:id', component: PaginaAttivitaComponent },
-  { path: 'homepage', component: GestionePrenotazioniAttiveComponent },
+  { path: 'listaSegnalazioni', component: ListaSegnalazioniComponent },
+  { path: 'modificaValoriAdmin', component: ModificaValoriAdminComponent },
+  { path: 'questionario', component: QuestionarioComponent },
   { path: 'ricerca/posizione', component: RisultatiComponent },
   { path: 'mieAttivita', component: GestioneAttivitaComponent },
   { path: 'modificaValori/:id', component: GestioneValoriComponent },
   { path: 'tabellaPrenotazioni', component: GestionePrenotazioniAttiveComponent },
   { path: 'login', component: LoginComponent },
   { path: 'areaRiservata', component: AreaRiservataComponent },
-  { path: '', component: HomePageComponent },
 ];
 
 @NgModule({

@@ -22,11 +22,18 @@
         </div>
       </mat-list-item>
     </mat-list>
+    <div class="containerChiarimenti" style="width: 550px;">
+      <h1 style="text-align: center; color: lime; font-weight: bold;">Aggiungi dettagli</h1>
+      <mat-form-field class="descrizione" appearance="fill">
+        <textarea matInput rows="5" style="resize: none; font-size: large; height: 200px;" id="descrizione"
+          (input)="onTextareaChange()" *ngIf="isTextareaVisible"></textarea>
+      </mat-form-field>
+    </div>
     <div class="button" style="display: flex; justify-content: space-between;">
       <button type="button" mat-raised-button color="primary" style="color: white; background-color: #32CD32;"
         (click)="rollbackChanges()">Annulla modifica</button>
-      <button mat-raised-button color="primary" style="color: white; background-color: #32CD32;" type="submit"
-        [disabled]="!moduloEcosostenibilita.valid">Procedi</button>
+        <button mat-raised-button color="primary" style="color: white; background-color: #32CD32;" type="submit" 
+        class="submitButton" [class.disabled]="!changesMade">Procedi</button>
     </div>
   </form>
 </div>
