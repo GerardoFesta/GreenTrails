@@ -8,7 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./icon-toolbar.component.css']
 })
 export class IconToolbarComponent implements OnInit {
-//a
+
   constructor(public router: Router, private cookieService: CookieService) { }
 
   isLoggedIn = false;

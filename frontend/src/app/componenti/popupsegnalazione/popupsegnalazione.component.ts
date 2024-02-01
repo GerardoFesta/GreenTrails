@@ -2,8 +2,8 @@ import { EffettuataComponent } from '../popupsegnalazione/effettuata/effettuata.
 import { CookieService } from 'ngx-cookie-service';
 import { SegnalazioneService } from './../../servizi/segnalazione.service';
 import { NgbRatingConfig } from '@ng-bootstrap/ng-bootstrap';
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
@@ -27,19 +27,11 @@ export class PopupsegnalazioneComponent implements OnInit {
     private cookie: CookieService,
     public dialogRef: MatDialogRef<PopupsegnalazioneComponent>, 
     private dialog: MatDialog,
-
+    @Inject(MAT_DIALOG_DATA) public data: any
     ) { }
 
     ngOnInit(): void {
-      const idAttivitaFromCookie = this.cookie.get('idAttivita');
-  
-      if (idAttivitaFromCookie) {
-        this.idAttivita = +idAttivitaFromCookie;
-        console.log('Id dell\'attività:', this.idAttivita);
-
-      } else {
-        console.error('idAttivita not found in the cookie');
-      }
+      this.idAttivita = this.data.id;
     }
 
 

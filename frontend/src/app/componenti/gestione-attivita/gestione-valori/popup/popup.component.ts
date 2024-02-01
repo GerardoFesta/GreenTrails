@@ -17,6 +17,6 @@ export class PopupComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
-}
+  }
 
 }

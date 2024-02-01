@@ -66,7 +66,9 @@ export class CardAttivitaComponent implements OnInit {
 
   apriSegnalazione(): void {
     const dialogRef = this.dialog.open(PopupsegnalazioneComponent, {
-
+      data:{
+        id: this.idAttivita
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

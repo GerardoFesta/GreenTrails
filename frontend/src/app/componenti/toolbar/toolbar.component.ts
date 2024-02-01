@@ -12,7 +12,7 @@ export class ToolbarComponent implements OnInit {
   isLoggedIn = false;
   isGestore = false;
 
-  constructor(private cookieService: CookieService, private router: Router) { }
+  constructor(private cookieService: CookieService, public router: Router) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.cookieService.get('user') !== ''

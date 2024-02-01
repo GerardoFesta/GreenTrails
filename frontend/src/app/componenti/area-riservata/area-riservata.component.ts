@@ -1,6 +1,7 @@
-import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { UtenteService } from 'src/app/servizi/utente.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-area-riservata',
@@ -8,12 +9,14 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./area-riservata.component.css']
 })
 export class AreaRiservataComponent implements OnInit {
-userData: any;
+
+  userData: any;
 
   constructor(
     private cookieService: CookieService,
-    private route: Router,
-    ) { }
+    private router: Router,
+    private utenteService: UtenteService,
+  ) { }
 
   ngOnInit(): void {
     const userCookieValue = this.cookieService.get('user');
@@ -27,31 +30,32 @@ userData: any;
   }
 
   clickedMieiViaggi() {
-    this.route.navigate(['/tabellaP']);
+    this.router.navigate(['/tabellaPrenotazioni']);
   }
 
-  clickedSuggeriti(){
-    this.route.navigate(['/homepage']);
+  clickedSuggeriti() {
+    this.router.navigate(['/']);
   }
 
-  clickedQuestionario(){
-    this.route.navigate(['/']); // inserire path della pagina dedicata al questionario
+  clickedQuestionario() {
+    this.router.navigate(['/questionario']); // inserire path della pagina dedicata al questionario
   }
 
-  clickedGenera(){
-    this.route.navigate(['/']); // inserire path della pagina dedicata alla generazione dell'itinerario automatico
+  clickedGenera() {
+    this.router.navigate(['/itinerarioAutomatico']); // inserire path della pagina dedicata alla generazione dell'itinerario automatico
   }
 
-  clickedLeMieAttivita(){
-    this.route.navigate(['/']); // inserire path della pagina con la lista di attività di un gestore
+  clickedLeMieAttivita() {
+    this.router.navigate(['/mieAttivita']); // inserire path della pagina con la lista di attività di un gestore
   }
 
-  clickedAggiungiAttivita(){
-    this.route.navigate(['/']); // inserire path per l'aggiunta di attività
+  clickedListaSegnalazioni() {
+    this.router.navigate(['/listaSegnalazioni'])// inserire path per visualizzare la lista delle segnalazioni
   }
 
-  clickedListaSegnalazioni(){
-    this.route.navigate(['/'])// inserire path per visualizzare la lista delle segnalazioni
+  logout() {
+    this.utenteService.logout();
+    this.router.navigate(['/']);
   }
 
 }

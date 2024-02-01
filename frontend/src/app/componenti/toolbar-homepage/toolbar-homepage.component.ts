@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { UtenteService } from 'src/app/servizi/utente.service';
 
 @Component({
   selector: 'app-toolbar-homepage',
@@ -14,7 +15,7 @@ export class ToolbarHomepageComponent implements OnInit {
   isAdmin = false;
   isVisitatore = false;
 
-  constructor(private router: Router, private cookieService: CookieService) { }
+  constructor(private router: Router, private cookieService: CookieService, private utenteService: UtenteService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.cookieService.get('user') !== ''
@@ -25,7 +26,7 @@ export class ToolbarHomepageComponent implements OnInit {
   }
 
   navigate() {
-    if (this.isLoggedIn) this.router.navigate(['/areariservata'])
+    if (this.isLoggedIn) this.router.navigate(['/areaRiservata'])
     else this.router.navigate(['/login'])
   }
 

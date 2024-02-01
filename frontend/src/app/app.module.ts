@@ -184,7 +184,7 @@ import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/list
     PopupDeleteConfermaComponent,
     PopupDettagliComponent,
     PopupDettagliAttivitaComponent,
-    GenerazioneAutomaticaComponent
+    GenerazioneAutomaticaComponent,
   ],
   imports: [
     BrowserModule,

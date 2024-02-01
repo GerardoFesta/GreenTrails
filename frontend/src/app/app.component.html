@@ -1,6 +1,8 @@
 <app-toolbar-homepage *ngIf="router.url == '/'"></app-toolbar-homepage>
-<app-toolbar *ngIf="router.url.match('/attivita/')"></app-toolbar>
-<app-icon-toolbar *ngIf="router.url === '/mieAttivita'
+<app-toolbar *ngIf="router.url.match('/attivita/') || router.url === '/areaRiservata'"></app-toolbar>
+<app-icon-toolbar *ngIf="router.url === '/mieAttivita' 
+|| router.url === '/modificaValoriAdmin'
+|| router.url === '/listaSegnalazioni'
 || router.url === '/login'
 || router.url === '/registrazione'
 || router.url === '/itinerarioAutomatico'

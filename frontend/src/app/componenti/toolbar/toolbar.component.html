@@ -9,7 +9,7 @@
 </button>
     <app-ricerca></app-ricerca>
     <div class="iconContainer">
-        <a routerLink="" class="iconLink" (click)="navigate()">
+        <a *ngIf="router.url !== '/areaRiservata'" routerLink="/areaRiservata" lass="iconLink" (click)="navigate()">
             <i class="fa-regular fa-user icon"></i>
         </a>
         <a routerLink="" class="iconLink" *ngIf="!isGestore && isLoggedIn">
