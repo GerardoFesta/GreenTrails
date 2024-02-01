@@ -4,7 +4,6 @@ import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.CategorieAlloggio;
 import it.greentrails.backend.enums.CategorieAttivitaTuristica;
-import it.greentrails.backend.enums.CategorieAttivitaTuristica;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.ValoriEcosostenibilitaService;
 import it.greentrails.backend.gestioneupload.service.ArchiviazioneService;
