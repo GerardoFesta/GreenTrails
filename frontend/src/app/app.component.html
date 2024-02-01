@@ -3,7 +3,8 @@
  && router.url !== '/login'
  && router.url !== '/ricerca/posizione'
  && router.url !== 'areaRiservata'
- && router.url !== '/mieAttivita'"></app-toolbar>
-<app-toolbar-homepage *ngIf="router.url === '/'"></app-toolbar-homepage>
+ && router.url !== '/mieAttivita' 
+ && router.url !== '/itinerarioAutomatico'"></app-toolbar>
+<app-toolbar-homepage *ngIf="router.url !== '/'"></app-toolbar-homepage>
 <app-icon-toolbar *ngIf="router.url === '/mieAttivita'"></app-icon-toolbar>
 <router-outlet></router-outlet>

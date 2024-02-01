@@ -1,4 +1,3 @@
-
 package it.greentrails.backend.gestioneattivita.service;
 
 import it.greentrails.backend.entities.Attivita;
@@ -70,21 +69,6 @@ public class AttivitaServiceImpl implements AttivitaService {
     } catch (Exception e) {
       return false;
     }
-  }
-
-  @Override
-  public List<Attivita> getAttivitaTuristiche(int limite) {
-    return  repository.getAttivitaTuristiche(Pageable.ofSize(limite)).toList();
-  }
-
-  @Override
-  public List<Attivita> getAlloggi(int limite) {
-    return  repository.getAlloggi(Pageable.ofSize(limite)).toList();
-  }
-
-  @Override
-  public List<Attivita> findAll() {
-    return repository.findAll();
   }
 
 

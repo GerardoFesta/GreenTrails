@@ -83,10 +83,7 @@ export class HomePageComponent implements OnInit {
             const newAttivita = result.data;
             console.log("New Attivita from API:", newAttivita);
   
-            // Filter out deleted items
-            const filteredAttivita = newAttivita.filter((item: { id: any; prezzo: number; eliminata: boolean }) => 
-              item.prezzo < 300 && !item.eliminata
-            );
+            const filteredAttivita = newAttivita.filter((item: { id: any; prezzo: number; eliminata: boolean}) => item.prezzo < 300 && !item.eliminata);
   
             this.attivitaPerPrezzoList.push(...filteredAttivita);
   
@@ -110,12 +107,8 @@ export class HomePageComponent implements OnInit {
   private visualizzaListaAlloggi(limite: number): Promise<void> {
     return new Promise<void>((resolve) => {
       this.attivitaService.getAlloggi(limite).subscribe((result) => {
-        const newAlloggi = result.data;
-  
-        // Filter out deleted items
-        const filteredAlloggi = newAlloggi.filter((item: { eliminata: boolean }) => !item.eliminata);
-  
-        this.alloggiList.push(...filteredAlloggi);
+        const newAlloggi = result.data.filter((item: any) => !item.eliminata);
+        this.alloggiList.push(...newAlloggi);
         resolve();
       });
     });
@@ -124,12 +117,8 @@ export class HomePageComponent implements OnInit {
   private visualizzaListaAttivitaTuristiche(limite: number): Promise<void> {
     return new Promise<void>((resolve) => {
       this.attivitaService.getAttivitaTuristiche(limite).subscribe((result) => {
-        const newAttivitaTuristiche = result.data;
-  
-        // Filter out deleted items
-        const filteredAttivitaTuristiche = newAttivitaTuristiche.filter((item: { eliminata: boolean }) => !item.eliminata);
-  
-        this.attivitaTuristicheList.push(...filteredAttivitaTuristiche);
+        const newAttivitaTuristiche = result.data.filter((item: any) => !item.eliminata);
+        this.attivitaTuristicheList.push(...newAttivitaTuristiche);
         resolve();
       });
     });

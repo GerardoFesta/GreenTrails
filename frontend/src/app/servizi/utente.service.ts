@@ -94,6 +94,14 @@ invioQuestionario(
     return this.http.post<any>(`${this.url}/questionario`,params, {headers});
    }
 
+getPreferenze():Observable<any> {
+ 
+  const headers = new HttpHeaders({
+    Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+  });
+  return this.http.get<any>(`${this.url}/preferenze`, {headers});
+
+}
 
 }
 

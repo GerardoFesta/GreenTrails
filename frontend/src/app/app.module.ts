@@ -107,7 +107,8 @@ import { EffettuataComponent } from './componenti/popupsegnalazione/effettuata/e
 import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';import { PopupDeleteConfermaComponent } from './componenti/gestione-prenotazioni-attive/popupDeleteConferma/popupDeleteConferma.component';
 import { PopupDettagliComponent } from './componenti/gestione-prenotazioni-attive/popupDettagli/popupDettagli.component';
 import { PopupDettagliAttivitaComponent } from './componenti/gestione-prenotazioni-attive/popupDettagliAttivita/popupDettagliAttivita.component';
-
+import { CalendariopopupComponent } from './componenti/generazione-automatica/calendariopopup/calendariopopup.component';
+import { PopupConfermaItinerarioComponent } from './componenti/generazione-automatica/popup-conferma-itinerario/popup-conferma-itinerario.component';
 
 @NgModule({
   declarations: [
@@ -126,9 +127,10 @@ import { PopupDettagliAttivitaComponent } from './componenti/gestione-prenotazio
     QuestionarioComponent,
     PopUpQuestionarioComponent,
     RecensioneFormComponent,
+    PaginaAttivitaComponent,
+    PopupErrorPassComponent,
     PopupRecensioneComponent,
-    GalleryDialogComponent,
-    VideoDialogComponent,
+    RegistrazioneComponent,
     HomePageComponent,
     ToolbarComponent,
     ToolbarHomepageComponent,
@@ -154,6 +156,17 @@ import { PopupDettagliAttivitaComponent } from './componenti/gestione-prenotazio
     PopUpPrenotazioneComponent,
     PrenotazioniAttivitaComponent,
     PopUpRegistrazioneComponent,
+    GestionePrenotazioniAttiveComponent,
+    AreaRiservataComponent,
+    GenerazioneAutomaticaComponent,
+    CalendariopopupComponent,
+    RicercaComponent,
+    QuestionarioComponent,
+    RisultatiComponent,
+    GestionePrenotazioniAttiveComponent,
+    GalleryDialogComponent,
+    VideoDialogComponent,
+    PopupConfermaItinerarioComponent,
     PopUpCategorieComponent,
     PopupModificaCategorieComponent,
     PopupEliminazioneCategorieComponent,
@@ -267,6 +280,7 @@ import { PopupDettagliAttivitaComponent } from './componenti/gestione-prenotazio
     MatNativeDateModule,
     Ng2SearchPipeModule,
     MatIconModule,
+    Ng2SearchPipeModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
