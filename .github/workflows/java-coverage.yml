@@ -1,12 +1,10 @@
 name: Backend coverage
 on:
   push:
-    branches:
-      - ci-coverage-actions
-  #    paths:
-  #      - 'backend/**'
-  #    branches:
-  #      - dev
+      paths:
+        - 'backend/**'
+      branches:
+        - dev
   pull_request:
     paths:
       - 'backend/**'
