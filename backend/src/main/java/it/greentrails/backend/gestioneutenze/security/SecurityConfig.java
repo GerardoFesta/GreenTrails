@@ -36,6 +36,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.PUT, "/api/utenti").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/utenti").authenticated()
             .requestMatchers(HttpMethod.GET, "/api/utenti/preferenze").hasRole(ROLE_VISITATORE)
+
             .requestMatchers(HttpMethod.POST, "/api/utenti/questionario").hasRole(ROLE_VISITATORE)
 
             .requestMatchers(HttpMethod.POST, "/api/file").authenticated()
@@ -44,6 +45,10 @@ public class SecurityConfig {
 
             .requestMatchers(HttpMethod.GET, "/api/attivita/*").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/attivita/perPrezzo").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/attivita/perGestore").hasRole(ROLE_GESTORE)
+            .requestMatchers(HttpMethod.GET, "/api/attivita/alloggi").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/attivita/attivitaTuristiche").permitAll()
+            .requestMatchers(HttpMethod.GET, "/api/attivita/all").permitAll()
             .requestMatchers(HttpMethod.GET, "/api/attivita").hasRole(ROLE_GESTORE)
             .requestMatchers(HttpMethod.POST, "/api/attivita").hasRole(ROLE_GESTORE)
             .requestMatchers(HttpMethod.POST, "/api/attivita/*").hasRole(ROLE_GESTORE)
@@ -61,7 +66,7 @@ public class SecurityConfig {
 
             .requestMatchers(HttpMethod.GET, "/api/valori/*").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/valori").authenticated()
-            .requestMatchers(HttpMethod.POST, "/api/valori/*").hasRole(ROLE_GESTORE)
+            .requestMatchers(HttpMethod.POST, "/api/valori/*").authenticated()
 
             .requestMatchers("/api/itinerari/**").hasRole(ROLE_VISITATORE)
 

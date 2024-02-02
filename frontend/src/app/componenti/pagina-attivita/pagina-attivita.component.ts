@@ -12,5 +12,4 @@ export class PaginaAttivitaComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

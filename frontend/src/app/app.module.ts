@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { RecensioneFormComponent } from './componenti/pagina-attivita/recensioni/recensione-form/recensione-form.component';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -20,7 +20,6 @@ import { MapComponent } from './componenti/pagina-attivita/info-attivita/map/map
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
@@ -49,7 +48,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -62,6 +61,57 @@ import { MatTableModule } from '@angular/material/table';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './componenti/login/login.component';
 import { RegistrazioneComponent } from './componenti/registrazione/registrazione.component';
+import { QuestionarioComponent } from './componenti/questionario/questionario.component';
+import { PopUpQuestionarioComponent } from './componenti/questionario/pop-up-questionario/pop-up-questionario.component';
+import { PopupRecensioneComponent } from './componenti/pagina-attivita/recensioni/popup-recensione/popup-recensione.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { CookieService } from 'ngx-cookie-service';
+import { HomePageComponent } from './componenti/home-page/home-page.component';
+import { GalleryDialogComponent } from './componenti/pagina-attivita/recensioni/gallery-dialog/gallery-dialog.component';
+import { VideoDialogComponent } from './componenti/pagina-attivita/recensioni/video-dialog/video-dialog.component';
+import { ToolbarComponent } from './componenti/toolbar/toolbar.component';
+import { ToolbarHomepageComponent } from './componenti/toolbar-homepage/toolbar-homepage.component';
+import { GestionePrenotazioniAttiveComponent } from './componenti/gestione-prenotazioni-attive/gestione-prenotazioni-attive.component';
+import { AreaRiservataComponent } from './componenti/area-riservata/area-riservata.component';
+import { PopupErrorPassComponent } from './componenti/login/popup-errorPass/popup-errorPass.component';
+import { IconToolbarComponent } from './componenti/icon-toolbar/icon-toolbar.component';
+import { RicercaComponent } from './componenti/ricerca/ricerca.component';
+import { RisultatiComponent } from './componenti/ricerca/risultati/risultati.component';
+import { GestioneAttivitaComponent } from './componenti/gestione-attivita/gestione-attivita.component';
+import { PopupEliminazioneComponent } from './componenti/gestione-attivita/popup-eliminazione-attivita/popup-eliminazione-attivita.component';
+import { InserimentoAttivitaComponent } from './componenti/inserimento-attivita/inserimento-attivita.component';
+import { PopUpConfermaComponent } from './componenti/inserimento-attivita/pop-up-conferma/pop-up-conferma.component';
+import { PopUpAlloggioComponent } from './componenti/inserimento-attivita/pop-up-alloggio/pop-up-alloggio.component';
+import { PopupModificaComponent } from './componenti/gestione-attivita/popup-modifica-attivita-turistica/popup-modifica-attivita-turistica.component';
+import { PopupModificaAlloggioComponent } from './componenti/gestione-attivita/popup-modifica-alloggio/popup-modifica-alloggio.component';
+import { PopupConfermaModificaComponent } from './componenti/gestione-attivita/popup-conferma-modifica/popup-conferma-modifica.component';
+import { PopupModificaDatiAlloggioComponent } from './componenti/gestione-attivita/popup-modifica-dati-alloggio/popup-modifica-dati-alloggio.component';
+import { PopupEliminazioneCameraComponent } from './componenti/gestione-attivita/popup-eliminazione-camera/popup-eliminazione-camera.component';
+import { GestioneValoriComponent } from './componenti/gestione-attivita/gestione-valori/gestione-valori.component';
+import { PopupComponent } from './componenti/gestione-attivita/gestione-valori/popup/popup.component';
+import { PrenotazioniComponent } from './componenti/pagina-attivita/prenotazioni/prenotazioni.component';
+import { PopUpPrenotazioneComponent } from './componenti/pagina-attivita/pop-up-prenotazione/pop-up-prenotazione.component';
+import { PrenotazioniAttivitaComponent } from './componenti/pagina-attivita/prenotazioni-attivita/prenotazioni-attivita.component';
+import { PopUpRegistrazioneComponent } from './componenti/registrazione/pop-up-registrazione/pop-up-registrazione.component';
+import { PopUpCategorieComponent } from './componenti/inserimento-attivita/pop-up-categorie/pop-up-categorie.component';
+import { PopupModificaCategorieComponent } from './componenti/gestione-attivita/popup-modifica-categorie/popup-modifica-categorie.component';
+import { PopupEliminazioneCategorieComponent } from './componenti/gestione-attivita/popup-eliminazione-categorie/popup-eliminazione-categorie.component';
+
+
+import { ChisiamoComponent } from './componenti/chisiamo/chisiamo.component';
+import { IntroduzioneComponent } from './componenti/chisiamo/introduzione/introduzione.component';
+import { PoliticheEcoComponent } from './componenti/chisiamo/politiche-eco/politiche-eco.component';
+import { FineComponent } from './componenti/chisiamo/fine/fine.component';
+import { EffettuataComponent } from './componenti/popupsegnalazione/effettuata/effettuata.component';
+import { PopupsegnalazioneComponent } from './componenti/popupsegnalazione/popupsegnalazione.component';import { PopupDeleteConfermaComponent } from './componenti/gestione-prenotazioni-attive/popupDeleteConferma/popupDeleteConferma.component';
+import { PopupDettagliComponent } from './componenti/gestione-prenotazioni-attive/popupDettagli/popupDettagli.component';
+import { PopupDettagliAttivitaComponent } from './componenti/gestione-prenotazioni-attive/popupDettagliAttivita/popupDettagliAttivita.component';
+import { CalendariopopupComponent } from './componenti/generazione-automatica/calendariopopup/calendariopopup.component';
+import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
+import { ModificaValoriAdminComponent } from './componenti/modifica-valori-admin/modifica-valori-admin.component';
+import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/lista-segnalazioni.component';
+import { TopbuttonComponent } from './componenti/topbutton/topbutton.component';
+import { CookieDialogComponent } from './componenti/cookiedialog/cookiedialog.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +127,68 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     SlideshowComponent,
     MapComponent,
     RegistrazioneComponent,
+    QuestionarioComponent,
+    PopUpQuestionarioComponent,
+    RecensioneFormComponent,
+    PaginaAttivitaComponent,
+    PopupErrorPassComponent,
+    PopupRecensioneComponent,
+    RegistrazioneComponent,
+    HomePageComponent,
+    ToolbarComponent,
+    ToolbarHomepageComponent,
+    GestionePrenotazioniAttiveComponent,
+    AreaRiservataComponent,
+    PopupErrorPassComponent,
+    IconToolbarComponent,
+    RicercaComponent,
+    RisultatiComponent,
+    GestioneAttivitaComponent,
+    PopupEliminazioneComponent,
+    InserimentoAttivitaComponent,
+    PopUpConfermaComponent,
+    PopUpAlloggioComponent,
+    PopupModificaComponent,
+    PopupModificaAlloggioComponent,
+    PopupConfermaModificaComponent,
+    PopupModificaDatiAlloggioComponent,
+    PopupEliminazioneCameraComponent,
+    GestioneValoriComponent,
+    PopupComponent,
+    PrenotazioniComponent,
+    PopUpPrenotazioneComponent,
+    PrenotazioniAttivitaComponent,
+    PopUpRegistrazioneComponent,
+    GestionePrenotazioniAttiveComponent,
+    AreaRiservataComponent,
+    CalendariopopupComponent,
+    RicercaComponent,
+    QuestionarioComponent,
+    RisultatiComponent,
+    GestionePrenotazioniAttiveComponent,
+    GalleryDialogComponent,
+    VideoDialogComponent,
+    PopUpCategorieComponent,
+    PopupModificaCategorieComponent,
+    PopupEliminazioneCategorieComponent,
+    PopupModificaCategorieComponent,
+    PopupEliminazioneCategorieComponent,
+    LoginComponent,
+    ChisiamoComponent,
+    IntroduzioneComponent,
+    PoliticheEcoComponent,
+    FineComponent,
+    EffettuataComponent,
+    PopupsegnalazioneComponent,
+    PopupComponent,
+    ModificaValoriAdminComponent,
+    ListaSegnalazioniComponent,
+    PopupDeleteConfermaComponent,
+    PopupDettagliComponent,
+    PopupDettagliAttivitaComponent,
+    GenerazioneAutomaticaComponent,
+    TopbuttonComponent,
+    CookieDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -125,6 +237,9 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
+    MatIconModule,
+    Ng2SearchPipeModule,
   ],
   exports: [
     MatAutocompleteModule,
@@ -168,8 +283,12 @@ import { RegistrazioneComponent } from './componenti/registrazione/registrazione
     NgbCarouselModule,
     MatTooltipModule,
     HttpClientModule,
+    MatNativeDateModule,
+    Ng2SearchPipeModule,
+    MatIconModule,
+    Ng2SearchPipeModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

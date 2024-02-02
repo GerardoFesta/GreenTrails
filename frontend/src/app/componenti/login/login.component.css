@@ -17,7 +17,9 @@
     padding-top: 10px;
     padding-bottom: 10px; 
   }
-
+  .underline-link {
+    text-decoration: underline;
+  }
   .error-message {
     color: red; 
     font-size: 0.9em; 
@@ -40,5 +42,15 @@ mat-label{
 }
 .form-bottom{
   display:flex;
+}
+
+.btn button:disabled {
+  background-color: #e0e0e0;
+  color: #d3d3d3
+}
+
+.btn button {
+  background-color: lime;
+  color: white;
 }
 

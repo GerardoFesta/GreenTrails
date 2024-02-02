@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-info-attivita',
@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class InfoAttivitaComponent implements OnInit {
 
   constructor() { }
-
-  userRating: number = 3;
 
   ngOnInit(): void {
   }

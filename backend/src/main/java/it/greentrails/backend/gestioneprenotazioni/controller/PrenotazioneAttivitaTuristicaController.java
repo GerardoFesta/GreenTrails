@@ -41,10 +41,10 @@ public class PrenotazioneAttivitaTuristicaController {
       @RequestParam("idAttivita") final Long idAttivita,
       @RequestParam("numAdulti") final int adulti,
       @RequestParam(value = "numBambini", defaultValue = "0", required = false) final int bambini,
-      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm")
+      @RequestParam("dataInizio") @DateTimeFormat(pattern = "yyyy-MM-dd")
       final Date dataInizio,
       @RequestParam(value = "dataFine", required = false)
-      @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm") final Date dataFine
+      @DateTimeFormat(pattern = "yyyy-MM-dd") final Date dataFine
   ) {
     try {
       Itinerario itinerario = itinerariService.findById(idItinerario);
@@ -101,7 +101,8 @@ public class PrenotazioneAttivitaTuristicaController {
       final Date dataFine
   ) {
     try {
-      PrenotazioneAttivitaTuristica prenotazione = prenotazioneAttivitaTuristicaService.findById(id);
+      PrenotazioneAttivitaTuristica prenotazione =
+          prenotazioneAttivitaTuristicaService.findById(id);
       Itinerario itinerario = prenotazione.getItinerario();
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,

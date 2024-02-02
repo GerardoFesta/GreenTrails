@@ -58,8 +58,8 @@ public class RicercaController {
 
   @PostMapping("perPosizione")
   private ResponseEntity<Object> cercaSenzaQuery(
-      @RequestParam(value = "latitudine") final long latitudine,
-      @RequestParam(value = "longitudine") final long longitudine,
+      @RequestParam(value = "latitudine") final Double latitudine,
+      @RequestParam(value = "longitudine") final Double longitudine,
       @RequestParam(value = "raggio") final Double raggio,
       @RequestParam(value = "idCategorie", required = false) final Long[] idCategorie
   ) {

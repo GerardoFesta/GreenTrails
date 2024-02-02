@@ -19,4 +19,10 @@ public interface AttivitaService {
   List<Attivita> getAttivitaTuristicheEconomiche(int limite);
 
   boolean deleteAttivita(Attivita attivita) throws Exception;
+
+  List<Attivita> getAttivitaTuristiche(int limite);
+
+  List<Attivita> getAlloggi(int limite);
+
+  List<Attivita> findAll();
 }
