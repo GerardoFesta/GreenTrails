@@ -45,7 +45,7 @@ public class AttivitaServiceImpl implements AttivitaService {
 
   @Override
   public Optional<Attivita> findByValori(ValoriEcosostenibilita valoriEcosostenibilita)
-          throws Exception {
+      throws Exception {
     if (valoriEcosostenibilita == null) {
       throw new Exception("I valori sono vuoti.");
     }
@@ -73,12 +73,12 @@ public class AttivitaServiceImpl implements AttivitaService {
 
   @Override
   public List<Attivita> getAttivitaTuristiche(int limite) {
-    return  repository.getAttivitaTuristiche(Pageable.ofSize(limite)).toList();
+    return repository.getAttivitaTuristiche(Pageable.ofSize(limite)).toList();
   }
 
   @Override
   public List<Attivita> getAlloggi(int limite) {
-    return  repository.getAlloggi(Pageable.ofSize(limite)).toList();
+    return repository.getAlloggi(Pageable.ofSize(limite)).toList();
   }
 
   @Override
