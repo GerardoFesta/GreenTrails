@@ -42,6 +42,11 @@ export class CategoriaService {
   }
 
   visualizzaCategoria(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}`);
+
+    const headers = new HttpHeaders({
+      Authorization: 'Basic ' + this.cookieService.get('credenziali').replace(/"/g, '')
+    });
+
+    return this.http.get<any>(`${this.baseUrl}/${id}`, {headers});
   }
 }
