@@ -130,15 +130,15 @@ export class GenerazioneAutomaticaComponent {
 
   clickedHome() {
     this.cancellaItinerario();
-    this.route.navigate(['/homepage']);
+    this.route.navigate(['/']);
   }
 
   openCalendario() {
     const dialogRef = this.dialog.open(CalendariopopupComponent, {
       data: {
         idItinerario: this.itinerarioAutoId,
-        prenotazioniAlloggio: this.prenotazioniAlloggio,
-        prenotazioniAttivitaTuristica: this.prenotazioniAttivitaTuristica,
+        prenotazioniAlloggio: this.prenotazioniAlloggio.filter((item :any) => !item.camera.alloggio.eliminata),
+        prenotazioniAttivitaTuristica: this.prenotazioniAttivitaTuristica.filter((item: any) => !item.attivitaTuristica.eliminata),
       },
       width: '500px',
     });
@@ -149,39 +149,6 @@ export class GenerazioneAutomaticaComponent {
   }
 
   cancellaItinerario() {
-
-    this.idPrenotazioniAttivitaTuristiche = this.prenotazioniAttivitaTuristica.map((item: any, index: number) => {
-      console.log("ID PRENOTAZIONE ATTIVITà N" + index, item.id, "PRENOTAZIONE ALLOGGIO: ", item);
-      return {
-        id: item.id
-      }
-    })
-
-    this.idPrenotazioniAttivitaTuristiche.forEach((item: any) => {
-      console.log(item);
-      this.prenotazioniAttivitaService.deletePrenotazioneAttivitaTuristica(item.id).subscribe((risposta) => {
-        console.log("CANCELLAZIONE PRENOTAZIONE ATTIVITà TURISTICA", risposta);
-      })
-    }, (error: any) => {
-      console.error(error)
-    })
-
-    this.idPrenotazioniAlloggio = this.prenotazioniAlloggio.map((item: any, index: number) => {
-      console.log("ID PRENOTAZIONE ALLOGGIO N" + index, item.id, "PRENOTAZIONE: ", item);
-      return {
-        id: item.id
-      }
-    })
-
-    this.idPrenotazioniAlloggio.forEach((item: any) => {
-      console.log(item);
-      this.prenotazioniAlloggioService.deletePrenotazioneAlloggio(item.id).subscribe((risposta: any) => {
-        console.log("CANCELLAZIONE PRENOTAZIONE ALLOGGIO", risposta)
-      })
-    }, (error: any) => {
-      console.error(error);
-    })
-
     this.itinerarioService.cancellaItinerario(this.itinerarioAutoId).subscribe((risposta) => {
       console.log("CANCELLAZIONE ITINERARIO", risposta);
     })
