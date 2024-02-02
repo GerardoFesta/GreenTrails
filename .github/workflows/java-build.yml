@@ -1,10 +1,9 @@
 name: Build Backend
 on:
   push:
-#      paths:
-#        - 'backend/**'
+      paths:
+        - 'backend/**'
       branches:
-        - ci-coverage-actions
         - main
   pull_request:
     paths:
