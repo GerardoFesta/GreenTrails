@@ -4,7 +4,7 @@ language: java
 before_install:
   - wget https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb
   - sudo dpkg -i jdk-21_linux-x64_bin.deb
-  - export JAVA_HOME=/usr/lib/jvm/jdk-21
+  - export JAVA_HOME=/usr/lib/jvm/jdk-21-oracle-x64
   - export PATH=$JAVA_HOME/bin:$PATH
   - cd backend
 
