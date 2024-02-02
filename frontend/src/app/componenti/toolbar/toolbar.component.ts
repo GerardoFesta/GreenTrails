@@ -11,6 +11,8 @@ export class ToolbarComponent implements OnInit {
 
   isLoggedIn = false;
   isGestore = false;
+  isVisitatore = false;
+  isAdmin = false;
 
   constructor(private cookieService: CookieService, public router: Router) { }
 
@@ -19,10 +21,14 @@ export class ToolbarComponent implements OnInit {
     console.log("isLoggedIn", this.isLoggedIn)
     this.isGestore = this.cookieService.get('ruolo') === 'ROLE_GESTORE_ATTIVITA'
     console.log("isGestore", this.isGestore)
+    this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
+    console.log("isVisitatore", this.isVisitatore)
+    this.isAdmin = this.cookieService.get('ruolo') === 'ROLE_AMMINISTRATORE'
+    console.log("isAdmin", this.isAdmin)
   }
 
   navigate() {
-    if(this.isLoggedIn) this.router.navigate(['/areaRiservata'])
+    if (this.isLoggedIn) this.router.navigate(['/areaRiservata'])
     else this.router.navigate(['/login'])
   }
 

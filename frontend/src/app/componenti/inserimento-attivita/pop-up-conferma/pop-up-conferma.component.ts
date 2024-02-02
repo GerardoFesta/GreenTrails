@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pop-up-conferma',
@@ -9,14 +10,15 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class PopUpConfermaComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<PopUpConfermaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private router: Router) { }
 
   ngOnInit(): void {
   }
   onNoClick(): void {
     this.dialogRef.close();
-    window.location.reload();
+    this.router.navigate(['/tabellaPrenotazioni'])
   }
 
+  
   
 }

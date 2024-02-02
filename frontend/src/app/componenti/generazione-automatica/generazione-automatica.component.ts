@@ -61,8 +61,8 @@ export class GenerazioneAutomaticaComponent {
       this.itinerarioAutoId = itinerarioRif.data.id;
 
       this.itinerarioService.visualizzaItinerario(this.itinerarioAutoId).subscribe((itinerario) => {
-        this.prenotazioniAlloggio = itinerario.data.prenotazioniAlloggio;
-        this.prenotazioniAttivitaTuristica = itinerario.data.prenotazioniAttivitaTuristica;
+        this.prenotazioniAlloggio = itinerario.data.prenotazioniAlloggio.filter((item: any) => !item.camera.alloggio.eliminata);
+        this.prenotazioniAttivitaTuristica = itinerario.data.prenotazioniAttivitaTuristica.filter((item: any) => !item.attivitaTuristica.eliminata);
 
         this.prenotazioniAlloggio.forEach((item: any, index: number) => {
           if (item.camera.alloggio.media !== null) {

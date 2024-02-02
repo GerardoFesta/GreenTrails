@@ -19,10 +19,13 @@ export class ToolbarHomepageComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn = this.cookieService.get('user') !== ''
-    console.log("isLoggedIn", this.isLoggedIn);
+    console.log("isLoggedIn", this.isLoggedIn)
     this.isGestore = this.cookieService.get('ruolo') === 'ROLE_GESTORE_ATTIVITA'
+    console.log("isGestore", this.isGestore)
     this.isVisitatore = this.cookieService.get('ruolo') === 'ROLE_VISITATORE'
-    console.log("isGestore", this.isGestore);
+    console.log("isVisitatore", this.isVisitatore)
+    this.isAdmin = this.cookieService.get('ruolo') === 'ROLE_AMMINISTRATORE'
+    console.log("isAdmin", this.isAdmin)
   }
 
   navigate() {

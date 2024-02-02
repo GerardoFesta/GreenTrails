@@ -6,6 +6,7 @@ import { AttivitaService } from 'src/app/servizi/attivita.service';
 import { UploadService } from 'src/app/servizi/upload.service';
 import { ValoriEcosostenibilitaService } from 'src/app/servizi/valori-ecosostenibilita.service';
 import { PopupComponent } from '../gestione-attivita/gestione-valori/popup/popup.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-modifica-valori-admin',
@@ -34,7 +35,8 @@ export class ModificaValoriAdminComponent implements OnInit {
     private valorieco: ValoriEcosostenibilitaService,
     private uploadService: UploadService,
     protected dialog: MatDialog
-    , private router: Router
+    , private router: Router,
+    private location: Location
   ) { }
 
   valori = [
@@ -190,8 +192,9 @@ export class ModificaValoriAdminComponent implements OnInit {
       this.valoriEcosostenibilitaSelected = { ...this.originalValoriEcosostenibilitaSelected };
       this.changesMade = false;
     }
-    this.router.navigate(['/lista']);
+    this.location.back();
   }
+  
   onTextareaChange(): void {
     const textareaValue = (document.getElementById('descrizione') as HTMLTextAreaElement).value;
     this.isTextareaFilled = textareaValue.trim() !== '';

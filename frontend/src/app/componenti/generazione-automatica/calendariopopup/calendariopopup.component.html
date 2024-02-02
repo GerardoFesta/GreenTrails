@@ -25,6 +25,6 @@
     <div class="button-group">
         <button mat-button type="button" (click)="dialogRef.close()" style="color: white; background-color: red; margin-top: 40px; margin-left: 20px;">Annulla</button>
         <button mat-raised-button color="primary" type="submit" style="margin-top: 40px; margin-left: 20px;"
-        [disabled]="!form.valid" class="submit-button">Invia</button>
+        [disabled]="!form.valid" class="submit-button" (click)="dialogRef.close()">Invia</button>
     </div>
 </form>

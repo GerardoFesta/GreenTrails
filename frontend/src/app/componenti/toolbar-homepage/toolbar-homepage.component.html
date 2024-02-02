@@ -26,6 +26,10 @@
                 <i class="fa-regular fa-building"></i>
                 <p class="icon-text">Le mie attività</p>
             </a>
+            <a routerLink="listaSegnalazioni" class="iconLink" *ngIf="isAdmin">
+                <mat-icon>report_problem</mat-icon>
+                <p class="icon-text">Lista segnalazioni</p>
+            </a>
         </div>
     </div>
 </div>
