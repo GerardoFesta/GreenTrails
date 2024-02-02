@@ -101,7 +101,8 @@ public class PrenotazioneAttivitaTuristicaController {
       final Date dataFine
   ) {
     try {
-      PrenotazioneAttivitaTuristica prenotazione = prenotazioneAttivitaTuristicaService.findById(id);
+      PrenotazioneAttivitaTuristica prenotazione =
+          prenotazioneAttivitaTuristicaService.findById(id);
       Itinerario itinerario = prenotazione.getItinerario();
       if (!itinerario.getVisitatore().getId().equals(utente.getId())) {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,

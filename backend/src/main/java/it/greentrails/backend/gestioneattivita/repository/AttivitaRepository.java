@@ -27,6 +27,7 @@ public interface AttivitaRepository extends JpaRepository<Attivita, Long> {
 
   @Query("SELECT a FROM Attivita a WHERE a.prezzo IS NOT NULL ORDER BY a.prezzo ASC")
   Page<Attivita> getAllByPrezzo(Pageable pageable);
+
   @Query("SELECT a FROM Attivita a WHERE a.isAlloggio = true")
   Page<Attivita> getAlloggi(Pageable pageable);
 
