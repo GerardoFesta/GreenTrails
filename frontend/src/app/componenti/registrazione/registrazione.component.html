@@ -1,21 +1,14 @@
-<div class="orientamento">
-  <mat-card style="box-shadow: none; width: 40%">
-    <mat-card-header>
-      <mat-card-title>Registrati</mat-card-title>
+<div class="centrato">
+  <mat-card class="card">
+    <mat-card-header class="header">
+      <mat-card-title class="titolo">Registrati</mat-card-title>
     </mat-card-header>
-    <mat-divider class="color"></mat-divider>
-
-    <mat-card-content style="text-align: center; " class="centered-form">
+    <mat-card-content class="contenuto">
       <form name="signupform" #signupform="ngForm">
         <div class="container">
-          <mat-form-field class="input" >
+          <mat-form-field class="input">
             <mat-label>Data Di Nascita</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              required
-              [formControl]="dataNascita"
-            />
+            <input matInput [matDatepicker]="picker" required [formControl]="dataNascita" />
             <mat-datepicker-toggle matSuffix [for]="picker">
               <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
             </mat-datepicker-toggle>
@@ -29,13 +22,7 @@
         <div class="container">
           <mat-form-field class="input">
             <mat-label>Nome</mat-label>
-            <input
-              matInput
-              type="text"
-              placeholder="Mario"
-              [formControl]="nome"
-              required
-            />
+            <input matInput type="text" placeholder="Mario" [formControl]="nome" required />
             <mat-error *ngIf="nome.invalid">
               {{ getErrorMessage(nome) }}
             </mat-error>
@@ -45,13 +32,7 @@
         <div class="container">
           <mat-form-field class="input">
             <mat-label>Cognome</mat-label>
-            <input
-              matInput
-              type="text"
-              [formControl]="cognome"
-              placeholder="Rossi"
-              required
-            />
+            <input matInput type="text" [formControl]="cognome" placeholder="Rossi" required />
             <mat-error *ngIf="cognome.invalid">
               {{ getErrorMessage(cognome) }}
             </mat-error>
@@ -61,13 +42,7 @@
         <div class="container">
           <mat-form-field class="input">
             <mat-label>Email</mat-label>
-            <input
-              matInput
-              type="email"
-              [formControl]="email"
-              placeholder="pat@example.com"
-              required
-            />
+            <input matInput type="email" [formControl]="email" placeholder="pat@example.com" required />
             <mat-error *ngIf="email.invalid">
               {{ getErrorMessage(email) }}
             </mat-error>
@@ -77,23 +52,13 @@
         <div class="container">
           <mat-form-field class="input">
             <mat-label>Password</mat-label>
-            <input
-              matInput
-              placeholder="********"
-              [formControl]="password"
-              [type]="hide ? 'password' : 'text'"
-              required
-            />
+            <input matInput placeholder="********" [formControl]="password" [type]="hide ? 'password' : 'text'"
+              required />
             <mat-error *ngIf="password.invalid">
               {{ getErrorMessage(password) }}
             </mat-error>
-            <button
-              mat-icon-button
-              matSuffix
-              (click)="hide = !hide"
-              [attr.aria-label]="'Hide password'"
-              [attr.aria-pressed]="hide"
-            >
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
               <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
           </mat-form-field>
@@ -110,26 +75,18 @@
         </div>
       </form>
     </mat-card-content>
-    <mat-divider class="color"></mat-divider>
-    <mat-card-actions>
-      <a ng-reflect-router-link="/registrazione" style="color:lightgreen" href="/login">Sei già registrato? Accedi</a>
-      <br>
+    <mat-card-actions class="azioni">
+      <div class="link">
+        <a routerLink="/login" style="color: lime;">Sei già registrato? Accedi</a>
+      </div>
       <div class="btn">
-        <button
-          mat-raised-button
-          (click)="onSubmit()"
-          [disabled]="
+        <button mat-raised-button (click)="onSubmit()" [disabled]="
             dataNascita.invalid ||
             nome.invalid ||
             cognome.invalid ||
             email.invalid ||
             password.invalid ||
-            selected.invalid
-          "
-          color="primary"
-          type="submit"
-          style="margin-top: 20px; color: white"
-        >
+            selected.invalid" type="submit">
           Invia
         </button>
       </div>

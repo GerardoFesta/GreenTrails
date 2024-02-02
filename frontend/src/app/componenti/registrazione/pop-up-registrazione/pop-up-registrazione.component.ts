@@ -16,6 +16,6 @@ export class PopUpRegistrazioneComponent implements OnInit {
   }
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/login']); // Aggiorna la pagina
+    this.router.navigate(['/']);
   }
 }
