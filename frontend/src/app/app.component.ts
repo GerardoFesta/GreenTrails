@@ -8,7 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
+  title = 'GreenTrails';
 
   constructor(public router: Router) {}
 }

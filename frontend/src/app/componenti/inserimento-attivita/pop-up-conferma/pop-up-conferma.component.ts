@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-pop-up-conferma',
@@ -10,15 +11,24 @@ import { Router } from '@angular/router';
 export class PopUpConfermaComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<PopUpConfermaComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any, private router: Router) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private cookieService: CookieService) { }
+
+  ruolo: any;
 
   ngOnInit(): void {
+    this.ruolo = this.cookieService.get('ruolo')
   }
   onNoClick(): void {
-    this.dialogRef.close();
-    this.router.navigate(['/tabellaPrenotazioni'])
+    if (this.ruolo === "ROLE_GESTORE") {
+      this.dialogRef.close();
+      window.location.reload();
+    }
+    else if (this.ruolo === "ROLE_VISITATORE") {
+      this.dialogRef.close();
+      this.router.navigate(['/tabellaPrenotazioni'])
+    }
   }
 
-  
-  
+
+
 }
