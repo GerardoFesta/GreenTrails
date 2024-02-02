@@ -66,7 +66,7 @@ public class SecurityConfig {
 
             .requestMatchers(HttpMethod.GET, "/api/valori/*").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/valori").authenticated()
-            .requestMatchers(HttpMethod.POST, "/api/valori/*").hasRole(ROLE_GESTORE)
+            .requestMatchers(HttpMethod.POST, "/api/valori/*").authenticated()
 
             .requestMatchers("/api/itinerari/**").hasRole(ROLE_VISITATORE)
 
