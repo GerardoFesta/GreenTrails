@@ -36,6 +36,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/utenti").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/utenti").authenticated()
                         .requestMatchers(HttpMethod.GET, "/api/utenti/preferenze").hasRole(ROLE_VISITATORE)
+
                         .requestMatchers(HttpMethod.POST, "/api/utenti/questionario").hasRole(ROLE_VISITATORE)
 
                         .requestMatchers(HttpMethod.POST, "/api/file").authenticated()
@@ -58,7 +59,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/api/camere/*").hasRole(ROLE_GESTORE)
 
                         .requestMatchers(HttpMethod.GET, "/api/categorie/**").permitAll()
-                        .requestMatchers("/api/categorie/**").hasRole(ROLE_GESTORE)
 
                         .requestMatchers(HttpMethod.GET, "/api/recensioni/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/recensioni").hasRole(ROLE_VISITATORE)
