@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,13 +27,16 @@ public class Itinerario {
 
   @Enumerated
   @Column(name = "stato", nullable = false)
+  @NotNull(message = "Lo stato non può essere vuoto.")
   private StatoItinerario stato = StatoItinerario.PIANIFICATO;
 
   @Column(name = "totale", nullable = false)
+  @NotNull(message = "Il totale non può essere vuoto.")
   private double totale;
 
   @ManyToOne(optional = false)
   @JoinColumn(name = "id_visitatore", nullable = false)
+  @NotNull(message = "Il visitatore non può essere vuoto.")
   private Utente visitatore;
 
 }

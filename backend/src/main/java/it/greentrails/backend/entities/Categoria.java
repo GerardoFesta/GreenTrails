@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,9 +22,11 @@ public class Categoria {
   private Long id;
 
   @Column(name = "nome", nullable = false, unique = true)
+  @NotNull(message = "Il nome non può essere vuoto.")
   private String nome;
 
   @Column(name = "descrizione", nullable = false)
+  @NotNull(message = "La descrizione non può essere vuota.")
   private String descrizione;
 
 }
