@@ -19,7 +19,7 @@ export class PopUpConfermaComponent implements OnInit {
     this.ruolo = this.cookieService.get('ruolo')
   }
   onNoClick(): void {
-    if (this.ruolo === "ROLE_GESTORE") {
+    if (this.ruolo === "ROLE_GESTORE_ATTIVITA") {
       this.dialogRef.close();
       window.location.reload();
     }
