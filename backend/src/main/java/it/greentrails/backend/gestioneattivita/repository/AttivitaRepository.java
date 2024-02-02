@@ -34,6 +34,6 @@ public interface AttivitaRepository extends JpaRepository<Attivita, Long> {
   Page<Attivita> getAttivitaTuristiche(Pageable pageable);
 
   @Query("SELECT a FROM Attivita a")
-  List<Attivita> findALl();
+  List<Attivita> findAll();
 
 }
