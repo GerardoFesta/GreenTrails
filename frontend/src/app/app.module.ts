@@ -110,6 +110,8 @@ import { CalendariopopupComponent } from './componenti/generazione-automatica/ca
 import { GenerazioneAutomaticaComponent } from './componenti/generazione-automatica/generazione-automatica.component';
 import { ModificaValoriAdminComponent } from './componenti/modifica-valori-admin/modifica-valori-admin.component';
 import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/lista-segnalazioni.component';
+import { TopbuttonComponent } from './componenti/topbutton/topbutton.component';
+import { CookieDialogComponent } from './componenti/cookiedialog/cookiedialog.component';
 
 @NgModule({
   declarations: [
@@ -185,6 +187,8 @@ import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/list
     PopupDettagliComponent,
     PopupDettagliAttivitaComponent,
     GenerazioneAutomaticaComponent,
+    TopbuttonComponent,
+    CookieDialogComponent,
   ],
   imports: [
     BrowserModule,
