@@ -149,8 +149,8 @@ export class RecensioneFormComponent implements OnInit {
   }
 
   validateTextArea() {
-    const regex = /^[A-Za-z0-9][\s\S]*$/;
-    this.isTextAreaValid = regex.test(this.valutazioneDiscorsiva) || this.valutazioneDiscorsiva === '';
+    const regex = /^$|^[A-Za-zÀ-ÖØ-öø-ÿ0-9][\s\S]*$/;
+    this.isTextAreaValid = regex.test(this.valutazioneDiscorsiva);
     this.isTextAreaLengthValid = this.valutazioneDiscorsiva.length <= 255
     this.updateSubmitButton();
   }
@@ -222,7 +222,7 @@ export class RecensioneFormComponent implements OnInit {
       } else if (!this.isTextAreaValid) {
         this.openPopupFail('Il formato della valutazione discorsiva non è corretto!')
       } else if (!this.isTextAreaLengthValid) {
-        this.openPopupFail('La lunghezza della valutazione supera i 255 caratteri!')
+        this.openPopupFail('La lunghezza della valutazione discorsiva supera i 255 caratteri!')
       }
     }
   }
