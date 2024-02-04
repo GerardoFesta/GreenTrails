@@ -8,36 +8,28 @@
 
 .questionario-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
+  flex-direction: column;
   width: 100%;
   font-size: 15px;
-  align-items: flex-start;
-  padding-left: 30px;
-  padding-right: 30px;
-  justify-content: space-between;
   border-radius: 20px;
   border: 5px solid lightgreen;
   box-shadow: 7px 7px 5px #dedede;
+  justify-content: space-between;
+  align-content: space-between;
+  padding: 15px;
 }
 
 .imgContainer {
   border-radius: 20px;
   border: 5px solid lightgreen;
   box-shadow: 7px 7px 5px #dedede;
-  width: 30%; /* Aumentato per rendere l'immagine un po' più grande */
-  height: 60%; /* Aumentato per rendere l'immagine un po' più grande */
-}
-
-.list-item-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+  width: 30%;
+  height: 60%;
 }
 
 .list-item-label {
   flex-grow: 1;
-  font-size: 20px; /* Aumentato per rendere le scritte più grandi */
+  font-size: 20px;
 }
 
 .radio-container {
@@ -93,7 +85,8 @@ input[type="radio"]:checked {
   margin-top: 50px;
 }
 
-.submitButton:disabled, .submitButton.disabled {
+.submitButton:disabled,
+.submitButton.disabled {
   background-color: #cccccc !important;
   color: white !important;
 }
