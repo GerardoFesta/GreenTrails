@@ -1,93 +1,24 @@
-/* .example-card {
-    background-color: transparent;
-    color: black;
-    border: none;
-    box-shadow: none;
-    display:flex;
-    flex-direction:row;
-    align-content:center;
-    justify-content:center;
-
-}
-
-.mat-form-field {
-  width: 100%;
-}
-.card-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content:center;
-}
-.eh{
-  display:flex;
-  flex-direction:column;
-  align-items: center;
-  justify-content:center;
-  margin-top:5%;
-}
-
-.lista-eco-container {
-  background-color: rgba(221, 221, 221, 0.504);
-  width: 100%;
-  border: 5px solid lightgreen;
-  max-width: 100%;
-  border-radius: 20px;
-  box-shadow: 7px 7px 5px #dedede;
-  max-height: 70%;
-
-}
-
-.lista-eco {
-        max-height: fit-content;
-        
-}
-mat-list-item {
-    display: flex;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;;
-    
-}
-
-::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #f1f8e9;
-  }
-   
-  ::-webkit-scrollbar-thumb {
-    background: #dcedc8;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: #c5e1a5;
-  }
-  .mat-card-image {
-    border: 5px solid lightgreen;
-    max-width: 100%;
-    border-radius: 20px;
-    box-shadow: 7px 7px 5px #dedede;
-    
- 
-}
-.a{
-  justify-content: center;
-  align-content: center;
-
-}
-.activity-image{
-  width:20%;
-  margin-top:50%;
-} */
 .containerValori {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
   padding: 20px;
+}
+
+.questionario-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  font-size: 15px;
+  align-items: flex-start;
+  padding-left: 30px;
+  padding-right: 30px;
+  justify-content: space-between;
+  border-radius: 20px;
+  border: 5px solid lightgreen;
+  box-shadow: 7px 7px 5px #dedede;
 }
 
 .imgContainer {

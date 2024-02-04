@@ -1,3 +1,4 @@
+import { PopuperroreComponent } from './popuperrore/popuperrore.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,10 +22,10 @@ export class ModificaValoriAdminComponent implements OnInit {
   id: number = 0;
   selectedValoreId: number = 0;
   valoriEcosostenibilita: string[] = [];
-  valoriEcosostenibilitaSelected: { [key: string]: string } = {};
+  //valoriEcosostenibilitaSelected: { [key: string]: string } = {};
   isGestoreAttivita: boolean = false;
   nome: any;
-  originalValoriEcosostenibilitaSelected: { [key: string]: string } = {};
+  //originalValoriEcosostenibilitaSelected: { [key: string]: string } = {};
   changesMade: boolean = false;
   idAttivita: any;
 
@@ -40,8 +41,12 @@ export class ModificaValoriAdminComponent implements OnInit {
   ) { }
 
   valori = [
-    { label: '', selezionato: '' }
+    { label: '', selectedOption: '' }
   ];
+
+  val: any;
+
+  isQuestionarioFilled: boolean = false;
 
   ngOnInit(): void {
     this.id = Number(this.getIdFromCookie());
@@ -57,23 +62,39 @@ export class ModificaValoriAdminComponent implements OnInit {
   visualizzaDettagliAttivita(): void {
     this.attivitaService.visualizzaAttivita(this.id).subscribe(
       (attivita) => {
-        this.idAttivita = attivita.data.id
+        this.idAttivita = attivita.data.id;
         this.selectedValoreId = attivita.data.valoriEcosostenibilita.id;
-        console.log('valori dichiarati dall\'attivita: ', attivita.data.valoriEcosostenibilita);
+        this.val = attivita.data.valoriEcosostenibilita;
+        console.log('valori dichiarati dall\'attivita: ', this.val);
 
-        this.originalValoriEcosostenibilitaSelected = {};
-        this.valoriEcosostenibilitaSelected = {};
-        this.valoriEcosostenibilita = Object.keys(attivita.data.valoriEcosostenibilita)
-          .filter(key => key !== 'id');
 
-        this.valoriEcosostenibilita.forEach(valore => {
-          const valoreId = attivita.data.valoriEcosostenibilita[valore].id;
-          this.originalValoriEcosostenibilitaSelected[valore] = attivita.data.valoriEcosostenibilita[valore] ? 'true' : 'false';
-          this.valoriEcosostenibilitaSelected[valore] = this.originalValoriEcosostenibilitaSelected[valore];
-        });
+        let valoriEcosostenibilitaTrue: string[] = Object.entries(attivita.data.valoriEcosostenibilita)
+        .filter(([nomePolitica, valore]) => valore === true)
+        .map(([nomePolitica, valore]) => this.convertCamelCaseToReadable(nomePolitica));
 
+      this.valori = valoriEcosostenibilitaTrue.map((label) => ({
+        label: label,
+        selectedOption: ''
+      }));
+
+      console.log('VALORI VERI:',this.valori)
+        
+  
+        // this.originalValoriEcosostenibilitaSelected = {};
+        // this.valoriEcosostenibilitaSelected = {};
+        // this.valoriEcosostenibilita = Object.keys(attivita.data.valoriEcosostenibilita)
+        //   .filter(key => key !== 'id')
+        //   .filter(valore => attivita.data.valoriEcosostenibilita[valore] === true); // Filtra solo i valori impostati a true
+  
+        // this.valoriEcosostenibilita.forEach(valore => {
+        //   const valoreId = attivita.data.valoriEcosostenibilita[valore].id;
+        //   this.originalValoriEcosostenibilitaSelected[valore] = attivita.data.valoriEcosostenibilita[valore] ? 'true' : 'false';
+        //   this.valoriEcosostenibilitaSelected[valore] = this.originalValoriEcosostenibilitaSelected[valore];
+        // });
+        
+  
         this.getImmagineUrl(attivita.data.media);
-
+  
         this.nome = attivita.data.nome;
       },
       (error) => {
@@ -99,23 +120,33 @@ export class ModificaValoriAdminComponent implements OnInit {
     }
   }
 
-  // Gestione del cambiamento dell'opzione selezionata
-  selezionatoRadio(valore: string, option: string) {
-    this.valoriEcosostenibilitaSelected[valore] = option;
-    this.changesMade = true;
-    this.updateSubmit();
-  }
+   // Gestione del cambiamento dell'opzione selezionata
+  // selezionatoRadio(valore: string, option: string) {
+  //   this.valoriEcosostenibilitaSelected[valore] = option;
+  //   this.changesMade = true;
+  //   //this.updateSubmit();
+  // }
 
-  inizializzaValoriEcosostenibilitaSelected() {
-    this.valoriEcosostenibilita.forEach(valore => {
-      this.valoriEcosostenibilitaSelected[valore] = '';
-    });
+  selectOption(item: any, option: any) {
+    item.selectedOption = option;
+    const key = this.convertLabelToCamelCase(item.label);
+    if (option === 'no') {
+      console.log("CHIAVE:", key)
+      this.val[key] = false;
+      console.log(this.val[key])
+    } else {
+      console.log("CHIAVE:", key)
+      this.val[key] = true;
+      console.log(this.val[key])
+    }
+
+    //this.updateSubmitButton();
   }
 
   // Aggiornamento della sottomissione
-  updateSubmit() {
-    const isValoriInseriti = this.valori.every(item => item.selezionato === 'sì' || item.selezionato === 'no');
-  }
+  //updateSubmit() {
+    //const isValoriInseriti = this.valori.every(item => item.selezionato === 'sì' || item.selezionato === 'no');
+  //}
 
 
   convertLabelToCamelCase(label: string): string {
@@ -144,56 +175,73 @@ export class ModificaValoriAdminComponent implements OnInit {
     return this.cookieService.get('idAttivita');
   }
 
+  isChiarimentiValido: boolean = false;
+  isChiarimentiLengthValid: boolean = false;
+  chiarimenti: string= '';
+
+  openPopupErrore(message: string): void {
+      const dialogRef = this.dialog.open(PopuperroreComponent, {
+        width: '250px',
+        data: { message },
+        disableClose: true,
+      });
+  }
+
   submitForm(): void {
+    console.log(this.chiarimenti);
     if (!this.selectedValoreId) {
       console.error('ID dei valori di ecosostenibilità non valido.');
       return;
     }
 
-    const politicheAntispreco = this.valoriEcosostenibilitaSelected['politicheAntispreco'] === 'true';
-    const prodottiLocali = this.valoriEcosostenibilitaSelected['prodottiLocali'] === 'true';
-    const energiaVerde = this.valoriEcosostenibilitaSelected['energiaVerde'] === 'true';
-    const raccoltaDifferenziata = this.valoriEcosostenibilitaSelected['raccoltaDifferenziata'] === 'true';
-    const limiteEmissioneCO2 = this.valoriEcosostenibilitaSelected['limiteEmissioneCO2'] === 'true';
-    const contattoConNatura = this.valoriEcosostenibilitaSelected['contattoConNatura'] === 'true';
+    console.log('validate radio:',this.validateRadio());
 
+    
+    if(this.validateChiarimenti() && this.validateRadio()){
+    
     this.valorieco.modificaValoriEcosostenibilita(
       this.selectedValoreId,
-      politicheAntispreco,
-      prodottiLocali,
-      energiaVerde,
-      raccoltaDifferenziata,
-      limiteEmissioneCO2,
-      contattoConNatura
+      this.val.politicheAntispreco,
+        this.val.prodottiLocali,
+        this.val.energiaVerde,
+        this.val.raccoltaDifferenziata,
+        this.val.limiteEmissioneCO2,
+        this.val.contattoConNatura,
     ).subscribe(
       (response) => {
         console.log('Modifica effettuata con successo', response);
         if (response?.status === 'success') {
-          if (this.changesMade) {
+          
             this.openPopup('Modifica effettuata');
-            return;
-          }
+          
         } else {
           this.openPopup('Impossibile effettuare la modifica')
-        }
+        } 
       },
       (error) => {
         console.error('Errore durante la modifica', error);
       }
     );
-  }
-
-  rollbackChanges(): void {
-    const changesDetected = Object.keys(this.valoriEcosostenibilitaSelected).some(valore =>
-      this.valoriEcosostenibilitaSelected[valore] !== this.originalValoriEcosostenibilitaSelected[valore]
-    );
-
-    if (changesDetected) {
-      this.valoriEcosostenibilitaSelected = { ...this.originalValoriEcosostenibilitaSelected };
-      this.changesMade = false;
+     } else if(!this.isChiarimentiLengthValid){
+       this.openPopupErrore('Errore: lunghezza chiarimenti eccessiva');
+    } else if(!this.isChiarimentiValido) {
+      this.openPopupErrore('Errore il formato dei chiarimenti non è valido');
+    } else if(!this.validateRadio()){
+       this.openPopupErrore('Erore non sono stati selezionati tutti i campi');
     }
-    this.location.back();
   }
+
+  // rollbackChanges(): void {
+  //   const changesDetected = Object.keys(this.valoriEcosostenibilitaSelected).some(valore =>
+  //     this.valoriEcosostenibilitaSelected[valore] !== this.originalValoriEcosostenibilitaSelected[valore]
+  //   );
+
+  //   if (changesDetected) {
+  //     this.valoriEcosostenibilitaSelected = { ...this.originalValoriEcosostenibilitaSelected };
+  //     this.changesMade = false;
+  //   }
+  //   this.location.back();
+  // }
   
   onTextareaChange(): void {
     const textareaValue = (document.getElementById('descrizione') as HTMLTextAreaElement).value;
@@ -211,5 +259,19 @@ export class ModificaValoriAdminComponent implements OnInit {
       console.log('Il popup è stato chiuso');
     });
   }
+
+  validateChiarimenti(): boolean{
+    const regex = /^$|^[A-Za-zÀ-ÖØ-öø-ÿ0-9][\s\S]*$/;
+    this.isChiarimentiValido = regex.test((document.getElementById('descrizione') as HTMLTextAreaElement).value);
+    this.isChiarimentiLengthValid = (document.getElementById('descrizione') as HTMLTextAreaElement).value.length<=1000;
+    return this.isChiarimentiLengthValid && this.isChiarimentiValido;
+  }
+
+  validateRadio() {
+   return this.valori.every((item: any) =>{ 
+    console.log('ITEMMMMMM', item, item.selectedOption);
+    return item.selectedOption === 'sì' || item.selectedOption === 'no';
+  });
+}
 
 }

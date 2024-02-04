@@ -113,6 +113,7 @@ import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/list
 import { TopbuttonComponent } from './componenti/topbutton/topbutton.component';
 import { CookieDialogComponent } from './componenti/cookiedialog/cookiedialog.component';
 import { PopupRecensioneFailComponent } from './componenti/pagina-attivita/recensioni/popup-recensione-fail/popup-recensione-fail.component';
+import { PopuperroreComponent } from './componenti/modifica-valori-admin/popuperrore/popuperrore.component';
 
 @NgModule({
   declarations: [
@@ -190,7 +191,8 @@ import { PopupRecensioneFailComponent } from './componenti/pagina-attivita/recen
     GenerazioneAutomaticaComponent,
     TopbuttonComponent,
     CookieDialogComponent,
-    PopupRecensioneFailComponent
+    PopupRecensioneFailComponent,
+    PopuperroreComponent
   ],
   imports: [
     BrowserModule,
