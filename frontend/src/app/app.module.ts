@@ -112,6 +112,7 @@ import { ModificaValoriAdminComponent } from './componenti/modifica-valori-admin
 import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/lista-segnalazioni.component';
 import { TopbuttonComponent } from './componenti/topbutton/topbutton.component';
 import { CookieDialogComponent } from './componenti/cookiedialog/cookiedialog.component';
+import { PopUpErroriComponent } from './componenti/pagina-attivita/prenotazioni/pop-up-errori/pop-up-errori.component';
 
 @NgModule({
   declarations: [
@@ -189,6 +190,7 @@ import { CookieDialogComponent } from './componenti/cookiedialog/cookiedialog.co
     GenerazioneAutomaticaComponent,
     TopbuttonComponent,
     CookieDialogComponent,
+    PopUpErroriComponent,
   ],
   imports: [
     BrowserModule,
