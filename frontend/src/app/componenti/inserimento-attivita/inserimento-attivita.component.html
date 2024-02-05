@@ -140,7 +140,7 @@
           <!--Provincia-->
           <mat-form-field appearance="outline" style="margin: 2%; width: 150px">
             <mat-label>Provincia</mat-label>
-            <input formControlName="provincia" matInput placeholder="SA" />
+            <input formControlName="provincia" matInput oninput="this.value = this.value.toUpperCase()" placeholder="SA" />
             <mat-error id="provincia"
               *ngIf="inserimento.get('provincia')?.hasError('required')"
             >
@@ -322,24 +322,18 @@
           formControlName="file"
           id="fileInput"
           type="file"
-          (change)="onFilesSelected($event)"
-          multiple
-          accept="image/*"
+          (change)="onFileSelected($event)"
+          accept="image/*,video/*"
           style="display: none"
+
         />
 
         <div *ngIf="errorMessage">
           <p style="color: red" id="file">{{ errorMessage }}</p>
         </div>
 
-        <div *ngIf="selectedFiles.length > 0">
-          <p>Numero di file selezionati: {{ selectedFiles.length }}</p>
-          <ul>
-            <li *ngFor="let file of selectedFiles">
-              Nome del file: {{ file.name }} (Dimensione: {{ file.size }} byte)
-              <!-- Puoi aggiungere ulteriori informazioni sul file qui. -->
-            </li>
-          </ul>
+        <div class="file-name" *ngIf="file">
+          {{ file.name }}
         </div>
       </div>
     </div>
@@ -370,7 +364,7 @@
     inserimento.get('descrizioneBreve')?.invalid ||
     inserimento.get('costo')?.invalid ||
     inserimento.get('descrizioneLunga')?.invalid ||
-    selectedFiles.length === 0
+    inserimento.get('file')?.invalid
   "
 >
     Inserisci
