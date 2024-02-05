@@ -11,61 +11,61 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./questionario.component.css']
 })
 export class QuestionarioComponent implements OnInit {
-  questionario : FormGroup
+  questionario: FormGroup
   mostraRisultati = false;
 
-  constructor(private formBuilder: FormBuilder, private utenteService: UtenteService, private router: Router, private dialog: MatDialog) { 
-  this.questionario = this.formBuilder.group({
-    viaggioPreferito: ['', Validators.required],
-    alloggioPreferito: ['', Validators.required],
-    attivitaPreferita:['', Validators.required],
-    preferenzaAlimentare:['', Validators.required],
-    animaleDomestico:['', Validators.required],
-    budgetPreferito:['', Validators.required],
-    souvenir:['', Validators.required],
-    stagioniPreferite:['', Validators.required],
+  constructor(private formBuilder: FormBuilder, private utenteService: UtenteService, private router: Router, private dialog: MatDialog) {
+    this.questionario = this.formBuilder.group({
+      viaggioPreferito: ['', Validators.required],
+      alloggioPreferito: ['', Validators.required],
+      attivitaPreferita: ['', Validators.required],
+      preferenzaAlimentare: ['', Validators.required],
+      animaleDomestico: ['', Validators.required],
+      budgetPreferito: ['', Validators.required],
+      souvenir: ['', Validators.required],
+      stagioniPreferite: ['', Validators.required],
 
-  
-  
-  });
-}
+
+
+    });
+  }
 
   ngOnInit(): void {
   }
 
-  openPopupQuestionario(message: string):void{
+  openPopupQuestionario(message: string): void {
     const dialogRef = this.dialog.open(PopUpQuestionarioComponent,
-    {    width: '250px',
-    data: { message },
-    disableClose: true,})
+      {
+        width: '250px',
+        data: { message },
+        disableClose: true,
+      })
   }
 
   esci() {
-
-    // Recupera i valori e mostra i risultati
-    this.router.navigate(['/registrazione']);
-
+    this.router.navigate(['/areaRiservata']);
   }
-  
-invio(){
+
+  invio() {
 
 
-  this.utenteService.invioQuestionario(
-    this.questionario.get('viaggioPreferito')?.value,
-    this.questionario.get('alloggioPreferito')?.value,
-    this.questionario.get('attivitaPreferita')?.value,
-    this.questionario.get('preferenzaAlimentare')?.value,
-    this.questionario.get('animaleDomestico')?.value,
-    this.questionario.get('budgetPreferito')?.value,
-    this.questionario.get('souvenir')?.value,
-    this.questionario.get('stagioniPreferite')?.value,
-  ).subscribe(
-    (response) =>{
-      this.openPopupQuestionario('Preferenze inviate')
-  },
-  (erorr)=>{
-    this.openPopupQuestionario('Preferenze non inviate')
+    this.utenteService.invioQuestionario(
+      this.questionario.get('viaggioPreferito')?.value,
+      this.questionario.get('alloggioPreferito')?.value,
+      this.questionario.get('attivitaPreferita')?.value,
+      this.questionario.get('preferenzaAlimentare')?.value,
+      this.questionario.get('animaleDomestico')?.value,
+      this.questionario.get('budgetPreferito')?.value,
+      this.questionario.get('souvenir')?.value,
+      this.questionario.get('stagioniPreferite')?.value,
+    ).subscribe(
+      (response) => {
+        this.openPopupQuestionario('Preferenze inviate')
+      },
+      (erorr) => {
+        this.openPopupQuestionario('Preferenze non inviate')
+      }
+    )
   }
-)}
 
 }
