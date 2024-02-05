@@ -42,14 +42,14 @@ export class InserimentoAttivitaComponent implements OnInit {
      private dialog: MatDialog,
      private valoriEcosostenibilitaService: ValoriEcosostenibilitaService) {
     this.inserimento = this.formBuilder.group({
-      nome:['',Validators.required],
+      nome:['',[Validators.required,Validators.maxLength(50), Validators.pattern(/^[A-Za-z\s]*$/)]],
       tipo:['',Validators.required],
-      categoria:[true,Validators.required],
-      disponibilita:[0, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-      indirizzo: ['',Validators.required],
+      categoria:[,Validators.required],
+      disponibilita:[0, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
+      indirizzo: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9][\s\S]*$/)]],
       cap:['',[Validators.required,Validators.maxLength(5),Validators.pattern(/^[0-9]+$/)]],
-      citta: ['',Validators.required],
-      provincia: ['',[Validators.required,Validators.maxLength(2)]],
+      citta: ['',[Validators.required, Validators.pattern(/^[A-Za-z]*$/)]],
+      provincia: ['',[Validators.required,Validators.maxLength(2)], Validators.pattern(/^[A-Z]*$/)],
       latitudine: ['',[Validators.required, Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
       longitudine: ['', [Validators.required,Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
       politicheAntispreco: false,   
@@ -58,9 +58,9 @@ export class InserimentoAttivitaComponent implements OnInit {
       raccoltaDifferenziata: false,   
       limiteEmissioneCO2: false,   
       contattoConNatura: false,  
-      descrizioneBreve:['',Validators.required],
+      descrizioneBreve:['',[Validators.required,Validators.maxLength(140), Validators.pattern(/^[A-Za-z0-9][\s\S]*$/)]],
       costo:[0, [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
-      descrizioneLunga:['',Validators.required],
+      descrizioneLunga:['',[Validators.required,Validators.maxLength(2000), Validators.pattern(/^[A-Za-z0-9][\s\S]*$/)]],
       file:['',Validators.required]
 
     });
@@ -102,9 +102,17 @@ export class InserimentoAttivitaComponent implements OnInit {
     } else {
        this.errorMessage = null;      
        // Aggiungi solo i file di tipo immagine alla lista
-       const imageFiles: File[] = Array.from(files).filter(file => file.type.startsWith('image/'));
-       this.selectedFiles.push(...imageFiles);
-      }
+
+      const maxFileSize = 100 * 1024 * 1024;
+      Array.from(files).forEach(file => {
+        if (file.size > maxFileSize) {
+          this.errorMessage = 'Almeno uno dei file è troppo grande! La dimensione massima del file è 100MB.';
+          return; // Interrompe il ciclo se viene trovato un file troppo grande
+        }
+      });
+      const imageFiles: File[] = Array.from(files).filter(file => file.type.startsWith('image/'));
+      this.selectedFiles.push(...imageFiles);
+     }
   }
 
   openPopupAlloggio(idAttivita: number):void{
@@ -134,8 +142,8 @@ export class InserimentoAttivitaComponent implements OnInit {
   }
 
     onSubmit() {
-
-      this.valoriEcosostenibilitaService.creaValoriEcosostenibilitaVisitatore(
+      if (this.inserimento.valid)
+ {     this.valoriEcosostenibilitaService.creaValoriEcosostenibilitaVisitatore(
         this.politica1 =  this.inserimento.get('politicheAntispreco')?.value, 
         this.politica2 =  this.inserimento.get('prodottiLocali')?.value,
         this.politica3 = this.inserimento.get('energiaVerde')?.value,
@@ -199,5 +207,5 @@ export class InserimentoAttivitaComponent implements OnInit {
 
             });
     
-   }
+   }}
 }
