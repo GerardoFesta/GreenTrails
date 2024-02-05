@@ -223,11 +223,11 @@ export class ModificaValoriAdminComponent implements OnInit {
       }
     );
      } else if(!this.isChiarimentiLengthValid){
-       this.openPopupErrore('Errore: lunghezza chiarimenti eccessiva');
+       this.openPopupErrore('La lunghezza chiarimenti eccessiva');
     } else if(!this.isChiarimentiValido) {
-      this.openPopupErrore('Errore il formato dei chiarimenti non è valido');
+      this.openPopupErrore('Il formato dei chiarimenti non è valido');
     } else if(!this.validateRadio()){
-       this.openPopupErrore('Erore non sono stati selezionati tutti i campi');
+       this.openPopupErrore('Non sono stati selezionati tutti i campi');
     }
   }
 
@@ -272,6 +272,10 @@ export class ModificaValoriAdminComponent implements OnInit {
     console.log('ITEMMMMMM', item, item.selectedOption);
     return item.selectedOption === 'sì' || item.selectedOption === 'no';
   });
+}
+
+goBack(){
+  this.location.back();
 }
 
 }
