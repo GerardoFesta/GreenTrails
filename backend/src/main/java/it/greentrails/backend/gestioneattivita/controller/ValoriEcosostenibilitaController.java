@@ -74,7 +74,7 @@ public class ValoriEcosostenibilitaController {
   @SuppressWarnings("checkstyle:AbbreviationAsWordInName")
   @PostMapping("{id}")
   private ResponseEntity<Object> modificaValoriEcosostenibilita(
-      @AuthenticationPrincipal
+      @AuthenticationPrincipal Utente utente,
       @PathVariable("id") final Long id,
       @RequestParam(value = "politicheAntispreco", required = false)
       final Boolean politicheAntispreco,
@@ -93,7 +93,8 @@ public class ValoriEcosostenibilitaController {
     try {
       ValoriEcosostenibilita valori = valoriEcosostenibilitaService.findById(id);
       Optional<Attivita> risultato = attivitaService.findByValori(valori);
-      if (risultato.isEmpty()) {
+      if (risultato.isEmpty() || !risultato.get().getGestore().getId().equals(utente.getId())
+          && utente.getRuolo() != RuoloUtente.AMMINISTRATORE) {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,
             "Valori da modificare non trovati.");
       }
