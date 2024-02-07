@@ -112,6 +112,7 @@ import { ModificaValoriAdminComponent } from './componenti/modifica-valori-admin
 import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/lista-segnalazioni.component';
 import { TopbuttonComponent } from './componenti/topbutton/topbutton.component';
 import { CookieDialogComponent } from './componenti/cookiedialog/cookiedialog.component';
+import { PopupRecensioneFailComponent } from './componenti/pagina-attivita/recensioni/popup-recensione-fail/popup-recensione-fail.component';
 import { ErrorPopupComponent } from './componenti/generazione-automatica/error-popup/error-popup.component';
 
 @NgModule({
@@ -190,6 +191,7 @@ import { ErrorPopupComponent } from './componenti/generazione-automatica/error-p
     GenerazioneAutomaticaComponent,
     TopbuttonComponent,
     CookieDialogComponent,
+    PopupRecensioneFailComponent
     ErrorPopupComponent
   ],
   imports: [

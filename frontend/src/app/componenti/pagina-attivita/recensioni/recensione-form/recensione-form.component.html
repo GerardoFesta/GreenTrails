@@ -30,20 +30,18 @@
     <div class="textarea-container">
       <mat-form-field class="example-full-width" appearance="fill">
         <mat-label style="font-size: medium; font-style: italic;">Fornisci maggiori informazioni...</mat-label>
-        <textarea maxlength="255" matInput rows="5" style="font-size: medium; resize: none;"
-          [(ngModel)]="valutazioneDiscorsiva" name="valutazioneDiscorsiva" (input)="validateTextArea()"></textarea>
+        <textarea matInput rows="5" style="font-size: medium; resize: none;" [(ngModel)]="valutazioneDiscorsiva"
+          name="valutazioneDiscorsiva" (input)="validateTextArea()"></textarea>
       </mat-form-field>
-      <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" accept="image/*,video/*">
-      <div class="icon-container">
-        <button mat-icon-button type="button" (click)="fileInput.click()">
-          <mat-icon style="color: #32CD32;">add_photo_alternate</mat-icon>
-        </button>
-      </div>
+      <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*,video/*"
+        style="display: none">
+      <label for="fileInput" class="icon-container">
+        <mat-icon style="color: #32CD32; cursor: pointer;">add_photo_alternate</mat-icon>
+      </label>
       <div class="file-name" *ngIf="file">
         {{ file.name }}
       </div>
-      <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitDisabled"
-        class="submit-button">Invia</button>
+      <button mat-raised-button color="primary" type="submit" class="submit-button">Invia</button>
     </div>
   </div>
 </form>

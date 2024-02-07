@@ -49,11 +49,20 @@ form {
 }
 
 .textarea-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
     width: 93%;
     height: 100%;
+}
+
+.icon-container {
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    color: #32CD32;
+    cursor: pointer;
 }
 
 .example-full-width {
@@ -66,7 +75,8 @@ form {
     background-color: #32CD32;
     width: fit-content;
     align-self: center;
-  }
+    order: 2;
+}
 
 .submit-button:disabled {
     background-color: #cccccc; 

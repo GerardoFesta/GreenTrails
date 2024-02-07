@@ -44,11 +44,10 @@ public class Recensione {
   @Max(value = 5, message = "La valutazione dell'esperienza non può essere superiore a 5.")
   private int valutazioneStelleEsperienza;
 
-  @Column(name = "descrizione", nullable = false)
-  @NotBlank(message = "La valutazione discorsiva non può essere vuota.")
+  @Column(name = "descrizione")
   @Size(max = 255, message = "La valutazione discorsiva è troppo lunga.")
-  @Pattern(regexp = "^[A-Za-z0-9](?s:.)*",
-      message = "La valutazione discorsiva non ha formato valido.")
+  @Pattern(regexp = "^$|^[A-Za-zÀ-ÖØ-öø-ÿ0-9][\\s\\S]*$",
+      message = "La valutazione discorsiva non ha un formato valido.")
   private String descrizione;
 
   @Column(name = "media")
