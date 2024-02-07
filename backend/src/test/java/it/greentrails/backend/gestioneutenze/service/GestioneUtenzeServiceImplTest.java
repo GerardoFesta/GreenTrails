@@ -8,10 +8,8 @@ import it.greentrails.backend.entities.Preferenze;
 import it.greentrails.backend.gestioneutenze.repository.PreferenzeRepository;
 import it.greentrails.backend.gestioneutenze.repository.UtenteRepository;
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
