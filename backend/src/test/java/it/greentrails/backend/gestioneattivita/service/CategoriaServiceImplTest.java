@@ -2,12 +2,7 @@ package it.greentrails.backend.gestioneattivita.service;
 
 import it.greentrails.backend.entities.Categoria;
 import it.greentrails.backend.gestioneattivita.repository.CategoriaRepository;
-import it.greentrails.backend.gestioneattivita.service.CategoriaServiceImpl;
-import java.util.Set;
 
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,12 +20,10 @@ public class CategoriaServiceImplTest {
     @InjectMocks
     private CategoriaServiceImpl categoriaService;
 
-    private Validator validator;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        validator = Validation.buildDefaultValidatorFactory().getValidator();
     }
 
     @Test
