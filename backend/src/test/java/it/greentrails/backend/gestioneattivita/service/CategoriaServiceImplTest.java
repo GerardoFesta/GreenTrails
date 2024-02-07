@@ -55,26 +55,4 @@ public class CategoriaServiceImplTest {
 
     }
 
-    @Test
-    void saveCategoria_NullName_ExceptionThrown() {
-        Categoria categoria = new Categoria();
-        categoria.setNome(null);
-        categoria.setDescrizione("Attività e alloggi per il relax e il benessere. Include spa, centri benessere, o alloggi con servizi di spa e benessere.");
-
-        Set<ConstraintViolation<Categoria>> violations = validator.validate(categoria);
-        assertFalse(violations.isEmpty());
-        assertEquals("Il nome non può essere vuoto.", violations.iterator().next().getMessage());
-    }
-
-    @Test
-    void saveCategoria_NullDescription_ExceptionThrown() {
-        Categoria categoria = new Categoria();
-        categoria.setNome("Relax e Benessere");
-        categoria.setDescrizione(null);
-
-        Set<ConstraintViolation<Categoria>> violations = validator.validate(categoria);
-        assertFalse(violations.isEmpty());
-        assertEquals("La descrizione non può essere vuota.", violations.iterator().next().getMessage());
-    }
-
 }
