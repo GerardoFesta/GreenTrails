@@ -4,6 +4,7 @@ import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Camera;
 import it.greentrails.backend.gestioneattivita.repository.CameraRepository;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,10 +48,19 @@ public class CameraServiceImplTest {
   public void testGetCamereByAlloggio_ValidAlloggio() throws Exception {
     Attivita alloggio = new Attivita();
     alloggio.setAlloggio(true);
-    List<Camera> camere = new ArrayList<>();
+    alloggio.setId(1L);
+
+    Camera camera = new Camera();
+    camera.setAlloggio(alloggio);
+
+    List<Camera> camere = Arrays.asList(camera);
     when(cameraRepository.findAll()).thenReturn(camere);
+
     List<Camera> foundCamere = cameraService.getCamereByAlloggio(alloggio);
+
     assertNotNull(foundCamere);
+    assertEquals(1, foundCamere.size());
+    assertTrue(foundCamere.contains(camera));
   }
 
 }
