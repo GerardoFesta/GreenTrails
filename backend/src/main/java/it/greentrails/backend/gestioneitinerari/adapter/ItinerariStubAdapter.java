@@ -11,6 +11,8 @@ import it.greentrails.backend.gestioneattivita.repository.CameraRepository;
 import it.greentrails.backend.gestioneitinerari.repository.ItinerariRepository;
 import it.greentrails.backend.gestioneprenotazioni.repository.PrenotazioneAlloggioRepository;
 import it.greentrails.backend.gestioneprenotazioni.repository.PrenotazioneAttivitaTuristicaRepository;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +41,7 @@ public class ItinerariStubAdapter implements ItinerariAdapter {
       PrenotazioneAttivitaTuristica p = new PrenotazioneAttivitaTuristica();
       p.setAttivitaTuristica(a);
       p.setItinerario(itinerarioFinal);
-      p.setDataInizio(new Date());
+      p.setDataInizio(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)));
       p.setNumAdulti(1);
       p.setNumBambini(0);
       p.setPrezzo(a.getPrezzo());
@@ -51,8 +53,8 @@ public class ItinerariStubAdapter implements ItinerariAdapter {
       PrenotazioneAlloggio p = new PrenotazioneAlloggio();
       p.setCamera(c);
       p.setItinerario(itinerarioFinal);
-      p.setDataInizio(new Date());
-      p.setDataFine(new Date());
+      p.setDataInizio(Date.from(Instant.now().plus(1, ChronoUnit.HOURS)));
+      p.setDataFine(Date.from(Instant.now().plus(1, ChronoUnit.DAYS)));
       p.setNumAdulti(1);
       p.setNumBambini(0);
       p.setNumCamere(1);

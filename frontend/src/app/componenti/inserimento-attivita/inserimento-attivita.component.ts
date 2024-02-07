@@ -42,14 +42,14 @@ export class InserimentoAttivitaComponent implements OnInit {
      private dialog: MatDialog,
      private valoriEcosostenibilitaService: ValoriEcosostenibilitaService) {
     this.inserimento = this.formBuilder.group({
-      nome:['',Validators.required],
+      nome:['',[Validators.required,Validators.maxLength(50), Validators.pattern(/^[A-Za-z\s]*$/)]],
       tipo:['',Validators.required],
-      categoria:[true,Validators.required],
-      disponibilita:[0, [Validators.required, Validators.pattern(/^[0-9]+$/)]],
-      indirizzo: ['',Validators.required],
+      categoria:[,Validators.required],
+      disponibilita:[0, [Validators.required, Validators.pattern(/^[1-9]\d*$/)]],
+      indirizzo: ['',[Validators.required, Validators.pattern(/^[A-Za-z0-9][\s\S]*$/)]],
       cap:['',[Validators.required,Validators.maxLength(5),Validators.pattern(/^[0-9]+$/)]],
-      citta: ['',Validators.required],
-      provincia: ['',[Validators.required,Validators.maxLength(2)]],
+      citta: ['',[Validators.required, Validators.pattern(/^[A-Za-z]*$/)]],
+      provincia: ['',[Validators.required,Validators.maxLength(2), Validators.pattern(/^[A-Z]{2}$/)]],
       latitudine: ['',[Validators.required, Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
       longitudine: ['', [Validators.required,Validators.pattern(/^[-]?([0-8]?[0-9]|90)\.[0-9]{1,15}$/)]],
       politicheAntispreco: false,   
@@ -58,9 +58,9 @@ export class InserimentoAttivitaComponent implements OnInit {
       raccoltaDifferenziata: false,   
       limiteEmissioneCO2: false,   
       contattoConNatura: false,  
-      descrizioneBreve:['',Validators.required],
+      descrizioneBreve:['',[Validators.required,Validators.maxLength(140), Validators.pattern(/^[A-Za-z0-9][\s\S]*$/)]],
       costo:[0, [Validators.required, Validators.pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
-      descrizioneLunga:['',Validators.required],
+      descrizioneLunga:['',[Validators.required,Validators.maxLength(2000), Validators.pattern(/^[A-Za-z0-9][\s\S]*$/)]],
       file:['',Validators.required]
 
     });
@@ -91,20 +91,29 @@ export class InserimentoAttivitaComponent implements OnInit {
   toppings = new FormControl(false, [Validators.required]);
 
   //File
-  selectedFiles: File[] = [];
+  file!: File | null;
+
   errorMessage: string | null = null;
- onFilesSelected(event: any): void {
-   const files: FileList = event.target.files;
-   // Controlla se ci sono file di tipo diverso da immagine
-   const nonImageFiles: File[] = Array.from(files).filter(file => !file.type.startsWith('image/'));
-   if (nonImageFiles.length > 0) {
-     this.errorMessage = 'Puoi selezionare solo file di immagine.';
-    } else {
-       this.errorMessage = null;      
-       // Aggiungi solo i file di tipo immagine alla lista
-       const imageFiles: File[] = Array.from(files).filter(file => file.type.startsWith('image/'));
-       this.selectedFiles.push(...imageFiles);
-      }
+  onFileSelected(event: any) {
+    this.file = event.target.files[0];
+
+    if (this.file!.size > 100 * 1024 * 1024) {
+      this.errorMessage = 'La dimensione del file è troppo grande! La dimensione massima del file è 100MB.';
+      this.file = null;
+      return;
+    }    else{
+      this.errorMessage = ''
+    }
+
+    const fileType = this.file!.type;
+    if (!fileType.startsWith('image/') && !fileType.startsWith('video/')) {
+      this.errorMessage = 'Puoi selezionare solo file di immagine.';
+      this.file = null;
+      return;
+    }
+    else{
+      this.errorMessage = ''
+    }
   }
 
   openPopupAlloggio(idAttivita: number):void{
@@ -134,8 +143,7 @@ export class InserimentoAttivitaComponent implements OnInit {
   }
 
     onSubmit() {
-
-      this.valoriEcosostenibilitaService.creaValoriEcosostenibilitaVisitatore(
+ {     this.valoriEcosostenibilitaService.creaValoriEcosostenibilitaVisitatore(
         this.politica1 =  this.inserimento.get('politicheAntispreco')?.value, 
         this.politica2 =  this.inserimento.get('prodottiLocali')?.value,
         this.politica3 = this.inserimento.get('energiaVerde')?.value,
@@ -167,12 +175,7 @@ export class InserimentoAttivitaComponent implements OnInit {
      this.prezzo = formData.append('prezzo', this.inserimento.get('costo')?.value);
      formData.append('descrizioneLunga', this.inserimento.get('descrizioneLunga')?.value);
      formData.append('valori', this.idPolitiche);
-     if (this.selectedFiles.length > 0) {
-      // If files are selected, append them to the FormData
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        formData.append('immagine', this.selectedFiles[i]);
-      }
-    }
+     formData.append('immagine', this.file!);
      console.log(formData)
 
 
@@ -199,5 +202,5 @@ export class InserimentoAttivitaComponent implements OnInit {
 
             });
     
-   }
+   }}
 }
