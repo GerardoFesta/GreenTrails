@@ -13,7 +13,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
@@ -39,7 +41,7 @@ public class Camera {
   @Column(name = "prezzo", nullable = false)
   @NotNull(message = "Il prezzo non può essere vuoto.")
   @PositiveOrZero(message = "Il prezzo non può essere negativo.")
-  private double prezzo;
+  private Double prezzo;
 
   @Column(name = "disponibilita", nullable = false)
   @NotNull(message = "La disponibilità non può essere vuota.")
@@ -54,6 +56,6 @@ public class Camera {
   @Column(name = "capienza", nullable = false)
   @NotNull(message = "La capienza non può essere vuota.")
   @Positive(message = "La capienza non può essere inferiore a 1.")
-  private int capienza;
+  private Integer capienza;
 
 }
