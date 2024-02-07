@@ -12,6 +12,8 @@ import { PrenotazioniAlloggioService } from 'src/app/servizi/prenotazioni-allogg
 import { PrenotazioniAttivitaService } from 'src/app/servizi/prenotazioni-attivita.service';
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { forkJoin, map, switchMap } from 'rxjs';
+import { PopupComponent } from '../gestione-attivita/gestione-valori/popup/popup.component';
+import { ErrorPopupComponent } from './error-popup/error-popup.component';
 
 @Component({
   selector: 'app-generazione-automatica',
@@ -47,7 +49,14 @@ export class GenerazioneAutomaticaComponent {
   }
 
   ngOnInit(): void {
-    this.generaItinerario();
+    this.utenteService.getPreferenze().subscribe((risposta: any) => {
+      console.log(risposta);
+      this.generaItinerario();
+    }, (error) => {
+      const dialogRef = this.dialog.open(ErrorPopupComponent, {
+        width: '250px',
+      });
+    })
   }
 
   generaItinerario(): void {
@@ -130,14 +139,14 @@ export class GenerazioneAutomaticaComponent {
 
   clickedHome() {
     this.cancellaItinerario();
-    this.route.navigate(['/']);
+    this.route.navigate(['/areaRiservata']);
   }
 
   openCalendario() {
     const dialogRef = this.dialog.open(CalendariopopupComponent, {
       data: {
         idItinerario: this.itinerarioAutoId,
-        prenotazioniAlloggio: this.prenotazioniAlloggio.filter((item :any) => !item.camera.alloggio.eliminata),
+        prenotazioniAlloggio: this.prenotazioniAlloggio.filter((item: any) => !item.camera.alloggio.eliminata),
         prenotazioniAttivitaTuristica: this.prenotazioniAttivitaTuristica.filter((item: any) => !item.attivitaTuristica.eliminata),
       },
       width: '500px',

@@ -4,6 +4,7 @@ package it.greentrails.backend.gestioneattivita.controller;
 import it.greentrails.backend.entities.Attivita;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.entities.ValoriEcosostenibilita;
+import it.greentrails.backend.enums.RuoloUtente;
 import it.greentrails.backend.gestioneattivita.service.AttivitaService;
 import it.greentrails.backend.gestioneattivita.service.ValoriEcosostenibilitaService;
 import it.greentrails.backend.utils.service.ResponseGenerator;
@@ -92,7 +93,8 @@ public class ValoriEcosostenibilitaController {
     try {
       ValoriEcosostenibilita valori = valoriEcosostenibilitaService.findById(id);
       Optional<Attivita> risultato = attivitaService.findByValori(valori);
-      if (risultato.isEmpty() || !risultato.get().getGestore().getId().equals(utente.getId())) {
+      if (risultato.isEmpty() || !risultato.get().getGestore().getId().equals(utente.getId())
+          && utente.getRuolo() != RuoloUtente.AMMINISTRATORE) {
         return ResponseGenerator.generateResponse(HttpStatus.NOT_FOUND,
             "Valori da modificare non trovati.");
       }
