@@ -6,10 +6,8 @@ import it.greentrails.backend.entities.Itinerario;
 import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.RuoloUtente;
 import it.greentrails.backend.gestioneitinerari.repository.ItinerariRepository;
-
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
