@@ -1,6 +1,12 @@
 package it.greentrails.backend.gestioneprenotazioni.service;
 
 
+import it.greentrails.backend.entities.PrenotazioneAttivitaTuristica;
+import it.greentrails.backend.entities.Utente;
+import it.greentrails.backend.enums.RuoloUtente;
+
+import it.greentrails.backend.gestioneprenotazioni.repository.PrenotazioneAttivitaTuristicaRepository;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -18,11 +24,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-
-import it.greentrails.backend.entities.PrenotazioneAttivitaTuristica;
-import it.greentrails.backend.entities.Utente;
-import it.greentrails.backend.enums.RuoloUtente;
-import it.greentrails.backend.gestioneprenotazioni.repository.PrenotazioneAttivitaTuristicaRepository;
 
 @ExtendWith(MockitoExtension.class)
 class PrenotazioneAttivitaTuristicaServiceImplTest {
