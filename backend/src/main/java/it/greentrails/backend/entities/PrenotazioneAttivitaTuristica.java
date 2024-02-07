@@ -49,18 +49,17 @@ public class PrenotazioneAttivitaTuristica {
 
   @Column(name = "num_bambini", nullable = false)
   @NotNull(message = "Il numero dei bambini non può essere vuoto.")
-  @Positive(message = "Il numero dei bambini non può essere negativo.")
+  @PositiveOrZero(message = "Il numero dei bambini non può essere negativo.")
   private int numBambini;
 
   @Temporal(TemporalType.TIME)
   @Column(name = "data_inizio", nullable = false)
   @NotNull(message = "La data di inizio non può essere vuota.")
-  @FutureOrPresent(message = "La data di fine non può essere antecedente alla data odierna.")
+  @FutureOrPresent(message = "La data di inizio non può essere antecedente alla data odierna.")
   private Date dataInizio;
 
   @Temporal(TemporalType.TIME)
   @Column(name = "data_fine")
-  @NotNull(message = "La data di fine non può essere vuota.")
   @FutureOrPresent(message = "La data di fine non può essere antecedente alla data odierna.")
   private Date dataFine;
 
