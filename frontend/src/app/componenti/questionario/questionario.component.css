@@ -48,9 +48,8 @@
   }
 
   .mat-button-toggle-checked {
-    background-color:#32CD32; /* Change this to your desired primary color */
-    color: #ffffff;
-    font-weight: bold; /* Change this to your desired text color */
+    background-color:#32CD32;
+    color: white;
     border-radius: 20px;
   }
 

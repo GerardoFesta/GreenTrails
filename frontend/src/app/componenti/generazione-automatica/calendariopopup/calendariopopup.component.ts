@@ -59,7 +59,7 @@ export class CalendariopopupComponent implements OnInit {
     });
   }
 
-
+  
   submitForm() {
     if (this.form.valid) {
       console.log("FORM COMPLETO", this.form.value);
