@@ -14,10 +14,10 @@ export class PopUpQuestionarioComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   onNoClick(): void {
-    this.router.navigate(['']);
+    this.router.navigate(['/areaRiservata']);
     this.dialogRef.close();
- // Aggiorna la pagina
   }
 
 }
