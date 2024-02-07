@@ -44,14 +44,14 @@ class PrenotazioneAttivitaTuristicaServiceImplTest {
 
   @Test
   void testGetPrenotazioniByVisitatore_WithNonVisitatore() {
-    Utente utenteNonVisitatore = new Utente();
-    utenteNonVisitatore.setId(1L);
-    utenteNonVisitatore.setRuolo(RuoloUtente.GESTORE_ATTIVITA);
+    Utente visitatore = new Utente();
+    visitatore.setId(1L);
+    visitatore.setRuolo(RuoloUtente.GESTORE_ATTIVITA);
 
     //when(repositoryMock.findByVisitatore(eq(1L), any(Pageable.class))).thenReturn(Page.empty());
 
     assertThrows(Exception.class, () -> {
-      service.getPrenotazioniByVisitatore(utenteNonVisitatore);
+      service.getPrenotazioniByVisitatore(visitatore);
     });
   }
 
