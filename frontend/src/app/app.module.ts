@@ -112,6 +112,7 @@ import { ModificaValoriAdminComponent } from './componenti/modifica-valori-admin
 import { ListaSegnalazioniComponent } from './componenti/lista-segnalazioni/lista-segnalazioni.component';
 import { TopbuttonComponent } from './componenti/topbutton/topbutton.component';
 import { CookieDialogComponent } from './componenti/cookiedialog/cookiedialog.component';
+import { PopUpErroriComponent } from './componenti/pagina-attivita/prenotazioni/pop-up-errori/pop-up-errori.component';
 import { PopupRecensioneFailComponent } from './componenti/pagina-attivita/recensioni/popup-recensione-fail/popup-recensione-fail.component';
 import { PopuperroreComponent } from './componenti/modifica-valori-admin/popuperrore/popuperrore.component';
 import { ErrorPopupComponent } from './componenti/generazione-automatica/error-popup/error-popup.component';
@@ -194,6 +195,7 @@ import { ErrorPopupComponent } from './componenti/generazione-automatica/error-p
     CookieDialogComponent,
     PopupRecensioneFailComponent,
     PopuperroreComponent
+    PopUpErroriComponent,
     PopupRecensioneFailComponent
     ErrorPopupComponent
   ],
