@@ -3,7 +3,7 @@
 <mat-dialog-content>
   <mat-stepper linear #stepper>
     <!--PRIMA PARTE-->
-    <mat-step [stepControl]="firstFormGroup">
+    <mat-step  linear #stepper [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
         <mat-grid-list cols="2" rowHeight="4:1">
           <mat-grid-tile>
@@ -44,13 +44,14 @@
 
           <mat-grid-tile>
             <input
+            id="adulti"
               required
               class="input"
-              type="number"
               name="numAdulti"
               [value]="1"
-              min="1"
+              min="0"
               formControlName="numAdulti"
+              
             />
           </mat-grid-tile>
 
@@ -61,12 +62,12 @@
 
           <mat-grid-tile>
             <input
+            id="bambini"
               required
               class="input"
-              type="number"
               name="numBambini"
               [value]="0"
-              min="0"
+              min="-1"
               formControlName="numBambini"
             />
           </mat-grid-tile>
@@ -78,11 +79,11 @@
 
           <mat-grid-tile>
             <input
+            id="camere"
               class="input"
-              type="number"
               name="numCamere"
               [value]="1"
-              min="1"
+              min="0"
               formControlName="numCamere"
               required
             />
@@ -110,7 +111,7 @@
         </mat-grid-list>
 
         <div class="button-container">
-          <button mat-button matStepperNext (click)="verificaDisponibilita()">
+          <button mat-button matStepperNext id="continua"  (click)="verificaDisponibilita()" >
             Continua
           </button>
         </div>
