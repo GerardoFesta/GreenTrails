@@ -194,6 +194,7 @@ import { ErrorPopupComponent } from './componenti/generazione-automatica/error-p
     CookieDialogComponent,
     PopupRecensioneFailComponent,
     PopuperroreComponent
+    PopupRecensioneFailComponent
     ErrorPopupComponent
   ],
   imports: [
