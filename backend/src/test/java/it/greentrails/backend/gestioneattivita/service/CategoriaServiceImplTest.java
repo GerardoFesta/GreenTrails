@@ -40,8 +40,8 @@ public class CategoriaServiceImplTest {
     Categoria categoria = new Categoria();
     categoria.setNome("Relax e Benessere");
     categoria.setDescrizione(
-        "Attività e alloggi per il relax e il benessere." +
-            " Include spa, centri benessere, o alloggi con servizi di spa e benessere.");
+        "Attività e alloggi per il relax e il benessere."
+            + " Include spa, centri benessere, o alloggi con servizi di spa e benessere.");
 
     when(categoriaRepository.save(any())).thenReturn(categoria);
 
@@ -64,8 +64,8 @@ public class CategoriaServiceImplTest {
     Categoria categoria = new Categoria();
     categoria.setNome(null);
     categoria.setDescrizione(
-        "Attività e alloggi per il relax e il benessere." +
-            " Include spa, centri benessere, o alloggi con servizi di spa e benessere."
+        "Attività e alloggi per il relax e il benessere."
+            + " Include spa, centri benessere, o alloggi con servizi di spa e benessere."
     );
 
     Set<ConstraintViolation<Categoria>> violations = validator.validate(categoria);
