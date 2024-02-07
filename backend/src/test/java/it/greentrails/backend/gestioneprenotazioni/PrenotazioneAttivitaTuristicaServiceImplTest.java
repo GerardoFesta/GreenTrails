@@ -1,7 +1,7 @@
 package it.greentrails.backend.gestioneprenotazioni;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -11,10 +11,8 @@ import it.greentrails.backend.entities.Utente;
 import it.greentrails.backend.enums.RuoloUtente;
 import it.greentrails.backend.gestioneprenotazioni.repository.PrenotazioneAttivitaTuristicaRepository;
 import it.greentrails.backend.gestioneprenotazioni.service.PrenotazioneAttivitaTuristicaServiceImpl;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
