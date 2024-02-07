@@ -14,38 +14,40 @@ import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 
 public class CategoriaServiceImplTest {
-    @Mock
-    private CategoriaRepository categoriaRepository;
 
-    @InjectMocks
-    private CategoriaServiceImpl categoriaService;
+  @Mock
+  private CategoriaRepository categoriaRepository;
+
+  @InjectMocks
+  private CategoriaServiceImpl categoriaService;
 
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+  }
 
-    @Test
-    void saveCategoria_Success() throws Exception {
-        Categoria categoria = new Categoria();
-        categoria.setNome("Relax e Benessere");
-        categoria.setDescrizione("Attività e alloggi per il relax e il benessere. Include spa, centri benessere, o alloggi con servizi di spa e benessere.");
+  @Test
+  void saveCategoria_Success() throws Exception {
+    Categoria categoria = new Categoria();
+    categoria.setNome("Relax e Benessere");
+    categoria.setDescrizione(
+        "Attività e alloggi per il relax e il benessere. Include spa, centri benessere, o alloggi con servizi di spa e benessere.");
 
-        when(categoriaRepository.save(any())).thenReturn(categoria);
+    when(categoriaRepository.save(any())).thenReturn(categoria);
 
-        Categoria savedCategoria = categoriaService.saveCategoria(categoria);
+    Categoria savedCategoria = categoriaService.saveCategoria(categoria);
 
-        assertNotNull(savedCategoria);
+    assertNotNull(savedCategoria);
 
-    }
+  }
 
-    @Test
-    void saveCategoria_NullCategoria_ExceptionThrown() {
-        Categoria nullCategoria = null;
+  @Test
+  void saveCategoria_NullCategoria_ExceptionThrown() {
+    Categoria nullCategoria = null;
 
-        assertThrows(Exception.class, () -> categoriaService.saveCategoria(nullCategoria));
+    assertThrows(Exception.class, () -> categoriaService.saveCategoria(nullCategoria));
 
-    }
+  }
 
 }
